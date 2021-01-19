@@ -1,7 +1,5 @@
 import Head from 'next/head'
 import HomeLayout, {siteTitle} from '../components/homeLayout'
-import Footer from '../components/footer'
-import Wave from '../components/wave'
 
 // export async function getStaticProps() {
 //   const allPostsData = getSortedPostsData()
@@ -12,8 +10,6 @@ import Wave from '../components/wave'
 //   }
 // }
 
-const waveColorClass = 'text-indigo-600'
-
 export default function Home() {
   return (
     <>
@@ -21,10 +17,7 @@ export default function Home() {
         <Head>
           <title>{siteTitle}</title>
         </Head>
-        
       </HomeLayout>
-      <Wave />
-      <Footer />
     </>
   )
 }
