@@ -5,17 +5,17 @@ import { Transition } from "@headlessui/react"
 const appName = 'AppCity'
 const links = [
     {
-        href: 'http://localhost:3000/about', 
+        href: '/about', 
         label: 'About', 
         icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
     },
     {
-        href: 'http://localhost:3000/partner',
+        href: '/partner',
         label: 'Partner',
         icon: 'M13 10V3L4 14h7v7l9-11h-7z'
     },
     {
-        href: 'http://localhost:3000/learn',
+        href: '/learn',
         label: 'Learn',
         icon: 'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222'
     },
