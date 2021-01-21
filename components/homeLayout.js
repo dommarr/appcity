@@ -71,7 +71,7 @@ export default function HomeLayout({ children }) {
                         </svg>
                         </div>
                         <input type="text" name="search" id="search" className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md" 
-                        onSubmit={handleSubmit} placeholder="CRM, video conferencing, analytics..." />
+                         placeholder="CRM, video conferencing, analytics..." />
                     </div>
                 </div>
                     
