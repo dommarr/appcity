@@ -24,12 +24,12 @@ export default function Header(props){
     const [showMenu, setShowMenu] = useState(false)
 
     return (
-    <div className={`${props.dark ? 'bg-indigo-600' : 'bg-white'} relative z-10`}>
+    <div className={`${props.dark ? 'bg-purple' : 'bg-white'} relative z-10`}>
         <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
-            <div>
+            <div className="flex items-center">
             <a href="/" className="flex">
-                <span className="sr-only">{appName}</span>
                 <img className="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt={appName} />
+                <span className="px-2 text-4xl text-white font-bold italic">{appName}</span>
             </a>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
