@@ -1,6 +1,7 @@
 {/* <link rel="stylesheet" href="https://rsms.me/inter/inter.css"></link> */}
 
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   purge: [
@@ -9,6 +10,26 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      white: colors.white,
+      black: colors.black,
+      gray: colors.gray,
+      yellow: {
+        light: '#ffd581',
+        DEFAULT: '#f7f004',
+        dark: '#009eeb',
+      },
+      purple: {
+        extralight: '#8d5cff',
+        light: '#7e47ff',
+        DEFAULT: '#6927ff',
+        dark: '#621fff',
+        extradark: '#540aff',
+      },
+      indigo: colors.indigo
+    },
     extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
