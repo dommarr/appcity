@@ -5,13 +5,16 @@ import {
     // Pagination,
     Highlight,
     ClearRefinements,
-    RefinementList,
+    //RefinementList,
     Configure,
     connectSearchBox,
     connectHits,
-    connectPagination
+    connectPagination,
+    connectRefinementList
   } from 'react-instantsearch-dom';
 import algoliasearch from 'algoliasearch/lite';
+import { Transition } from "@headlessui/react"
+import { useState } from 'react';
 import { Component } from 'react'
 import GridContainer from '../components/gridContainer'
 // import CustomSearchBox from '../components/searchbox'
@@ -27,14 +30,6 @@ const indexName = "wf_products";
 
 const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
   <>
-   <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-    <button className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
-      <span className="sr-only">Open sidebar</span>
-      {/* Heroicon name: menu-alt-2 */}
-      <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
-      </svg>
-    </button>
     <div className="flex-1 px-4 flex justify-between">
       <div className="flex-1 flex">
         <form className="w-full flex md:ml-0" noValidate action="" role="search">
@@ -60,12 +55,11 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
         </form>
       </div>
     </div>
-  </div>
 
-  <div className="relative z-10 flex-shrink-0 flex bg-white shadow">
+  {/* <div className="relative z-10 flex-shrink-0 flex bg-white shadow">
     {isSearchStalled ? 'Loading...' : ''}
     <button onClick={() => refine('')}>Reset query</button>
-  </div>
+  </div> */}
   </>
 );
 
@@ -187,44 +181,127 @@ const CustomPagination = connectPagination(Pagination);
 
 
 
-class SearchApp extends Component {
-  render() {
+const RefinementList = ({
+  items,
+  refine,
+  createURL,
+}) => (
+
+  <div className="mt-4 sm:mt-0 sm:col-span-2">
+    <div className="max-w-lg space-y-2">
+
+    {items.map(item => (
+
+      <div className="relative flex items-start" key={item.label}>
+        <div className="flex items-center h-5">
+          <input 
+            id={item.label}
+            name={item.label}
+            type="checkbox"
+            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+            onClick={event => {
+              event.preventDefault();
+              refine(item.value);
+              
+            }}
+          />
+        </div>
+        <div className="ml-3 text-sm">
+          <label 
+            htmlFor={item.label}
+          >
+            <span className="font-medium text-gray-700">{item.label}</span>
+            <span className="font-medium text-gray-700">({item.count})</span>
+          </label>
+        </div>
+      </div>
+
+      ))}
+    </div>
+  </div>
+
+);
+
+const CustomRefinementList = connectRefinementList(RefinementList);
+
+{/* <ul>
+{items.map(item => (
+  <li key={item.label}
+  >
+    <div>
+      <label
+        onClick={event => {
+        event.preventDefault();
+        refine(item.value);
+      }}
+      htmlFor={item.label}
+      >
+        <input type="checkbox" id={item.label} name={item.label}/>
+        <span>{item.label}</span>
+        <span>({item.count})</span>
+      </label>
+    </div>
+  </li>
+))}
+</ul> */}
+
+
+
+
+ {/* <input type="checkbox"/>
+      
+        <a
+          href={createURL(item.value)}
+          style={{ fontWeight: item.isRefined ? 'bold' : '' }}
+          onClick={event => {
+            event.preventDefault();
+            refine(item.value);
+          }}
+        >
+          {item.label} ({item.count})
+        </a>
+        
+      </li> */}
+
+
+export default function SearchApp(props){
+// class SearchApp extends Component {
+//   render() {
+  const [showSidebar, setShowSidebar] = useState(false)
+
     return (
       <div id="top" className="h-screen flex overflow-hidden bg-gray-100">
       <InstantSearch indexName={indexName} searchClient={searchClient}>
-        {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
-        <div className="md:hidden">
+        <Transition
+          className="md:hidden"
+          show={showSidebar}
+        >
           <div className="fixed inset-0 flex z-40">
-            {/*
-              Off-canvas menu overlay, show/hide based on off-canvas menu state.
-      
-              For animated transitions, import { Transition } from '@headlessui/react' and wrap the next tag in this component:
-      <Transition
-              show={isOpen}
+            <Transition.Child 
+              className="fixed inset-0"
+              aria-hidden="true"
               enter="transition-opacity ease-linear duration-300"
               enterFrom="opacity-0"
               enterTo="opacity-100"
               leave="transition-opacity ease-linear duration-300"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
-            ></Transition>
-            */}
-            <div className="fixed inset-0" aria-hidden="true">
+            >
               <div className="absolute inset-0 bg-gray-600 opacity-75"></div>
-            </div>
-            {/*
-              Off-canvas menu, show/hide based on off-canvas menu state.
-      
-              Entering: "transition ease-in-out duration-300 transform"
-                From: "-translate-x-full"
-                To: "translate-x-0"
-              Leaving: "transition ease-in-out duration-300 transform"
-                From: "translate-x-0"
-                To: "-translate-x-full"
-            */}
-            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white">
+            </Transition.Child>
+            <Transition.Child
+              className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white"
+              enter="transition ease-in-out duration-300 transform"
+              enterFrom="-translate-x-full"
+              enterTo="translate-x-0"
+              leave="transition ease-in-out duration-300 transform"
+              leaveFrom="translate-x-0"
+              leaveTo="-translate-x-full"
+            >
               <div className="absolute top-0 right-0 -mr-12 pt-2">
-                <button className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <button className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                onClick={() => 
+                setShowSidebar(false)}>
                   <span className="sr-only">Close sidebar</span>
                   {/* Heroicon name: x */}
                   <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -232,68 +309,17 @@ class SearchApp extends Component {
                   </svg>
                 </button>
               </div>
-              <div className="flex-shrink-0 flex items-center px-4">
-                <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow" />
-              </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-2 space-y-1">
-                  {/* Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" */}
-                  <a href="/" className="bg-gray-100 text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                    {/* Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" */}
-                    {/* Heroicon name: home */}
-                    <svg className="text-gray-500 mr-4 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    Dashboard
-                  </a>
-      
-                  <a href="/" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                    {/* Heroicon name: users */}
-                    <svg className="text-gray-400 group-hover:text-gray-500 mr-4 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    Team
-                  </a>
-      
-                  <a href="/" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                    {/* Heroicon name: folder */}
-                    <svg className="text-gray-400 group-hover:text-gray-500 mr-4 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                    </svg>
-                    Projects
-                  </a>
-      
-                  <a href="/" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                    {/* Heroicon name: calendar */}
-                    <svg className="text-gray-400 group-hover:text-gray-500 mr-4 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Calendar
-                  </a>
-      
-                  <a href="/" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                    {/* Heroicon name: inbox */}
-                    <svg className="text-gray-400 group-hover:text-gray-500 mr-4 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                    </svg>
-                    Documents
-                  </a>
-      
-                  <a href="/" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                    {/* Heroicon name: chart-bar */}
-                    <svg className="text-gray-400 group-hover:text-gray-500 mr-4 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    Reports
-                  </a>
+                <CustomRefinementList attribute="vendor_name" />
                 </nav>
               </div>
-            </div>
+            </Transition.Child>
             <div className="flex-shrink-0 w-14" aria-hidden="true">
-              {/* Dummy element to force sidebar to shrink to fit close icon */}
             </div>
           </div>
-        </div>
+        </Transition>
+        
       
         {/* Static sidebar for desktop */}
         <div className="hidden md:flex md:flex-shrink-0">
@@ -303,7 +329,7 @@ class SearchApp extends Component {
               <div className="mt-5 flex-grow flex flex-col">
                 <nav className="flex-1 px-2 bg-white space-y-1">
 
-                <RefinementList attribute="vendor_name" />
+                <CustomRefinementList attribute="vendor_name" />
                   
                 </nav>
               </div>
@@ -311,6 +337,15 @@ class SearchApp extends Component {
           </div>
         </div>
         <div className="flex flex-col w-0 flex-1 overflow-hidden">
+  <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+    <button className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+    onClick={() => setShowSidebar(true)}>
+      <span className="sr-only">Open sidebar</span>
+      {/* Heroicon name: menu-alt-2 */}
+      <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
+      </svg>
+    </button>
         
         <Configure
           // filters="free_shipping:true"
@@ -321,6 +356,7 @@ class SearchApp extends Component {
         />
           
           <CustomSearchBox />
+      </div>
 
           <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
             <div className="py-6">
@@ -419,6 +455,6 @@ class SearchApp extends Component {
       // </div>
     );
   }
-}
+// }
 
-export default SearchApp
+// export default SearchApp
