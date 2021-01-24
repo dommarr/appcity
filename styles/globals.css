@@ -89,7 +89,29 @@ body {
   @apply opacity-50 hover:bg-indigo-600 cursor-not-allowed;
 }
 
+/* Stats */
 
+/* <div class="ais-Stats">
+  <span class="ais-Stats-text">20,337 results found in 1ms.</span>
+</div> */
+
+.ais-Stats-text {
+  @apply text-xs
+}
+
+/* Sort By */
+
+/* <div class="ais-SortBy">
+  <select class="ais-SortBy-select">
+    <option class="ais-SortBy-option" value="instant_search">Featured</option>
+    <option class="ais-SortBy-option" value="instant_search_price_asc">Price asc.</option>
+    <option class="ais-SortBy-option" value="instant_search_price_desc">Price desc.</option>
+  </select>
+</div> */
+
+.ais-SortBy-select {
+  @apply text-xs text-gray-700 border-0 rounded-md text-right
+}
 
 /* Start purging... */
 @tailwind utilities;

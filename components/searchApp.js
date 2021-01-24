@@ -4,6 +4,8 @@ import {
     // SearchBox,
     // Pagination,
     Highlight,
+    Stats,
+    SortBy,
     ClearRefinements,
     RefinementList,
     CurrentRefinements,
@@ -42,6 +44,7 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
               <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
               </svg>
+              
             </div>
             
             <input 
@@ -54,6 +57,7 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
               onChange={event => refine(event.currentTarget.value)}
             />
           </div>
+          
         </form>
       </div>
     </div>
@@ -300,7 +304,7 @@ export default function SearchApp(props){
           </div>
         </div>
         <div className="flex flex-col w-0 flex-1 overflow-hidden">
-  <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+  <div className="relative z-10 flex-shrink-0 flex h-12 bg-white shadow">
     <button className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
     onClick={() => setShowSidebar(true)}>
       <span className="sr-only">Open sidebar</span>
@@ -318,9 +322,20 @@ export default function SearchApp(props){
         />
         <CustomSearchBox />
       </div>
-      {/* <div className="relative z-10 flex-shrink-0 flex bg-white shadow px-2 py-1">
-        <CurrentRefinements />
-      </div>          */}
+      <div className="z-10 flex-shrink-0 flex justify-between items-center bg-white shadow px-5 py-0.5">
+        {/* <CurrentRefinements /> */}
+        <Stats />
+        <SortBy 
+          defaultRefinement="wf_products"
+          items={[
+            { label: 'Relevance', value: 'wf_products' },
+            { label: 'Price Low to High (pay yearly)', value: 'wf_products_price_low_to_high_yearly' },
+            { label: 'Price Low to High (pay monthly)', value: 'wf_products_price_low_to_high_monthly' },
+            { label: 'Price High to Low (pay yearly)', value: 'wf_products_price_high_to_low_yearly' },
+            { label: 'Price High to Low (pay monthly)', value: 'wf_products_price_high_to_low_monthly' },
+          ]}
+        />
+      </div>         
 
           <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
             <div className="py-6">
