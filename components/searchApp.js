@@ -5,7 +5,8 @@ import {
     // Pagination,
     Highlight,
     ClearRefinements,
-    //RefinementList,
+    RefinementList,
+    CurrentRefinements,
     Configure,
     connectSearchBox,
     connectHits,
@@ -17,6 +18,7 @@ import { Transition } from "@headlessui/react"
 import { useState } from 'react';
 import { Component } from 'react'
 import GridContainer from '../components/gridContainer'
+import RefinementBlock from '../components/refinementBlock'
 // import CustomSearchBox from '../components/searchbox'
 const searchClient = algoliasearch('2MSQ1OBQ7T', 'dc7a5fd7ebd0b77ab30f1c0ce9d2334a');
 const indexName = "wf_products";
@@ -56,10 +58,8 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
       </div>
     </div>
 
-  {/* <div className="relative z-10 flex-shrink-0 flex bg-white shadow">
-    {isSearchStalled ? 'Loading...' : ''}
-    <button onClick={() => refine('')}>Reset query</button>
-  </div> */}
+  {/* {isSearchStalled ? 'Loading...' : ''}
+    <button onClick={() => refine('')}>Reset query</button> */}
   </>
 );
 
@@ -181,7 +181,7 @@ const CustomPagination = connectPagination(Pagination);
 
 
 
-const RefinementList = ({
+const cRefinementList = ({
   items,
   refine,
   createURL,
@@ -222,51 +222,10 @@ const RefinementList = ({
 
 );
 
-const CustomRefinementList = connectRefinementList(RefinementList);
-
-{/* <ul>
-{items.map(item => (
-  <li key={item.label}
-  >
-    <div>
-      <label
-        onClick={event => {
-        event.preventDefault();
-        refine(item.value);
-      }}
-      htmlFor={item.label}
-      >
-        <input type="checkbox" id={item.label} name={item.label}/>
-        <span>{item.label}</span>
-        <span>({item.count})</span>
-      </label>
-    </div>
-  </li>
-))}
-</ul> */}
-
-
-
-
- {/* <input type="checkbox"/>
-      
-        <a
-          href={createURL(item.value)}
-          style={{ fontWeight: item.isRefined ? 'bold' : '' }}
-          onClick={event => {
-            event.preventDefault();
-            refine(item.value);
-          }}
-        >
-          {item.label} ({item.count})
-        </a>
-        
-      </li> */}
+const CustomRefinementList = connectRefinementList(cRefinementList);
 
 
 export default function SearchApp(props){
-// class SearchApp extends Component {
-//   render() {
   const [showSidebar, setShowSidebar] = useState(false)
 
     return (
@@ -311,7 +270,10 @@ export default function SearchApp(props){
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-2 space-y-1">
-                <CustomRefinementList attribute="vendor_name" />
+                <ClearRefinements />
+                <RefinementBlock header="vendors">
+                  <RefinementList attribute="vendor_name" />
+                </RefinementBlock>
                 </nav>
               </div>
             </Transition.Child>
@@ -320,17 +282,18 @@ export default function SearchApp(props){
           </div>
         </Transition>
         
-      
         {/* Static sidebar for desktop */}
         <div className="hidden md:flex md:flex-shrink-0">
           <div className="flex flex-col w-64">
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <div className="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
-              <div className="mt-5 flex-grow flex flex-col">
+            <div className="flex flex-col flex-grow border-r border-gray-200 py-2 bg-white overflow-y-auto">
+              <div className="flex-grow flex flex-col">
                 <nav className="flex-1 px-2 bg-white space-y-1">
-
-                <CustomRefinementList attribute="vendor_name" />
-                  
+                {/* <CustomRefinementList attribute="vendor_name" /> */}
+                <ClearRefinements />
+                <RefinementBlock header="vendors">
+                  <RefinementList attribute="vendor_name" />
+                </RefinementBlock>
                 </nav>
               </div>
             </div>
@@ -346,7 +309,6 @@ export default function SearchApp(props){
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
       </svg>
     </button>
-        
         <Configure
           // filters="free_shipping:true"
           hitsPerPage={16}
@@ -354,56 +316,21 @@ export default function SearchApp(props){
           // enablePersonalization={true}
           // distinct
         />
-          
-          <CustomSearchBox />
+        <CustomSearchBox />
       </div>
+      {/* <div className="relative z-10 flex-shrink-0 flex bg-white shadow px-2 py-1">
+        <CurrentRefinements />
+      </div>          */}
 
           <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
             <div className="py-6">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                {/* Replace with your content */}
-                {/* <GridContainer> */}
-                  {/* <Hits hitComponent={Hit} /> */}
-                  <CustomHits />
-                {/* </GridContainer> */}
-              {/* <div className="py-4">
-                  <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
-                </div> */}
-                {/* /End replace */}
-              
-           
-    
-    {/* Pagination */}
-    <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
-      
-      <CustomPagination />
-      {/* <div className="hidden md:-mt-px md:flex">
-        <a href="/" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-          1
-        </a>
-        <a href="/" className="border-indigo-500 text-indigo-600 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium" aria-current="page">
-          2
-        </a>
-        <a href="/" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-          3
-        </a>
-        <span className="border-transparent text-gray-500 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-          ...
-        </span>
-        <a href="/" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-          8
-        </a>
-        <a href="/" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-          9
-        </a>
-        <a href="/" className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-          10
-        </a>
-      </div> */}
-      
-    </nav>
-
-            </div>
+                <CustomHits />
+                {/* Pagination */}
+                <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
+                  <CustomPagination />      
+                </nav>
+              </div>
             </div>
           </main>
         </div>

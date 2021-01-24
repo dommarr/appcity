@@ -16,6 +16,81 @@ body {
   @apply px-4 py-2 font-bold text-white bg-blue-500 rounded;
 } */
 
+/* Refinement List Output
+
+<div class="ais-RefinementList">
+  <div class="ais-RefinementList-searchBox">
+    <!-- SearchBox widget here -->
+  </div>
+  <ul class="ais-RefinementList-list">
+    <li class="ais-RefinementList-item ais-RefinementList-item--selected">
+      <label class="ais-RefinementList-label">
+        <input class="ais-RefinementList-checkbox" type="checkbox" value="Insignia™" checked="" />
+        <span class="ais-RefinementList-labelText">Insignia™</span>
+        <span class="ais-RefinementList-count">746</span>
+      </label>
+    </li>
+    <li class="ais-RefinementList-item">
+      <label class="ais-RefinementList-label">
+        <input class="ais-RefinementList-checkbox" type="checkbox" value="Samsung">
+        <span class="ais-RefinementList-labelText">Samsung</span>
+        <span class="ais-RefinementList-count">633</span>
+      </label>
+    </li>
+  </ul>
+  <button class="ais-RefinementList-showMore">Show more</button>
+</div> */
+
+
+.ais-RefinementList-list {
+  @apply font-normal text-gray-700 text-sm;
+}
+
+.ais-RefinementList-item {
+  @apply mt-0.5;
+}
+
+.ais-RefinementList-item--selected {
+  @apply font-semibold;
+}
+
+.ais-RefinementList-labelText {
+  @apply pl-2;
+}
+
+.ais-RefinementList-count {
+  @apply bg-gray-100 py-0.5 px-1 rounded;
+}
+
+.ais-RefinementList-checkbox {
+  @apply rounded;
+}
+
+/* Clear Refinements Button */
+
+/* <div class="ais-ClearRefinements">
+  <button
+    class="ais-ClearRefinements-button ais-ClearRefinements-button--disabled"
+    disabled
+  >
+    Clear refinements
+  </button>
+</div> */
+
+.ais-ClearRefinements {
+  @apply flex justify-center
+}
+
+.ais-ClearRefinements-button {
+  @apply inline-flex items-center mb-1 px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+}
+
+.ais-ClearRefinements-button--disabled {
+  @apply opacity-50 hover:bg-indigo-600 cursor-not-allowed;
+}
+
+
+
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
