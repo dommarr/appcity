@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+import { useState } from 'react';
 import Head from 'next/head'
 import Header from '../components/header'
 import Footer from '../components/footer'
@@ -16,6 +18,17 @@ export const siteTitle = 'AppCity'
 //   .continue('React!!')
 
 export default function HomeLayout({ children }) {
+    const router = useRouter()
+    const [keyword, setKeyword] = useState('')
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        router.push({
+            pathname: '/search',
+            query: { keyword }
+          })
+      }
+
     return ( 
         <>
         <Header dark="true"/>
@@ -85,9 +98,17 @@ export default function HomeLayout({ children }) {
                             <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                         </svg>
                         </div>
-                        <input type="text" name="search" id="search" className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md" 
-                         placeholder="CRM, video conferencing, analytics..." />
-                         
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                name="search" 
+                                id="search" 
+                                className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md" 
+                                placeholder="CRM, video conferencing, analytics..."
+                                value={keyword} 
+                                onChange={event => setKeyword(event.target.value)}
+                            />
+                        </form>
                     </div>
                     <div className="flex items-center pt-4">
                     <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple mx-1 inline-flex items-center justify-center px-4 py-1 border border-white rounded-md shadow-sm text-sm font-light">
@@ -101,14 +122,8 @@ export default function HomeLayout({ children }) {
                     </a>
                     
                 </div>
-                </div>
-
-                
-                    
+                </div>  
             </div>
-            
-            
-
             <div>{ children }</div>
             </main>
         </div>
