@@ -16,6 +16,58 @@ body {
   @apply px-4 py-2 font-bold text-white bg-blue-500 rounded;
 } */
 
+input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+
+/* clears the 'X' from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+
+
+/* SearchBox Output
+
+<div class="ais-SearchBox">
+  <form class="ais-SearchBox-form" novalidate>
+    <input class="ais-SearchBox-input" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search for products" spellcheck="false" maxlength="512" type="search" value="" />
+    <button class="ais-SearchBox-submit" type="submit" title="Submit the search query.">
+      <svg class="ais-SearchBox-submitIcon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 40 40">
+        ...
+      </svg>
+    </button>
+    <button class="ais-SearchBox-reset" type="reset" title="Clear the search query." hidden>
+      <svg class="ais-SearchBox-resetIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="10" height="10">
+        ...
+      </svg>
+    </button>
+    <span class="ais-SearchBox-loadingIndicator" hidden>
+      <svg width="16" height="16" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#444" class="ais-SearchBox-loadingIcon">
+        ...
+      </svg>
+    </span>
+  </form>
+</div>
+
+*/
+
+.ais-SearchBox {
+  @apply flex-1 flex
+}
+
+.ais-SearchBox-form {
+  @apply relative w-full flex md:ml-0 text-gray-400 focus-within:text-gray-600
+}
+
+.ais-SearchBox-input {
+  @apply block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm
+}
+
+.ais-SearchBox-submit {
+  @apply absolute inset-y-0 left-0 flex items-center pointer-events-none
+}
+
 /* Refinement List Output
 
 <div class="ais-RefinementList">
@@ -40,7 +92,6 @@ body {
   </ul>
   <button class="ais-RefinementList-showMore">Show more</button>
 </div> */
-
 
 .ais-RefinementList-list {
   @apply font-normal text-gray-700 text-sm;

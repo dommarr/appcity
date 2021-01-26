@@ -1,16 +1,14 @@
 import {
     InstantSearch,
     // Hits,
-    // SearchBox,
+    SearchBox,
     // Pagination,
     Highlight,
     Stats,
     SortBy,
     ClearRefinements,
     RefinementList,
-    CurrentRefinements,
     Configure,
-    connectSearchBox,
     connectHits,
     connectPagination,
     connectRefinementList
@@ -18,56 +16,52 @@ import {
 import algoliasearch from 'algoliasearch/lite';
 import { Transition } from "@headlessui/react"
 import { useState } from 'react';
+import { useRouter } from 'next/router'
 import { Component } from 'react'
-import GridContainer from '../components/gridContainer'
 import RefinementBlock from '../components/refinementBlock'
-// import CustomSearchBox from '../components/searchbox'
 const searchClient = algoliasearch('2MSQ1OBQ7T', 'dc7a5fd7ebd0b77ab30f1c0ce9d2334a');
 const indexName = "wf_products";
 
-// const SearchApp = () => (
-//   <InstantSearch searchClient={searchClient} indexName={indexName}>
-//     <SearchBox />
-//     <Hits />
-//   </InstantSearch>
+// const SearchBox = ({ 
+//   currentRefinement,
+//   isSearchStalled,
+//   refine,
+// }) => (
+//   <>
+//     <div className="flex-1 px-4 flex justify-between">
+//       <div className="flex-1 flex">
+//         <form className="w-full flex md:ml-0" noValidate action="" role="search">
+//           <label htmlFor="search_field" className="sr-only">Search</label>
+//           <div className="relative w-full text-gray-400 focus-within:text-gray-600">
+//             <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+//               {/* Heroicon name: search */}
+//               <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+//                 <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+//               </svg>
+              
+//             </div>
+            
+//             <input 
+//               id="search_field"
+//               className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
+//               // placeholder="Search" 
+//               type="search"
+//               name="query"
+//               value={currentRefinement} 
+//               onChange={event => refine(event.currentTarget.value)}
+//             />
+//           </div>
+          
+//         </form>
+//       </div>
+//     </div>
+//   </>
 // );
 
-const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
-  <>
-    <div className="flex-1 px-4 flex justify-between">
-      <div className="flex-1 flex">
-        <form className="w-full flex md:ml-0" noValidate action="" role="search">
-          <label htmlFor="search_field" className="sr-only">Search</label>
-          <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-            <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-              {/* Heroicon name: search */}
-              <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-              </svg>
-              
-            </div>
-            
-            <input 
-              id="search_field"
-              className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
-              // placeholder="Search" 
-              type="search"
-              name="search"
-              value={currentRefinement} 
-              onChange={event => refine(event.currentTarget.value)}
-            />
-          </div>
-          
-        </form>
-      </div>
-    </div>
-
-  {/* {isSearchStalled ? 'Loading...' : ''}
+ {/* {isSearchStalled ? 'Loading...' : ''}
     <button onClick={() => refine('')}>Reset query</button> */}
-  </>
-);
 
-const CustomSearchBox = connectSearchBox(SearchBox);
+// const CustomSearchBox = connectSearchBox(SearchBox);
 
 const Hits = ({ hits }) => (
   <ol className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -181,10 +175,6 @@ const Pagination = ({ currentRefinement, nbPages, refine, createURL }) => (
   
 const CustomPagination = connectPagination(Pagination);
 
-
-
-
-
 const cRefinementList = ({
   items,
   refine,
@@ -228,9 +218,10 @@ const cRefinementList = ({
 
 const CustomRefinementList = connectRefinementList(cRefinementList);
 
-
 export default function SearchApp(props){
   const [showSidebar, setShowSidebar] = useState(false)
+  const router = useRouter()
+  console.log(router.query.keyword)
 
     return (
       <div id="top" className="h-screen flex overflow-hidden bg-gray-100">
@@ -267,8 +258,8 @@ export default function SearchApp(props){
                 setShowSidebar(false)}>
                   <span className="sr-only">Close sidebar</span>
                   {/* Heroicon name: x */}
-                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
@@ -297,6 +288,7 @@ export default function SearchApp(props){
                 <ClearRefinements />
                 <RefinementBlock header="vendors">
                   <RefinementList attribute="vendor_name" />
+                  <Configure query={router.query.keyword} hitsPerPage={16} distinct />
                 </RefinementBlock>
                 </nav>
               </div>
@@ -313,14 +305,22 @@ export default function SearchApp(props){
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
       </svg>
     </button>
-        <Configure
-          // filters="free_shipping:true"
-          hitsPerPage={16}
-          // analytics={false}
-          // enablePersonalization={true}
-          // distinct
-        />
-        <CustomSearchBox />
+        <div className="flex-1 px-4 flex justify-between">
+          
+          <SearchBox 
+            searchAsYouType={false}
+            submit={
+              <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+            }
+            reset={
+              <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            }
+          />
+        </div>
       </div>
       <div className="z-10 flex-shrink-0 flex justify-between items-center bg-white shadow px-5 py-0.5">
         {/* <CurrentRefinements /> */}
