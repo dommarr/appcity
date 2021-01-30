@@ -1,33 +1,24 @@
 import { useRouter } from 'next/router'
+import Router from 'next/router'
 import { useState } from 'react';
 import Head from 'next/head'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import Wave from '../components/wave'
-// import typer from 'typer-js'
 
 export const siteTitle = 'AppCity'
 
-// typer('#typer')
-//   .line('Backbone')
-//   .pause(1000)
-//   .back('all')
-//   .continue('Angular')
-//   .pause(1000)
-//   .back('all')
-//   .continue('React!!')
-
 export default function HomeLayout({ children }) {
     const router = useRouter()
-    const [keyword, setKeyword] = useState('')
+    const [query, setQuery] = useState('')
 
     const handleSubmit = (event) => {
         event.preventDefault()
         router.push({
             pathname: '/search',
-            query: { keyword }
-          })
-      }
+            query: { query }
+        })
+    }
 
     return ( 
         <>
@@ -83,11 +74,6 @@ export default function HomeLayout({ children }) {
                 <span className="block text-black">shop for everything else</span>
                 </h1>
 
-                <h1>Typer.js is
-                <span id="typer"></span>
-                {/* <span class="cursor" data-owner="main"></span> */}
-                </h1>
-
                 {/* Search */}
                 <div className="block mt-8 max-w-lg mx-auto">
                     <label htmlFor="search" className="sr-only">Search</label>
@@ -105,8 +91,8 @@ export default function HomeLayout({ children }) {
                                 id="search" 
                                 className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md" 
                                 placeholder="CRM, video conferencing, analytics..."
-                                value={keyword} 
-                                onChange={event => setKeyword(event.target.value)}
+                                value={query} 
+                                onChange={event => setQuery(event.target.value)}
                             />
                         </form>
                     </div>
