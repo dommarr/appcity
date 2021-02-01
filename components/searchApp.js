@@ -20,16 +20,21 @@ const Hits = ({ hits }) => (
     {hits.map(hit => (
       <li key={hit.objectID} className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200">
       <div className="flex-1 flex flex-col p-8">
-        <img className="w-32 h-32 flex-shrink-0 mx-auto bg-black rounded-full" src={`//logo.clearbit.com/${hit['vendor_logo-link-2']}?size=80`} alt={`${hit.parent_name} logo`} />
-        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.parent_name}</h3>
+        <img className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto rounded-lg" src={hit.logo} alt={`${hit.vendor} logo`} />
+        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.product}</h3>
         <dl className="mt-1 flex-grow flex flex-col justify-between">
           <dt className="sr-only">Product Tier</dt>
-          <dd className="text-gray-500 text-sm">{hit['product_card-name']}</dd>
+          <dd className="text-gray-500 text-sm">{hit.tier}</dd>
         </dl>
-        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.price}</h3>
+        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.price_pay_monthly}</h3>
         <dl className="mt-1 flex-grow flex flex-col justify-between">
-          <dt className="sr-only">Product Tier</dt>
-          <dd className="text-gray-500 text-sm">{hit['product_price-unit']}</dd>
+          <dt className="sr-only">Price Paid Monthly</dt>
+          <dd className="text-gray-500 text-sm">{hit.price_unit}</dd>
+        </dl>
+        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.price_pay_yearly}</h3>
+        <dl className="mt-1 flex-grow flex flex-col justify-between">
+          <dt className="sr-only">Price Paid Yearly</dt>
+          <dd className="text-gray-500 text-sm">{hit.price_unit}</dd>
         </dl>
       </div>
     </li>
@@ -123,7 +128,7 @@ export default class SearchApp extends React.Component {
 
   render() {
     return (
-      <div id="top" className="h-screen flex overflow-hidden bg-gray-100">
+      <div id="top" className="flex bg-gray-100">
         <InstantSearch
           searchClient={this.props.searchClient}
           resultsState={this.props.resultsState}
@@ -238,9 +243,9 @@ export default class SearchApp extends React.Component {
               {/* <CurrentRefinements /> */}
               <Stats />
               <SortBy 
-                defaultRefinement="wf_products"
+                defaultRefinement="catalog"
                 items={[
-                  { label: 'Relevance', value: 'wf_products' },
+                  { label: 'Relevance', value: 'catalog' },
                   { label: 'Price Low to High (pay yearly)', value: 'wf_products_price_low_to_high_yearly' },
                   { label: 'Price Low to High (pay monthly)', value: 'wf_products_price_low_to_high_monthly' },
                   { label: 'Price High to Low (pay yearly)', value: 'wf_products_price_high_to_low_yearly' },
