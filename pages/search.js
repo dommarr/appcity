@@ -26,7 +26,7 @@ const searchStateToURL = searchState =>
 
 const DEFAULT_PROPS = {
     searchClient,
-    indexName: 'wf_products',
+    indexName: 'catalog',
 };
 
 class Search extends React.Component {
