@@ -3,6 +3,7 @@ import {
     SearchBox,
     // Pagination,
     Highlight,
+    HierarchicalMenu,
     Stats,
     SortBy,
     ClearRefinements,
@@ -22,6 +23,7 @@ const Hits = ({ hits }) => (
       <div className="flex-1 flex flex-col p-8">
         <img className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto rounded-lg" src={hit.logo} alt={`${hit.vendor} logo`} />
         <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.product}</h3>
+        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.vendor_name}</h3>
         <dl className="mt-1 flex-grow flex flex-col justify-between">
           <dt className="sr-only">Product Tier</dt>
           <dd className="text-gray-500 text-sm">{hit.tier}</dd>
@@ -200,11 +202,21 @@ export default class SearchApp extends React.Component {
                   <nav className="flex-1 px-2 bg-white space-y-1">
                   {/* <CustomRefinementList attribute="vendor_name" /> */}
                   <ClearRefinements />
-                  <RefinementBlock header="vendors">
-                    <RefinementList attribute="vendor_name" />
-                    <Configure hitsPerPage={16} />
-                    {/* query={this.props.searchState.query} */}
+                  <Configure hitsPerPage={24} />
+                  <RefinementBlock header="Category">
+                    <HierarchicalMenu 
+                      attributes={['categories.lvl0', 'categories.lvl1']} 
+                      showParentLevel={false}
+                      separator="---"
+                    />
                   </RefinementBlock>
+                  <RefinementBlock header="vendors">
+                    <RefinementList attribute="vendor" />
+                  </RefinementBlock>
+                  
+                  {/* <RefinementBlock header="vendors">
+                    <RefinementList attribute="vendor" />
+                  </RefinementBlock> */}
                   </nav>
                 </div>
               </div>
@@ -246,10 +258,10 @@ export default class SearchApp extends React.Component {
                 defaultRefinement="catalog"
                 items={[
                   { label: 'Relevance', value: 'catalog' },
-                  { label: 'Price Low to High (pay yearly)', value: 'wf_products_price_low_to_high_yearly' },
-                  { label: 'Price Low to High (pay monthly)', value: 'wf_products_price_low_to_high_monthly' },
-                  { label: 'Price High to Low (pay yearly)', value: 'wf_products_price_high_to_low_yearly' },
-                  { label: 'Price High to Low (pay monthly)', value: 'wf_products_price_high_to_low_monthly' },
+                  { label: 'Price Low to High (pay yearly)', value: 'catalog_price_low_to_high_yearly' },
+                  { label: 'Price Low to High (pay monthly)', value: 'catalog_price_low_to_high_monthly' },
+                  { label: 'Price High to Low (pay yearly)', value: 'catalog_price_high_to_low_yearly' },
+                  { label: 'Price High to Low (pay monthly)', value: 'catalog_price_high_to_low_monthly' },
                 ]}
               />
             </div>         

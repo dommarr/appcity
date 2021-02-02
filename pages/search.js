@@ -57,10 +57,7 @@ class Search extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        //console.log(props.router.asPath)
-        console.log(state)
         if (!isEqual(state.lastRouter, props.router)) {
-            console.log("not equal")
             return {
                 searchState: pathToSearchState(props.router.asPath),
                 lastRouter: props.router,
