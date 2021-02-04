@@ -102,6 +102,11 @@ export default async function(req, res) {
         obj.sort_price_monthly = elem.price_pay_monthly
         obj.sort_price_yearly = elem.price_pay_yearly
         obj.price_unit = elem.price_unit
+        obj.price_note = elem.price_note
+        obj.starting_price_monthly = elem.starting_price_pay_monthly
+        obj.starting_price_yearly = elem.starting_price_pay_yearly
+        obj.starting_price_unit = elem.starting_price_unit
+        obj.starting_price_note = elem.starting_price_note
         obj.categories = {}
         // for each category, match and get the hierarchy level and name
         elem.products.products_categories.forEach(function(item){
