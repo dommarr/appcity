@@ -68,6 +68,159 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   @apply absolute inset-y-0 left-0 flex items-center pointer-events-none
 }
 
+/* Stats */
+
+/* <div class="ais-Stats">
+  <span class="ais-Stats-text">20,337 results found in 1ms.</span>
+</div> */
+
+.ais-Stats-text {
+  @apply text-xs
+}
+
+/* Sort By */
+
+/* <div class="ais-SortBy">
+  <select class="ais-SortBy-select">
+    <option class="ais-SortBy-option" value="instant_search">Featured</option>
+    <option class="ais-SortBy-option" value="instant_search_price_asc">Price asc.</option>
+    <option class="ais-SortBy-option" value="instant_search_price_desc">Price desc.</option>
+  </select>
+</div> */
+
+.ais-SortBy-select {
+  @apply text-xs text-gray-700 border-0 rounded-md text-right
+}
+
+/* Clear Refinements Button */
+
+/* <div class="ais-ClearRefinements">
+  <button
+    class="ais-ClearRefinements-button ais-ClearRefinements-button--disabled"
+    disabled
+  >
+    Clear refinements
+  </button>
+</div> */
+
+.ais-ClearRefinements {
+  @apply flex justify-center
+}
+
+.ais-ClearRefinements-button {
+  @apply inline-flex items-center mb-1 px-2.5 py-1.5 border border-transparent text-xs font-normal rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+}
+
+.ais-ClearRefinements-button--disabled {
+  @apply opacity-50 hover:bg-indigo-600 cursor-not-allowed;
+}
+
+/* Price RangeInput */
+
+/* <div class="ais-RangeInput">
+  <form class="ais-RangeInput-form">
+    <label class="ais-RangeInput-label">
+      <input
+        class="ais-RangeInput-input ais-RangeInput-input--min"
+        type="number"
+        placeholder=""
+        step="1"
+      />
+    </label>
+    <span class="ais-RangeInput-separator">to</span>
+    <label class="ais-RangeInput-label">
+      <input
+        class="ais-RangeInput-input ais-RangeInput-input--max"
+        type="number"
+        placeholder=""
+        step="1"
+      />
+    </label>
+    <button class="ais-RangeInput-submit" type="submit">ok</button>
+  </form>
+</div> */
+
+.ais-RangeInput {
+  @apply font-normal text-gray-700 text-sm;
+}
+
+.ais-RangeInput-form {
+  @apply space-x-2 space-y-1
+}
+
+
+.ais-RangeInput-input {
+  @apply w-1/3 h-8 px-1 py-1 text-sm text-center rounded;
+}
+
+.ais-RangeInput-submit {
+  @apply px-2 py-1.5 border border-transparent text-xs font-normal rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700
+}
+
+
+/* Hierarchical Menu */
+
+/* <div class="ais-HierarchicalMenu">
+  <ul class="ais-HierarchicalMenu-list ais-HierarchicalMenu-list--lvl0">
+    <li class="ais-HierarchicalMenu-item ais-HierarchicalMenu-item--parent ais-HierarchicalMenu-item--selected">
+      <a class="ais-HierarchicalMenu-link" href="#">
+        <span class="ais-HierarchicalMenu-label">Appliances</span>
+        <span class="ais-HierarchicalMenu-count">4,306</span>
+      </a>
+      <ul class="ais-HierarchicalMenu-list ais-HierarchicalMenu-list--child ais-HierarchicalMenu-list--lvl1">
+        <li class="ais-HierarchicalMenu-item ais-HierarchicalMenu-item--parent">
+          <a class="ais-HierarchicalMenu-link" href="#">
+            <span class="ais-HierarchicalMenu-label">Dishwashers</span>
+            <span class="ais-HierarchicalMenu-count">181</span>
+          </a>
+        </li>
+        <li class="ais-HierarchicalMenu-item">
+          <a class="ais-HierarchicalMenu-link" href="#">
+            <span class="ais-HierarchicalMenu-label">Fans</span>
+            <span class="ais-HierarchicalMenu-count">91</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="ais-HierarchicalMenu-item ais-HierarchicalMenu-item--parent">
+      <a class="ais-HierarchicalMenu-link" href="#">
+        <span class="ais-HierarchicalMenu-label">Audio</span>
+        <span class="ais-HierarchicalMenu-count">1,570</span>
+      </a>
+    </li>
+  </ul>
+  <button class="ais-HierarchicalMenu-showMore">Show more</button>
+</div> */
+
+.ais-HierarchicalMenu {
+  @apply font-normal text-gray-700 text-sm;
+}
+
+.ais-HierarchicalMenu-item {
+  @apply mt-0.5;
+}
+
+.ais-HierarchicalMenu-item--selected {
+  @apply font-bold;
+}
+
+.ais-HierarchicalMenu-count {
+  @apply bg-gray-100 py-0.5 px-1 rounded;
+}
+
+.ais-HierarchicalMenu-list--child {
+  @apply ml-4
+}
+
+.ais-HierarchicalMenu-showMore {
+  @apply mt-2 px-2 py-1 border border-transparent text-xs font-normal rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700
+}
+
+.ais-HierarchicalMenu-showMore--disabled {
+  @apply hidden;
+}
+
+
 /* Refinement List Output
 
 <div class="ais-RefinementList">
@@ -102,7 +255,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 }
 
 .ais-RefinementList-item--selected {
-  @apply font-semibold;
+  @apply font-bold;
 }
 
 .ais-RefinementList-labelText {
@@ -117,52 +270,19 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   @apply rounded;
 }
 
-/* Clear Refinements Button */
-
-/* <div class="ais-ClearRefinements">
-  <button
-    class="ais-ClearRefinements-button ais-ClearRefinements-button--disabled"
-    disabled
-  >
-    Clear refinements
-  </button>
-</div> */
-
-.ais-ClearRefinements {
-  @apply flex justify-center
+.ais-RefinementList-showMore {
+  @apply bg-purple font-normal text-white text-sm py-1 px-2;
 }
 
-.ais-ClearRefinements-button {
-  @apply inline-flex items-center mb-1 px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+.ais-RefinementList-showMore {
+  @apply mt-2 px-2 py-1 border border-transparent text-xs font-normal rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700
 }
 
-.ais-ClearRefinements-button--disabled {
-  @apply opacity-50 hover:bg-indigo-600 cursor-not-allowed;
+.ais-RefinementList-showMore--disabled {
+  @apply hidden;
 }
 
-/* Stats */
 
-/* <div class="ais-Stats">
-  <span class="ais-Stats-text">20,337 results found in 1ms.</span>
-</div> */
-
-.ais-Stats-text {
-  @apply text-xs
-}
-
-/* Sort By */
-
-/* <div class="ais-SortBy">
-  <select class="ais-SortBy-select">
-    <option class="ais-SortBy-option" value="instant_search">Featured</option>
-    <option class="ais-SortBy-option" value="instant_search_price_asc">Price asc.</option>
-    <option class="ais-SortBy-option" value="instant_search_price_desc">Price desc.</option>
-  </select>
-</div> */
-
-.ais-SortBy-select {
-  @apply text-xs text-gray-700 border-0 rounded-md text-right
-}
 
 /* Start purging... */
 @tailwind utilities;
