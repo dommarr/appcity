@@ -17,28 +17,67 @@ import { Transition } from "@headlessui/react"
 import RefinementBlock from '../components/refinementBlock'
 import PropTypes from 'prop-types';
 
-const Hits = ({ hits }) => (
-  <ol className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+const Hits = ({ hits, monthlyPrice }) => (
+  <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     {hits.map(hit => (
       <li key={hit.objectID} className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200">
-      <div className="flex-1 flex flex-col p-8">
+      <div className="flex-1 flex flex-col p-4">
         <img className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto rounded-lg" src={hit.logo} alt={`${hit.vendor} logo`} />
-        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.product}</h3>
-        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.vendor_name}</h3>
-        <dl className="mt-1 flex-grow flex flex-col justify-between">
-          <dt className="sr-only">Product Tier</dt>
-          <dd className="text-gray-500 text-sm">{hit.tier}</dd>
-        </dl>
-        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.price_pay_monthly}</h3>
-        <dl className="mt-1 flex-grow flex flex-col justify-between">
-          <dt className="sr-only">Price Paid Monthly</dt>
-          <dd className="text-gray-500 text-sm">{hit.price_unit}</dd>
-        </dl>
-        <h3 className="mt-6 text-gray-900 text-sm font-medium">{hit.price_pay_yearly}</h3>
-        <dl className="mt-1 flex-grow flex flex-col justify-between">
-          <dt className="sr-only">Price Paid Yearly</dt>
-          <dd className="text-gray-500 text-sm">{hit.price_unit}</dd>
-        </dl>
+        {/* Header Block */}
+        <div className="flex flex-col justify-center items-center h-32">
+          <h2 className="text-gray-900 text-md font-medium">{hit.product}</h2>
+          <h3 className="mt-2 text-gray-500 text-md font-normal">{hit.tier}</h3>
+        </div>
+        {/* Price Block */}
+        <div className="relative h-32">
+          <span className="absolute left-0 top-0 text-gray-300 text-xs">Paid monthly</span>
+          <div className="flex flex-col justify-center items-center h-5/6 w-full mt-4 border border-gray-100 rounded">
+            
+
+            
+            {/* Starting Price */}
+            {/* Monthly */}
+            <div className={`${monthlyPrice ? 'block' : 'hidden'} mb-2`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_monthly}</h3>
+                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                  <dt className="sr-only">Price Paid Monthly</dt>
+                  <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
+                </dl>
+              </div>
+              {/* Yearly */}
+              <div className={`${monthlyPrice ? 'hidden' : 'block'} mb-2`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_yearly}</h3>
+                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                    <dt className="sr-only">Price Paid Yearly</dt>
+                    <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
+                  </dl>
+              </div>
+
+              {/* Comparison Price */}
+              {/* Monthly */}
+              <div className={`${monthlyPrice ? 'block' : 'hidden'}`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_monthly}</h3>
+                {hit.price_pay_monthly.startsWith('$') &&
+                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                  <dt className="sr-only">Price Paid Monthly</dt>
+                  <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
+                </dl>
+                }
+              </div>
+            {/* Yearly */}
+              <div className={`${monthlyPrice ? 'hidden' : 'block'}`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_yearly}</h3>
+                {hit.price_pay_yearly.startsWith('$') &&
+                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                    <dt className="sr-only">Price Paid Yearly</dt>
+                    <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
+                  </dl>
+                }
+              </div>
+          </div>
+ 
+        </div>
+
       </div>
     </li>
     ))}
@@ -115,9 +154,16 @@ const CustomPagination = connectPagination(Pagination);
 export default class SearchApp extends React.Component {
   constructor(props) {
     super(props);
+    this.flipPrice = this.flipPrice.bind(this)
     this.state = {
-      showSidebar: false
+      showSidebar: false,
+      monthlyPrice: false
     };
+  }
+
+  flipPrice() {
+    this.setState(!this.state.monthlyPrice)
+    console.log(monthlyPrice)
   }
 
   static propTypes = {
@@ -207,21 +253,23 @@ export default class SearchApp extends React.Component {
                   <RefinementBlock header="Price">
                     <RangeInput 
                       attribute="sort_price_monthly"
+                      className={`${this.state.monthlyPrice ? 'block' : 'hidden'}`}
                     />
                     <RangeInput 
                       attribute="sort_price_yearly"
+                      className={`${this.state.monthlyPrice ? 'hidden' : 'block'}`}
                     />
                     <div className="flex items-center mt-2">
                       {/* Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" */}
-                      <button type="button" className="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-pressed="false" aria-labelledby="annual-billing-label"
-                        
+                      <button type="button" className={`${this.state.monthlyPrice ? 'bg-indigo-600' : 'bg-indigo-300'} relative inline-flex flex-shrink-0 h-5 w-10 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-pressed="false" aria-labelledby="annual-billing-label`}
+                        onClick={() => this.setState(prevState => ({monthlyPrice: !prevState.monthlyPrice}))}
                       >
                         <span className="sr-only">Use setting</span>
                         {/* Enabled: "translate-x-5", Not Enabled: "translate-x-0" */}
-                        <span aria-hidden="true" className="translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
+                        <span aria-hidden="true" className={`${this.state.monthlyPrice ? 'translate-x-5' : 'translate-x-0'}  pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`}></span>
                       </button>
                       <span className="ml-3" id="annual-billing-label">
-                        <span className="text-sm font-medium text-gray-900">Pay monthly</span>
+                        <span className="text-sm font-normal text-gray-900">{this.state.monthlyPrice ? 'Pay monthly' : 'Pay yearly'}</span>
                       </span>
                     </div>
                   </RefinementBlock>
@@ -293,9 +341,9 @@ export default class SearchApp extends React.Component {
               />
             </div>         
             <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
-              <div className="py-6">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                  <CustomHits />
+              <div className="py-4">
+                <div className="max-w-7xl mx-auto px-4 sm:px-4">
+                  <CustomHits monthlyPrice={this.state.monthlyPrice}/>
                   {/* Pagination */}
                   <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
                     <CustomPagination />      
