@@ -32,10 +32,47 @@ const Hits = ({ hits, monthlyPrice }) => (
         <div className="relative h-32">
           <span className="absolute left-0 top-0 text-gray-300 text-xs">Paid monthly</span>
           <div className="flex flex-col justify-center items-center h-5/6 w-full mt-4 border border-gray-100 rounded">
-            
 
-            
-            {/* Starting Price */}
+           {/* Starting Price */}
+            {/* Monthly */}
+            {/* Yearly */}
+            {/* Comparison Price */}
+              {/* Monthly */}
+              {/* Yearly */}
+          {(hit.starting_price_monthly && hit.price_pay_monthly) ? [
+            <div className={`${monthlyPrice ? 'block' : 'hidden'} mb-2`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_monthly}</h3>
+                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                  <dt className="sr-only">Price Paid Monthly</dt>
+                  <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
+                </dl>
+              </div>
+              <div className={`${monthlyPrice ? 'hidden' : 'block'} mb-2`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_yearly}</h3>
+                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                    <dt className="sr-only">Price Paid Yearly</dt>
+                    <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
+                  </dl>
+              </div>
+              <div className={`${monthlyPrice ? 'block' : 'hidden'}`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_monthly}</h3>
+                {hit.price_pay_monthly.startsWith('$') &&
+                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                  <dt className="sr-only">Price Paid Monthly</dt>
+                  <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
+                </dl>
+                }
+              </div>
+              <div className={`${monthlyPrice ? 'hidden' : 'block'}`}>
+                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_yearly}</h3>
+                {hit.price_pay_yearly.startsWith('$') &&
+                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
+                    <dt className="sr-only">Price Paid Yearly</dt>
+                    <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
+                  </dl>
+                }
+              </div>]
+            :   {/* Starting Price */}
             {/* Monthly */}
             <div className={`${monthlyPrice ? 'block' : 'hidden'} mb-2`}>
                 <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_monthly}</h3>
@@ -73,7 +110,16 @@ const Hits = ({ hits, monthlyPrice }) => (
                     <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
                   </dl>
                 }
-              </div>
+              </div> 
+
+          
+          }
+            
+
+            
+          
+
+
           </div>
  
         </div>
