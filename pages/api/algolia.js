@@ -77,8 +77,9 @@ const formatPrice = (price) => {
       let num = Number(Math.round(price+'e2')+'e-2');
       num = num.toFixed(2);
       return "$".concat(num);
-    } else { 
-      return "$".concat(price);
+    } else {
+      let num = price.toLocaleString('en')
+      return "$".concat(num);
     }
 };
 
