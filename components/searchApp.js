@@ -17,6 +17,110 @@ import { Transition } from "@headlessui/react"
 import RefinementBlock from '../components/refinementBlock'
 import PropTypes from 'prop-types';
 
+const PriceBlock = ({hit, monthlyPrice}) => {
+  if (hit.starting_price_yearly && hit.price_pay_yearly) {
+    return (
+      <div className="flex flex-col justify-center items-center h-32 w-full border border-gray-100 rounded relative">
+      {hit.price_pay_monthly.startsWith('$') &&
+      <span className={`${monthlyPrice ? 'block' : 'hidden'} absolute left-2 bottom-9 text-gray-400 text-xs`}>Compare</span>
+      }
+      {hit.price_pay_yearly.startsWith('$') &&
+      <span className={`${monthlyPrice ? 'hidden' : 'block'} absolute left-2 bottom-9 text-gray-400 text-xs`}>Compare</span>
+      }
+        {/* Starting Price */}
+        {/* Monthly */}
+        <div className={`${monthlyPrice ? 'block' : 'hidden'}`}>
+          {/* if other is populated, display */}
+          {!hit.price_pay_monthly.startsWith('$') &&
+          <h3 className="text-gray-900 text-md font-medium">{hit.price_pay_monthly}</h3>
+          }
+          {/* if other is populated, do not display */}
+          {hit.price_pay_monthly.startsWith('$') &&
+          <h3 className="text-gray-900 text-md font-medium">{hit.starting_price_monthly}</h3>
+          }
+          {hit.price_pay_monthly.startsWith('$') &&
+          <dl className="flex-grow flex flex-col justify-between">
+            <dt className="sr-only">Price Paid Monthly</dt>
+            <dd className="text-gray-600 text-sm">{hit.starting_price_unit}</dd>
+            <dd className="text-gray-400 text-xs">{monthlyPrice ? 'paid monthly' : 'paid yearly'}</dd>
+          </dl>
+          }
+        </div> 
+        {/* Yearly */}
+        <div className={`${monthlyPrice ? 'hidden' : 'block'}`}>
+          {/* if other is populated, display */}
+          {!hit.price_pay_yearly.startsWith('$') &&
+          <h3 className="text-gray-900 text-md font-medium">{hit.price_pay_yearly}</h3>
+          }
+          {/* if other is populated, do not display */}
+          {hit.price_pay_yearly.startsWith('$') &&
+          <h3 className="text-gray-900 text-md font-medium">{hit.starting_price_yearly}</h3>
+          }
+          {hit.price_pay_yearly.startsWith('$') &&
+          <dl className="flex-grow flex flex-col justify-between">
+            <dt className="sr-only">Price Paid Yearly</dt>
+            <dd className="text-gray-600 text-sm">{hit.starting_price_unit}</dd>
+            <dd className="text-gray-400 text-xs">{monthlyPrice ? 'paid monthly' : 'paid yearly'}</dd>
+          </dl>
+          }
+        </div>
+        {/* Comparison Price */}
+        {/* Monthly */}
+        {/* if other is populated, do not display */}
+        {hit.price_pay_monthly.startsWith('$') &&
+        <div className={`${monthlyPrice ? 'block' : 'hidden'} mt-5`}>
+          <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_monthly}</h3>
+          <dl className="flex-grow flex flex-col justify-between">
+            <dt className="sr-only">Price Paid Monthly</dt>
+            <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
+          </dl>
+        </div>
+        }
+        {/* Yearly */}
+        {/* if other is populated, do not display */}
+        {hit.price_pay_yearly.startsWith('$') &&
+        <div className={`${monthlyPrice ? 'hidden' : 'block'} mt-5`}>
+          <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_yearly}</h3>
+          <dl className="flex-grow flex flex-col justify-between">
+            <dt className="sr-only">Price Paid Yearly</dt>
+            <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
+          </dl>
+        </div> 
+        }
+      </div>
+    )
+  } else {
+    return (
+      <div className="flex flex-col justify-center items-center h-32 w-full border border-gray-100 rounded">
+        {/* Comparison Price */}
+        {/* Monthly */}
+        <div className={`${monthlyPrice ? 'block' : 'hidden'}`}>
+          <h3 className="text-gray-900 text-md font-medium">{hit.price_pay_monthly}</h3>
+          {hit.price_pay_monthly.startsWith('$') &&
+          <dl className="flex-grow flex flex-col justify-between">
+            <dt className="sr-only">Price Paid Monthly</dt>
+            <dd className="text-gray-600 text-sm">{hit.price_unit}</dd>
+            <dd className="text-gray-400 text-xs">{monthlyPrice ? 'paid monthly' : 'paid yearly'}</dd>
+          </dl>
+          }
+        </div>
+        {/* Yearly */}
+        <div className={`${monthlyPrice ? 'hidden' : 'block'}`}>
+          <h3 className="text-gray-900 text-md font-medium">{hit.price_pay_yearly}</h3>
+          {hit.price_pay_yearly.startsWith('$') &&
+            <dl className="flex-grow flex flex-col justify-between">
+              <dt className="sr-only">Price Paid Yearly</dt>
+              <dd className="text-gray-600 text-sm">{hit.price_unit}</dd>
+              <dd className="text-gray-400 text-xs">{monthlyPrice ? 'paid monthly' : 'paid yearly'}</dd>
+            </dl>
+          }
+        </div> 
+      </div>
+
+    )
+  }
+}
+
 const Hits = ({ hits, monthlyPrice }) => (
   <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     {hits.map(hit => (
@@ -24,106 +128,11 @@ const Hits = ({ hits, monthlyPrice }) => (
       <div className="flex-1 flex flex-col p-4">
         <img className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto rounded-lg" src={hit.logo} alt={`${hit.vendor} logo`} />
         {/* Header Block */}
-        <div className="flex flex-col justify-center items-center h-32">
+        <div className="flex flex-col justify-center items-center h-24">
           <h2 className="text-gray-900 text-md font-medium">{hit.product}</h2>
-          <h3 className="mt-2 text-gray-500 text-md font-normal">{hit.tier}</h3>
+          <h3 className="mt-1 text-gray-500 text-md font-normal">{hit.tier}</h3>
         </div>
-        {/* Price Block */}
-        <div className="relative h-32">
-          <span className="absolute left-0 top-0 text-gray-300 text-xs">Paid monthly</span>
-          <div className="flex flex-col justify-center items-center h-5/6 w-full mt-4 border border-gray-100 rounded">
-
-           {/* Starting Price */}
-            {/* Monthly */}
-            {/* Yearly */}
-            {/* Comparison Price */}
-              {/* Monthly */}
-              {/* Yearly */}
-          {(hit.starting_price_monthly && hit.price_pay_monthly) ? [
-            <div className={`${monthlyPrice ? 'block' : 'hidden'} mb-2`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_monthly}</h3>
-                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                  <dt className="sr-only">Price Paid Monthly</dt>
-                  <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
-                </dl>
-              </div>
-              <div className={`${monthlyPrice ? 'hidden' : 'block'} mb-2`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_yearly}</h3>
-                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                    <dt className="sr-only">Price Paid Yearly</dt>
-                    <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
-                  </dl>
-              </div>
-              <div className={`${monthlyPrice ? 'block' : 'hidden'}`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_monthly}</h3>
-                {hit.price_pay_monthly.startsWith('$') &&
-                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                  <dt className="sr-only">Price Paid Monthly</dt>
-                  <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
-                </dl>
-                }
-              </div>
-              <div className={`${monthlyPrice ? 'hidden' : 'block'}`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_yearly}</h3>
-                {hit.price_pay_yearly.startsWith('$') &&
-                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                    <dt className="sr-only">Price Paid Yearly</dt>
-                    <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
-                  </dl>
-                }
-              </div>]
-            :   {/* Starting Price */}
-            {/* Monthly */}
-            <div className={`${monthlyPrice ? 'block' : 'hidden'} mb-2`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_monthly}</h3>
-                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                  <dt className="sr-only">Price Paid Monthly</dt>
-                  <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
-                </dl>
-              </div>
-              {/* Yearly */}
-              <div className={`${monthlyPrice ? 'hidden' : 'block'} mb-2`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.starting_price_yearly}</h3>
-                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                    <dt className="sr-only">Price Paid Yearly</dt>
-                    <dd className="text-gray-500 text-xs">{hit.starting_price_unit}</dd>
-                  </dl>
-              </div>
-
-              {/* Comparison Price */}
-              {/* Monthly */}
-              <div className={`${monthlyPrice ? 'block' : 'hidden'}`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_monthly}</h3>
-                {hit.price_pay_monthly.startsWith('$') &&
-                <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                  <dt className="sr-only">Price Paid Monthly</dt>
-                  <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
-                </dl>
-                }
-              </div>
-            {/* Yearly */}
-              <div className={`${monthlyPrice ? 'hidden' : 'block'}`}>
-                <h3 className="text-gray-900 text-sm font-medium">{hit.price_pay_yearly}</h3>
-                {hit.price_pay_yearly.startsWith('$') &&
-                  <dl className="mt-0.5 flex-grow flex flex-col justify-between">
-                    <dt className="sr-only">Price Paid Yearly</dt>
-                    <dd className="text-gray-500 text-xs">{hit.price_unit}</dd>
-                  </dl>
-                }
-              </div> 
-
-          
-          }
-            
-
-            
-          
-
-
-          </div>
- 
-        </div>
-
+        <PriceBlock hit={hit} monthlyPrice={monthlyPrice}/>
       </div>
     </li>
     ))}
