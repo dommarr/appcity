@@ -5,6 +5,8 @@ import Head from 'next/head'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import Wave from '../components/wave'
+import Typist from 'react-typist';
+const RotatingText = require("react-rotating-text");
 
 export const siteTitle = 'AppCity'
 
@@ -69,10 +71,27 @@ export default function HomeLayout({ children }) {
             {/* Heading */}
             <div className="text-center">
 
-                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                {/* <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block text-white">Shop for software like you </span>
                 <span className="block text-black">shop for everything else</span>
+                </h1> */}
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                <span className="block text-white">The software marketplace</span>
+                <span className="inline text-white">for </span>
+                <RotatingText
+                    items={[
+                        " small business. ",
+                        " startups. ",
+                        " restaurants. ",
+                        " podcasters. ",
+                        " salons. ",
+                        " YouTubers. "
+                    ]}
+                    color="yellow"
+                    pause={2500}
+                />
                 </h1>
+                
 
                 {/* Search */}
                 <div className="block mt-8 max-w-lg mx-auto">

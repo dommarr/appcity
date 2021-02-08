@@ -29,7 +29,7 @@ export default function Header(props){
             <div className="flex items-center">
             <a href="/" className="flex">
                 <img className="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt={appName} />
-                <span className="px-2 text-4xl text-white font-bold italic">{appName}</span>
+                <span className="px-2 text-4xl text-yellow font-bold italic">{appName}</span>
             </a>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
