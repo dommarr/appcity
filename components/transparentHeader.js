@@ -25,7 +25,7 @@ export default function Header(props) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className={`${props.dark ? "bg-purple" : "bg-white"} relative z-10`}>
+    <div className={`bg-transparent relative z-10`}>
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
         <div className="flex items-center">
           <a href="/" className="flex">
@@ -44,7 +44,7 @@ export default function Header(props) {
             type="button"
             className={`${
               props.dark
-                ? "bg-purple text-white hover:text-gray-200 hover:bg-purple-extralight"
+                ? "bg-transparent text-white hover:bg-purple-extradark"
                 : "bg-white text-gray-400 hover:text-gray-500 hover:bg-gray-100"
             } p-2 inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight`}
             onClick={() => setShowMenu(true)}
