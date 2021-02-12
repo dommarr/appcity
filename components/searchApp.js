@@ -16,6 +16,7 @@ import {
 import { Transition } from "@headlessui/react";
 import RefinementBlock from "../components/refinementBlock";
 import PropTypes from "prop-types";
+import Link from "next/link";
 
 const PriceBlock = ({ hit, monthlyPrice }) => {
   if (hit.starting_price_yearly && hit.price_pay_yearly) {
@@ -167,21 +168,25 @@ const Hits = ({ hits, monthlyPrice }) => (
         key={hit.objectID}
         className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200"
       >
-        <div className="flex-1 flex flex-col p-4">
-          <img
-            className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto"
-            src={hit.logo}
-            alt={`${hit.vendor} logo`}
-          />
-          {/* Header Block */}
-          <div className="flex flex-col justify-center items-center h-24">
-            <h2 className="text-gray-900 text-md font-medium">{hit.product}</h2>
-            <h3 className="mt-1 text-gray-500 text-md font-normal">
-              {hit.tier}
-            </h3>
-          </div>
-          <PriceBlock hit={hit} monthlyPrice={monthlyPrice} />
-        </div>
+        <Link href={`/product/${hit.product_id}`}>
+          <a className="flex-1 flex flex-col p-4">
+            <img
+              className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto"
+              src={hit.logo}
+              alt={`${hit.vendor} logo`}
+            />
+            {/* Header Block */}
+            <div className="flex flex-col justify-center items-center h-24">
+              <h2 className="text-gray-900 text-md font-medium">
+                {hit.product}
+              </h2>
+              <h3 className="mt-1 text-gray-500 text-md font-normal">
+                {hit.tier}
+              </h3>
+            </div>
+            <PriceBlock hit={hit} monthlyPrice={monthlyPrice} />
+          </a>
+        </Link>
       </li>
     ))}
   </ol>
@@ -330,11 +335,11 @@ export default class SearchApp extends React.Component {
               } fixed inset-0 md:hidden`}
               aria-hidden="true"
               enter="transition-opacity ease-linear duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
+              enterfrom="opacity-0"
+              enterto="opacity-100"
               leave="transition-opacity ease-linear duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
+              leavefrom="opacity-100"
+              leaveto="opacity-0"
             >
               <div className="absolute inset-0 bg-gray-600 opacity-75"></div>
             </div>
@@ -344,11 +349,11 @@ export default class SearchApp extends React.Component {
                 this.state.showSidebar ? `flex` : `hidden`
               } md:flex relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white md:static md:flex-auto md:max-w-none md:w-64 md:p-0`}
               enter="transition ease-in-out duration-300 transform"
-              enterFrom="-translate-x-full"
-              enterTo="translate-x-0"
+              enterfrom="-translate-x-full"
+              enterto="translate-x-0"
               leave="transition ease-in-out duration-300 transform"
-              leaveFrom="translate-x-0"
-              leaveTo="-translate-x-full"
+              leavefrom="translate-x-0"
+              leaveto="-translate-x-full"
             >
               <div className="md:hidden absolute top-0 right-0 -mr-12 pt-2">
                 <button
