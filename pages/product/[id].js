@@ -80,7 +80,9 @@ export default function Product({ product }) {
       <div className="block md:flex md:flex-row">
         {/* Left */}
         <div className="block bg-purple h-96 w-full md:w-3/5">
-          <ImageSlider media={product.media} />
+          {/* if media is not null, then display slider */}
+          {product.media && <ImageSlider media={product.media} />}
+          {/* need to add no images placeholder */}
         </div>
         {/* Right */}
         <div className="bg-gray-200 h-96 w-full md:w-2/5"></div>
