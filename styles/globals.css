@@ -307,7 +307,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .dot.active {
   background: #000;
 }
-
+/* 
 .arrow {
   width: 30px;
   height: 30px;
@@ -315,8 +315,9 @@ input[type="search"]::-webkit-search-results-decoration {
   top: 50%;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
-  fill: #fff;
+  fill: #000;
   cursor: pointer;
+
 }
 
 .arrow--left {
@@ -330,7 +331,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .arrow--disabled {
   fill: rgba(255, 255, 255, 0.5);
-}
+} */
 
 /* Start purging... */
 @tailwind utilities;

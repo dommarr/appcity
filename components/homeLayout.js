@@ -59,12 +59,11 @@ export default function HomeLayout({ children }) {
                 {/* <span className="inline text-white">for </span> */}
                 <RotatingText
                   items={[
-                    " small business. ",
-                    " startups. ",
-                    " restaurants. ",
-                    " podcasters. ",
-                    " retailers. ",
-                    " builders. ",
+                    " small business ",
+                    " startups ",
+                    " creators ",
+                    " retailers ",
+                    " builders ",
                   ]}
                   color="yellow"
                   pause={2500}
