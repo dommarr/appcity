@@ -283,6 +283,10 @@ input[type="search"]::-webkit-search-results-decoration {
   position: relative;
 }
 
+.keen-slider__slide {
+  @apply flex flex-col justify-center items-center;
+}
+
 .dots {
   display: flex;
   padding: 10px 0;
@@ -293,11 +297,14 @@ input[type="search"]::-webkit-search-results-decoration {
   border: none;
   width: 10px;
   height: 10px;
-  background: #c5c5c5;
   border-radius: 50%;
   margin: 0 5px;
   padding: 5px;
   cursor: pointer;
+}
+
+.dot {
+  @apply bg-gray-200;
 }
 
 .dot:focus {
@@ -305,33 +312,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .dot.active {
-  background: #000;
+  @apply bg-gray-600;
 }
-/* 
-.arrow {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  fill: #000;
-  cursor: pointer;
-
-}
-
-.arrow--left {
-  left: 5px;
-}
-
-.arrow--right {
-  left: auto;
-  right: 5px;
-}
-
-.arrow--disabled {
-  fill: rgba(255, 255, 255, 0.5);
-} */
 
 /* Start purging... */
 @tailwind utilities;
