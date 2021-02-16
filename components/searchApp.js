@@ -17,6 +17,7 @@ import { Transition } from "@headlessui/react";
 import RefinementBlock from "../components/refinementBlock";
 import PropTypes from "prop-types";
 import Link from "next/link";
+import React from "react";
 
 const PriceBlock = ({ hit, monthlyPrice }) => {
   if (hit.starting_price_yearly && hit.price_pay_yearly) {

@@ -13,6 +13,19 @@ import "keen-slider/keen-slider.min.css";
 // import { Breadcrumb } from "react-instantsearch-dom";
 import ReactPlayer from "react-player";
 import { SRLWrapper } from "simple-react-lightbox-pro";
+import { useLightbox } from "simple-react-lightbox-pro";
+
+const Lightbox = (props) => {
+  return (
+    <SRLWrapper>
+      {props.media.map((src, idx) => (
+        <div key={idx}>
+          {src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}
+        </div>
+      ))}
+    </SRLWrapper>
+  );
+};
 
 const ImageSlider = (props) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,31 +36,78 @@ const ImageSlider = (props) => {
       setCurrentSlide(s.details().relativeSlide);
     },
   });
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const { openLightbox } = useLightbox();
+
+  const media = [];
+  let i = 0;
+  let key = 0;
+  props.media.forEach((elem) => {
+    let obj = {};
+    if (elem.match(/\.(jpeg|jpg|gif|png)$/)) {
+      obj.key = key;
+      obj.src = elem;
+      obj.type = "image";
+      obj.imgNum = i;
+      i = i + 1;
+    } else {
+      obj.key = key;
+      obj.src = elem;
+      obj.type = "video";
+    }
+    key = key + 1;
+    media.push(obj);
+  });
+
+  const prevSlide = (e) => {
+    e.stopPropagation() || slider.prev();
+    setPlaying(false);
+  };
+
+  const nextSlide = (e) => {
+    e.stopPropagation() || slider.next();
+    setPlaying(false);
+  };
 
   return (
     <>
-      <div className="navigation-wrapper h-full w-full relative">
-        <div ref={sliderRef} className="keen-slider h-full w-full">
-          {props.media.map((src, idx) => (
-            <div key={idx} className="keen-slider__slide">
+      <div className="navigation-wrapper max-h-full max-w-full relative">
+        <div ref={sliderRef} className="keen-slider max-h-full max-w-full">
+          {media.map((obj) => (
+            <div
+              key={obj.key}
+              className="keen-slider__slide max-h-full max-w-full"
+            >
               {/* if image, render image. else, render video player */}
-              {src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}
-              {!src.match(/\.(jpeg|jpg|gif|png)$/) && (
-                <ReactPlayer playing={playing} url={src} />
+              {obj.type === "image" && (
+                <img
+                  className="max-h-full max-w-full"
+                  src={obj.src}
+                  onClick={() => openLightbox(obj.imgNum)}
+                />
+              )}
+              {obj.type === "video" && (
+                <ReactPlayer
+                  className="max-h-full max-w-full"
+                  url={obj.src}
+                  controls
+                  playing={playing}
+                  onPlay={() => setPlaying(true)}
+                  onPause={() => setPlaying(false)}
+                />
               )}
             </div>
           ))}
         </div>
+
         {slider && (
           <>
-            <div className="absolute inset-y-0 left-0 h-full flex flex-col justify-center items-center pl-1">
+            <div className="absolute inset-y-0 left-0 h-full flex flex-col justify-center items-center">
               <svg
                 onClick={(e) => {
-                  e.stopPropagation() || slider.prev();
-                  setPlaying(false);
+                  prevSlide(e);
                 }}
-                className="h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-1 pr-2 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40"
+                className="h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-1 pr-2 ml-1 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
@@ -55,13 +115,12 @@ const ImageSlider = (props) => {
                 <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
               </svg>
             </div>
-            <div className="absolute inset-y-0 right-0 h-full flex flex-col justify-center items-center pr-1">
+            <div className="absolute inset-y-0 right-0 h-full flex flex-col justify-center items-center">
               <svg
                 onClick={(e) => {
-                  e.stopPropagation() || slider.next();
-                  setPlaying(false);
+                  nextSlide(e);
                 }}
-                className="h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-2 pr-1 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40"
+                className="h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-2 pr-1 mr-1 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
@@ -114,15 +173,13 @@ export default function Product({ product }) {
       <div className="block md:flex md:flex-row h-4/5">
         {/* Left */}
         <div className="flex flex-col justify-center items-center h-4/5 w-full md:w-3/5 bg-black">
-          {/* <SRLWrapper> */}
           {/* if media is not null, then display slider */}
           {product.media && <ImageSlider media={product.media} />}
           {/* need to add no images placeholder */}
-          {/* </SRLWrapper> */}
         </div>
         {/* Right */}
-        <div className="h-4/5 w-full md:w-2/5 flex flex-col justify-center items-center">
-          <div className="hidden md:flex flex-col justify-center items-start m-5">
+        <div className="h-4/5 w-full md:w-2/5 flex flex-col justify-center items-center m-5">
+          <div className="hidden md:flex flex-col justify-center items-start w-full">
             <h1 className="text-4xl font-bold">{product.name}</h1>
             <a className="mt-2 flex" href={product.vendors.website}>
               <img
@@ -137,7 +194,11 @@ export default function Product({ product }) {
           </div>
         </div>
       </div>
-      <div></div>
+      {product.media && (
+        <div className="hidden">
+          <Lightbox media={product.media} />
+        </div>
+      )}
       <Footer />
     </>
   );
