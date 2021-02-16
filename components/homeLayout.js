@@ -7,8 +7,6 @@ import Header from "../components/transparentHeader";
 import Footer from "../components/footer";
 import Wave from "../components/wave";
 import Wedge from "../components/wedge";
-import PixelTransition from "../components/pixelTransition";
-import Typist from "react-typist";
 const RotatingText = require("react-rotating-text");
 
 export const siteTitle = "AppCity";
