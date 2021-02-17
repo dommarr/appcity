@@ -298,7 +298,6 @@ export default class SearchApp extends React.Component {
 
   flipPrice() {
     this.setState(!this.state.monthlyPrice);
-    console.log(monthlyPrice);
   }
 
   static propTypes = {
