@@ -3,7 +3,7 @@ import Link from "next/link";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import PriceBlock from "../../components/priceBlock";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -155,7 +155,9 @@ const ImageSlider = (props) => {
 export default function Product({ product }) {
   const router = useRouter();
   const [monthly, setMonthly] = useState(false);
-  const [tier, setTier] = useState(null);
+
+  const tier =
+    product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
 
   return (
     <>
@@ -214,52 +216,78 @@ export default function Product({ product }) {
               </h5>
             </a>
           </div>
-          <h2 className="text-3xl font-medium my-3">
-            {tier === null ? "Select a tier" : tier.name}
+          <h2 className="text-3xl font-medium my-4">
+            {tier === null ? "Select a tier:" : tier.name}
           </h2>
+          {/* Price Toggle */}
+          {tier != null && (
+            <div className="flex flex justify-start items-center w-36 mb-4">
+              <button
+                type="button"
+                className={`flex-shrink-0 group relative rounded-full inline-flex items-center justify-center h-5 w-10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+                aria-pressed="false"
+                onClick={() => setMonthly(!monthly)}
+              >
+                <span className="sr-only">Toggle payment cadence</span>
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute bg-white w-full h-full rounded-md"
+                ></span>
+                {/* Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" */}
+                <span
+                  aria-hidden="true"
+                  className={`${
+                    monthly ? "bg-indigo-300" : "bg-gray-300"
+                  } pointer-events-none absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200`}
+                ></span>
+                {/* Enabled: "translate-x-5", Not Enabled: "translate-x-0" */}
+                <span
+                  aria-hidden="true"
+                  className={`${
+                    monthly ? "translate-x-5" : "translate-x-0"
+                  } pointer-events-none absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform ring-0 transition-transform ease-in-out duration-200`}
+                ></span>
+              </button>
+              <span className="ml-3" id="billing-label">
+                <span className="text-sm font-normal text-gray-900">
+                  {monthly ? "Pay monthly" : "Pay yearly"}
+                </span>
+              </span>
+            </div>
+          )}
           {/* Price Block */}
-          <div>
-            <button
-              type="button"
-              className="flex-shrink-0 group relative rounded-full inline-flex items-center justify-center h-5 w-10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              aria-pressed="false"
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute bg-white w-full h-full rounded-md"
-              ></span>
-              {/* Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" */}
-              <span
-                aria-hidden="true"
-                className="bg-gray-200 pointer-events-none absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"
-              ></span>
-              {/* Enabled: "translate-x-5", Not Enabled: "translate-x-0" */}
-              <span
-                aria-hidden="true"
-                className="translate-x-0 pointer-events-none absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform ring-0 transition-transform ease-in-out duration-200"
-              ></span>
-            </button>
-            {tier != null && (
-              <>
-                <PriceBlock tier={tier} cadence="monthly" starting={false} />
+          {tier != null && (
+            <div className="flex flex-col justify-center items-center p-4 border border-gray-100 relative">
+              <div className={`${monthly ? "hidden" : "flex flex-col"}`}>
+                <PriceBlock tier={tier} cadence="yearly" starting={true} />
+                <PriceBlock tier={tier} cadence="yearly" starting={false} />
+              </div>
+              <div className={`${monthly ? "flex flex-col" : "hidden"}`}>
                 <PriceBlock tier={tier} cadence="monthly" starting={true} />
-              </>
-            )}
-          </div>
+                <PriceBlock tier={tier} cadence="monthly" starting={false} />
+              </div>
+            </div>
+          )}
 
           {/* Tier Selection */}
           {product.tiers.length > 1 && (
             <div className="flex flex-col justify-start items-start">
-              <h3>Select Tier:</h3>
+              {tier != null && <h3>Select Tier:</h3>}
               <div className="flex flex-wrap justify-center mt-2">
                 {product.tiers.map((obj) => (
                   <button
+                    key={obj.id}
                     type="button"
                     className={`${
                       tier != null && tier.id === obj.id ? "bg-gray-200" : ""
                     } inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
-                    onClick={() => setTier(obj)}
+                    onClick={() => {
+                      router.push(
+                        `/product/${product.id}?tier=${obj.id}`,
+                        undefined,
+                        { shallow: true }
+                      );
+                    }}
                   >
                     {obj.name}
                   </button>
@@ -269,14 +297,16 @@ export default function Product({ product }) {
           )}
 
           {/* Buy Button */}
-          <div className="my-4">
-            <button
-              type="button"
-              className="w-60 text-center block px-4 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Buy now
-            </button>
-          </div>
+          {tier != null && (
+            <div className="my-4">
+              <button
+                type="button"
+                className="w-60 text-center block px-4 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Buy now
+              </button>
+            </div>
+          )}
         </div>
       </div>
       {/* LightBox */}

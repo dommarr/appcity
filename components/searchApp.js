@@ -169,7 +169,12 @@ const Hits = ({ hits, monthlyPrice }) => (
         key={hit.objectID}
         className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200"
       >
-        <Link href={`/product/${hit.product_id}`}>
+        <Link
+          href={{
+            pathname: `/product/${hit.product_id}`,
+            query: { tier: hit.objectID },
+          }}
+        >
           <a className="flex-1 flex flex-col p-4">
             <img
               className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto"

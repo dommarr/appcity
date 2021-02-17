@@ -14,21 +14,32 @@ const PriceBlock = ({ tier, cadence, starting }) => {
   let price_other = "";
   let price_unit = "";
 
+  // if starting price is requested
   if (starting) {
-    price = tier[`starting_price_pay_${cadence}`]
-      ? formatPrice(tier[`starting_price_pay_${cadence}`])
-      : null;
-    price_other = tier[`starting_price_other_pay_${cadence}`]
-      ? tier[`starting_price_other_pay_${cadence}`]
-      : null;
+    // set price if present
+    price =
+      tier[`starting_price_pay_${cadence}`] != null
+        ? formatPrice(tier[`starting_price_pay_${cadence}`])
+        : null;
+    // set other if present
+    price_other =
+      tier[`starting_price_other_pay_${cadence}`] != null
+        ? tier[`starting_price_other_pay_${cadence}`]
+        : null;
+    // set price unit
     price_unit = tier.starting_price_unit;
   } else {
-    price = tier[`price_pay_${cadence}`]
-      ? formatPrice(tier[`price_pay_${cadence}`])
-      : null;
-    price_other = tier[`price_other_pay_${cadence}`]
-      ? tier[`price_other_pay_${cadence}`]
-      : null;
+    // if not starting price, set compare price if present
+    price =
+      tier[`price_pay_${cadence}`] != null
+        ? formatPrice(tier[`price_pay_${cadence}`])
+        : null;
+    // set other if present
+    price_other =
+      tier[`price_other_pay_${cadence}`] != null
+        ? tier[`price_other_pay_${cadence}`]
+        : null;
+    // set price unit
     price_unit = tier.price_unit;
   }
 
@@ -37,6 +48,9 @@ const PriceBlock = ({ tier, cadence, starting }) => {
     // if other starts with n/a
     if (price_other.startsWith("n/a")) {
       // return other w/ the price unit present for context
+      // for example...
+      // n/a - 250 contact limit
+      // per 500 contacts per month
       return (
         <div>
           <h3>{price_other}</h3>
@@ -45,6 +59,8 @@ const PriceBlock = ({ tier, cadence, starting }) => {
       );
     } else {
       // return other w/o the price unit
+      // for example...
+      // Upon request
       return (
         <div>
           <h3>{price_other}</h3>
@@ -52,13 +68,22 @@ const PriceBlock = ({ tier, cadence, starting }) => {
       );
     }
   } else {
-    // if other is not populated, return price
-    return (
-      <div>
-        <h3>{price}</h3>
-        <h5>{price_unit}</h5>
-      </div>
-    );
+    // if price is empty, skip
+    if (price != null) {
+      // if price is present and other is not populated, return price
+      // for example...
+      // $25
+      // per user per month
+      return (
+        <dl className="flex-grow flex flex-col items-center justify-between">
+          <dt className="text-gray-900 text-md font-medium">{price}</dt>
+          <dd className="text-gray-600 text-sm">{price_unit}</dd>
+          <dd className="text-gray-400 text-xs">paid {cadence}</dd>
+        </dl>
+      );
+    } else {
+      return "";
+    }
   }
 };
 
