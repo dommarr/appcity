@@ -10,6 +10,9 @@ const PriceBlock = ({ tier, cadence, starting }) => {
     }
   };
 
+  // function to determin if there are going to be 2 prices showing.
+  // if yes, format one large, other small. if no, format large.
+
   let price = "";
   let price_other = "";
   let price_unit = "";
@@ -53,8 +56,33 @@ const PriceBlock = ({ tier, cadence, starting }) => {
       // per 500 contacts per month
       return (
         <div>
-          <h3>{price_other}</h3>
-          <h5>{price_unit}</h5>
+          {/* if starting price, large text. if not starting price && starting price is not present, large text. else, base text. */}
+          <dt
+            className={`text-gray-900 ${starting ? "text-lg" : ""} ${
+              !starting &&
+              !(
+                tier[`starting_price_pay_${cadence}`] ||
+                tier[`starting_price_other_pay_${cadence}`]
+              )
+                ? "text-lg"
+                : "text-base"
+            } font-medium`}
+          >
+            {price_other}
+          </dt>
+          <dd
+            className={`text-gray-600 ${starting ? "text-base" : ""} ${
+              !starting &&
+              !(
+                tier[`starting_price_pay_${cadence}`] ||
+                tier[`starting_price_other_pay_${cadence}`]
+              )
+                ? "text-base"
+                : "text-sm"
+            }`}
+          >
+            {price_unit}
+          </dd>
         </div>
       );
     } else {
@@ -62,9 +90,23 @@ const PriceBlock = ({ tier, cadence, starting }) => {
       // for example...
       // Upon request
       return (
-        <div>
-          <h3>{price_other}</h3>
-        </div>
+        <dl className={`flex-grow flex flex-col items-center justify-between`}>
+          <dt
+            className={`text-gray-900  
+            ${starting ? "text-lg" : ""} ${
+              !starting &&
+              !(
+                tier[`starting_price_pay_${cadence}`] ||
+                tier[`starting_price_other_pay_${cadence}`]
+              )
+                ? "text-lg"
+                : "text-base"
+            }
+            font-medium`}
+          >
+            {price_other}
+          </dt>
+        </dl>
       );
     }
   } else {
@@ -76,9 +118,40 @@ const PriceBlock = ({ tier, cadence, starting }) => {
       // per user per month
       return (
         <dl className="flex-grow flex flex-col items-center justify-between">
-          <dt className="text-gray-900 text-md font-medium">{price}</dt>
-          <dd className="text-gray-600 text-sm">{price_unit}</dd>
-          <dd className="text-gray-400 text-xs">paid {cadence}</dd>
+          <dt
+            className={`text-gray-900 
+            ${starting ? "text-lg" : ""} ${
+              !starting &&
+              (tier[`starting_price_pay_${cadence}`] ||
+                tier[`starting_price_other_pay_${cadence}`])
+                ? "text-lg"
+                : "text-base"
+            } font-medium`}
+          >
+            {price}
+          </dt>
+          <dd
+            className={`text-gray-600 ${starting ? "text-base" : ""} ${
+              !starting &&
+              (tier[`starting_price_pay_${cadence}`] ||
+                tier[`starting_price_other_pay_${cadence}`])
+                ? "text-base"
+                : "text-sm"
+            }`}
+          >
+            {price_unit}
+          </dd>
+          <dd
+            className={`text-gray-400 ${starting ? "text-sm" : ""} ${
+              !starting &&
+              (tier[`starting_price_pay_${cadence}`] ||
+                tier[`starting_price_other_pay_${cadence}`])
+                ? "text-sm"
+                : "text-xs"
+            }`}
+          >
+            paid {cadence}
+          </dd>
         </dl>
       );
     } else {
