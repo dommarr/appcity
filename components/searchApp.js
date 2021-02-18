@@ -46,13 +46,13 @@ const PriceBlock = ({ hit, monthlyPrice }) => {
         <div className={`${monthlyPrice ? "block" : "hidden"}`}>
           {/* if other is populated, display */}
           {!hit.price_pay_monthly.startsWith("$") && (
-            <h3 className="text-gray-900 text-md font-medium">
+            <h3 className="text-gray-900 text-base font-medium">
               {hit.price_pay_monthly}
             </h3>
           )}
           {/* if other is populated, do not display */}
           {hit.price_pay_monthly.startsWith("$") && (
-            <h3 className="text-gray-900 text-md font-medium">
+            <h3 className="text-gray-900 text-base font-medium">
               {hit.starting_price_monthly}
             </h3>
           )}
@@ -72,13 +72,13 @@ const PriceBlock = ({ hit, monthlyPrice }) => {
         <div className={`${monthlyPrice ? "hidden" : "block"}`}>
           {/* if other is populated, display */}
           {!hit.price_pay_yearly.startsWith("$") && (
-            <h3 className="text-gray-900 text-md font-medium">
+            <h3 className="text-gray-900 text-base font-medium">
               {hit.price_pay_yearly}
             </h3>
           )}
           {/* if other is populated, do not display */}
           {hit.price_pay_yearly.startsWith("$") && (
-            <h3 className="text-gray-900 text-md font-medium">
+            <h3 className="text-gray-900 text-base font-medium">
               {hit.starting_price_yearly}
             </h3>
           )}
@@ -129,7 +129,7 @@ const PriceBlock = ({ hit, monthlyPrice }) => {
         {/* Comparison Price */}
         {/* Monthly */}
         <div className={`${monthlyPrice ? "block" : "hidden"}`}>
-          <h3 className="text-gray-900 text-md font-medium">
+          <h3 className="text-gray-900 text-base font-medium">
             {hit.price_pay_monthly}
           </h3>
           {hit.price_pay_monthly.startsWith("$") && (
@@ -144,7 +144,7 @@ const PriceBlock = ({ hit, monthlyPrice }) => {
         </div>
         {/* Yearly */}
         <div className={`${monthlyPrice ? "hidden" : "block"}`}>
-          <h3 className="text-gray-900 text-md font-medium">
+          <h3 className="text-gray-900 text-base font-medium">
             {hit.price_pay_yearly}
           </h3>
           {hit.price_pay_yearly.startsWith("$") && (
@@ -183,10 +183,10 @@ const Hits = ({ hits, monthlyPrice }) => (
             />
             {/* Header Block */}
             <div className="flex flex-col justify-center items-center h-24">
-              <h2 className="text-gray-900 text-md font-medium">
+              <h2 className="text-gray-900 text-base font-medium">
                 {hit.product}
               </h2>
-              <h3 className="mt-1 text-gray-500 text-md font-normal">
+              <h3 className="mt-1 text-gray-500 text-base font-normal">
                 {hit.tier}
               </h3>
             </div>

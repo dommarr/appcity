@@ -159,6 +159,21 @@ export default function Product({ product }) {
   const tier =
     product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
 
+  function compare(a, b) {
+    const tierNumA = a.number;
+    const tierNumB = b.number;
+
+    let comparison = 0;
+    if (tierNumA > tierNumB) {
+      comparison = 1;
+    } else if (tierNumA < tierNumB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  const sortedTiers = product.tiers.slice().sort(compare);
+
   return (
     <>
       <Header dark="true" />
@@ -249,7 +264,7 @@ export default function Product({ product }) {
                 ></span>
               </button>
               <span className="ml-3" id="billing-label">
-                <span className="text-sm font-normal text-gray-900">
+                <span className="text-base font-normal text-gray-900">
                   {monthly ? "Pay monthly" : "Pay yearly"}
                 </span>
               </span>
@@ -274,7 +289,7 @@ export default function Product({ product }) {
             <div className="flex flex-col justify-start items-start">
               {tier != null && <h3>Select Tier:</h3>}
               <div className="flex flex-wrap justify-center mt-2">
-                {product.tiers.map((obj) => (
+                {sortedTiers.map((obj) => (
                   <button
                     key={obj.id}
                     type="button"
@@ -1591,7 +1606,7 @@ export default function Product({ product }) {
                 <tr>
                   <th
                     className="bg-gray-50 py-3 pl-6 text-sm font-medium text-gray-900 text-left"
-                    colspan="4"
+                    colSpan="4"
                     scope="colgroup"
                   >
                     Features
@@ -1817,7 +1832,7 @@ export default function Product({ product }) {
                 <tr>
                   <th
                     className="bg-gray-50 py-3 pl-6 text-sm font-medium text-gray-900 text-left"
-                    colspan="4"
+                    colSpan="4"
                     scope="colgroup"
                   >
                     Reporting
@@ -2067,7 +2082,7 @@ export default function Product({ product }) {
                 <tr>
                   <th
                     className="bg-gray-50 py-3 pl-6 text-sm font-medium text-gray-900 text-left"
-                    colspan="4"
+                    colSpan="4"
                     scope="colgroup"
                   >
                     Support
