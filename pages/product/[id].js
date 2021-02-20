@@ -272,7 +272,9 @@ export default function Product({ product }) {
           )}
           {/* Price Block */}
           {tier != null && (
-            <div className="flex flex-col justify-center items-center p-4 border border-gray-100 relative">
+            <PriceBlock tier={tier} large={true} monthly={monthly} />
+          )}
+          {/* <div className="flex flex-col justify-center items-center p-4 border border-gray-100 relative">
               <div className={`${monthly ? "hidden" : "flex flex-col"}`}>
                 <PriceBlock tier={tier} cadence="yearly" starting={true} />
                 <PriceBlock tier={tier} cadence="yearly" starting={false} />
@@ -281,12 +283,11 @@ export default function Product({ product }) {
                 <PriceBlock tier={tier} cadence="monthly" starting={true} />
                 <PriceBlock tier={tier} cadence="monthly" starting={false} />
               </div>
-            </div>
-          )}
+            </div> */}
 
           {/* Tier Selection */}
           {product.tiers.length > 1 && (
-            <div className="flex flex-col justify-start items-start">
+            <div className="flex flex-col justify-start items-start mt-4 mb-2">
               {tier != null && <h3>Select Tier:</h3>}
               <div className="flex flex-wrap justify-center mt-2">
                 {sortedTiers.map((obj) => (
