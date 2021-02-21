@@ -207,7 +207,7 @@ export default function Product({ product }) {
             </div>
           )}
           {/* Price Block */}
-          {tier != null && <PriceBlock tier={tier} large={true} monthly={monthly} />}
+          {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} />}
 
           {/* Tier Selection */}
           {product.tiers.length > 1 && (
