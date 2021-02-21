@@ -1,3 +1,5 @@
+import PriceModel from "./priceModel";
+
 const PriceBlock = ({ tier, large, monthly }) => {
   const formatPrice = (price) => {
     if (price % 1 != 0) {
@@ -27,14 +29,8 @@ const PriceBlock = ({ tier, large, monthly }) => {
   let secondary_price_month = "";
   let secondary_price_month_unit = "";
 
-  let two_prices_year = setTwoPrices(
-    tier.starting_price_year,
-    tier.starting_price_year_other
-  );
-  let two_prices_month = setTwoPrices(
-    tier.starting_price_month,
-    tier.starting_price_month_other
-  );
+  let two_prices_year = setTwoPrices(tier.starting_price_year, tier.starting_price_year_other);
+  let two_prices_month = setTwoPrices(tier.starting_price_month, tier.starting_price_month_other);
 
   // YEAR
   // if two prices
@@ -137,70 +133,23 @@ const PriceBlock = ({ tier, large, monthly }) => {
   // 2 prices for both
   if (two_prices_year && two_prices_month) {
     return (
-      <div className="price-block-2-2 flex flex-col justify-center items-center border border-gray-100 relative p-4 w-64 h-40">
-        <dl
-          className={`price-block-year ${
-            monthly ? "hidden" : "flex"
-          } flex-col justify-center items-center`}
-        >
-          <span className={`absolute left-2 bottom-12 text-gray-400 text-xs`}>
-            Compare
-          </span>
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_year}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_year_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid yearly
-          </dd>
-          <dt
-            className={`${
-              large ? "text-sm" : "text-sm"
-            } text-gray-900 font-medium pt-4`}
-          >
-            {secondary_price_year}
-          </dt>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>
-            {secondary_price_year_unit}
-          </dd>
+      <div className="price-block-2-2 flex flex-col justify-center items-center border border-gray-100 relative p-4 w-64 h-44">
+        <PriceModel model="Flat-rate" />
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
+          <span className={`absolute left-6 bottom-11 text-gray-400 text-xs`}>Compare</span>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid yearly</dd>
+          <dt className={`${large ? "text-sm" : "text-sm"} text-gray-900 font-medium pt-4`}>{secondary_price_year}</dt>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>{secondary_price_year_unit}</dd>
         </dl>
-        <dl
-          className={`price-block-month ${
-            monthly ? "flex" : "hidden"
-          } flex-col justify-center items-center`}
-        >
-          <span className={`absolute left-2 bottom-12 text-gray-400 text-xs`}>
-            Compare
-          </span>
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_month}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_month_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid monthly
-          </dd>
-          <dt
-            className={`${
-              large ? "text-sm" : "text-sm"
-            } text-gray-900 font-medium pt-4`}
-          >
-            {secondary_price_month}
-          </dt>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>
-            {secondary_price_month_unit}
-          </dd>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center`}>
+          <span className={`absolute left-2 bottom-12 text-gray-400 text-xs`}>Compare</span>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>
+          <dt className={`${large ? "text-sm" : "text-sm"} text-gray-900 font-medium pt-4`}>{secondary_price_month}</dt>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>{secondary_price_month_unit}</dd>
         </dl>
       </div>
     );
@@ -208,56 +157,18 @@ const PriceBlock = ({ tier, large, monthly }) => {
   } else if (two_prices_year && !two_prices_month) {
     return (
       <div className="price-block-2-1 flex flex-col justify-center items-center border border-gray-100 relative p-4 w-64 h-40">
-        <dl
-          className={`price-block-year ${
-            monthly ? "hidden" : "flex"
-          } flex-col justify-center items-center`}
-        >
-          <span className={`absolute left-2 bottom-12 text-gray-400 text-xs`}>
-            Compare
-          </span>
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_year}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_year_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid yearly
-          </dd>
-          <dt
-            className={`${
-              large ? "text-sm" : "text-sm"
-            } text-gray-900 font-medium pt-4`}
-          >
-            {secondary_price_year}
-          </dt>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>
-            {secondary_price_year_unit}
-          </dd>
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
+          <span className={`absolute left-2 bottom-12 text-gray-400 text-xs`}>Compare</span>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid yearly</dd>
+          <dt className={`${large ? "text-sm" : "text-sm"} text-gray-900 font-medium pt-4`}>{secondary_price_year}</dt>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>{secondary_price_year_unit}</dd>
         </dl>
-        <dl
-          className={`price-block-month ${
-            monthly ? "flex" : "hidden"
-          } flex-col justify-center items-center`}
-        >
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_month}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_month_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid monthly
-          </dd>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center`}>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>
         </dl>
       </div>
     );
@@ -265,99 +176,33 @@ const PriceBlock = ({ tier, large, monthly }) => {
   } else if (!two_prices_year && two_prices_month) {
     return (
       <div className="price-block-1-2 flex flex-col justify-center items-center border border-gray-100 relative p-4 w-64 h-40">
-        <dl
-          className={`price-block-year ${
-            monthly ? "hidden" : "flex"
-          } flex-col justify-center items-center`}
-        >
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_year}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_year_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid yearly
-          </dd>
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid yearly</dd>
         </dl>
-        <dl
-          className={`price-block-month ${
-            monthly ? "flex" : "hidden"
-          } flex-col justify-center items-center`}
-        >
-          <span className={`absolute left-2 bottom-12 text-gray-400 text-xs`}>
-            Compare
-          </span>
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_month}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_month_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid monthly
-          </dd>
-          <dt
-            className={`${
-              large ? "text-sm" : "text-sm"
-            } text-gray-900 font-medium pt-4`}
-          >
-            {secondary_price_month}
-          </dt>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>
-            {secondary_price_month_unit}
-          </dd>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center`}>
+          <span className={`absolute left-2 bottom-12 text-gray-400 text-xs`}>Compare</span>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>
+          <dt className={`${large ? "text-sm" : "text-sm"} text-gray-900 font-medium pt-4`}>{secondary_price_month}</dt>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>{secondary_price_month_unit}</dd>
         </dl>
       </div>
     );
   } else {
     return (
       <div className="price-block-1-1 flex flex-col justify-center items-center border border-gray-100 relative p-4 w-64 h-40">
-        <dl
-          className={`price-block-year ${
-            monthly ? "hidden" : "flex"
-          } flex-col justify-center items-center`}
-        >
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_year}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_year_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid yearly
-          </dd>
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid yearly</dd>
         </dl>
-        <dl
-          className={`price-block-month ${
-            monthly ? "flex" : "hidden"
-          } flex-col justify-center items-center`}
-        >
-          <dt
-            className={`${
-              large ? "text-lg" : "text-base"
-            } text-gray-900 font-medium`}
-          >
-            {primary_price_month}
-          </dt>
-          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>
-            {primary_price_month_unit}
-          </dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>
-            paid monthly
-          </dd>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center`}>
+          <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
+          <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
+          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>
         </dl>
       </div>
     );
