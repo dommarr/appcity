@@ -40,6 +40,7 @@ async function getCatalog() {
   }
 }
 
+// categories
 const createCatTable = (cats, arr) => {
   const categories = [];
   let i;
@@ -68,17 +69,6 @@ const createCatTable = (cats, arr) => {
   return categories;
 };
 
-const formatPrice = (price) => {
-  if (price % 1 != 0) {
-    let num = Number(Math.round(price + "e2") + "e-2");
-    num = num.toFixed(2);
-    return "$".concat(num);
-  } else {
-    let num = price.toLocaleString("en");
-    return "$".concat(num);
-  }
-};
-
 export default async function (req, res) {
   // get category data and build out hierarchy (categories and sub-categories)
   const catArray = await getCategories();
@@ -103,43 +93,21 @@ export default async function (req, res) {
     obj.keywords = elem.products.keywords;
     obj.vendor_website = elem.products.vendors.website;
     obj.logo = elem.products.vendors.logo;
-    // Format prices: pre-pend $ and round to 2 decimals if a decimal is present. Otherwise, keep whole number.
-    const price_pay_monthly =
-      elem.price_pay_monthly === null
-        ? null
-        : formatPrice(elem.price_pay_monthly);
-    const price_pay_yearly =
-      elem.price_pay_yearly === null
-        ? null
-        : formatPrice(elem.price_pay_yearly);
-    const starting_price_pay_monthly =
-      elem.starting_price_pay_monthly === null
-        ? null
-        : formatPrice(elem.starting_price_pay_monthly);
-    const starting_price_pay_yearly =
-      elem.starting_price_pay_yearly === null
-        ? null
-        : formatPrice(elem.starting_price_pay_yearly);
+    obj.price_model = elem.products.price_model;
     // Assign display and sort prices
-    elem.price_other_pay_monthly
-      ? (obj.price_pay_monthly = elem.price_other_pay_monthly)
-      : (obj.price_pay_monthly = price_pay_monthly);
-    elem.price_other_pay_yearly
-      ? (obj.price_pay_yearly = elem.price_other_pay_yearly)
-      : (obj.price_pay_yearly = price_pay_yearly);
-    obj.price_unit = elem.price_unit;
-    obj.price_note = elem.price_note;
-    obj.starting_price_monthly = starting_price_pay_monthly;
-    obj.starting_price_yearly = starting_price_pay_yearly;
+    obj.starting_price_year = elem.starting_price_year;
+    obj.starting_price_year_other = elem.starting_price_year_other;
+    obj.starting_price_month = elem.starting_price_month;
+    obj.starting_price_month_other = elem.starting_price_month_other;
     obj.starting_price_unit = elem.starting_price_unit;
-    obj.starting_price_note = elem.starting_price_note;
+    obj.compare_price_year = elem.compare_price_year;
+    obj.compare_price_year_other = elem.compare_price_year_other;
+    obj.compare_price_month = elem.compare_price_month;
+    obj.compare_price_month_other = elem.compare_price_month_other;
+    obj.compare_price_unit = elem.compare_price_unit;
     // determine what price to sort by - defined in database
-    elem.sort_by_starting_price
-      ? (obj.sort_price_monthly = elem.starting_price_pay_monthly)
-      : (obj.sort_price_monthly = elem.price_pay_monthly);
-    elem.sort_by_starting_price
-      ? (obj.sort_price_yearly = elem.starting_price_pay_yearly)
-      : (obj.sort_price_yearly = elem.price_pay_yearly);
+    elem.sort_by_starting_price ? (obj.sort_price_monthly = elem.starting_price_month) : (obj.sort_price_monthly = elem.compare_price_month);
+    elem.sort_by_starting_price ? (obj.sort_price_yearly = elem.starting_price_year) : (obj.sort_price_yearly = elem.compare_price_year);
     obj.categories = {};
     // for each category, match and get the hierarchy level and name
     elem.products.products_categories.forEach(function (item) {
