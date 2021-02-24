@@ -1,5 +1,10 @@
 import PriceModel from "./priceModel";
 
+// tier = object of tier data
+// model = the pricing model of the product (same for all tiers)
+// large = boolean - large (true) or small priceBlock (false)
+// monthly = boolean - if state is set to monthly pricing (true) or yearly (false)
+
 const PriceBlock = ({ tier, model, large, monthly }) => {
   const formatPrice = (price) => {
     if (price % 1 != 0) {
@@ -133,7 +138,7 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
   // 2 prices for both
   if (two_prices_year && two_prices_month) {
     return (
-      <div className="price-block-2-2 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4">
+      <div className="price-block-2-2 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
         <PriceModel tier={tier} model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative`}>
           <dd className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</dd>
@@ -156,7 +161,7 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
     // 2 prices for year, 1 price for month
   } else if (two_prices_year && !two_prices_month) {
     return (
-      <div className="price-block-2-1 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4">
+      <div className="price-block-2-1 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
         <PriceModel tier={tier} model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative`}>
           <span className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</span>
@@ -176,7 +181,7 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
     // 1 price for year, 2 prices for month
   } else if (!two_prices_year && two_prices_month) {
     return (
-      <div className="price-block-1-2 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4">
+      <div className="price-block-1-2 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
         <PriceModel tier={tier} model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
@@ -195,7 +200,7 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
     );
   } else {
     return (
-      <div className="price-block-1-1 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4">
+      <div className="price-block-1-1 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
         <PriceModel tier={tier} model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
