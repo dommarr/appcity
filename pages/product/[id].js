@@ -4,10 +4,7 @@ import Footer from "../../components/footer";
 import Header from "../../components/header";
 import PriceBlock from "../../components/priceBlock";
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
@@ -135,6 +132,8 @@ const ImageSlider = (props) => {
 export default function Product({ product }) {
   const router = useRouter();
   const [monthly, setMonthly] = useState(true);
+  //const tierCount = useState(product.tiers.length);
+  const tierCount = product.tiers.length;
 
   const tier = product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
 
@@ -153,9 +152,44 @@ export default function Product({ product }) {
 
   const sortedTiers = product.tiers.slice().sort(compare);
 
+  function order(index, section, cols) {
+    let group = Math.ceil(index / cols);
+    let groupCount = cols * 3;
+    return index + (section - 1) * cols + (groupCount - cols) * (group - 1);
+  }
+
+  // for example, if there is only 1 tier then return 1 column instead of the max columns for the screen width
+  function columns(maxCols) {
+    if (tierCount <= maxCols) {
+      return tierCount;
+    } else {
+      return maxCols;
+    }
+  }
+
+  // mc for max content - to set row height to content rather than fr
+  function rows(cols) {
+    return Math.ceil(tierCount / cols) * 3 + "mc";
+  }
+
+  // creates empty spaces and correctly places sections with the rest of the column
+  function rowStart(order, cols) {
+    return Math.ceil(order / cols);
+  }
+
+  const xlCols = columns(5);
+  const lgCols = columns(4);
+  const mdCols = columns(3);
+  const smCols = columns(2);
+
+  const xlRows = rows(xlCols);
+  const lgRows = rows(lgCols);
+  const mdRows = rows(mdCols);
+  const smRows = rows(smCols);
+
   return (
     <>
-      <Header dark="true" />
+      <Header style="dark" />
       <div className="flex flex-col justify-center items-start m-5 md:hidden">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a className="mt-2 flex" href={product.vendors.website}>
@@ -243,9 +277,9 @@ export default function Product({ product }) {
       )}
       {/* Tier Comparison */}
       <div className="bg-gray-50">
-        <div className="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
+        <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 ${xlCols >= 5 ? "xl:px-1" : ""}`}>
           <div className="sm:flex sm:flex-col sm:align-center">
-            <h1 className="text-5xl font-extrabold text-gray-900 sm:text-center">Pricing Plans</h1>
+            <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Tiers</h1>
             <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
               <button type="button" onClick={() => setMonthly(true)} className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}>
                 Monthly billing
@@ -255,23 +289,40 @@ export default function Product({ product }) {
               </button>
             </div>
           </div>
-          <div className="mt-8 space-y-4 sm:mt-8 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-4">
-            {sortedTiers.map((obj) => (
-              <div className="border border-gray-200 bg-white shadow-sm divide-y divide-gray-200">
-                <div className="p-6">
-                  <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
-                  {/* <p className="mt-4 text-sm text-gray-500">All the basics for starting a new business</p>
-                  <p className="mt-8">
-                    <span className="text-4xl font-extrabold text-gray-900">$12</span>
-                    <span className="text-base font-medium text-gray-500">/mo</span>
-                  </p> */}
-                  <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
-                  <a href="/" className="block w-full bg-gray-800 border border-gray-800 py-2 text-sm font-semibold text-white text-center hover:bg-gray-900">
-                    Buy {obj.name}
-                  </a>
-                </div>
-                <div className="pt-6 pb-8 px-6">
-                  <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">What's included</h3>
+          <div className={`mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}>
+            {sortedTiers.map((obj, index) => (
+              <div key={index} className={`index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(index + 1, 1, mdCols)} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 1, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}>
+                <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
+                <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
+                <a href="/" className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 text-sm font-semibold text-white text-center">
+                  Buy {obj.name}
+                </a>
+              </div>
+            ))}
+            {sortedTiers.map((obj, index) => (
+              <div key={index} className={`flex flex-col index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white px-6 py-4 border-l border-r border-gray-200 order-${order(index + 1, 2, 1)} sm:order-${order(index + 1, 2, smCols)} md:order-${order(index + 1, 2, mdCols)} lg:order-${order(index + 1, 2, lgCols)} xl:order-${order(index + 1, 2, xlCols)} sm:row-start-${rowStart(order(index + 1, 2, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 2, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 2, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 2, xlCols), xlCols)}`}>
+                <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Limits</h3>
+                <ul className="mt-6 space-y-4">
+                  <li className="flex space-x-3">
+                    <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-gray-500">Potenti felis, in cras at at ligula nunc.</span>
+                  </li>
+
+                  <li className="flex space-x-3">
+                    <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-gray-500">Orci neque eget pellentesque.</span>
+                  </li>
+                </ul>
+              </div>
+            ))}
+            {sortedTiers.map((obj, index) => (
+              <div key={index} className={`index-${index + 1} order-${order(index + 1, 3, 1)} sm:order-${order(index + 1, 3, smCols)} md:order-${order(index + 1, 3, mdCols)} lg:order-${order(index + 1, 3, lgCols)} xl:order-${order(index + 1, 3, xlCols)} sm:row-start-${rowStart(order(index + 1, 3, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 3, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 3, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 3, xlCols), xlCols)}`}>
+                <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 `}>
+                  <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
                   <ul className="mt-6 space-y-4">
                     <li className="flex space-x-3">
                       <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

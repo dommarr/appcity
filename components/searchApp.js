@@ -13,7 +13,6 @@ import {
   connectHits,
   connectPagination,
 } from "react-instantsearch-dom";
-import { Transition } from "@headlessui/react";
 import RefinementBlock from "./refinementBlock";
 import PriceBlock from "./priceBlock";
 import PropTypes from "prop-types";
@@ -37,7 +36,7 @@ const Hits = ({ hits, monthlyPrice }) => (
               <h2 className="text-gray-900 text-base font-medium">{hit.product}</h2>
               <h3 className="mt-1 text-gray-500 text-base font-normal">{hit.tier}</h3>
             </div>
-            <PriceBlock tier={hit} model={hit.price_model} large={false} monthly={monthlyPrice} />
+            <PriceBlock tier={hit} model={hit.price_model} large={false} monthly={monthlyPrice} search={true} />
           </a>
         </Link>
       </li>
@@ -192,7 +191,7 @@ export default class SearchApp extends React.Component {
           </div>
 
           <div className="flex flex-col w-0 flex-1 overflow-hidden">
-            <div className="relative z-10 flex-shrink-0 flex h-12 bg-white shadow">
+            <div className="relative flex-shrink-0 flex h-12 bg-white shadow">
               <button className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight md:hidden" onClick={() => this.setState({ showSidebar: true })}>
                 <span className="sr-only">Open sidebar</span>
                 {/* Heroicon name: menu-alt-2 */}
@@ -217,7 +216,7 @@ export default class SearchApp extends React.Component {
                 />
               </div>
             </div>
-            <div className="z-10 flex-shrink-0 flex justify-between items-center bg-white shadow px-5 py-0.5">
+            <div className="flex-shrink-0 flex justify-between items-center bg-white shadow px-5 py-0.5">
               {/* <CurrentRefinements /> */}
               <Stats />
               <SortBy

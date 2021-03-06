@@ -9,20 +9,15 @@ import qs from "qs";
 import algoliasearch from "algoliasearch/lite";
 import { findResultsState } from "react-instantsearch-dom/server";
 
-const searchClient = algoliasearch(
-  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
-  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
-);
+const searchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
 const updateAfter = 700;
 
 const createURL = (state) => `?${qs.stringify(state)}`;
 
-const pathToSearchState = (path) =>
-  path.includes("?") ? qs.parse(path.substring(path.indexOf("?") + 1)) : {};
+const pathToSearchState = (path) => (path.includes("?") ? qs.parse(path.substring(path.indexOf("?") + 1)) : {});
 
-const searchStateToURL = (searchState) =>
-  searchState ? `${window.location.pathname}?${qs.stringify(searchState)}` : "";
+const searchStateToURL = (searchState) => (searchState ? `${window.location.pathname}?${qs.stringify(searchState)}` : "");
 
 const DEFAULT_PROPS = {
   searchClient,
@@ -83,14 +78,8 @@ class Search extends React.Component {
   render() {
     return (
       <>
-        <Header dark="true" />
-        <SearchApp
-          {...DEFAULT_PROPS}
-          searchState={this.state.searchState}
-          resultsState={this.props.resultsState}
-          onSearchStateChange={this.onSearchStateChange}
-          createURL={createURL}
-        />
+        <Header style="dark" />
+        <SearchApp {...DEFAULT_PROPS} searchState={this.state.searchState} resultsState={this.props.resultsState} onSearchStateChange={this.onSearchStateChange} createURL={createURL} />
         <Footer />
       </>
     );
