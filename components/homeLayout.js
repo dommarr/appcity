@@ -1,11 +1,8 @@
 import { useRouter } from "next/router";
-import Router from "next/router";
 import { useState } from "react";
 import Head from "next/head";
-// import Header from "../components/header";
-import Header from "../components/transparentHeader";
+import Header from "../components/header";
 import Footer from "../components/footer";
-import Wave from "../components/wave";
 import Wedge from "../components/wedge";
 const RotatingText = require("react-rotating-text");
 
@@ -26,19 +23,11 @@ export default function HomeLayout({ children }) {
   return (
     <>
       <div className="relative bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
-        <Header dark="true" />
+        <Header style="trans" />
         <Head>
           <link rel="icon" href="/favicon.ico" />
-          <meta
-            name="description"
-            content="Shop for software like you shop for everything else"
-          />
-          <meta
-            property="og:image"
-            content={`https://og-image.now.sh/${encodeURI(
-              siteTitle
-            )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-          />
+          <meta name="description" content="Shop for software like you shop for everything else" />
+          <meta property="og:image" content={`https://og-image.now.sh/${encodeURI(siteTitle)}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`} />
           <meta name="og:title" content={siteTitle} />
           <meta name="twitter:card" content="summary_large_image" />
         </Head>
@@ -55,17 +44,7 @@ export default function HomeLayout({ children }) {
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block text-white">The app store for</span>
                 {/* <span className="inline text-white">for </span> */}
-                <RotatingText
-                  items={[
-                    " small business ",
-                    " startups ",
-                    " creators ",
-                    " retailers ",
-                    " builders ",
-                  ]}
-                  color="yellow"
-                  pause={2500}
-                />
+                <RotatingText items={[" small business ", " startups ", " creators ", " retailers ", " builders "]} color="yellow" pause={2500} />
               </h1>
 
               {/* Search */}
@@ -76,48 +55,22 @@ export default function HomeLayout({ children }) {
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     {/* Heroicon name: search */}
-                    <svg
-                      className="h-5 w-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clipRule="evenodd"
-                      />
+                    <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <form onSubmit={handleSubmit}>
-                    <input
-                      type="text"
-                      name="search"
-                      id="search"
-                      className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300"
-                      placeholder="CRM, video conferencing, analytics..."
-                      value={query}
-                      onChange={(event) => setQuery(event.target.value)}
-                    />
+                    <input type="text" name="search" id="search" className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300" placeholder="CRM, video conferencing, analytics..." value={query} onChange={(event) => setQuery(event.target.value)} />
                   </form>
                 </div>
                 <div className="flex items-center pt-4">
-                  <a
-                    href="/"
-                    className="text-white bg-transparent hover:bg-white hover:text-purple mx-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light"
-                  >
+                  <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple mx-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
                     CRM
                   </a>
-                  <a
-                    href="/"
-                    className="text-white bg-transparent hover:bg-white hover:text-purple mx-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light"
-                  >
+                  <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple mx-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
                     Video Conferencing
                   </a>
-                  <a
-                    href="/"
-                    className="text-white bg-transparent hover:bg-white hover:text-purple mx-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light"
-                  >
+                  <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple mx-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
                     Analytics
                   </a>
                 </div>

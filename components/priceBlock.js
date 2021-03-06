@@ -5,7 +5,7 @@ import PriceModel from "./priceModel";
 // large = boolean - large (true) or small priceBlock (false)
 // monthly = boolean - if state is set to monthly pricing (true) or yearly (false)
 
-const PriceBlock = ({ tier, model, large, monthly }) => {
+const PriceBlock = ({ tier, model, large, monthly, search }) => {
   const formatPrice = (price) => {
     if (price % 1 != 0) {
       let num = Number(Math.round(price + "e2") + "e-2");
@@ -138,9 +138,9 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
   // 2 prices for both
   if (two_prices_year && two_prices_month) {
     return (
-      <div className="price-block-2-2 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
+      <div className={`price-block-2-2 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
         <PriceModel tier={tier} model={model} />
-        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative`}>
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative ${search ? "" : "h-full flex-grow"}`}>
           <dd className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</dd>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
@@ -148,7 +148,7 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
           <dt className={`${large ? "text-sm" : "text-sm"} text-gray-900 font-medium pt-4`}>{secondary_price_year}</dt>
           <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>{secondary_price_year_unit}</dd>
         </dl>
-        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center relative`}>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center relative ${search ? "" : "h-full flex-grow"}`}>
           <span className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</span>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
@@ -161,9 +161,9 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
     // 2 prices for year, 1 price for month
   } else if (two_prices_year && !two_prices_month) {
     return (
-      <div className="price-block-2-1 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
+      <div className={`price-block-2-1 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
         <PriceModel tier={tier} model={model} />
-        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative`}>
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative ${search ? "" : "h-full flex-grow"}`}>
           <span className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</span>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
@@ -171,7 +171,7 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
           <dt className={`${large ? "text-sm" : "text-sm"} text-gray-900 font-medium pt-4`}>{secondary_price_year}</dt>
           <dd className={`${large ? "text-xs" : "text-xs"} text-gray-600 pb-2`}>{secondary_price_year_unit}</dd>
         </dl>
-        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center`}>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center ${search ? "" : "h-full flex-grow"}`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
           <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>
@@ -181,14 +181,14 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
     // 1 price for year, 2 prices for month
   } else if (!two_prices_year && two_prices_month) {
     return (
-      <div className="price-block-1-2 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
+      <div className={`price-block-1-2 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
         <PriceModel tier={tier} model={model} />
-        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center ${search ? "" : "h-full flex-grow"}`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
           <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid yearly</dd>
         </dl>
-        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center relative`}>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center relative ${search ? "" : "h-full flex-grow"}`}>
           <span className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</span>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
@@ -200,14 +200,14 @@ const PriceBlock = ({ tier, model, large, monthly }) => {
     );
   } else {
     return (
-      <div className="price-block-1-1 flex flex-col justify-center items-center border border-gray-100 py-4 px-12 my-4 min-h-block">
+      <div className={`price-block-1-1 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
         <PriceModel tier={tier} model={model} />
-        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center`}>
+        <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center ${search ? "" : "h-full flex-grow"}`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
           <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid yearly</dd>
         </dl>
-        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center`}>
+        <dl className={`price-block-month ${monthly ? "flex" : "hidden"} flex-col justify-center items-center ${search ? "" : "h-full flex-grow"}`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
           <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>
