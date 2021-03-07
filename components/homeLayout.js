@@ -44,7 +44,7 @@ export default function HomeLayout({ children }) {
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block text-white">The app store for</span>
                 {/* <span className="inline text-white">for </span> */}
-                <RotatingText items={[" small business ", " startups ", " creators ", " retailers ", " builders "]} color="yellow" pause={2500} />
+                <RotatingText items={[" small business ", " startups ", " creators ", " builders. "]} color="yellow" pause={2500} />
               </h1>
 
               {/* Search */}
@@ -154,6 +154,7 @@ export default function HomeLayout({ children }) {
           </div>
         </div> */}
       </div>
+      <div className="h-screen"></div>
       <Footer />
     </>
   );
