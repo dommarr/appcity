@@ -1,6 +1,8 @@
 import { Transition } from "@headlessui/react";
-import Loading from "./loading";
 import { useState, useEffect } from "react";
+import { supabase } from "../utils/initSupabase";
+import { useRouter } from "next/router";
+import Loading from "./loading";
 
 const navLinks = [
   {
@@ -14,13 +16,45 @@ const navLinks = [
 ];
 
 export default function Dashboard(props) {
+  const [profile, setProfile] = useState(null);
   const [screen, setScreen] = useState("Profile");
   const [showSidebar, setShowSidebar] = useState(false);
+  const router = useRouter();
 
   const mobileSidebarClick = (label) => {
     setScreen(label);
     setShowSidebar(false);
   };
+
+  const signOut = () => {
+    supabase.auth.signOut();
+    router.push("/");
+  };
+
+  const updateProfile = async (event) => {
+    event.preventDefault();
+    try {
+      const { data, error } = await supabase.from("users").update({ other_column: "otherValue" }).eq("some_column", "someValue");
+      return "Success";
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  // Fetch on load
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        let response = await supabase.from("users").select("*").eq("id", props.user.id);
+        setProfile(response.data);
+      } catch (err) {
+        alert("test");
+      }
+    }
+    fetchProfile();
+  }, []);
+
+  if (!profile) return <Loading />;
 
   return (
     <>
@@ -88,11 +122,47 @@ export default function Dashboard(props) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <h1 className="text-2xl font-semibold text-gray-900">{screen}</h1>
             </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="flex flex-col justify-left max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* Replace with your content */}
-              <div className="py-4">
-                <div className="border-4 border-dashed border-gray-200 h-96"></div>
-              </div>
+              <section className="py-4 space-y-2">
+                <form onSubmit={updateProfile}>
+                  <div className="shadow sm:overflow-hidden">
+                    <div className="bg-white py-6 px-4 sm:p-6">
+                      <div className="grid grid-cols-4 gap-6">
+                        <div className="col-span-4 sm:col-span-2">
+                          <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
+                            First name
+                          </label>
+                          <input type="text" name="first_name" id="first_name" placeholder="Jane" value={profile.first_name} autoComplete="cc-given-name" className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+                        </div>
+
+                        <div className="col-span-4 sm:col-span-2">
+                          <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
+                            Last name
+                          </label>
+                          <input type="text" name="last_name" id="last_name" placeholder="Doe" value={profile.last_name} autoComplete="cc-family-name" className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+                        </div>
+
+                        <div className="col-span-4 sm:col-span-2">
+                          <label htmlFor="email_address" className="block text-sm font-medium text-gray-700">
+                            Email address
+                          </label>
+                          <input type="text" name="email_address" id="email_address" placeholder="jane@doe.com" value={profile.email} autoComplete="email" className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">
+                      <button type="submit" className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                        Update
+                      </button>
+                      <button onClick={() => signOut()} className="ml-2 bg-white border border-black shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                        Sign out
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </section>
+
               {/* /End replace */}
             </div>
           </div>
