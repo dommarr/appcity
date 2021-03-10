@@ -54,7 +54,7 @@ export default function Dashboard(props) {
     fetchProfile();
   }, []);
 
-  if (!profile) return <Loading />;
+  if (!profile) return <div>Loading...</div>;
 
   return (
     <>
