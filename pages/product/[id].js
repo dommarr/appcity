@@ -99,7 +99,7 @@ const ImageSlider = (props) => {
                 onClick={(e) => {
                   nextSlide(e);
                 }}
-                className="h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-2 pr-1 mr-1 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40"
+                className={`${isMobile ? "hidden" : "block"} h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-2 pr-1 mr-1 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40`}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
@@ -110,7 +110,7 @@ const ImageSlider = (props) => {
           </>
         )}
         {slider && (
-          <div className="dots absolute inset-x-0 bottom-0 hover:bg-gray-200 hover:bg-opacity-30">
+          <div className="dots absolute inset-x-0 -bottom-8 sm:bottom-0 hover:bg-gray-200 hover:bg-opacity-30">
             {[...Array(slider.details().size).keys()].map((idx) => {
               return (
                 <button
@@ -200,18 +200,17 @@ export default function Product({ product }) {
       </div>
       <div className="block md:flex md:flex-row h-4/5">
         {/* Left */}
-        <div className="w-full md:w-3/5 flex flex-col justify-center items-center bg-black">
+        <div className="w-full md:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black">
           {/* if media is not null, then display slider */}
           {product.media && <ImageSlider media={product.media} />}
-          {/* need to add no images placeholder */}
           {!product.media && (
             <>
               <img className="object-contain object-center w-40 h-40 p-2 bg-white flex-shrink-0 mx-auto mt-10" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h3 className="text-white text-center text-2xl mt-5">Sorry!</h3>
               <h4 className="text-white text-center text-base">Looks like we don't have any media for this product.</h4>
-              <button type="button" className="mt-3 mb-10 inline-flex items-center px-2.5 py-1.5 border border-white shadow-sm text-xs font-medium text-white hover:bg-gray-700">
+              <a href={product.vendors.website} className="mt-3 mb-10 inline-flex items-center px-2.5 py-1.5 border border-white shadow-sm text-xs font-medium text-white hover:bg-gray-700">
                 Go to product site
-              </button>
+              </a>
             </>
           )}
         </div>
