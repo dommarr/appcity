@@ -46,9 +46,9 @@ export default function Dashboard(props) {
     async function fetchProfile() {
       try {
         let response = await supabase.from("users").select("*").eq("id", props.user.id);
-        setProfile(response.data);
+        setProfile(response.data[0]);
       } catch (err) {
-        alert("test");
+        alert(err);
       }
     }
     fetchProfile();

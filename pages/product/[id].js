@@ -12,6 +12,7 @@ import "keen-slider/keen-slider.min.css";
 import ReactPlayer from "react-player";
 import { SRLWrapper } from "simple-react-lightbox-pro";
 import { useLightbox } from "simple-react-lightbox-pro";
+import { isMobile } from "react-device-detect";
 
 const Lightbox = (props) => {
   return (
@@ -85,7 +86,7 @@ const ImageSlider = (props) => {
                 onClick={(e) => {
                   prevSlide(e);
                 }}
-                className="h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-1 pr-2 ml-1 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40"
+                className={`${isMobile ? "hidden" : "block"} h-16 w-16 cursor-pointer text-gray-400 hover:text-black py-2 pl-1 pr-2 ml-1 opacity-40 rounded-full hover:opacity-100 hover:bg-gray-400 hover:bg-opacity-40`}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
