@@ -8,6 +8,7 @@ import Footer from "../components/footer";
 import Header from "../components/header";
 import Dashboard from "../components/dashboard";
 import Loading from "../components/loading";
+import Logo from "../components/logo";
 
 const { Text } = Typography;
 
@@ -48,7 +49,14 @@ const SupabaseLogin = () => {
       return (
         <div className="min-h-screen min-w-screen bg-gradient-to-bl from-purple-extradark to-purple-extralight flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
-            <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
+            {/* <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" /> */}
+            <div className="flex justify-center">
+              <Link href="/">
+                <a>
+                  <Logo size={100} />
+                </a>
+              </Link>
+            </div>
           </div>
           <Card className="sm:mx-auto sm:w-full sm:max-w-md">
             <Space direction="vertical" size={8}>
@@ -72,7 +80,7 @@ const SupabaseLogin = () => {
               Log out
             </Button> */}
               {error && <Typography.Text danger>Failed to fetch user!</Typography.Text>}
-              {data && !error ? <Dashboard /> : <Loading />}
+              {data && !error ? <Dashboard user={user} /> : <Loading />}
             </>
           )}
         </div>
