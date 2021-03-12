@@ -321,6 +321,8 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .sbui-btn {
   border-radius: 0px !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
 }
 
 .sbui-btn-primary {

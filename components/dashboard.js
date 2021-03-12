@@ -165,7 +165,7 @@ export default function Dashboard(props) {
             </div>
             <div className="flex flex-col justify-left max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* Replace with your content */}
-              {screen === "Your Account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} />}
+              {screen === "Your Account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} authView={props.authView} />}
               {screen === "Favorites" && <Favorites user={props.user} />}
               {/* /End replace */}
             </div>
