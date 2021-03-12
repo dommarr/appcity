@@ -3,12 +3,26 @@ import { useState, useEffect } from "react";
 import { supabase } from "../utils/initSupabase";
 import { useRouter } from "next/router";
 import Loading from "./loading";
+import Account from "./dashboard/account";
+import Favorites from "./dashboard/favorites";
+import SectionLoading from "./dashboard/sectionLoading";
 
 const navLinks = [
   {
-    label: "Profile",
+    label: "Your Account",
     icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
   },
+  {
+    label: "Favorites",
+    icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
+  },
+  {
+    label: "Reviews",
+    icon: "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z",
+  },
+];
+
+const vendorLinks = [
   {
     label: "Products",
     icon: "M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z",
@@ -16,10 +30,11 @@ const navLinks = [
 ];
 
 export default function Dashboard(props) {
-  const [profile, setProfile] = useState(null);
-  const [screen, setScreen] = useState("Profile");
+  const [screen, setScreen] = useState("Your Account");
   const [showSidebar, setShowSidebar] = useState(false);
+  const [vendor, setVendor] = useState();
   const router = useRouter();
+  console.log(vendor);
 
   const mobileSidebarClick = (label) => {
     setScreen(label);
@@ -31,30 +46,7 @@ export default function Dashboard(props) {
     router.push("/");
   };
 
-  const updateProfile = async (event) => {
-    event.preventDefault();
-    try {
-      const { data, error } = await supabase.from("users").update({ other_column: "otherValue" }).eq("some_column", "someValue");
-      return "Success";
-    } catch (err) {
-      alert(err);
-    }
-  };
-
-  // Fetch on load
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        let response = await supabase.from("users").select("*").eq("id", props.user.id);
-        setProfile(response.data[0]);
-      } catch (err) {
-        alert(err);
-      }
-    }
-    fetchProfile();
-  }, []);
-
-  if (!profile) return <div>Loading...</div>;
+  // if (!profile) return <div>Loading...</div>;
 
   return (
     <>
@@ -72,7 +64,7 @@ export default function Dashboard(props) {
                 </svg>
               </button>
             </div>
-            <div className="flex-1 h-0 pb-4 overflow-y-auto">
+            <div className="flex-1 h-0 pb-4 overflow-y-auto relative">
               <nav className="mt-5 px-2 space-y-1">
                 {navLinks.map(({ label, icon }) => (
                   <button key={label} onClick={() => mobileSidebarClick(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
@@ -82,6 +74,24 @@ export default function Dashboard(props) {
                     {label}
                   </button>
                 ))}
+                {vendor && (
+                  <>
+                    {vendorLinks.map(({ label, icon }) => (
+                      <button key={label} onClick={() => mobileSidebarClick(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
+                        <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
+                        </svg>
+                        {label}
+                      </button>
+                    ))}
+                  </>
+                )}
+                <button onClick={() => signOut()} className={`absolute inset-x-0 bottom-4 mx-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center w-full px-2 py-2 text-sm font-medium`}>
+                  <svg className={`text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  Sign out
+                </button>
               </nav>
             </div>
           </Transition.Child>
@@ -94,7 +104,7 @@ export default function Dashboard(props) {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col h-0 flex-1 border-r border-gray-200 bg-white">
             <div className="flex-1 flex flex-col pb-4 overflow-y-auto">
-              <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
+              <nav className="mt-5 flex-1 px-2 bg-white space-y-1 relative">
                 {navLinks.map(({ label, icon }) => (
                   <button key={label} onClick={() => setScreen(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
                     <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -103,6 +113,24 @@ export default function Dashboard(props) {
                     {label}
                   </button>
                 ))}
+                {vendor && (
+                  <>
+                    {vendorLinks.map(({ label, icon }) => (
+                      <button key={label} onClick={() => setScreen(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
+                        <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
+                        </svg>
+                        {label}
+                      </button>
+                    ))}
+                  </>
+                )}
+                <button onClick={() => signOut()} className={`absolute inset-x-0 bottom-0 mx-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex w-full items-center px-2 py-2 text-sm font-medium`}>
+                  <svg className={`text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  Sign out
+                </button>
               </nav>
             </div>
           </div>
@@ -124,45 +152,8 @@ export default function Dashboard(props) {
             </div>
             <div className="flex flex-col justify-left max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* Replace with your content */}
-              <section className="py-4 space-y-2">
-                <form onSubmit={updateProfile}>
-                  <div className="shadow sm:overflow-hidden">
-                    <div className="bg-white py-6 px-4 sm:p-6">
-                      <div className="grid grid-cols-4 gap-6">
-                        <div className="col-span-4 sm:col-span-2">
-                          <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
-                            First name
-                          </label>
-                          <input type="text" name="first_name" id="first_name" placeholder="Jane" value={profile.first_name} autoComplete="cc-given-name" className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
-                        </div>
-
-                        <div className="col-span-4 sm:col-span-2">
-                          <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
-                            Last name
-                          </label>
-                          <input type="text" name="last_name" id="last_name" placeholder="Doe" value={profile.last_name} autoComplete="cc-family-name" className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
-                        </div>
-
-                        <div className="col-span-4 sm:col-span-2">
-                          <label htmlFor="email_address" className="block text-sm font-medium text-gray-700">
-                            Email address
-                          </label>
-                          <input type="text" name="email_address" id="email_address" placeholder="jane@doe.com" value={profile.email} autoComplete="email" className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">
-                      <button type="submit" className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                        Update
-                      </button>
-                      <button onClick={() => signOut()} className="ml-2 bg-white border border-black shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                        Sign out
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </section>
-
+              {screen === "Your Account" && <Account user={props.user} vendor={vendor} setVendor={setVendor} />}
+              {screen === "Favorites" && <Favorites user={props.user} />}
               {/* /End replace */}
             </div>
           </div>
