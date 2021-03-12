@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../utils/initSupabase";
 import { useRouter } from "next/router";
 import Loading from "./loading";
@@ -34,7 +34,20 @@ export default function Dashboard(props) {
   const [showSidebar, setShowSidebar] = useState(false);
   const [vendor, setVendor] = useState();
   const router = useRouter();
-  console.log(vendor);
+
+  async function updateVendor(ven) {
+    try {
+      let response = await supabase.from("users").update({ vendor: ven }).eq("id", props.user.id);
+      return response.data;
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+  function handleVendor(val) {
+    setVendor(val);
+    updateVendor(val);
+  }
 
   const mobileSidebarClick = (label) => {
     setScreen(label);
@@ -152,7 +165,7 @@ export default function Dashboard(props) {
             </div>
             <div className="flex flex-col justify-left max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* Replace with your content */}
-              {screen === "Your Account" && <Account user={props.user} vendor={vendor} setVendor={setVendor} />}
+              {screen === "Your Account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} />}
               {screen === "Favorites" && <Favorites user={props.user} />}
               {/* /End replace */}
             </div>
