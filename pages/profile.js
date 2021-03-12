@@ -24,6 +24,7 @@ const SupabaseLogin = () => {
   const { data, error } = useSWR(session ? ["/api/getUser", session.access_token] : null, fetcher);
   const router = useRouter();
   const [authView, setAuthView] = useState(router.query.view);
+  console.log(authView);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -49,7 +50,6 @@ const SupabaseLogin = () => {
       return (
         <div className="min-h-screen min-w-screen bg-gradient-to-bl from-purple-extradark to-purple-extralight flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
-            {/* <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" /> */}
             <div className="flex justify-center">
               <Link href="/">
                 <a>
@@ -68,23 +68,16 @@ const SupabaseLogin = () => {
 
     return (
       <>
-      <div className="h-screen flex flex-col">
-        <Header style="dark" />
-        <div className="flex flex-1 overflow-hidden bg-gray-100">
-          {authView === "update_password" && <Auth.UpdatePassword supabaseClient={supabase} />}
-          {user && (
-            <>
-              {/* <Typography.Text>You're signed in</Typography.Text>
-            <Typography.Text strong>Email: {user.email}</Typography.Text>
-
-            <Button icon={<Icon type="LogOut" />} type="outline" onClick={() => supabase.auth.signOut()}>
-              Log out
-            </Button> */}
-              {error && <Typography.Text danger>Failed to fetch user!</Typography.Text>}
-              {data && !error ? <Dashboard user={user} /> : <Loading />}
-            </>
-          )}
-        </div>
+        <div className="h-screen flex flex-col">
+          <Header style="dark" />
+          <div className="flex flex-1 overflow-hidden bg-gray-100">
+            {user && (
+              <>
+                {error && <Typography.Text danger>Failed to fetch user!</Typography.Text>}
+                {data && !error ? <Dashboard user={user} authView={authView} /> : <Loading />}
+              </>
+            )}
+          </div>
         </div>
         <Footer />
       </>

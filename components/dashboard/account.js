@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
+import { Auth } from "@supabase/ui";
 import Loading from "./sectionLoading";
+import Link from "next/link";
 
 export default function Account(props) {
   const [profile, setProfile] = useState(null);
@@ -81,7 +83,7 @@ export default function Account(props) {
             </div>
           </div>
           <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">
-            <button type="submit" className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+            <button type="submit" className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">
               Update
             </button>
             <div className="flex items-center ml-4">{success}</div>
@@ -95,21 +97,25 @@ export default function Account(props) {
               Settings
             </h2>
           </div>
-          <div className="mt-6 grid grid-cols-4 gap-6">
-            <div className="col-span-4 sm:col-span-2">
-              <li className="py-4 flex items-center justify-between">
-                <div className="flex flex-col">
-                  <p className="text-sm font-medium text-gray-900" id="privacy-option-1-label">
-                    Software vendor?
-                  </p>
-                </div>
-                {/* Enabled: "bg-teal-500", Not Enabled: "bg-gray-200" */}
-                <button type="button" onClick={() => toggleVendor()} className={`${props.vendor ? "bg-purple" : "bg-gray-200"} ml-4 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-blue-500`} aria-pressed="true" aria-labelledby="software-vendor" aria-describedby="software vendor">
-                  <span className="sr-only">Toggle software vendor</span>
+          <div className="mt-6 grid grid-cols-8 gap-6">
+            <div className="col-span-4">
+              <div className="flex items-center">
+                {/* Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" */}
+                <button type="button" onClick={() => toggleVendor()} className="flex-shrink-0 group relative rounded-full inline-flex items-center justify-center h-5 w-10 cursor-pointer focus:outline-none focus:ring-0" aria-pressed="false">
+                  <span className="sr-only">Toggle software vendor on off</span>
+                  <span aria-hidden="true" className="pointer-events-none absolute bg-white w-full h-full rounded-md"></span>
+                  {/* Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" */}
+                  <span aria-hidden="true" className={`${props.vendor ? "bg-purple" : "bg-gray-200"} pointer-events-none absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200`}></span>
                   {/* Enabled: "translate-x-5", Not Enabled: "translate-x-0" */}
-                  <span aria-hidden="true" className={`${props.vendor ? "translate-x-5" : "translate-x-0"} inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`}></span>
+                  <span aria-hidden="true" className={`${props.vendor ? "translate-x-5" : "translate-x-0"} pointer-events-none absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform ring-0 transition-transform ease-in-out duration-200`}></span>
                 </button>
-              </li>
+                <span className="ml-3" id="software-vendor-label">
+                  <span className="text-sm font-medium text-gray-900">Software vendor</span>
+                </span>
+              </div>
+            </div>
+            <div className="col-span-4 sm:col-span-4 lg:col-span-3 xl:col-span-2 row-start-2">
+              <Auth.UpdatePassword supabaseClient={supabase} />
             </div>
           </div>
         </div>
