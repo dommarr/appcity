@@ -68,8 +68,9 @@ const SupabaseLogin = () => {
 
     return (
       <>
+      <div className="h-screen flex flex-col">
         <Header style="dark" />
-        <div className="h-screen flex overflow-hidden bg-gray-100">
+        <div className="flex flex-1 overflow-hidden bg-gray-100">
           {authView === "update_password" && <Auth.UpdatePassword supabaseClient={supabase} />}
           {user && (
             <>
@@ -83,6 +84,7 @@ const SupabaseLogin = () => {
               {data && !error ? <Dashboard user={user} /> : <Loading />}
             </>
           )}
+        </div>
         </div>
         <Footer />
       </>
