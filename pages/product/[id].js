@@ -198,7 +198,7 @@ export default function Product({ product }) {
           <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
         </a>
       </div>
-      <div className="block md:flex md:flex-row h-4/5">
+      <div className="block md:flex md:flex-row h-4/5 max-w-7xl mx-auto">
         {/* Left */}
         <div className="w-full md:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black">
           {/* if media is not null, then display slider */}

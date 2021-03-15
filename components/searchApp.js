@@ -1,18 +1,4 @@
-import {
-  InstantSearch,
-  SearchBox,
-  // Pagination,
-  Highlight,
-  RangeInput,
-  HierarchicalMenu,
-  Stats,
-  SortBy,
-  ClearRefinements,
-  RefinementList,
-  Configure,
-  connectHits,
-  connectPagination,
-} from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, Pagination, ScrollTo, Highlight, RangeInput, HierarchicalMenu, Stats, SortBy, ClearRefinements, RefinementList, Configure, connectHits, connectPagination } from "react-instantsearch-dom";
 import RefinementBlock from "./refinementBlock";
 import PriceBlock from "./priceBlock";
 import PropTypes from "prop-types";
@@ -20,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 
 const Hits = ({ hits, monthlyPrice }) => (
-  <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
     {hits.map((hit) => (
       <li key={hit.objectID} className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200">
         <Link
@@ -29,12 +15,12 @@ const Hits = ({ hits, monthlyPrice }) => (
             query: { tier: hit.objectID },
           }}
         >
-          <a className="flex-1 flex flex-col p-4">
-            <img className="object-contain object-center w-32 h-32 flex-shrink-0 mx-auto" src={hit.logo} alt={`${hit.vendor} logo`} />
+          <a className="flex-1 flex flex-col p-4 md:p-2 lg:p-4">
+            <img className="object-contain object-center w-28 h-28 flex-shrink-0 mx-auto" src={hit.logo} alt={`${hit.vendor} logo`} />
             {/* Header Block */}
-            <div className="flex flex-col justify-center items-center h-24">
+            <div className="flex flex-col justify-center items-center h-20">
               <h2 className="text-gray-900 text-base font-medium">{hit.product}</h2>
-              <h3 className="mt-1 text-gray-500 text-base font-normal">{hit.tier}</h3>
+              <h3 className="mt-1 text-gray-500 text-sm font-normal">{hit.tier}</h3>
             </div>
             <PriceBlock tier={hit} model={hit.price_model} large={false} monthly={monthlyPrice} search={true} />
           </a>
@@ -46,7 +32,7 @@ const Hits = ({ hits, monthlyPrice }) => (
 
 const CustomHits = connectHits(Hits);
 
-const Pagination = ({ currentRefinement, nbPages, refine, createURL }) => (
+const Pagination_Custom = ({ currentRefinement, nbPages, refine, createURL }) => (
   <>
     <div className="-mt-px w-0 flex-1 flex">
       <a
@@ -112,7 +98,7 @@ const Pagination = ({ currentRefinement, nbPages, refine, createURL }) => (
   </>
 );
 
-const CustomPagination = connectPagination(Pagination);
+const CustomPagination = connectPagination(Pagination_Custom);
 
 export default class SearchApp extends React.Component {
   constructor(props) {
@@ -191,31 +177,32 @@ export default class SearchApp extends React.Component {
           </div>
 
           <div className="flex flex-col w-0 flex-1 overflow-hidden">
-            <div className="relative flex-shrink-0 flex h-12 bg-white shadow">
-              <button className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight md:hidden" onClick={() => this.setState({ showSidebar: true })}>
-                <span className="sr-only">Open sidebar</span>
-                {/* Heroicon name: menu-alt-2 */}
-                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
-                </svg>
-              </button>
-
-              <div className="flex-1 px-4 flex justify-between">
-                <SearchBox
-                  searchAsYouType={false}
-                  submit={
-                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                    </svg>
-                  }
-                  reset={
-                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" clipRule="evenodd" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  }
-                />
+            <ScrollTo>
+              <div className="relative flex-shrink-0 flex h-12 bg-white shadow">
+                <button className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight md:hidden" onClick={() => this.setState({ showSidebar: true })}>
+                  <span className="sr-only">Open sidebar</span>
+                  {/* Heroicon name: menu-alt-2 */}
+                  <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
+                  </svg>
+                </button>
+                <div className="flex-1 px-4 flex justify-between">
+                  <SearchBox
+                    searchAsYouType={false}
+                    submit={
+                      <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                      </svg>
+                    }
+                    reset={
+                      <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" clipRule="evenodd" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    }
+                  />
+                </div>
               </div>
-            </div>
+            </ScrollTo>
             <div className="flex-shrink-0 flex justify-between items-center bg-white shadow px-5 py-0.5">
               {/* <CurrentRefinements /> */}
               <Stats />
@@ -244,11 +231,12 @@ export default class SearchApp extends React.Component {
             </div>
             <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
               <div className="py-4">
-                <div className="max-w-7xl mx-auto px-4 sm:px-4">
+                <div className="max-w-screen-2xl mx-auto px-4 sm:px-4">
                   <CustomHits monthlyPrice={this.state.monthlyPrice} />
                   {/* Pagination */}
                   <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
                     <CustomPagination />
+                    {/* <Pagination /> */}
                   </nav>
                 </div>
               </div>
