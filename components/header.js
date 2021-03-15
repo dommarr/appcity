@@ -30,7 +30,7 @@ export default function Header(props) {
 
   return (
     <div className={`${props.style === "dark" ? "bg-purple" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
-      <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
+      <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 max-w-screen-2xl mx-auto">
         <div className="flex items-center">
           <Link href="/">
             <a className="flex">

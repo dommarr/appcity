@@ -5,6 +5,10 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Wedge from "../components/wedge";
 const RotatingText = require("react-rotating-text");
+import SmSkyline from "./skyline/smSkyline";
+import MdSkyline from "./skyline/mdSkyline";
+import LgSkyline from "./skyline/lgSkyline";
+import XlSkyline from "./skyline/xlSkyline";
 
 export const siteTitle = "AppCity";
 
@@ -79,7 +83,10 @@ export default function HomeLayout({ children }) {
             <div>{children}</div>
           </main>
         </div>
-        <Wedge className="absolute inset-x-0 bottom-0" />
+        <SmSkyline />
+        <MdSkyline />
+        <LgSkyline />
+        <XlSkyline />
 
         {/* Patterns */}
         {/* <div

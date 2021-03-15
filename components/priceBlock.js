@@ -1,4 +1,4 @@
-import PriceModel from "./priceModel";
+import PriceModelTooltip from "./priceModelTooltip";
 
 // tier = object of tier data
 // model = the pricing model of the product (same for all tiers)
@@ -138,8 +138,9 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
   // 2 prices for both
   if (two_prices_year && two_prices_month) {
     return (
-      <div className={`price-block-2-2 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
-        <PriceModel tier={tier} model={model} />
+      <div className={`price-block-2-2 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-2 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
+        {/* <PriceModel tier={tier} model={model} /> */}
+        <PriceModelTooltip model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative ${search ? "" : "h-full flex-grow"}`}>
           <dd className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</dd>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
@@ -161,8 +162,9 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
     // 2 prices for year, 1 price for month
   } else if (two_prices_year && !two_prices_month) {
     return (
-      <div className={`price-block-2-1 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
-        <PriceModel tier={tier} model={model} />
+      <div className={`price-block-2-1 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-2 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
+        {/* <PriceModel tier={tier} model={model} /> */}
+        <PriceModelTooltip model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center relative ${search ? "" : "h-full flex-grow"}`}>
           <span className={`absolute bottom-9 -left-10 text-gray-400 text-xs`}>Compare</span>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
@@ -181,8 +183,9 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
     // 1 price for year, 2 prices for month
   } else if (!two_prices_year && two_prices_month) {
     return (
-      <div className={`price-block-1-2 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
-        <PriceModel tier={tier} model={model} />
+      <div className={`price-block-1-2 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-2 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
+        {/* <PriceModel tier={tier} model={model} /> */}
+        <PriceModelTooltip model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center ${search ? "" : "h-full flex-grow"}`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
@@ -200,8 +203,9 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
     );
   } else {
     return (
-      <div className={`price-block-1-1 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-4 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
-        <PriceModel tier={tier} model={model} />
+      <div className={`price-block-1-1 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-2 mb-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
+        {/* <PriceModel tier={tier} model={model} /> */}
+        <PriceModelTooltip model={model} />
         <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center ${search ? "" : "h-full flex-grow"}`}>
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>

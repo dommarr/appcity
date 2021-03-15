@@ -9,6 +9,7 @@ import Header from "../components/header";
 import Dashboard from "../components/dashboard";
 import Loading from "../components/loading";
 import Logo from "../components/logo";
+import ProfileLoading from "../components/dashboard/profileLoading";
 
 const { Text } = Typography;
 
@@ -74,7 +75,7 @@ const SupabaseLogin = () => {
             {user && (
               <>
                 {error && <Typography.Text danger>Failed to fetch user!</Typography.Text>}
-                {data && !error ? <Dashboard user={user} authView={authView} /> : <Loading />}
+                {data && !error ? <Dashboard user={user} authView={authView} /> : <ProfileLoading />}
               </>
             )}
           </div>
