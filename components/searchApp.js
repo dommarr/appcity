@@ -16,7 +16,7 @@ function Hits({ hits, monthlyPrice }) {
   return (
     <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {hits.map((hit) => (
-        <li key={hit.objectID} onClick={() => router.push({ pathname: `/product/${hit.product_id}`, query: { tier: hit.objectID } })} className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200">
+        <li key={hit.objectID} onClick={() => router.push({ pathname: `/product/${hit.product_id}`, query: { tier: hit.objectID } })} className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200 cursor-pointer">
           <div className="flex-1 flex flex-col p-4 md:px-2 lg:p-4">
             <Link
               href={{
