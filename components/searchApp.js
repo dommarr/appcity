@@ -1,34 +1,45 @@
-import { InstantSearch, SearchBox, Pagination, ScrollTo, Highlight, RangeInput, HierarchicalMenu, Stats, SortBy, ClearRefinements, RefinementList, Configure, connectHits, connectPagination } from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, ScrollTo, Highlight, RangeInput, HierarchicalMenu, Stats, SortBy, ClearRefinements, RefinementList, Configure, connectHits, connectPagination } from "react-instantsearch-dom";
 import RefinementBlock from "./refinementBlock";
 import PriceBlock from "./priceBlock";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/router";
 
-const Hits = ({ hits, monthlyPrice }) => (
-  <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-    {hits.map((hit) => (
-      <li key={hit.objectID} className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200">
-        <Link
-          href={{
-            pathname: `/product/${hit.product_id}`,
-            query: { tier: hit.objectID },
-          }}
-        >
-          <a className="flex-1 flex flex-col p-4 md:p-2 lg:p-4">
-            <img className="object-contain object-center w-28 h-28 flex-shrink-0 mx-auto" src={hit.logo} alt={`${hit.vendor} logo`} />
-            {/* Header Block */}
-            <div className="flex flex-col justify-center items-center h-20">
-              <h2 className="text-gray-900 text-base font-medium">{hit.product}</h2>
-              <h3 className="mt-1 text-gray-500 text-sm font-normal">{hit.tier}</h3>
-            </div>
+function Hits({ hits, monthlyPrice }) {
+  const router = useRouter();
+  // const handleClick = (e) => {
+  //   e.preventDefault()
+  //   router.push(href)
+  // }
+
+  return (
+    <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      {hits.map((hit) => (
+        <li key={hit.objectID} onClick={() => router.push({ pathname: `/product/${hit.product_id}`, query: { tier: hit.objectID } })} className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200">
+          <div className="flex-1 flex flex-col p-4 md:px-2 lg:p-4">
+            <Link
+              href={{
+                pathname: `/product/${hit.product_id}`,
+                query: { tier: hit.objectID },
+              }}
+            >
+              <a>
+                <img className="object-contain object-center w-28 h-28 flex-shrink-0 mx-auto" src={hit.logo} alt={`${hit.vendor} logo`} />
+                {/* Header Block */}
+                <div className="flex flex-col justify-center items-center h-20">
+                  <h2 className="text-gray-900 text-base font-medium">{hit.product}</h2>
+                  <h3 className="mt-1 text-gray-500 text-sm font-normal">{hit.tier}</h3>
+                </div>
+              </a>
+            </Link>
             <PriceBlock tier={hit} model={hit.price_model} large={false} monthly={monthlyPrice} search={true} />
-          </a>
-        </Link>
-      </li>
-    ))}
-  </ol>
-);
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 const CustomHits = connectHits(Hits);
 
@@ -113,6 +124,8 @@ export default class SearchApp extends React.Component {
   flipPrice() {
     this.setState(!this.state.monthlyPrice);
   }
+
+  handleClick() {}
 
   static propTypes = {
     searchState: PropTypes.object,
@@ -203,9 +216,9 @@ export default class SearchApp extends React.Component {
                 </div>
               </div>
             </ScrollTo>
-            <div className="flex-shrink-0 flex justify-between items-center bg-white shadow px-5 py-0.5">
+            <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white shadow px-5 py-0.5">
               {/* <CurrentRefinements /> */}
-              <Stats />
+              <Stats className="hidden sm:block" />
               <SortBy
                 defaultRefinement="catalog"
                 items={[
