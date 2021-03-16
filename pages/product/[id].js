@@ -207,7 +207,7 @@ export default function Product({ product }) {
             <>
               <img className="object-contain object-center w-40 h-40 p-2 bg-white flex-shrink-0 mx-auto mt-10" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h3 className="text-white text-center text-2xl mt-5">Sorry!</h3>
-              <h4 className="text-white text-center text-base">Looks like we don't have any media for this product.</h4>
+              <h4 className="text-white text-center text-base px-2">Looks like we don't have any media for this product.</h4>
               <a href={product.vendors.website} className="mt-3 mb-10 inline-flex items-center px-2.5 py-1.5 border border-white shadow-sm text-xs font-medium text-white hover:bg-gray-700">
                 Go to product site
               </a>
