@@ -1,6 +1,6 @@
 export default function Grid() {
   return (
-    <div className="grid grid-cols-4 grid-rows-3 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-6 md:grid-rows-3 gap-4">
       <div className="bg-gray-300 h-40 p-4">title-1</div>
       <div className="bg-gray-300 h-40 p-4">title-2</div>
       <div className="bg-gray-300 h-40 p-4">title-3</div>
