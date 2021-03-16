@@ -23,8 +23,13 @@ const PriceModelTooltip = ({ model }) => {
   const price_model = capitalize(model);
   const caption = setCaption(model);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
-    <Tippy content={caption} onClick={(event) => event.stopPropagation()}>
+    <Tippy content={caption} onClick={handleClick} onMouseUp={handleClick} onMouseDown={handleClick}>
       <div className="-mr-5 flex justify-center items-center cursor-pointer pb-2">
         <span className="text-sm mr-1 text-gray-400 text-center">{price_model} Pricing</span>
         <svg className="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
