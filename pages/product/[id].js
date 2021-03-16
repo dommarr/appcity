@@ -294,7 +294,7 @@ export default function Product({ product }) {
               <div key={index} className={`index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(index + 1, 1, mdCols)} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 1, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}>
                 <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
                 <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
-                <a href="/" className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 text-sm font-semibold text-white text-center">
+                <a href="/" className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center">
                   Buy {obj.name}
                 </a>
               </div>
