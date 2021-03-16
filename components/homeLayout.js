@@ -9,6 +9,7 @@ import SmSkyline from "./skyline/smSkyline";
 import MdSkyline from "./skyline/mdSkyline";
 import LgSkyline from "./skyline/lgSkyline";
 import XlSkyline from "./skyline/xlSkyline";
+import XxlSkyline from "./skyline/xxlSkyline";
 
 export const siteTitle = "AppCity";
 
@@ -87,6 +88,7 @@ export default function HomeLayout({ children }) {
         <MdSkyline />
         <LgSkyline />
         <XlSkyline />
+        <XxlSkyline />
 
         {/* Patterns */}
         {/* <div
