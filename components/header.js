@@ -5,7 +5,7 @@ import { supabase } from "../utils/initSupabase";
 import { Auth } from "@supabase/ui";
 import Logo from "./logo";
 
-const appName = "AppCity";
+const appName = "appcity";
 const links = [
   {
     href: "/about",
@@ -36,7 +36,8 @@ export default function Header(props) {
             <a className="flex">
               <Logo size={40} />
               {/* <img className="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt={appName} /> */}
-              <span className="px-2 text-4xl text-yellow font-bold italic">{appName}</span>
+              <span className="pl-2 text-4xl text-white font-light">app</span>
+              <span className="pr-2 text-4xl text-white font-bold">city</span>
             </a>
           </Link>
         </div>

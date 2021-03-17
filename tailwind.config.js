@@ -19,6 +19,13 @@ module.exports = {
       white: colors.white,
       black: colors.black,
       gray: colors.gray,
+      red: colors.red,
+      amber: colors.yellow,
+      green: colors.emerald,
+      blue: colors.blue,
+      indigo: colors.indigo,
+      violet: colors.violet,
+      pink: colors.pink,
       yellow: {
         light: "#ffd581",
         DEFAULT: "#ffff00",
@@ -31,9 +38,14 @@ module.exports = {
         dark: "#621fff",
         extradark: "#540aff",
       },
-      indigo: colors.indigo,
     },
     extend: {
+      // colors: {
+      //   google: "#DB4437",
+      //   "google-light": "#E57368",
+      //   facebook: "#1778F2",
+      //   "facebook-light": "#5DA1F6",
+      // },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
@@ -125,6 +137,9 @@ module.exports = {
         38: 38,
         39: 39,
         40: 40,
+      },
+      textDecoration: {
+        dotted: "underline dotted",
       },
     },
   },
