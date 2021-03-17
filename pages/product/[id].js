@@ -169,13 +169,13 @@ export default function Product({ product }) {
   }
 
   // mc for max content - to set row height to content rather than fr
-  function rows(cols) {
-    return Math.ceil(tierCount / cols) * 3 + "mc";
-  }
-
   // function rows(cols) {
-  //   return Math.ceil(tierCount / cols) * 3;
+  //   return Math.ceil(tierCount / cols) * 3 + "mc";
   // }
+
+  function rows(cols) {
+    return Math.ceil(tierCount / cols) * 3;
+  }
 
   // creates empty spaces and correctly places sections with the rest of the column
   function rowStart(order, cols) {
