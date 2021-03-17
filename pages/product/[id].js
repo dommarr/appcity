@@ -202,7 +202,7 @@ export default function Product({ product }) {
           <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
         </a>
       </div>
-      <div className="block md:flex md:flex-row h-4/5 max-w-7xl mx-auto">
+      <div className="block md:flex md:flex-row h-4/5 max-w-screen-2xl mx-auto">
         {/* Left */}
         <div className="w-full md:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black">
           {/* if media is not null, then display slider */}
@@ -293,8 +293,8 @@ export default function Product({ product }) {
               </button>
             </div>
           </div>
-          {/* <div className={`mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}> */}
-          <div className={`mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-rows-${smRows}mc md:grid-rows-${mdRows}mc lg:grid-rows-${lgRows}mc xl:grid-rows-${xlRows}mc sm:grid-cols-${smCols} md:grid-cols-${mdCols} lg:grid-cols-${lgCols} xl:grid-cols-${xlCols}`}>
+          <div className={`mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}>
+            {/* <div className={`mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-rows-${smRows}mc md:grid-rows-${mdRows}mc lg:grid-rows-${lgRows}mc xl:grid-rows-${xlRows}mc sm:grid-cols-${smCols} md:grid-cols-${mdCols} lg:grid-cols-${lgCols} xl:grid-cols-${xlCols}`}> */}
             {sortedTiers.map((obj, index) => (
               <div key={index} className={`index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(index + 1, 1, mdCols)} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 1, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}>
                 <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
