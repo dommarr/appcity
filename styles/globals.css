@@ -358,3 +358,9 @@ input[type="search"]::-webkit-search-results-decoration {
 /* Stop purging. */
 
 /* Your own custom utilities */
+
+@layer utilities {
+  .dotted {
+    text-decoration: underline dotted;
+  }
+}
