@@ -1,7 +1,6 @@
 {
   /* <link rel="stylesheet" href="https://rsms.me/inter/inter.css"></link> */
 }
-
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
@@ -55,6 +54,7 @@ module.exports = {
       // },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        logo: ["Poppins"],
       },
       minHeight: {
         block: "200px",

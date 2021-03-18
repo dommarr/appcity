@@ -4,8 +4,9 @@ import { Transition } from "@headlessui/react";
 import { supabase } from "../utils/initSupabase";
 import { Auth } from "@supabase/ui";
 import Logo from "./logo";
+import LogoLight from "./LogoLight";
 
-const appName = "appcity";
+const appName = "AppCity";
 const links = [
   {
     href: "/about",
@@ -31,13 +32,12 @@ export default function Header(props) {
   return (
     <div className={`${props.style === "dark" ? "bg-purple" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 max-w-screen-2xl mx-auto">
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           <Link href="/">
-            <a className="flex">
-              <Logo size={40} />
-              {/* <img className="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt={appName} /> */}
-              <span className="pl-2 text-4xl text-white font-light">app</span>
-              <span className="pr-2 text-4xl text-white font-bold">city</span>
+            <a className="flex items-center justify-center">
+              <Logo size={50} alt={appName} />
+              <span className="font-logo pl-2 text-4xl text-white font-light">app</span>
+              <span className="font-logo pr-2 text-4xl text-white font-semibold">city</span>
             </a>
           </Link>
         </div>
@@ -111,7 +111,7 @@ export default function Header(props) {
           <div className="pt-5 pb-6 px-5">
             <div className="flex items-center justify-between">
               <div>
-                <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt={appName} />
+                <LogoLight size={40} alt={appName} />
               </div>
               <div className="-mr-2">
                 <button type="button" className="bg-white p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight" onClick={() => setShowMenu(false)}>
