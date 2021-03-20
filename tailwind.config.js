@@ -59,6 +59,9 @@ module.exports = {
       minHeight: {
         block: "200px",
       },
+      // maxWidth: {
+      //   "max-w-screen-3xl": "max-width: 1920px",
+      // },
       gridTemplateRows: {
         "1mc": "repeat(1, minmax(0, max-content))",
         "2mc": "repeat(2, minmax(0, max-content))",
