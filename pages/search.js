@@ -1,6 +1,6 @@
-import Footer from "../components/footer";
-import Header from "../components/header";
-import SearchApp from "../components/searchApp";
+import Footer from "../components/global/footer";
+import Header from "../components/global/header";
+import SearchApp from "../components/search/searchApp";
 import { isEqual } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
@@ -80,7 +80,7 @@ class Search extends React.Component {
       <>
         <Header style="dark" />
         <SearchApp {...DEFAULT_PROPS} searchState={this.state.searchState} resultsState={this.props.resultsState} onSearchStateChange={this.onSearchStateChange} createURL={createURL} />
-        <Footer />
+        <Footer dark={true} />
       </>
     );
   }

@@ -1,11 +1,10 @@
 import { Transition } from "@headlessui/react";
 import { useState } from "react";
-import { supabase } from "../utils/initSupabase";
+import { supabase } from "../../utils/initSupabase";
 import { useRouter } from "next/router";
-import Loading from "./loading";
-import Account from "./dashboard/account";
-import Favorites from "./dashboard/favorites";
-import SectionLoading from "./dashboard/sectionLoading";
+import Account from "./account";
+import Favorites from "./favorites";
+import SectionLoading from "./sectionLoading";
 
 const navLinks = [
   {

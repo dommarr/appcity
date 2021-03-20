@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Head from "next/head";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Wedge from "../components/wedge";
+import Header from "../global/header";
+import Footer from "../global/footer";
 const RotatingText = require("react-rotating-text");
-import SmSkyline from "./skyline/smSkyline";
-import MdSkyline from "./skyline/mdSkyline";
-import LgSkyline from "./skyline/lgSkyline";
-import XlSkyline from "./skyline/xlSkyline";
-import XxlSkyline from "./skyline/xxlSkyline";
+import SmSkyline from "../graphics/skyline/SmSkyline";
+import MdSkyline from "../graphics/skyline/MdSkyline";
+import LgSkyline from "../graphics/skyline/LgSkyline";
+import XlSkyline from "../graphics/skyline/XlSkyline";
+import XxlSkyline from "../graphics/skyline/XxlSkyline";
+import Link from "next/link";
 
 export const siteTitle = "AppCity";
 
@@ -177,16 +177,21 @@ export default function HomeLayout({ children }) {
       <div className="max-w-7xl mx-auto my-16 px-4 sm:px-6 lg:px-8">
         {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
         <div className="max-w-3xl mx-auto">
+          <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Starter Kits</h1>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-rows-3 grid-flow-row gap-2">
             <div class="row-span-1 col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-              <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2089&q=80" alt="" />
-              <div class="absolute inset-0 bg-violet-500 opacity-50"></div>
-              <div class="absolute inset-0 bg-gradient-to-t from-violet-600 via-violet-600 opacity-90"></div>
-              <div class="relative">
-                <div>
-                  <div className="text-white font-semibold text-xl">Podcasts</div>
-                </div>
-              </div>
+              <Link href="/podcasts">
+                <a>
+                  <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2089&q=80" alt="" />
+                  <div class="absolute inset-0 bg-violet-500 opacity-50"></div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-violet-600 via-violet-600 opacity-90"></div>
+                  <div class="relative">
+                    <div>
+                      <div className="text-white font-semibold text-xl">Podcasts</div>
+                    </div>
+                  </div>
+                </a>
+              </Link>
             </div>
 
             <div class="row-span-2 col-span-1 relative pt-10 pb-10 px-4 shadow-xl overflow-hidden">

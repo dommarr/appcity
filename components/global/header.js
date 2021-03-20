@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
-import { supabase } from "../utils/initSupabase";
+import { supabase } from "../../utils/initSupabase";
 import { Auth } from "@supabase/ui";
-import Logo from "./logo";
-import LogoLight from "./LogoLight";
+import Logo from "../graphics/logo/Logo";
+import LogoLight from "../graphics/logo/LogoLight";
 
 const appName = "AppCity";
 const links = [
@@ -31,7 +31,7 @@ export default function Header(props) {
 
   return (
     <div className={`${props.style === "dark" ? "bg-purple" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
-      <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 max-w-screen-2xl mx-auto">
+      <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 max-w-screen-3xl mx-auto">
         <div className="flex items-center justify-center">
           <Link href="/">
             <a className="flex items-center justify-center">

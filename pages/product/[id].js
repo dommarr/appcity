@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Footer from "../../components/footer";
-import Header from "../../components/header";
-import PriceBlock from "../../components/priceBlock";
+import Footer from "../../components/global/footer";
+import Header from "../../components/global/header";
+import PriceBlock from "../../components/search/priceBlock";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
@@ -202,7 +202,7 @@ export default function Product({ product }) {
           <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
         </a>
       </div>
-      <div className="block md:flex md:flex-row h-4/5 max-w-screen-2xl mx-auto">
+      <div className="block md:flex md:flex-row h-4/5 max-w-screen-3xl mx-auto">
         {/* Left */}
         <div className="w-full md:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black">
           {/* if media is not null, then display slider */}
@@ -347,7 +347,7 @@ export default function Product({ product }) {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer dark={true} />
     </>
   );
 }

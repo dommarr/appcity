@@ -4,14 +4,16 @@ import useSWR from "swr";
 import { Auth, Card, Typography, Space, Button, Icon } from "@supabase/ui";
 import { supabase } from "../utils/initSupabase";
 import { useEffect, useState } from "react";
-import Footer from "../components/footer";
-import Header from "../components/header";
-import Dashboard from "../components/dashboard";
-import Loading from "../components/loading";
-import Logo from "../components/logo";
+import Footer from "../components/global/footer";
+import Header from "../components/global/header";
+import Dashboard from "../components/dashboard/dashboard";
+import Loading from "../components/global/loading";
+import Logo from "../components/graphics/logo/Logo";
 import ProfileLoading from "../components/dashboard/profileLoading";
 
 const { Text } = Typography;
+
+// providers={["google", "facebook"]}
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -61,7 +63,7 @@ const SupabaseLogin = () => {
           </div>
           <Card className="sm:mx-auto sm:w-full sm:max-w-md">
             <Space direction="vertical" size={8}>
-              <Auth supabaseClient={supabase} providers={["google", "facebook"]} view={authView} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
+              <Auth supabaseClient={supabase} view={authView} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
             </Space>
           </Card>
         </div>
@@ -80,7 +82,7 @@ const SupabaseLogin = () => {
             )}
           </div>
         </div>
-        <Footer />
+        <Footer dark={true} />
       </>
     );
   };
