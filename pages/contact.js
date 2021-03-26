@@ -1,9 +1,47 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
-
+import { useState } from 'react';
+let postmark = require("postmark")
+const serverToken = process.env.NEXT_PUBLIC_POSTMARK_KEY;
+let client = new postmark.ServerClient(serverToken);
 
 
 export default function Contact() {
+    const [loading, setLoading] = useState(false)
+    let [form, setForm] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        message: ''
+      });
+
+    let handleChange = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+        form[name] = value;
+        setForm(form);
+        console.log(form)
+    }
+    
+    const handleSubmit = (e) => {
+        e.preventDefault
+        setLoading(true)
+        client.sendEmail(
+            {
+                From: "contact.form@tryappcity.com",
+                To: "contact@tryappcity.com",
+                ReplyTo: form[email],
+                Subject: "Contact Form Message",
+                TextBody: form[message],
+            }
+        ).then(response => {
+            console.log("Sending message");
+            console.log(response.To);
+            console.log(response.Message);
+            setLoading(false)
+        });
+    }
+
   return (
       <>
       <Header style="dark" />
@@ -34,29 +72,30 @@ export default function Contact() {
             </p>
             </div>
             <div className="mt-12">
-            <form action="#" method="POST" className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+            {!loading && 
+            <form onSubmit={handleSubmit} method="POST" className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                 <div>
-                <label for="first_name" className="block text-sm font-medium text-gray-700">First name</label>
+                <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">First name</label>
                 <div className="mt-1">
-                    <input type="text" name="first_name" id="first_name" autocomplete="given-name" className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"/>
+                    <input type="text" name="first_name" id="first_name" autoComplete="given-name" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"/>
                 </div>
                 </div>
                 <div>
-                <label for="last_name" className="block text-sm font-medium text-gray-700">Last name</label>
+                <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">Last name</label>
                 <div className="mt-1">
-                    <input type="text" name="last_name" id="last_name" autocomplete="family-name" className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"/>
+                    <input type="text" name="last_name" id="last_name" autoComplete="family-name" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"/>
                 </div>
                 </div>
                 <div className="sm:col-span-2">
-                <label for="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                 <div className="mt-1">
-                    <input id="email" name="email" type="email" autocomplete="email" className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"/>
+                    <input id="email" name="email" type="email" autoComplete="email" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"/>
                 </div>
                 </div>
                 <div className="sm:col-span-2">
-                <label for="message" className="block text-sm font-medium text-gray-700">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
                 <div className="mt-1">
-                    <textarea id="message" name="message" rows="4" className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"></textarea>
+                    <textarea id="message" name="message" rows="4" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"></textarea>
                 </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -65,6 +104,8 @@ export default function Contact() {
                 </button>
                 </div>
             </form>
+            }
+            {loading && <div>Loading...</div>}
             </div>
         </div>
         </div>
