@@ -1,13 +1,11 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import { useState } from 'react';
-let postmark = require("postmark")
-const serverToken = process.env.NEXT_PUBLIC_POSTMARK_KEY;
-let client = new postmark.ServerClient(serverToken);
-
 
 export default function Contact() {
     const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [error, setError] = useState(false)
     let [form, setForm] = useState({
         first_name: '',
         last_name: '',
@@ -20,27 +18,41 @@ export default function Contact() {
         let value = e.target.value;
         form[name] = value;
         setForm(form);
-        console.log(form)
     }
     
-    const handleSubmit = (e) => {
-        e.preventDefault
+    const handleSubmit = async event => {
+        event.preventDefault()
         setLoading(true)
-        client.sendEmail(
-            {
-                From: "contact.form@tryappcity.com",
-                To: "contact@tryappcity.com",
-                ReplyTo: form[email],
-                Subject: "Contact Form Message",
-                TextBody: form[message],
-            }
-        ).then(response => {
-            console.log("Sending message");
-            console.log(response.To);
-            console.log(response.Message);
+    
+        const res = await fetch('/api/contact', {
+          body: JSON.stringify({
+            From: "contact.form@tryappcity.com",
+            To: "contact@tryappcity.com",
+            ReplyTo: form.email,
+            Subject: "Contact Form Message",
+            TextBody: `
+            From: ${form.first_name} ${form.last_name}
+            Email: ${form.email}
+            Message:
+            ${form.message}
+            `,
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        })
+        const result = await res.json()
+        if (result.ErrorCode === 0) {
             setLoading(false)
-        });
-    }
+            setSuccess(true)
+            setTimeout(function(){ setSuccess(false) }, 3000)
+        } else {
+            setLoading(false)
+            setError(true)
+            setTimeout(function(){ setError(false) }, 3000)
+        }
+      }
 
   return (
       <>
@@ -72,7 +84,7 @@ export default function Contact() {
             </p>
             </div>
             <div className="mt-12">
-            {!loading && 
+            {(!loading && !success && !error) && 
             <form onSubmit={handleSubmit} method="POST" className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                 <div>
                 <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">First name</label>
@@ -105,7 +117,33 @@ export default function Contact() {
                 </div>
             </form>
             }
-            {loading && <div>Loading...</div>}
+            {loading && 
+                <div className="text-center">
+                <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl animate-pulse">
+                    Sending...
+                </h2>
+                </div>
+            }
+            {success && 
+                <div className="text-center">
+                <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Sent!
+                </h2>
+                <p className="mt-4 text-lg leading-6 text-gray-500">
+                    We'll be in touch.
+                </p>
+                </div>
+            }
+            {error && 
+                <div className="text-center">
+                <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Uh oh!
+                </h2>
+                <p className="mt-4 text-lg leading-6 text-gray-500">
+                    There was an error. Please try again. The form will reset shortly.
+                </p>
+                </div>
+            }
             </div>
         </div>
         </div>
