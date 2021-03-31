@@ -13,8 +13,6 @@ import ProfileLoading from "../components/dashboard/profileLoading";
 
 const { Text } = Typography;
 
-// providers={["google", "facebook"]}
-
 const fetcher = (url, token) =>
   fetch(url, {
     method: "GET",

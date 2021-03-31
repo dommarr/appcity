@@ -104,63 +104,54 @@ export default function HomeLayout({ children }) {
       <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Starter Kits</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-rows-3 grid-flow-row gap-2">
-            <div className="row-span-1 col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-rows-5 md:grid-rows-3 grid-flow-row gap-2">
+            <div class="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
               <Link href="/podcasts">
                 <a>
-                  <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2089&q=80" alt="" />
-                  <div className="absolute inset-0 bg-violet-500 opacity-50"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-violet-600 via-violet-600 opacity-90"></div>
-                  <div className="relative">
-                    <div>
-                      <div className="text-white font-semibold text-xl">Podcasts</div>
-                    </div>
+                  <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2089&q=80" alt="" />
+                  <div class="absolute inset-0 bg-violet-500 opacity-50"></div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-violet-600 via-violet-600 opacity-90"></div>
+                  <div class="absolute bottom-10 left-4">
+                    <div className="text-white font-semibold text-xl">Podcasts</div>
                   </div>
                 </a>
               </Link>
             </div>
 
-            <div className="row-span-2 col-span-1 relative pt-10 pb-10 px-4 shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="" />
-              <div className="absolute inset-0 bg-blue-500 opacity-50"></div>
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-600 via-blue-600 opacity-90"></div>
-              <div className="relative">
-                <div>
-                  <div className="text-white font-semibold text-xl">Ecommerce</div>
-                </div>
+            <div class="row-span-1 col-span-1 sm:row-span-2 relative shadow-xl overflow-hidden">
+              <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="" />
+              <div class="absolute inset-0 bg-blue-500 opacity-50"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-600 opacity-90"></div>
+              <div class="absolute bottom-10 left-4">
+                <div className="text-white font-semibold text-xl">Ecommerce</div>
               </div>
             </div>
 
-            <div className="row-span-2 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1334&q=80" alt="" />
-              <div className="absolute inset-0 bg-red-500 opacity-50"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-red-600 via-red-600 opacity-90"></div>
-              <div className="absolute bottom-10 left-4">
-                <div>
-                  <div className="text-white font-semibold text-xl">YouTube</div>
-                </div>
+            <div class="row-span-1 col-span-1 sm:row-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
+              <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1334&q=80" alt="" />
+              <div class="absolute inset-0 bg-red-500 opacity-50"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-red-600 via-red-600 opacity-90"></div>
+              <div class="absolute bottom-10 left-4">
+                <div className="text-white font-semibold text-xl">YouTube</div>
               </div>
             </div>
 
-            <div className="row-span-1 col-span-1 relative pt-10 pb-10 px-4 shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1559057287-ce0f595679a8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80" alt="" />
-              <div className="absolute inset-0 bg-amber-400 opacity-50"></div>
-              <div className="absolute inset-0 bg-gradient-to-b from-amber-400 via-amber-400 opacity-90"></div>
-              <div className="relative">
-                <div>
-                  <div className="text-white font-semibold text-xl">Newsletters</div>
-                </div>
+            <div class="row-span-1 col-span-1 sm:row-span-2 md:row-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
+              <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1559057287-ce0f595679a8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80" alt="" />
+              <div class="absolute inset-0 bg-amber-400 opacity-50"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-amber-400 via-amber-400 opacity-90"></div>
+              <div class="absolute bottom-10 left-4">
+                <div className="text-white font-semibold text-xl">Newsletters</div>
               </div>
             </div>
 
-            <div className="row-span-1 col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1567&q=80" alt="" />
-              <div className="absolute inset-0 bg-pink-500 opacity-50"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-pink-600 via-pink-600 opacity-90"></div>
-              <div className="relative">
-                <div>
-                  <div className="text-white font-semibold text-xl">Startups</div>
-                </div>
+            <div class="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
+              <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1567&q=80" alt="" />
+              <div class="absolute inset-0 bg-pink-500 opacity-50"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-pink-600 via-pink-600 opacity-90"></div>
+              <div class="absolute bottom-10 left-4">
+                <div className="text-white font-semibold text-xl">Startups</div>
               </div>
             </div>
           </div>
