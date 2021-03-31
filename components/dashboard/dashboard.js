@@ -4,6 +4,7 @@ import { supabase } from "../../utils/initSupabase";
 import { useRouter } from "next/router";
 import Account from "./account";
 import Favorites from "./favorites";
+import Products from "./products";
 import SectionLoading from "./sectionLoading";
 
 const navLinks = [
@@ -166,6 +167,7 @@ export default function Dashboard(props) {
               {/* Replace with your content */}
               {screen === "Your Account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} authView={props.authView} />}
               {screen === "Favorites" && <Favorites user={props.user} />}
+              {screen === "Products" && <Products user={props.user} />}
               {/* /End replace */}
             </div>
           </div>
