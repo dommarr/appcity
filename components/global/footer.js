@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 export default function Footer({ children, dark }) {
+
   return (
     <footer className={`${dark ? "bg-purple" : "bg-white"}`} aria-labelledby="footerHeading">
       <h2 id="footerHeading" className="sr-only">
@@ -11,16 +14,24 @@ export default function Footer({ children, dark }) {
               <div>
                 <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Solutions</h3>
                 <ul className="mt-4 space-y-4">
-                  <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      For software vendors
+                <li>
+                  <Link href="/about">
+                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
+                      For creators
                     </a>
+                    </Link>
                   </li>
-
                   <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      For software buyers
+                  <Link
+                    href={{
+                      pathname: `/about`,
+                      query: { customer: "vendor" },
+                    }}
+                  >
+                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
+                      For vendors
                     </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -58,9 +69,19 @@ export default function Footer({ children, dark }) {
                 <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Company</h3>
                 <ul className="mt-4 space-y-4">
                   <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
+                    <Link href="/about">
+                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
                       About
                     </a>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link href="/contact">
+                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
+                      Contact
+                    </a>
+                    </Link>
                   </li>
 
                   <li>

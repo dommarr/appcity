@@ -17,11 +17,13 @@
     "@tippyjs/react": "^4.2.4",
     "algoliasearch": "^4.8.5",
     "autoprefixer": "^10.2.1",
+    "cors": "^2.8.5",
     "keen-slider": "^5.4.0",
     "next": "10.0.6",
     "postcss": "^8.2.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^6.7.0",
+    "postmark": "^2.7.3",
     "qs": "^6.9.6",
     "react": "^17.0.1",
     "react-device-detect": "^1.15.0",
@@ -29,9 +31,13 @@
     "react-instantsearch-dom": "^6.9.0",
     "react-player": "^2.8.2",
     "react-rotating-text": "^1.4.1",
+    "recordrtc": "^5.6.2",
     "simple-react-lightbox-pro": "^1.2.2",
     "swr": "^0.4.2",
     "tailwindcss": "^2.0.2",
-    "vercel": "^21.2.1"
+    "vercel": "^21.2.1",
+    "video.js": "^7.11.4",
+    "videojs-record": "^4.3.0",
+    "webrtc-adapter": "^7.7.1"
   }
 }
