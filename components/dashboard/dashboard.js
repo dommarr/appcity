@@ -8,6 +8,7 @@ import Reviews from "./reviews";
 import Products from "./products";
 import Vendor from "./vendor";
 import SectionLoading from "./sectionLoading";
+import AddApp from "./addApp";
 
 const navLinks = [
   {
@@ -25,12 +26,16 @@ const navLinks = [
 ];
 
 const vendorLinks = [
+  // {
+  //   label: "Vendor",
+  //   icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
+  // },
+  // {
+  //   label: "Products",
+  //   icon: "M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z",
+  // },
   {
-    label: "Vendor",
-    icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
-  },
-  {
-    label: "Products",
+    label: "Add your app",
     icon: "M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z",
   },
 ];
@@ -192,6 +197,7 @@ export default function Dashboard(props) {
               {screen === "Reviews" && <Reviews user={props.user} />}
               {/* {screen === "Vendor" && <Vendor user={props.user} />} */}
               {/* {screen === "Products" && <Products user={props.user} />} */}
+              {screen === "Add your app" && <AddApp user={props.user} />}
               {/* /End replace */}
             </div>
           </div>

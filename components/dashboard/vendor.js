@@ -7,7 +7,7 @@
 
 //   const [vendorname, setVendorname] = useState("");
 //   const [vendorwebsite, setVendorwebsite] = useState("");
-//   const [vendorlogo, setVendorlogo] = useState("");
+//   // const [vendorlogo, setVendorlogo] = useState("");
 
 //   // Fetch on load
 //   useEffect(() => {
@@ -26,7 +26,7 @@
 //         .eq("id", user_id);
 //       setVendorname(vendorData.body[0].vendors.name);
 //       setVendorwebsite(vendorData.body[0].vendors.website);
-//       setVendorlogo(vendorData.body[0].vendors.logo);
+//       // setVendorlogo(vendorData.body[0].vendors.logo);
 //     } catch (error) {
 //       alert(error);
 //     }

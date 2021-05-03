@@ -38,7 +38,7 @@ export default function HomeLayout({ children }) {
         </Head>
 
         {/* Page Content */}
-        <div className="relative py-32">
+        <div className="relative pt-16 pb-32 min-h-70vh flex flex-col justify-center items-center">
           <main className="mx-auto max-w-7xl px-4">
             {/* Heading */}
             <div className="text-center">
@@ -79,7 +79,7 @@ export default function HomeLayout({ children }) {
                   </form>
                 </div>
 
-                <div className="flex justify-center items-center flex-wrap pt-4">
+                {/* <div className="flex justify-center items-center flex-wrap pt-4">
                   <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
                     CRM
                   </a>
@@ -89,7 +89,7 @@ export default function HomeLayout({ children }) {
                   <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
                     Analytics
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
             <div>{children}</div>
