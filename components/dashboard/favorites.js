@@ -17,7 +17,6 @@ export default function Favorites({ user }) {
   useEffect(() => {
     async function fetchProfile() {
       const profileData = await getProfile(user.id);
-      console.log(profileData);
       setProfile(profileData[0]);
     }
     fetchProfile();

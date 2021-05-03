@@ -143,16 +143,20 @@ export default class ReviewRecorder extends React.Component {
       setTimeout(() => {
         this.setState({ message: "" });
       }, 2000);
-      return;
+      throw err;
     }
   }
 
   async signUrl(path) {
     try {
-    const { data, error } = await supabase.storage.from("reviews").createSignedUrl(path, 283824000);
-      if (error) {throw error}
-      return data.signedURL
-    } catch (err) {throw err}
+      const { data, error } = await supabase.storage.from("reviews").createSignedUrl(path, 283824000);
+      if (error) {
+        throw error;
+      }
+      return data.signedURL;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async handleSubmit(e) {
@@ -189,7 +193,7 @@ export default class ReviewRecorder extends React.Component {
           // update user profile
           this.updateProfile(this.state.firstname, this.state.lastname, this.props.user.id);
           // sign review video and create url for display
-          let url = await this.signUrl(`${this.props.user.id}_${this.props.product.id}`)
+          let url = await this.signUrl(`${this.props.user.id}_${this.props.product.id}`);
           // add review to database - reviews table
           let reviewObj = {
             first_name: this.state.firstname,
@@ -221,7 +225,7 @@ export default class ReviewRecorder extends React.Component {
           setTimeout(() => {
             this.setState({ message: "" });
           }, 2000);
-          return;
+          throw err;
         }
       } catch (err) {
         this.setState({ uploading: false });
@@ -230,13 +234,13 @@ export default class ReviewRecorder extends React.Component {
           setTimeout(() => {
             this.setState({ message: "" });
           }, 2000);
-          return;
+          throw err;
         } else {
           this.setState({ message: "There was an error. Please try again." });
           setTimeout(() => {
             this.setState({ message: "" });
           }, 2000);
-          return;
+          throw err;
         }
       }
     }

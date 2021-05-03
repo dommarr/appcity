@@ -16,25 +16,17 @@ export default function UserReviews({ user }) {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const refreshData = () => {
-    router.replace(router.asPath);
-  };
+  // const refreshData = () => {
+  //   router.replace(router.asPath);
+  // };
 
   const { data: reviews } = useSWR(`/api/user_reviews/${user.id}`, fetcher, {
     onSuccess: (data) => {
       if (data.length < 1) {
-        console.log(data.length);
         return;
       } else {
-        console.log(data.length);
         setCount(data.length);
       }
-      // let sum = 0;
-      // let i;
-      // for (i = 0; i < data.length; i++) {
-      //   sum += data[i].rating;
-      // }
-      // props.setRating(Math.round((sum / data.length) * 10) / 10);
     },
   });
 
@@ -43,7 +35,6 @@ export default function UserReviews({ user }) {
     try {
       const { data, error } = await supabase.from("reviews").delete().eq("id", review_id);
       if (error) {
-        console.log(error);
         setLoading(false);
         throw error;
       }
@@ -51,7 +42,6 @@ export default function UserReviews({ user }) {
         try {
           const { data, error } = await supabase.storage.from("reviews").remove([`${user_id}_${product_id}`]);
           if (error) {
-            console.log(error);
             setLoading(false);
             throw error;
           }
@@ -61,13 +51,11 @@ export default function UserReviews({ user }) {
             return;
           }
         } catch (error) {
-          console.log(error);
           setLoading(false);
           throw error;
         }
       }
     } catch (error) {
-      console.log(error);
       setLoading(false);
       throw error;
     }
