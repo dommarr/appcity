@@ -22,7 +22,31 @@ export default function Home() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-start">
-              <span className="pr-3 bg-white text-lg font-medium text-gray-900">Recording & Editing</span>
+              <span className="pr-3 bg-white text-3xl font-medium text-gray-900">Recording</span>
+            </div>
+          </div>
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/b2151ba927bb42e.png" alt="Riverside Logo" />
+              <div className="flex items-center justify-center text-2xl font-medium pl-4">Riverside.FM</div>
+            </li>
+            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/a6c740900a504b2.png" alt="Squadcast Logo" />
+              <div className="flex items-center justify-center text-2xl font-medium pl-4">SquadCast.fm</div>
+            </li>
+            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/0083c38b256a4ff.png" alt="Zencastr Logo" />
+              <div className="flex items-center justify-center text-2xl font-medium pl-4">Zencastr</div>
+            </li>
+          </ul>
+        </section>
+        <section className="py-10">
+          <div className="relative mb-4">
+            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-start">
+              <span className="pr-3 bg-white text-3xl font-medium text-gray-900">Editing</span>
             </div>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -46,7 +70,7 @@ export default function Home() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-start">
-              <span className="pr-3 bg-white text-lg font-medium text-gray-900">Hosting</span>
+              <span className="pr-3 bg-white text-3xl font-medium text-gray-900">Hosting</span>
             </div>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -70,7 +94,7 @@ export default function Home() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-start">
-              <span className="pr-3 bg-white text-lg font-medium text-gray-900">Social Media</span>
+              <span className="pr-3 bg-white text-3xl font-medium text-gray-900">Social Media</span>
             </div>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

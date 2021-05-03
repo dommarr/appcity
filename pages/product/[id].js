@@ -13,6 +13,11 @@ import ReactPlayer from "react-player";
 import { SRLWrapper } from "simple-react-lightbox-pro";
 import { useLightbox } from "simple-react-lightbox-pro";
 import { isMobile } from "react-device-detect";
+import ReviewRecorder from "../../components/review/reviewRecorder";
+import { Auth } from "@supabase/ui";
+import Tooltip from "../../components/global/tooltip";
+import ReviewGrid from "../../components/review/reviewGrid";
+import { StarIcon } from "@heroicons/react/outline";
 
 const Lightbox = (props) => {
   return (
@@ -132,7 +137,12 @@ const ImageSlider = (props) => {
 
 export default function Product({ product }) {
   const router = useRouter();
+  const { user } = Auth.useUser();
   const [monthly, setMonthly] = useState(true);
+  const [review, setReview] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [rating, setRating] = useState("");
+  const [count, setCount] = useState("");
   //const tierCount = useState(product.tiers.length);
   const tierCount = product.tiers.length;
 
@@ -201,6 +211,16 @@ export default function Product({ product }) {
           <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
           <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
         </a>
+        <a href="#reviews">
+          <div className="flex mt-2 justify-center items-center">
+            <StarIcon className={`h-5 w-5 text-purple ${rating > 0 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating > 1 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating > 2 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating > 3 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating > 4 ? "fill-current" : ""}`} />
+            {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
+          </div>
+        </a>
       </div>
       <div className="block md:flex md:flex-row h-4/5 max-w-screen-3xl mx-auto">
         {/* Left */}
@@ -225,6 +245,16 @@ export default function Product({ product }) {
             <a className="mt-2 flex" href={product.vendors.website}>
               <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
+            </a>
+            <a href="#reviews">
+              <div className="flex mt-2 justify-center items-center">
+                <StarIcon className={`h-5 w-5 text-purple ${rating > 0 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating > 1 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating > 2 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating > 3 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating > 4 ? "fill-current" : ""}`} />
+                {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
+              </div>
             </a>
           </div>
           <h2 className="text-3xl font-medium my-4">{tier === null ? "Select a tier:" : tier.name}</h2>
@@ -344,6 +374,36 @@ export default function Product({ product }) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+      <div id="reviews" className="bg-white">
+        <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
+          <div className="sm:flex sm:flex-col sm:align-center">
+            <h1 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h1>
+            <div className="self-center my-8 flex">
+              {!review && !success && (
+                <div className="flex-col items-center space-y-2">
+                  <button type="button" onClick={() => setReview(true)} className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">
+                    Leave a video review
+                  </button>
+                  <Tooltip text="Why only video?" caption="Video reviews are more trustworthy. When someone puts their face and name on a video, you can better trust its authenticity." />
+                </div>
+              )}
+              {review && (
+                <div className="flex flex-col">
+                  <ReviewRecorder user={user} product={product} setReview={setReview} setSuccess={setSuccess} />
+                  <div className="w-full border-t border-gray-300 mt-8" />
+                </div>
+              )}
+              {success && (
+                <div className="flex flex-col justify-center items-center">
+                  <div className="text-green-600 font-medium">Review submitted successfully.</div>
+                  <div className="text-green-600 font-medium">Thank you!</div>
+                </div>
+              )}
+            </div>
+            <ReviewGrid product={product} count={count} rating={rating} setCount={setCount} setRating={setRating} />
           </div>
         </div>
       </div>

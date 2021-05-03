@@ -1,10 +1,11 @@
-import { InstantSearch, SearchBox, ScrollTo, Highlight, RangeInput, HierarchicalMenu, Stats, SortBy, ClearRefinements, RefinementList, Configure, connectHits, connectPagination } from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, ScrollTo, Highlight, RangeInput, HierarchicalMenu, RatingMenu, Stats, SortBy, ClearRefinements, RefinementList, Configure, connectHits, connectPagination } from "react-instantsearch-dom";
 import RefinementBlock from "./refinementBlock";
 import PriceBlock from "./priceBlock";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
+import { StarIcon } from "@heroicons/react/outline";
 
 function Hits({ hits, monthlyPrice }) {
   const router = useRouter();
@@ -33,6 +34,16 @@ function Hits({ hits, monthlyPrice }) {
                 </div>
               </a>
             </Link>
+            <div className="flex justify-center items-center p-2">
+              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 0 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 1 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 2 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 3 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 4 ? "fill-current" : ""}`} />
+              <span className="ml-2 text-sm">
+                {hit.count} {hit.count === 1 ? "review" : "reviews"}
+              </span>
+            </div>
             <PriceBlock tier={hit} model={hit.price_model} large={false} monthly={monthlyPrice} search={true} />
           </div>
         </li>
@@ -176,13 +187,13 @@ export default class SearchApp extends React.Component {
                     <RefinementBlock header="Category">
                       <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1"]} limit={10} showMore />
                     </RefinementBlock>
-                    <RefinementBlock header="vendors">
+                    <RefinementBlock header="Rating">
+                      <RatingMenu attribute="rating" />
+                    </RefinementBlock>
+                    <RefinementBlock header="Vendors">
                       <RefinementList attribute="vendor" limit={10} showMore />
                     </RefinementBlock>
-
-                    {/* <RefinementBlock header="vendors">
-                    <RefinementList attribute="vendor" />
-                  </RefinementBlock> */}
+                    <RefinementBlock header="Features"></RefinementBlock>
                   </nav>
                 </div>
               </div>

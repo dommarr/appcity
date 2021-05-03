@@ -25,7 +25,6 @@ const SupabaseLogin = () => {
   const { data, error } = useSWR(session ? ["/api/getUser", session.access_token] : null, fetcher);
   const router = useRouter();
   const [authView, setAuthView] = useState(router.query.view);
-  console.log(authView);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {

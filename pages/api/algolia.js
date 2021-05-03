@@ -1,9 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
 import algoliasearch from "algoliasearch";
-
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "../../utils/initSupabase";
 
 const algoliaApp = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
 const algoliaKey = process.env.ALGOLIA_ADMIN_KEY;
@@ -35,6 +31,18 @@ async function getCatalog() {
             )
         `);
     return response.data;
+  } catch (err) {
+    alert(err);
+  }
+}
+
+async function getReviews() {
+  try {
+    let { data: reviews, error } = await supabase.from("reviews").select("*");
+    if (error) {
+      throw error;
+    }
+    return reviews;
   } catch (err) {
     alert(err);
   }
@@ -76,11 +84,14 @@ export default async function (req, res) {
   catArray.forEach((elem) => (catNames[elem.id] = elem.name));
   const categories = createCatTable(catNames, catArray);
 
+  // get all reviews
+  const reviews = await getReviews();
+
   // query data from Supabase
   const catalog = await getCatalog();
 
   // array for algolia index
-  const objects = [];
+  let objects = [];
 
   // organize data for Algolia
   catalog.forEach(function (elem) {
@@ -108,6 +119,20 @@ export default async function (req, res) {
     // determine what price to sort by - defined in database
     elem.sort_by_starting_price ? (obj.sort_price_monthly = elem.starting_price_month) : (obj.sort_price_monthly = elem.compare_price_month);
     elem.sort_by_starting_price ? (obj.sort_price_yearly = elem.starting_price_year) : (obj.sort_price_yearly = elem.compare_price_year);
+    // calc and set review rating and count
+    let filteredReviews = reviews.filter((review) => review.product === elem.products.id);
+    if (filteredReviews.length === 0) {
+      obj.rating = 0;
+      obj.count = 0;
+    } else {
+      let sum = 0;
+      let i;
+      for (i = 0; i < filteredReviews.length; i++) {
+        sum += filteredReviews[i].rating;
+      }
+      obj.rating = Math.round((sum / filteredReviews.length) * 10) / 10;
+      obj.count = filteredReviews.length;
+    }
     obj.categories = {};
     // for each category, match and get the hierarchy level and name
     elem.products.products_categories.forEach(function (item) {

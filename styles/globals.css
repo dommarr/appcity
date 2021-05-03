@@ -133,7 +133,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .ais-RangeInput-submit {
-  @apply px-2 py-1.5 mt-0 border border-transparent text-xs font-normal shadow-sm text-white bg-purple hover:bg-purple-extradark !important;
+  @apply px-2 py-1.5 mt-0 border border-transparent text-xs font-normal shadow-sm text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-0 !important;
 }
 
 .ais-HierarchicalMenu {
@@ -185,11 +185,35 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .ais-RefinementList-showMore {
-  @apply mt-2 px-2 py-1 border border-transparent text-xs font-normal shadow-sm text-white bg-purple hover:bg-purple-extradark;
+  @apply mt-2 px-2 py-1 border border-transparent text-xs font-normal shadow-sm text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-0;
 }
 
 .ais-RefinementList-showMore--disabled {
   @apply hidden;
+}
+
+.ais-RatingMenu-item {
+  @apply font-normal text-gray-700 text-sm flex items-center my-1;
+}
+
+.ais-RatingMenu-item--selected {
+  @apply font-bold;
+}
+
+.ais-RatingMenu-link {
+  @apply flex;
+}
+
+.ais-RatingMenu-count {
+  @apply bg-gray-100 py-0.5 px-1;
+}
+
+.ais-RatingMenu-label {
+  @apply py-0.5 px-1;
+}
+
+.ais-RatingMenu-starIcon {
+  @apply w-5 h-5 text-purple fill-current;
 }
 
 .navigation-wrapper {
