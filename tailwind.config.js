@@ -154,7 +154,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fill: ["hover"],
+      cursor: ["hover"],
+    },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("@tailwindcss/aspect-ratio")],
 };

@@ -4,7 +4,9 @@ import { supabase } from "../../utils/initSupabase";
 import { useRouter } from "next/router";
 import Account from "./account";
 import Favorites from "./favorites";
+import Reviews from "./reviews";
 import Products from "./products";
+import Vendor from "./vendor";
 import SectionLoading from "./sectionLoading";
 
 const navLinks = [
@@ -23,6 +25,10 @@ const navLinks = [
 ];
 
 const vendorLinks = [
+  {
+    label: "Vendor",
+    icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
+  },
   {
     label: "Products",
     icon: "M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z",
@@ -89,6 +95,14 @@ export default function Dashboard(props) {
                 ))}
                 {vendor && (
                   <>
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div className="relative flex justify-center">
+                        <span className="px-2 bg-white text-sm text-gray-500">Vendor</span>
+                      </div>
+                    </div>
                     {vendorLinks.map(({ label, icon }) => (
                       <button key={label} onClick={() => mobileSidebarClick(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
                         <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -128,6 +142,14 @@ export default function Dashboard(props) {
                 ))}
                 {vendor && (
                   <>
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div className="relative flex justify-center">
+                        <span className="px-2 bg-white text-sm text-gray-500">Vendor</span>
+                      </div>
+                    </div>
                     {vendorLinks.map(({ label, icon }) => (
                       <button key={label} onClick={() => setScreen(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
                         <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -167,6 +189,8 @@ export default function Dashboard(props) {
               {/* Replace with your content */}
               {screen === "Your Account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} authView={props.authView} />}
               {screen === "Favorites" && <Favorites user={props.user} />}
+              {screen === "Reviews" && <Reviews user={props.user} />}
+              {screen === "Vendor" && <Vendor user={props.user} />}
               {screen === "Products" && <Products user={props.user} />}
               {/* /End replace */}
             </div>
