@@ -169,7 +169,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .ais-RefinementList-item {
-  @apply mt-0.5;
+  @apply my-1;
 }
 
 .ais-RefinementList-item--selected {

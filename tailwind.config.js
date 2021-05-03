@@ -58,6 +58,10 @@ module.exports = {
       },
       minHeight: {
         block: "200px",
+        "1/4": "25%",
+        "1/2": "50%",
+        "3/4": "75%",
+        "70vh": "70vh",
       },
       // maxWidth: {
       //   "max-w-screen-3xl": "max-width: 1920px",
