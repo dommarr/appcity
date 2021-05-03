@@ -1,7 +1,6 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Container from "../components/global/fullContainer";
-// import VideoRecorder from "../components/review/videoRecorder"
 
 export default function Review() {
   return (
@@ -17,9 +16,7 @@ export default function Review() {
             </div>
           </div>
         </div>
-        <section className="py-10">
-        
-        </section>
+        <section className="py-10"></section>
       </Container>
 
       <Footer dark={true} />

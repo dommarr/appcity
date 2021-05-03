@@ -12,7 +12,6 @@ export default function TierCard({ tier }) {
   // Fetch on load
   useEffect(() => {
     fetchTiers(product.id);
-    console.log(product.id);
   }, []);
 
   const fetchTiers = async (product_id) => {
@@ -25,7 +24,6 @@ export default function TierCard({ tier }) {
         )
         .eq("product_id", product_id);
       setTiers(tierData);
-      console.log(tierData.data);
     } catch (error) {
       alert(error);
     }

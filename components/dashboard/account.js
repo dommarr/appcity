@@ -24,6 +24,9 @@ export default function Account(props) {
     event.preventDefault();
     try {
       const { data, error } = await supabase.from("users").update({ first_name: firstname, last_name: lastname, email: email }).eq("id", profile.id);
+      if (error) {
+        throw error;
+      }
       if (data) {
         setSuccess("Account updated.");
         setTimeout(function () {
