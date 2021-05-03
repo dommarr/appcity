@@ -377,7 +377,7 @@ export default function Product({ product }) {
           </div>
         </div>
       </div>
-      <div id="reviews" className="bg-white">
+      {/* <div id="reviews" className="bg-white">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
           <div className="sm:flex sm:flex-col sm:align-center">
             <h1 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h1>
@@ -406,7 +406,7 @@ export default function Product({ product }) {
             <ReviewGrid product={product} count={count} rating={rating} setCount={setCount} setRating={setRating} />
           </div>
         </div>
-      </div>
+      </div> */}
       <Footer dark={true} />
     </>
   );
