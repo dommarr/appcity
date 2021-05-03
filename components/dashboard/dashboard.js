@@ -190,8 +190,8 @@ export default function Dashboard(props) {
               {screen === "Your Account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} authView={props.authView} />}
               {screen === "Favorites" && <Favorites user={props.user} />}
               {screen === "Reviews" && <Reviews user={props.user} />}
-              {screen === "Vendor" && <Vendor user={props.user} />}
-              {screen === "Products" && <Products user={props.user} />}
+              {/* {screen === "Vendor" && <Vendor user={props.user} />} */}
+              {/* {screen === "Products" && <Products user={props.user} />} */}
               {/* /End replace */}
             </div>
           </div>
