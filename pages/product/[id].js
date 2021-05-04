@@ -20,13 +20,7 @@ import ReviewGrid from "../../components/review/reviewGrid";
 import { StarIcon } from "@heroicons/react/outline";
 
 const Lightbox = (props) => {
-  return (
-    <SRLWrapper>
-      {props.media.map((src, idx) => (
-        <div key={idx}>{src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}</div>
-      ))}
-    </SRLWrapper>
-  );
+  return <SRLWrapper>{props.media.length && props.media.map((src, idx) => <div key={idx}>{src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}</div>)}</SRLWrapper>;
 };
 
 const ImageSlider = (props) => {
@@ -75,13 +69,14 @@ const ImageSlider = (props) => {
     <>
       <div className="navigation-wrapper max-h-full max-w-full relative">
         <div ref={sliderRef} className="keen-slider max-h-full max-w-full">
-          {media.map((obj) => (
-            <div key={obj.key} className="keen-slider__slide max-h-full max-w-full">
-              {/* if image, render image. else, render video player */}
-              {obj.type === "image" && <img className="max-h-full max-w-full" src={obj.src} onClick={() => openLightbox(obj.imgNum)} />}
-              {obj.type === "video" && <ReactPlayer className="max-h-full max-w-full" url={obj.src} controls playing={playing} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />}
-            </div>
-          ))}
+          {media.length &&
+            media.map((obj) => (
+              <div key={obj.key} className="keen-slider__slide max-h-full max-w-full">
+                {/* if image, render image. else, render video player */}
+                {obj.type === "image" && <img className="max-h-full max-w-full" src={obj.src} onClick={() => openLightbox(obj.imgNum)} />}
+                {obj.type === "video" && <ReactPlayer className="max-h-full max-w-full" url={obj.src} controls playing={playing} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />}
+              </div>
+            ))}
         </div>
 
         {slider && (
@@ -116,18 +111,19 @@ const ImageSlider = (props) => {
         )}
         {slider && (
           <div className="dots absolute inset-x-0 -bottom-8 sm:bottom-0 hover:bg-gray-200 hover:bg-opacity-30">
-            {[...Array(slider.details().size).keys()].map((idx) => {
-              return (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    slider.moveToSlideRelative(idx);
-                    setPlaying(false);
-                  }}
-                  className={"dot" + (currentSlide === idx ? " active" : "")}
-                />
-              );
-            })}
+            {[...Array(slider.details().size).keys()].length &&
+              [...Array(slider.details().size).keys()].map((idx) => {
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      slider.moveToSlideRelative(idx);
+                      setPlaying(false);
+                    }}
+                    className={"dot" + (currentSlide === idx ? " active" : "")}
+                  />
+                );
+              })}
           </div>
         )}
       </div>
@@ -278,18 +274,19 @@ export default function Product({ product }) {
               <div className="justify-start items-start">
                 {tier != null && <h3>Select tier:</h3>}
                 <div className="flex flex-wrap justify-center mt-2">
-                  {sortedTiers.map((obj) => (
-                    <button
-                      key={obj.id}
-                      type="button"
-                      className={`${tier != null && tier.id === obj.id ? "bg-gray-200" : ""} inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
-                      onClick={() => {
-                        router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
-                      }}
-                    >
-                      {obj.name}
-                    </button>
-                  ))}
+                  {sortedTiers.length &&
+                    sortedTiers.map((obj) => (
+                      <button
+                        key={obj.id}
+                        type="button"
+                        className={`${tier != null && tier.id === obj.id ? "bg-gray-200" : ""} inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
+                        onClick={() => {
+                          router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
+                        }}
+                      >
+                        {obj.name}
+                      </button>
+                    ))}
                 </div>
               </div>
 
@@ -341,15 +338,16 @@ export default function Product({ product }) {
             </div>
           </div>
           <div className={`safe mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}>
-            {sortedTiers.map((obj, index) => (
-              <div key={index} className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(index + 1, 1, mdCols)} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 1, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}>
-                <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
-                <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
-                <a href={product.price_link} className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center">
-                  Buy {obj.name}
-                </a>
-              </div>
-            ))}
+            {sortedTiers.length &&
+              sortedTiers.map((obj, index) => (
+                <div key={index} className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(index + 1, 1, mdCols)} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 1, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}>
+                  <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
+                  <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
+                  <a href={product.price_link} className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center">
+                    Buy {obj.name}
+                  </a>
+                </div>
+              ))}
             {/* {sortedTiers.map((obj, index) => (
               <div key={index} className={`safe flex flex-col index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white px-6 py-4 border-l border-r border-gray-200 order-${order(index + 1, 2, 1)} sm:order-${order(index + 1, 2, smCols)} md:order-${order(index + 1, 2, mdCols)} lg:order-${order(index + 1, 2, lgCols)} xl:order-${order(index + 1, 2, xlCols)} sm:row-start-${rowStart(order(index + 1, 2, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 2, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 2, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 2, xlCols), xlCols)}`}>
                 <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Limits</h3>
@@ -370,24 +368,26 @@ export default function Product({ product }) {
                 </ul>
               </div>
             ))} */}
-            {sortedTiers.map((obj, index) => (
-              <div key={index} className={`safe index-${index + 1} order-${order(index + 1, 3, 1)} sm:order-${order(index + 1, 3, smCols)} md:order-${order(index + 1, 3, mdCols)} lg:order-${order(index + 1, 3, lgCols)} xl:order-${order(index + 1, 3, xlCols)} sm:row-start-${rowStart(order(index + 1, 3, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 3, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 3, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 3, xlCols), xlCols)}`}>
-                <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 `}>
-                  <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
-                  <ul className="mt-6 space-y-4">
-                    {index > 0 && <li className="text-sm text-gray-500 font-medium">All prior features plus...</li>}
-                    {obj.display_features.map((feature, index) => (
-                      <li key={index} className="flex space-x-3">
-                        <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-sm text-gray-500">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {sortedTiers.length &&
+              sortedTiers.map((obj, index) => (
+                <div key={index} className={`safe index-${index + 1} order-${order(index + 1, 3, 1)} sm:order-${order(index + 1, 3, smCols)} md:order-${order(index + 1, 3, mdCols)} lg:order-${order(index + 1, 3, lgCols)} xl:order-${order(index + 1, 3, xlCols)} sm:row-start-${rowStart(order(index + 1, 3, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 3, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 3, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 3, xlCols), xlCols)}`}>
+                  <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 `}>
+                    <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
+                    <ul className="mt-6 space-y-4">
+                      {index > 0 && <li className="text-sm text-gray-500 font-medium">All prior features plus...</li>}
+                      {obj.display_features.length &&
+                        obj.display_features.map((feature, index) => (
+                          <li key={index} className="flex space-x-3">
+                            <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span className="text-sm text-gray-500">{feature}</span>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
