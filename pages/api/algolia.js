@@ -119,6 +119,8 @@ export default async function (req, res) {
     // determine what price to sort by - defined in database
     elem.sort_by_starting_price ? (obj.sort_price_monthly = elem.starting_price_month) : (obj.sort_price_monthly = elem.compare_price_month);
     elem.sort_by_starting_price ? (obj.sort_price_yearly = elem.starting_price_year) : (obj.sort_price_yearly = elem.compare_price_year);
+    // tier features
+    obj.features = elem.features;
     // calc and set review rating and count
     let filteredReviews = reviews.filter((review) => review.product === elem.products.id);
     if (filteredReviews.length === 0) {

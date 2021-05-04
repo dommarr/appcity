@@ -191,9 +191,11 @@ export default class SearchApp extends React.Component {
                       <RatingMenu attribute="rating" />
                     </RefinementBlock>
                     <RefinementBlock header="Vendors">
-                      <RefinementList attribute="vendor" limit={10} showMore />
+                      <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />
                     </RefinementBlock>
-                    <RefinementBlock header="Features"></RefinementBlock>
+                    <RefinementBlock header="Features">
+                      <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />
+                    </RefinementBlock>
                   </nav>
                 </div>
               </div>
