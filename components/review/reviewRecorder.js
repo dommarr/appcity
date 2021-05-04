@@ -23,23 +23,27 @@ export default class ReviewRecorder extends React.Component {
   }
 
   async componentDidMount() {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    // show it to user
-    this.video.srcObject = stream;
-    this.video.play();
-    // init recording
-    this.mediaRecorder = new MediaRecorder(stream, {
-      mimeType: videoType,
-    });
-    // init data storage for video chunks
-    this.chunks = [];
-    // listen for data from media recorder
-    this.mediaRecorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) {
-        this.chunks.push(e.data);
-      }
-    };
-    this.fetchProfile(this.props.user.id);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      // show it to user
+      this.video.srcObject = stream;
+      this.video.play();
+      // init recording
+      this.mediaRecorder = new MediaRecorder(stream, {
+        mimeType: videoType,
+      });
+      // init data storage for video chunks
+      this.chunks = [];
+      // listen for data from media recorder
+      this.mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          this.chunks.push(e.data);
+        }
+      };
+      this.fetchProfile(this.props.user.id);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async componentWillUnmount() {
@@ -60,10 +64,14 @@ export default class ReviewRecorder extends React.Component {
   }
 
   async fetchProfile(id) {
-    const profileData = await this.getProfile(id);
-    if (profileData) {
-      profileData[0].first_name ? this.setState({ firstname: profileData[0].first_name }) : "";
-      profileData[0].last_name ? this.setState({ lastname: profileData[0].last_name }) : "";
+    try {
+      const profileData = await this.getProfile(id);
+      if (profileData) {
+        profileData[0].first_name ? this.setState({ firstname: profileData[0].first_name }) : "";
+        profileData[0].last_name ? this.setState({ lastname: profileData[0].last_name }) : "";
+      }
+    } catch (error) {
+      throw error;
     }
   }
 

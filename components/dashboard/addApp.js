@@ -3,38 +3,6 @@ import { supabase } from "../../utils/initSupabase";
 import Loading from "./sectionLoading";
 
 export default function AddApp(props) {
-  //   const [loading, setLoading] = useState(true);
-
-  //   const [vendorname, setVendorname] = useState("");
-  //   const [vendorwebsite, setVendorwebsite] = useState("");
-  // const [vendorlogo, setVendorlogo] = useState("");
-
-  // //   // Fetch on load
-  // //   useEffect(() => {
-  // //     fetchData(props.user.id);
-  // //   }, []);
-
-  // //   const fetchData = async (user_id) => {
-  // //     try {
-  // //       let vendorData = await supabase
-  // //         .from("users")
-  // //         .select(
-  // //           `
-  // //             vendors:vendor_id (*)
-  // //             `
-  // //         )
-  // //         .eq("id", user_id);
-  // //       setVendorname(vendorData.body[0].vendors.name);
-  // //       setVendorwebsite(vendorData.body[0].vendors.website);
-  // //       // setVendorlogo(vendorData.body[0].vendors.logo);
-  // //     } catch (error) {
-  // //       alert(error);
-  // //     }
-  // //     setLoading(false);
-  // //   };
-
-  //   if (loading) return <Loading />;
-
   return (
     <section className="py-4 space-y-4">
       <form>
