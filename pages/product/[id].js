@@ -20,7 +20,7 @@ import ReviewGrid from "../../components/review/reviewGrid";
 import { StarIcon } from "@heroicons/react/outline";
 
 const Lightbox = (props) => {
-  return <SRLWrapper>{props.media.length && props.media.map((src, idx) => <div key={idx}>{src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}</div>)}</SRLWrapper>;
+  return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}</div>)}</SRLWrapper>;
 };
 
 const ImageSlider = (props) => {
@@ -69,7 +69,7 @@ const ImageSlider = (props) => {
     <>
       <div className="navigation-wrapper max-h-full max-w-full relative">
         <div ref={sliderRef} className="keen-slider max-h-full max-w-full">
-          {media.length &&
+          {media &&
             media.map((obj) => (
               <div key={obj.key} className="keen-slider__slide max-h-full max-w-full">
                 {/* if image, render image. else, render video player */}
@@ -111,7 +111,7 @@ const ImageSlider = (props) => {
         )}
         {slider && (
           <div className="dots absolute inset-x-0 -bottom-8 sm:bottom-0 hover:bg-gray-200 hover:bg-opacity-30">
-            {[...Array(slider.details().size).keys()].length &&
+            {[...Array(slider.details().size).keys()] &&
               [...Array(slider.details().size).keys()].map((idx) => {
                 return (
                   <button
@@ -274,7 +274,7 @@ export default function Product({ product }) {
               <div className="justify-start items-start">
                 {tier != null && <h3>Select tier:</h3>}
                 <div className="flex flex-wrap justify-center mt-2">
-                  {sortedTiers.length &&
+                  {sortedTiers &&
                     sortedTiers.map((obj) => (
                       <button
                         key={obj.id}
@@ -338,7 +338,7 @@ export default function Product({ product }) {
             </div>
           </div>
           <div className={`safe mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}>
-            {sortedTiers.length &&
+            {sortedTiers &&
               sortedTiers.map((obj, index) => (
                 <div key={index} className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(index + 1, 1, mdCols)} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 1, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}>
                   <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
@@ -368,14 +368,14 @@ export default function Product({ product }) {
                 </ul>
               </div>
             ))} */}
-            {sortedTiers.length &&
+            {sortedTiers &&
               sortedTiers.map((obj, index) => (
                 <div key={index} className={`safe index-${index + 1} order-${order(index + 1, 3, 1)} sm:order-${order(index + 1, 3, smCols)} md:order-${order(index + 1, 3, mdCols)} lg:order-${order(index + 1, 3, lgCols)} xl:order-${order(index + 1, 3, xlCols)} sm:row-start-${rowStart(order(index + 1, 3, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 3, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 3, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 3, xlCols), xlCols)}`}>
                   <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 `}>
                     <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
                     <ul className="mt-6 space-y-4">
                       {index > 0 && <li className="text-sm text-gray-500 font-medium">All prior features plus...</li>}
-                      {obj.display_features.length &&
+                      {obj.display_features &&
                         obj.display_features.map((feature, index) => (
                           <li key={index} className="flex space-x-3">
                             <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
