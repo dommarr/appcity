@@ -38,7 +38,7 @@ export default function HomeLayout({ children }) {
         </Head>
 
         {/* Page Content */}
-        <div className="relative pt-16 pb-32 min-h-65vh flex flex-col justify-center items-center">
+        <div className="relative pt-16 pb-32 min-h-60vh sm:min-h-70vh flex flex-col justify-center items-center">
           <main className="mx-auto max-w-7xl px-4">
             {/* Heading */}
             <div className="text-center">
