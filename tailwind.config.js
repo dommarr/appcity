@@ -7,11 +7,11 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   purge: {
     content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-    // options: {
-    //   safelist: {
-    //     greedy: ["/safe$/"],
-    //   },
-    // },
+    options: {
+      safelist: {
+        greedy: ["/safe$/"],
+      },
+    },
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -61,7 +61,9 @@ module.exports = {
         "1/4": "25%",
         "1/2": "50%",
         "3/4": "75%",
+        "60vh": "60vh",
         "65vh": "65vh",
+        "70vh": "70vh",
       },
       // maxWidth: {
       //   "max-w-screen-3xl": "max-width: 1920px",
