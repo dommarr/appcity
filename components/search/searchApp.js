@@ -1,4 +1,4 @@
-import { InstantSearch, SearchBox, ScrollTo, Highlight, RangeInput, HierarchicalMenu, RatingMenu, Stats, SortBy, ClearRefinements, RefinementList, Configure, connectHits, connectPagination } from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, ScrollTo, Highlight, RangeInput, HierarchicalMenu, RatingMenu, Stats, SortBy, ClearRefinements, RefinementList, Configure, connectHits, connectPagination, connectStateResults, connectCurrentRefinements } from "react-instantsearch-dom";
 import RefinementBlock from "./refinementBlock";
 import PriceBlock from "./priceBlock";
 import PropTypes from "prop-types";
@@ -6,6 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 import { StarIcon } from "@heroicons/react/outline";
+import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 
 function Hits({ hits, monthlyPrice }) {
   const router = useRouter();
@@ -53,6 +54,46 @@ function Hits({ hits, monthlyPrice }) {
 }
 
 const CustomHits = connectHits(Hits);
+
+const EmptySearchClearRefinements = ({ items, refine }) => {
+  return (
+    <button onClick={() => refine(items)} disabled={!items.length} className="text-sm font-medium underline text-amber-700 hover:text-amber-600 focus:outline-none focus:ring-0">
+      Clear and try again
+    </button>
+  );
+};
+
+const CustomClearRefinements = connectCurrentRefinements(EmptySearchClearRefinements);
+
+const Results = connectStateResults(({ searchState, searchResults, children }) =>
+  searchResults && searchResults.nbHits !== 0 ? (
+    children
+  ) : (
+    <div className="space-y-2">
+      <div className="bg-amber-50 border-l-4 border-amber-400 p-4">
+        <div className="flex">
+          <div className="flex items-center justify-center">
+            <ExclamationIcon className="h-5 w-5 text-amber-400" aria-hidden="true" />
+          </div>
+          <div className="ml-3 space-x-2">
+            <span className="text-sm text-amber-700">Oops! Looks like we don't have any results for "{searchState.query}"</span>
+            <CustomClearRefinements clearsQuery />
+          </div>
+        </div>
+      </div>
+      <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
+        <div className="flex">
+          <div className="flex items-center justify-center">
+            <InformationCircleIcon className="h-5 w-5 text-blue-400" aria-hidden="true" />
+          </div>
+          <div className="ml-3">
+            <p className="text-sm text-blue-700">We are actively monitoring empty searches like this. Thanks for your patience as we fill out our catalog!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+);
 
 const Pagination_Custom = ({ currentRefinement, nbPages, refine, createURL }) => (
   <>
@@ -258,7 +299,9 @@ export default class SearchApp extends React.Component {
             <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
               <div className="py-4">
                 <div className="max-w-screen-2xl mx-auto px-4 sm:px-4">
-                  <CustomHits monthlyPrice={this.state.monthlyPrice} />
+                  <Results>
+                    <CustomHits monthlyPrice={this.state.monthlyPrice} />
+                  </Results>
                   {/* Pagination */}
                   <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
                     <CustomPagination />
