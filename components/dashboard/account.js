@@ -45,13 +45,17 @@ export default function Account(props) {
   // Fetch on load
   useEffect(() => {
     async function fetchProfile() {
-      const profileData = await getProfile(props.user.id);
-      if (profileData) {
-        setProfile(profileData[0]);
-        profileData[0].first_name ? setFirstname(profileData[0].first_name) : "";
-        profileData[0].last_name ? setLastname(profileData[0].last_name) : "";
-        profileData[0].email ? setEmail(profileData[0].email) : "";
-        profileData[0].vendor ? props.handleVendor(profileData[0].vendor) : "";
+      try {
+        const profileData = await getProfile(props.user.id);
+        if (profileData) {
+          setProfile(profileData[0]);
+          profileData[0].first_name ? setFirstname(profileData[0].first_name) : "";
+          profileData[0].last_name ? setLastname(profileData[0].last_name) : "";
+          profileData[0].email ? setEmail(profileData[0].email) : "";
+          profileData[0].vendor ? props.handleVendor(profileData[0].vendor) : "";
+        }
+      } catch (error) {
+        throw error;
       }
     }
     fetchProfile();

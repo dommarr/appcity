@@ -6,8 +6,12 @@ import { supabase } from "../../utils/initSupabase";
 import { useRouter } from "next/router";
 
 const fetcher = async (id) => {
-  const res = await fetch(id);
-  return await res.json();
+  try {
+    const res = await fetch(id);
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default function UserReviews({ user }) {

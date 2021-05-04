@@ -5,8 +5,12 @@ import useSWR from "swr";
 import { supabase } from "../../utils/initSupabase";
 
 const fetcher = async (id) => {
-  const res = await fetch(id);
-  return await res.json();
+  try {
+    const res = await fetch(id);
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default function ReviewGrid(props) {
