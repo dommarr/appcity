@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 import { StarIcon } from "@heroicons/react/outline";
-import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
+import { ExclamationIcon, InformationCircleIcon, XCircleIcon } from "@heroicons/react/solid";
 
 function Hits({ hits, monthlyPrice }) {
   const router = useRouter();
@@ -58,42 +58,60 @@ const CustomHits = connectHits(Hits);
 const EmptySearchClearRefinements = ({ items, refine }) => {
   return (
     <button onClick={() => refine(items)} disabled={!items.length} className="text-sm font-medium underline text-amber-700 hover:text-amber-600 focus:outline-none focus:ring-0">
-      Clear and try again
+      Clear and try again.
     </button>
   );
 };
 
 const CustomClearRefinements = connectCurrentRefinements(EmptySearchClearRefinements);
 
-const Results = connectStateResults(({ searchState, searchResults, children }) =>
-  searchResults && searchResults.nbHits !== 0 ? (
-    children
-  ) : (
-    <div className="space-y-2">
-      <div className="bg-amber-50 border-l-4 border-amber-400 p-4">
-        <div className="flex">
-          <div className="flex items-center justify-center">
-            <ExclamationIcon className="h-5 w-5 text-amber-400" aria-hidden="true" />
+const Results = connectStateResults(({ searchState, searchResults, children }) => {
+  // empty state for no search results
+  if (searchResults && searchResults.nbHits === 0) {
+    return (
+      <div className="space-y-2">
+        <div className="bg-amber-50 border-l-4 border-amber-400 p-4">
+          <div className="flex">
+            <div className="flex items-center justify-center">
+              <ExclamationIcon className="h-5 w-5 text-amber-400" aria-hidden="true" />
+            </div>
+            <div className="ml-3 space-x-1">
+              <span className="text-sm text-amber-700">Oops! Looks like we don't have any results for "{searchState.query}".</span>
+              <CustomClearRefinements clearsQuery />
+            </div>
           </div>
-          <div className="ml-3 space-x-2">
-            <span className="text-sm text-amber-700">Oops! Looks like we don't have any results for "{searchState.query}"</span>
-            <CustomClearRefinements clearsQuery />
+        </div>
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
+          <div className="flex">
+            <div className="flex items-center justify-center">
+              <InformationCircleIcon className="h-5 w-5 text-blue-400" aria-hidden="true" />
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-blue-700">We are actively monitoring empty searches like this. Thanks for your patience as we fill out our catalog!</p>
+            </div>
           </div>
         </div>
       </div>
-      <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
+    );
+  }
+  // empty state for no search query
+  if (searchState && !searchState.query) {
+    return (
+      <div className="bg-red-50 border-l-4 border-red-400 p-4">
         <div className="flex">
-          <div className="flex items-center justify-center">
-            <InformationCircleIcon className="h-5 w-5 text-blue-400" aria-hidden="true" />
+          <div className="flex-shrink-0">
+            <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
           </div>
           <div className="ml-3">
-            <p className="text-sm text-blue-700">We are actively monitoring empty searches like this. Thanks for your patience as we fill out our catalog!</p>
+            <p className="text-sm text-red-700">Enter a search query.</p>
           </div>
         </div>
       </div>
-    </div>
-  )
-);
+    );
+  }
+  // return hits
+  return children;
+});
 
 const Pagination_Custom = ({ currentRefinement, nbPages, refine, createURL }) => (
   <>
@@ -214,29 +232,26 @@ export default class SearchApp extends React.Component {
                     <ClearRefinements />
                     <Configure hitsPerPage={24} />
                     <RefinementBlock header="Price">
-                      <RangeInput attribute="sort_price_monthly" className={`${this.state.monthlyPrice ? "block" : "hidden"}`} />
-                      <RangeInput attribute="sort_price_yearly" className={`${this.state.monthlyPrice ? "hidden" : "block"}`} />
-                      <div className="relative self-center bg-gray-100 p-0.5 flex items-center mt-4">
-                        <button type="button" onClick={() => this.setState({ monthlyPrice: true })} className={`relative w-1/2 ${this.state.monthlyPrice ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-3.5`}>
-                          Monthly billing
-                        </button>
-                        <button type="button" onClick={() => this.setState({ monthlyPrice: false })} className={`ml-0.5 relative w-1/2 ${this.state.monthlyPrice ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-3.5`}>
-                          Yearly billing
-                        </button>
-                      </div>
+                      {/* Hide on empty */}
+                      {this.props.searchState.query && (
+                        <>
+                          <RangeInput attribute="sort_price_monthly" className={`${this.state.monthlyPrice ? "block" : "hidden"}`} />
+                          <RangeInput attribute="sort_price_yearly" className={`${this.state.monthlyPrice ? "hidden" : "block"}`} />
+                          <div className="relative self-center bg-gray-100 p-0.5 flex items-center mt-4">
+                            <button type="button" onClick={() => this.setState({ monthlyPrice: true })} className={`relative w-1/2 ${this.state.monthlyPrice ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-3.5`}>
+                              Monthly billing
+                            </button>
+                            <button type="button" onClick={() => this.setState({ monthlyPrice: false })} className={`ml-0.5 relative w-1/2 ${this.state.monthlyPrice ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-3.5`}>
+                              Yearly billing
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </RefinementBlock>
-                    <RefinementBlock header="Category">
-                      <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1"]} limit={10} showMore />
-                    </RefinementBlock>
-                    <RefinementBlock header="Rating">
-                      <RatingMenu attribute="rating" />
-                    </RefinementBlock>
-                    <RefinementBlock header="Vendors">
-                      <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />
-                    </RefinementBlock>
-                    <RefinementBlock header="Features">
-                      <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />
-                    </RefinementBlock>
+                    <RefinementBlock header="Category">{this.props.searchState.query && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1"]} limit={10} showMore />}</RefinementBlock>
+                    <RefinementBlock header="Rating">{this.props.searchState.query && <RatingMenu attribute="rating" />}</RefinementBlock>
+                    <RefinementBlock header="Vendors">{this.props.searchState.query && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}</RefinementBlock>
+                    <RefinementBlock header="Features">{this.props.searchState.query && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}</RefinementBlock>
                   </nav>
                 </div>
               </div>
@@ -270,42 +285,44 @@ export default class SearchApp extends React.Component {
                 </div>
               </div>
             </ScrollTo>
-            <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white shadow px-5 py-0.5">
-              {/* <CurrentRefinements /> */}
-              <Stats className="hidden sm:block" />
-              <SortBy
-                defaultRefinement="catalog"
-                items={[
-                  { label: "Relevance", value: "catalog" },
-                  {
-                    label: "Price Low to High (pay yearly)",
-                    value: "catalog_price_low_to_high_yearly",
-                  },
-                  {
-                    label: "Price Low to High (pay monthly)",
-                    value: "catalog_price_low_to_high_monthly",
-                  },
-                  {
-                    label: "Price High to Low (pay yearly)",
-                    value: "catalog_price_high_to_low_yearly",
-                  },
-                  {
-                    label: "Price High to Low (pay monthly)",
-                    value: "catalog_price_high_to_low_monthly",
-                  },
-                ]}
-              />
-            </div>
+            {/* Hide stats and sorts if there is no query */}
+            {this.props.searchState.query && (
+              <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white shadow px-5 py-0.5">
+                {/* <CurrentRefinements /> */}
+                <Stats className="hidden sm:block" />
+                <SortBy
+                  defaultRefinement="catalog"
+                  items={[
+                    { label: "Relevance", value: "catalog" },
+                    {
+                      label: "Price Low to High (pay yearly)",
+                      value: "catalog_price_low_to_high_yearly",
+                    },
+                    {
+                      label: "Price Low to High (pay monthly)",
+                      value: "catalog_price_low_to_high_monthly",
+                    },
+                    {
+                      label: "Price High to Low (pay yearly)",
+                      value: "catalog_price_high_to_low_yearly",
+                    },
+                    {
+                      label: "Price High to Low (pay monthly)",
+                      value: "catalog_price_high_to_low_monthly",
+                    },
+                  ]}
+                />
+              </div>
+            )}
             <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
               <div className="py-4">
                 <div className="max-w-screen-2xl mx-auto px-4 sm:px-4">
                   <Results>
                     <CustomHits monthlyPrice={this.state.monthlyPrice} />
                   </Results>
-                  {/* Pagination */}
                   <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
-                    <CustomPagination />
-                    {/* <Pagination /> */}
+                    {/* Hide pagination if there is no query */}
+                    {this.props.searchState.query && <CustomPagination />}
                   </nav>
                 </div>
               </div>
