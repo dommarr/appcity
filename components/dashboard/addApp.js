@@ -5,6 +5,7 @@ import Loading from "./sectionLoading";
 export default function AddApp(props) {
   return (
     <section className="py-4 space-y-4">
+      <h1 className="text-2xl font-semibold text-gray-900">Add your app</h1>
       <form>
         <div className="shadow sm:overflow-hidden">
           <div className="bg-white py-6 px-4 sm:p-6">

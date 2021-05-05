@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 export default function Footer({ children, dark }) {
-
   return (
-    <footer className={`${dark ? "bg-purple" : "bg-white"}`} aria-labelledby="footerHeading">
+    <footer className={`${dark ? "bg-purple-extradark" : "bg-white"}`} aria-labelledby="footerHeading">
       <h2 id="footerHeading" className="sr-only">
         Footer
       </h2>
@@ -14,23 +13,19 @@ export default function Footer({ children, dark }) {
               <div>
                 <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Solutions</h3>
                 <ul className="mt-4 space-y-4">
-                <li>
-                  <Link href="/about">
-                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      For creators
-                    </a>
+                  <li>
+                    <Link href="/about">
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For creators</a>
                     </Link>
                   </li>
                   <li>
-                  <Link
-                    href={{
-                      pathname: `/about`,
-                      query: { customer: "vendor" },
-                    }}
-                  >
-                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      For vendors
-                    </a>
+                    <Link
+                      href={{
+                        pathname: `/about`,
+                        query: { customer: "vendor" },
+                      }}
+                    >
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For vendors</a>
                     </Link>
                   </li>
                 </ul>
@@ -70,17 +65,13 @@ export default function Footer({ children, dark }) {
                 <ul className="mt-4 space-y-4">
                   <li>
                     <Link href="/about">
-                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      About
-                    </a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>About</a>
                     </Link>
                   </li>
 
                   <li>
                     <Link href="/contact">
-                    <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      Contact
-                    </a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Contact</a>
                     </Link>
                   </li>
 
@@ -142,7 +133,7 @@ export default function Footer({ children, dark }) {
               </label>
               <input type="email" name="emailAddress" id="emailAddress" autoComplete="email" required className="appearance-none min-w-0 w-full bg-white border border-gray-300 shadow-sm py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-purple-extralight focus:border-purple-extralight focus:placeholder-gray-400" placeholder="Enter your email" />
               <div className="mt-3 sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                <button type="submit" className={`w-full ${dark ? "bg-white text-purple hover:bg-gray-300" : "bg-purple text-white hover:bg-purple-extradark"}  flex items-center justify-center border border-transparent py-2 px-4 text-base font-medium focus:ring-2 focus:ring-offset-2 focus:ring-purple-extralight`}>
+                <button type="submit" className={`w-full ${dark ? "bg-white text-purple-extradark hover:bg-gray-300" : "bg-purple text-white hover:bg-purple-extradark"}  flex items-center justify-center border border-transparent py-2 px-4 text-base font-medium focus:ring-2 focus:ring-offset-2 focus:ring-purple-extralight`}>
                   Subscribe
                 </button>
               </div>

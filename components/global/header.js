@@ -30,7 +30,7 @@ export default function Header(props) {
   const { user, session } = Auth.useUser();
 
   return (
-    <div className={`${props.style === "dark" ? "bg-purple" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
+    <div className={`${props.style === "dark" ? "bg-purple-extradark" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 max-w-screen-3xl mx-auto">
         <div className="flex items-center justify-center">
           <Link href="/">
@@ -43,7 +43,7 @@ export default function Header(props) {
           </Link>
         </div>
         <div className="-mr-2 -my-2 md:hidden">
-          <button type="button" className={`${props.style === "dark" ? "bg-purple text-white hover:text-gray-200 hover:bg-purple-extralight" : ""} ${props.style === "light" ? "bg-white text-gray-400 hover:text-gray-500 hover:bg-gray-100" : ""} ${props.style === "trans" ? "bg-transparent text-white hover:bg-purple-extradark" : ""} p-2 inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight`} onClick={() => setShowMenu(true)}>
+          <button type="button" className={`${props.style === "dark" ? "bg-purple-extradark text-white hover:text-gray-200 hover:bg-purple-dark" : ""} ${props.style === "light" ? "bg-white text-gray-400 hover:text-gray-500 hover:bg-gray-100" : ""} ${props.style === "trans" ? "bg-transparent text-white hover:bg-purple-dark" : ""} p-2 inline-flex items-center justify-center focus:outline-none focus:ring-0`} onClick={() => setShowMenu(true)}>
             <span className="sr-only">Open menu</span>
             {/* Heroicon name: menu */}
             <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -67,7 +67,7 @@ export default function Header(props) {
                   <a className={`${props.style === "dark" || props.style === "trans" ? "text-white hover:text-gray-200" : "text-gray-500 hover:text-gray-900"} text-base font-medium`}>Sign in</a>
                 </Link>
                 <Link href={{ pathname: `/profile`, query: { view: "sign_up" } }}>
-                  <a className={`${props.style === "dark" || props.style === "trans" ? "text-purple bg-white hover:bg-gray-200" : "text-white bg-purple hover:bg-purple-extradark"} ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-base font-medium`}>Sign up</a>
+                  <a className={`${props.style === "dark" || props.style === "trans" ? "text-purple-dark bg-white hover:bg-gray-200" : "text-white bg-purple hover:bg-purple-extradark"} ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-base font-medium`}>Sign up</a>
                 </Link>
               </>
             )}
@@ -75,7 +75,7 @@ export default function Header(props) {
             {user && (
               <div className="ml-3 relative">
                 <div>
-                  <button onClick={() => setProfileMenu(!showProfileMenu)} className={`max-w-xs bg-transparent flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-extralight lg:p-2 ${props.style === "dark" || props.style === "trans" ? "lg:hover:bg-purple-extradark text-white" : "lg:hover:bg-gray-200 text-gray-500 lg:hover:text-gray-900"}`} id="user-menu" aria-haspopup="true">
+                  <button onClick={() => setProfileMenu(!showProfileMenu)} className={`max-w-xs bg-transparent flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-white lg:p-2 ${props.style === "dark" || props.style === "trans" ? "lg:hover:bg-purple-dark text-white" : "lg:hover:bg-gray-200 text-gray-500 lg:hover:text-gray-900"}`} id="user-menu" aria-haspopup="true">
                     <span className={`block ml-3 text-sm font-medium`}>
                       <span className="sr-only">Open user menu for </span>
                       {user.email}
@@ -88,7 +88,7 @@ export default function Header(props) {
                 </div>
                 <Transition show={showProfileMenu} enter="transition ease-out duration-100" enterFrom="transform opacity-0 scale-95" enterTo="transform opacity-100 scale-100" leave="transition ease-in duration-75" leaveFrom="transform opacity-100 scale-100" leaveTo="transform opacity-0 scale-95">
                   <div className="origin-top-right absolute right-0 mt-2 w-48 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                    <Link href="/profile">
+                    <Link href={{ pathname: `/profile`, query: { screen: "account" } }}>
                       <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Your Profile
                       </a>
@@ -115,7 +115,7 @@ export default function Header(props) {
                 <LogoLight size={40} alt={appName} />
               </div>
               <div className="-mr-2">
-                <button type="button" className="bg-white p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight" onClick={() => setShowMenu(false)}>
+                <button type="button" className="bg-white p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-0" onClick={() => setShowMenu(false)}>
                   <span className="sr-only">Close menu</span>
                   {/* Heroicon name: x */}
                   <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -174,7 +174,7 @@ export default function Header(props) {
               {/* if logged in, show profile and menu */}
               {user && (
                 <>
-                  <Link href="/profile">
+                  <Link href={{ pathname: `/profile`, query: { screen: "account" } }}>
                     <a className="w-full flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-base font-medium text-white bg-purple hover:bg-purple-extradark">Your profile</a>
                   </Link>
                   <button className="w-full mt-6 text-center font-medium text-gray-500" onClick={() => supabase.auth.signOut()}>

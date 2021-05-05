@@ -31,9 +31,9 @@ export default function About() {
         <div className="absolute inset-0 flex flex-1 flex-col items-center justify-center text-center max-w-7xl mx-auto py-10 px-4 sm:py-12 sm:px-6 lg:px-8">
           {vendor && (
             <>
-              <h1 className={`text-4xl font-extrabold ${vendor ? "text-black" : "text-white"} sm:hidden sm:text-5xl sm:tracking-tight lg:text-6xl`}>Supplement your sales team, reach your target customers</h1>
-              <h1 className={`text-4xl font-extrabold ${vendor ? "text-black" : "text-white"} hidden sm:block sm:text-5xl sm:tracking-tight lg:text-6xl`}>Supplement your sales team,</h1>
-              <h1 className={`text-4xl font-extrabold ${vendor ? "text-black" : "text-white"} hidden sm:block sm:text-5xl sm:tracking-tight lg:text-6xl`}>reach your target customers</h1>
+              <h1 className={`text-4xl font-extrabold ${vendor ? "text-purple" : "text-white"} sm:hidden sm:text-5xl sm:tracking-tight lg:text-6xl`}>Supplement your sales team, reach your target customers</h1>
+              <h1 className={`text-4xl font-extrabold ${vendor ? "text-purple" : "text-white"} hidden sm:block sm:text-5xl sm:tracking-tight lg:text-6xl`}>Supplement your sales team,</h1>
+              <h1 className={`text-4xl font-extrabold ${vendor ? "text-purple" : "text-white"} hidden sm:block sm:text-5xl sm:tracking-tight lg:text-6xl`}>reach your target customers</h1>
             </>
           )}
           {!vendor && (
@@ -188,7 +188,7 @@ export default function About() {
             <div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
               <div className="pr-4 -ml-48 sm:pr-6 md:-ml-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
                 {!vendor && <img className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none" src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/podcast_starter_kit_cropped.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9wb2RjYXN0X3N0YXJ0ZXJfa2l0X2Nyb3BwZWQucG5nIiwiaWF0IjoxNjE2NjA3NTU2LCJleHAiOjE5MzE5Njc1NTZ9.MymkOu8J2hspi4x2x2O0RC8iKd0jqydIxtUxcg409zg" alt="Podcast starter kit" />}
-                {vendor && <img className="w-full rounded-xl ring-0 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none" src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/funnel.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9mdW5uZWwucG5nIiwiaWF0IjoxNjE2NjE0NTgwLCJleHAiOjE5MzE5NzQ1ODB9.F7XuaujH0fTjmUx4oqerzoo0Hp22WudNb0RyfmcXaz0" alt="AppCity funnel" />}
+                {vendor && <img className="w-full rounded-xl ring-0 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none" src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/funnel2?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9mdW5uZWwyIiwiaWF0IjoxNjIwMjQyMTA0LCJleHAiOjE5MzU2MDIxMDR9.PlrGM8V6O0SrOkSvGEPn08szAoiV14Hz3UjnyZZ9QcU" alt="AppCity funnel" />}
               </div>
             </div>
           </div>
