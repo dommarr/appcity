@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import { useRouter } from "next/router";
 import Account from "./account";
@@ -9,10 +9,12 @@ import Products from "./products";
 import Vendor from "./vendor";
 import SectionLoading from "./sectionLoading";
 import AddApp from "./addApp";
+import TaskList from "./taskList";
 
 const navLinks = [
   {
-    label: "Your Account",
+    label: "Your account",
+    route: "account",
     icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
   },
   // {
@@ -21,6 +23,7 @@ const navLinks = [
   // },
   {
     label: "Reviews",
+    route: "reviews",
     icon: "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z",
   },
 ];
@@ -36,15 +39,52 @@ const vendorLinks = [
   // },
   {
     label: "Add your app",
+    route: "add_app",
     icon: "M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z",
   },
 ];
 
+const adminLinks = [
+  {
+    label: "Tasks",
+    route: "tasks",
+    icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
+  },
+];
+
 export default function Dashboard(props) {
-  const [screen, setScreen] = useState("Your Account");
+  const router = useRouter();
+  const initialState = router.query.screen ? router.query.screen : "account";
+  const [screen, setScreen] = useState(initialState);
   const [showSidebar, setShowSidebar] = useState(false);
   const [vendor, setVendor] = useState();
-  const router = useRouter();
+  const [admin, setAdmin] = useState();
+
+  // Fetch on load
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  async function fetchProfile() {
+    try {
+      const profileData = await getProfile(props.user.id);
+      if (profileData) {
+        profileData[0].vendor ? setVendor(profileData[0].vendor) : "";
+        profileData[0].admin ? setAdmin(profileData[0].admin) : "";
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function getProfile(id) {
+    try {
+      let response = await supabase.from("users").select("*").eq("id", id);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async function updateVendor(ven) {
     try {
@@ -60,9 +100,13 @@ export default function Dashboard(props) {
     updateVendor(val);
   }
 
-  const mobileSidebarClick = (label) => {
-    setScreen(label);
+  const mobileSidebarClick = (route) => {
+    router.push(`/profile?screen=${route}`, undefined, { shallow: true });
     setShowSidebar(false);
+  };
+
+  const desktopSidebarClick = (route) => {
+    router.push(`/profile?screen=${route}`, undefined, { shallow: true });
   };
 
   const signOut = () => {
@@ -90,9 +134,9 @@ export default function Dashboard(props) {
             </div>
             <div className="flex-1 h-0 pb-4 overflow-y-auto relative">
               <nav className="mt-5 px-2 space-y-1">
-                {navLinks.map(({ label, icon }) => (
-                  <button key={label} onClick={() => mobileSidebarClick(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
-                    <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                {navLinks.map(({ label, route, icon }) => (
+                  <button key={route} onClick={() => mobileSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
+                    <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                     </svg>
                     {label}
@@ -108,9 +152,29 @@ export default function Dashboard(props) {
                         <span className="px-2 bg-white text-sm text-gray-500">Vendor</span>
                       </div>
                     </div>
-                    {vendorLinks.map(({ label, icon }) => (
-                      <button key={label} onClick={() => mobileSidebarClick(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
-                        <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    {vendorLinks.map(({ label, route, icon }) => (
+                      <button key={route} onClick={() => mobileSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
+                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
+                        </svg>
+                        {label}
+                      </button>
+                    ))}
+                  </>
+                )}
+                {admin && (
+                  <>
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div className="relative flex justify-center">
+                        <span className="px-2 bg-white text-sm text-gray-500">Admin</span>
+                      </div>
+                    </div>
+                    {adminLinks.map(({ label, route, icon }) => (
+                      <button key={route} onClick={() => mobileSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
+                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                         </svg>
                         {label}
@@ -137,9 +201,9 @@ export default function Dashboard(props) {
           <div className="flex flex-col h-0 flex-1 border-r border-gray-200 bg-white">
             <div className="flex-1 flex flex-col pb-4 overflow-y-auto">
               <nav className="mt-5 flex-1 px-2 bg-white space-y-1 relative">
-                {navLinks.map(({ label, icon }) => (
-                  <button key={label} onClick={() => setScreen(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
-                    <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                {navLinks.map(({ label, route, icon }) => (
+                  <button key={route} onClick={() => desktopSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
+                    <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                     </svg>
                     {label}
@@ -155,9 +219,29 @@ export default function Dashboard(props) {
                         <span className="px-2 bg-white text-sm text-gray-500">Vendor</span>
                       </div>
                     </div>
-                    {vendorLinks.map(({ label, icon }) => (
-                      <button key={label} onClick={() => setScreen(label)} className={`${screen === label ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium`}>
-                        <svg className={`${screen === label ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    {vendorLinks.map(({ label, route, icon }) => (
+                      <button key={route} onClick={() => desktopSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
+                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
+                        </svg>
+                        {label}
+                      </button>
+                    ))}
+                  </>
+                )}
+                {admin && (
+                  <>
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div className="relative flex justify-center">
+                        <span className="px-2 bg-white text-sm text-gray-500">Admin</span>
+                      </div>
+                    </div>
+                    {adminLinks.map(({ label, route, icon }) => (
+                      <button key={route} onClick={() => desktopSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
+                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                         </svg>
                         {label}
@@ -187,17 +271,15 @@ export default function Dashboard(props) {
         </div>
         <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex={0}>
           <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900">{screen}</h1>
-            </div>
             <div className="flex flex-col justify-left max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* Replace with your content */}
-              {screen === "Your Account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} authView={props.authView} />}
-              {screen === "Favorites" && <Favorites user={props.user} />}
-              {screen === "Reviews" && <Reviews user={props.user} />}
+              {screen === "account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} authView={props.authView} />}
+              {screen === "favorites" && <Favorites user={props.user} />}
+              {screen === "reviews" && <Reviews user={props.user} />}
               {/* {screen === "Vendor" && <Vendor user={props.user} />} */}
               {/* {screen === "Products" && <Products user={props.user} />} */}
-              {screen === "Add your app" && <AddApp user={props.user} />}
+              {screen === "add_app" && <AddApp user={props.user} />}
+              {screen === "tasks" && <TaskList user={props.user} />}
               {/* /End replace */}
             </div>
           </div>

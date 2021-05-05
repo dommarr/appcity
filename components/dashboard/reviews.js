@@ -68,6 +68,7 @@ export default function UserReviews({ user }) {
   if (!reviews || reviews.length < 1)
     return (
       <section className="py-4 space-y-4">
+        <h1 className="text-2xl font-semibold text-gray-900">Your reviews</h1>
         <div className="shadow sm:overflow-hidden">
           <div className="bg-white py-6 px-4 sm:p-6">
             <div>
@@ -92,6 +93,7 @@ export default function UserReviews({ user }) {
   if (loading) return <div>Loading...</div>;
   return (
     <section className="py-4 space-y-4">
+      <h1 className="text-2xl font-semibold text-gray-900">Your reviews</h1>
       <div className="shadow sm:overflow-hidden">
         <div className="bg-white py-6 px-4 sm:p-6">
           <div>
