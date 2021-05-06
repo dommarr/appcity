@@ -3,7 +3,7 @@ import Link from "next/link";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
 import PriceBlock from "../../components/search/priceBlock";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
