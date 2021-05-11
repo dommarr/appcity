@@ -105,20 +105,39 @@ export default async function (req, res) {
     obj.vendor_website = elem.products.vendors.website;
     obj.logo = elem.products.vendors.logo;
     obj.price_model = elem.products.price_model;
-    // Assign display and sort prices
-    obj.starting_price_year = elem.starting_price_year;
-    obj.starting_price_year_other = elem.starting_price_year_other;
-    obj.starting_price_month = elem.starting_price_month;
-    obj.starting_price_month_other = elem.starting_price_month_other;
-    obj.starting_price_unit = elem.starting_price_unit;
-    obj.compare_price_year = elem.compare_price_year;
-    obj.compare_price_year_other = elem.compare_price_year_other;
-    obj.compare_price_month = elem.compare_price_month;
-    obj.compare_price_month_other = elem.compare_price_month_other;
-    obj.compare_price_unit = elem.compare_price_unit;
-    // determine what price to sort by - defined in database
-    elem.sort_by_starting_price ? (obj.sort_price_monthly = elem.starting_price_month) : (obj.sort_price_monthly = elem.compare_price_month);
-    elem.sort_by_starting_price ? (obj.sort_price_yearly = elem.starting_price_year) : (obj.sort_price_yearly = elem.compare_price_year);
+
+    // old pricing setup.....................
+    // obj.starting_price_year = elem.starting_price_year;
+    // obj.starting_price_year_other = elem.starting_price_year_other;
+    // obj.starting_price_month = elem.starting_price_month;
+    // obj.starting_price_month_other = elem.starting_price_month_other;
+    // obj.starting_price_unit = elem.starting_price_unit;
+    // obj.compare_price_year = elem.compare_price_year;
+    // obj.compare_price_year_other = elem.compare_price_year_other;
+    // obj.compare_price_month = elem.compare_price_month;
+    // obj.compare_price_month_other = elem.compare_price_month_other;
+    // obj.compare_price_unit = elem.compare_price_unit;
+    // // determine what price to sort by - defined in database
+    // elem.sort_by_starting_price ? (obj.sort_price_monthly = elem.starting_price_month) : (obj.sort_price_monthly = elem.compare_price_month);
+    // elem.sort_by_starting_price ? (obj.sort_price_yearly = elem.starting_price_year) : (obj.sort_price_yearly = elem.compare_price_year);
+
+    // Price fields
+    obj.price_primary_number_year = elem.price_primary_number_year;
+    obj.price_primary_text_year = elem.price_primary_text_year;
+    obj.price_primary_unit_year = elem.price_primary_unit_year;
+    obj.price_secondary_number_year = elem.price_secondary_number_year;
+    obj.price_secondary_text_year = elem.price_secondary_text_year;
+    obj.price_secondary_unit_year = elem.price_secondary_unit_year;
+    obj.price_primary_number_month = elem.price_primary_number_month;
+    obj.price_primary_text_month = elem.price_primary_text_month;
+    obj.price_primary_unit_month = elem.price_primary_unit_month;
+    obj.price_secondary_number_month = elem.price_secondary_number_month;
+    obj.price_secondary_text_month = elem.price_secondary_text_month;
+    obj.price_secondary_unit_month = elem.price_secondary_unit_month;
+
+    obj.sort_price_yearly = elem.price_primary_number_year;
+    obj.sort_price_monthly = elem.price_primary_number_month;
+
     // tier features
     obj.features = elem.features;
     // calc and set review rating and count
