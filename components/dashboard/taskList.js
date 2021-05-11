@@ -31,6 +31,7 @@ export default function TaskList(props) {
   function handleTaskClick({ task }) {
     setListview(false);
     setCurrenttask(task);
+    // props.router.push(`/profile?screen=tasks&task=${task.id}`, undefined, { shallow: true });
   }
   // const [newproduct, setNewproduct] = useState(false);
 
@@ -85,8 +86,7 @@ export default function TaskList(props) {
               Back to task list
             </button>
           </div>
-
-          <Task task={currenttask} />
+          <Task productId={currenttask.id} />
         </div>
       )}
     </section>

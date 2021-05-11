@@ -34,27 +34,49 @@ export default function Footer({ children, dark }) {
                 <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Top categories</h3>
                 <ul className="mt-4 space-y-4">
                   <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      CRM
-                    </a>
+                    <Link
+                      href={{
+                        pathname: `/search`,
+                        query: { query: "crm" },
+                      }}
+                    >
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>CRM</a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      Video conferencing
-                    </a>
+                    <Link
+                      href={{
+                        pathname: `/search`,
+                        query: { query: "email" },
+                      }}
+                    >
+                      <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
+                        Email
+                      </a>
+                    </Link>
                   </li>
-
                   <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      Website builder
-                    </a>
+                    <Link
+                      href={{
+                        pathname: `/search`,
+                        query: { query: "podcast recording" },
+                      }}
+                    >
+                      <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
+                        Podcast recording
+                      </a>
+                    </Link>
                   </li>
-
                   <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      Ecommerce platform
-                    </a>
+                    <Link
+                      href={{
+                        pathname: `/search`,
+                        query: { query: "audio editing" },
+                      }}
+                    >
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Audio editing</a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -100,7 +122,7 @@ export default function Footer({ children, dark }) {
                     </li> */}
                 </ul>
               </div>
-              <div className="mt-12 md:mt-0">
+              {/* <div className="mt-12 md:mt-0">
                 <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Legal</h3>
                 <ul className="mt-4 space-y-4">
                   <li>
@@ -121,10 +143,10 @@ export default function Footer({ children, dark }) {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
-          <div className="mt-8 xl:mt-0">
+          {/* <div className="mt-8 xl:mt-0">
             <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Subscribe to our newsletter</h3>
             <p className={`mt-4 text-base ${dark ? "text-white" : "text-gray-500"}`}>Insights on the best business software sent to your inbox weekly.</p>
             <form className="mt-4 sm:flex sm:max-w-md">
@@ -138,7 +160,7 @@ export default function Footer({ children, dark }) {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
           {/* <div className="flex space-x-6 md:order-2">
@@ -181,7 +203,7 @@ export default function Footer({ children, dark }) {
               </svg>
             </a>
           </div> */}
-          <p className={`mt-8 text-base ${dark ? "text-gray-200" : "text-gray-400"} md:mt-0 md:order-1`}>&copy; 2021 AppCity, Inc. All rights reserved.</p>
+          <p className={`mt-8 text-base ${dark ? "text-gray-200" : "text-gray-400"} md:mt-0 md:order-1`}>&copy; 2021 SaaStack LLC. All rights reserved.</p>
         </div>
       </div>
       {children}

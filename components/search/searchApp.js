@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 import { StarIcon } from "@heroicons/react/outline";
-import { ExclamationIcon, InformationCircleIcon, XCircleIcon } from "@heroicons/react/solid";
+import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 
 function Hits({ hits, monthlyPrice }) {
   const router = useRouter();
@@ -97,13 +97,13 @@ const Results = connectStateResults(({ searchState, searchResults, children }) =
   // empty state for no search query
   if (searchState && !searchState.query) {
     return (
-      <div className="bg-red-50 border-l-4 border-red-400 p-4">
+      <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
         <div className="flex">
-          <div className="flex-shrink-0">
-            <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+          <div className="flex items-center justify-center">
+            <InformationCircleIcon className="h-5 w-5 text-blue-400" aria-hidden="true" />
           </div>
           <div className="ml-3">
-            <p className="text-sm text-red-700">Enter a search query.</p>
+            <p className="text-sm text-blue-700">Enter a search query.</p>
           </div>
         </div>
       </div>
@@ -271,6 +271,11 @@ export default class SearchApp extends React.Component {
                 <div className="flex-1 px-4 flex justify-between">
                   <SearchBox
                     searchAsYouType={false}
+                    // onSubmit={(event) => {
+                    //   event.preventDefault();
+                    //   let elements = document.getElementsByClassName("ais-ClearRefinements-button");
+                    //   elements[0].click();
+                    // }}
                     submit={
                       <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />

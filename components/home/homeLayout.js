@@ -70,7 +70,7 @@ export default function HomeLayout({ children }) {
 
                 <div className="mt-1">
                   <form onSubmit={handleSubmit} className="flex">
-                    <input type="text" name="search" id="search" className="border border-gray-200 focus:ring-purple-extradark focus:border-purple-extradark w-full text-sm" placeholder="CRM, video conferencing, analytics..." value={query} onChange={(event) => setQuery(event.target.value)} />
+                    <input type="text" name="search" id="search" className="border border-gray-200 focus:ring-purple-extradark focus:border-purple-extradark w-full text-sm" placeholder="podcast, email, video, audio..." value={query} onChange={(event) => setQuery(event.target.value)} />
                     <button type="submit" className="bg-gray-200 w-20 flex justify-center items-center focus:outline-none focus:ring-0">
                       <svg className="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
@@ -124,7 +124,7 @@ export default function HomeLayout({ children }) {
               <div className="absolute inset-0 bg-blue-500 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-600 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
-                <div className="text-white font-semibold text-xl">Ecommerce</div>
+                <div className="text-white font-semibold text-xl">Coming soon: Ecommerce</div>
               </div>
             </div>
 
@@ -133,7 +133,7 @@ export default function HomeLayout({ children }) {
               <div className="absolute inset-0 bg-red-500 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-red-600 via-red-600 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
-                <div className="text-white font-semibold text-xl">YouTube</div>
+                <div className="text-white font-semibold text-xl">Coming soon: YouTube</div>
               </div>
             </div>
 
@@ -142,7 +142,7 @@ export default function HomeLayout({ children }) {
               <div className="absolute inset-0 bg-amber-400 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-amber-400 via-amber-400 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
-                <div className="text-white font-semibold text-xl">Newsletters</div>
+                <div className="text-white font-semibold text-xl">Coming soon: Newsletters</div>
               </div>
             </div>
 
@@ -151,7 +151,7 @@ export default function HomeLayout({ children }) {
               <div className="absolute inset-0 bg-pink-500 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-pink-600 via-pink-600 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
-                <div className="text-white font-semibold text-xl">Startups</div>
+                <div className="text-white font-semibold text-xl">Coming soon: Startups</div>
               </div>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function HomeLayout({ children }) {
                   <span className="block">List your app today.</span>
                 </h2>
                 <div className="flex flex-col">
-                  <p className="mt-4 text-lg leading-6 text-gray-900">Sign up, add your product to our catalog, and reach thousands of creators.</p>
+                  <p className="mt-4 text-lg leading-6 text-gray-900">Sign up, add your app to our catalog, and reach thousands of creators.</p>
                   <Link href="/about?customer=vendor">
                     <a className="text-lg leading-6 text-gray-900 underline hover:no-underline">Learn more</a>
                   </Link>
