@@ -1,6 +1,8 @@
 import React from "react";
 import Tooltip from "../global/tooltip";
 import { supabase } from "../../utils/initSupabase";
+import Link from "next/link";
+import { InformationCircleIcon } from "@heroicons/react/solid";
 
 const videoType = "video/webm";
 
@@ -23,34 +25,38 @@ export default class ReviewRecorder extends React.Component {
   }
 
   async componentDidMount() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      // show it to user
-      this.video.srcObject = stream;
-      this.video.play();
-      // init recording
-      this.mediaRecorder = new MediaRecorder(stream, {
-        mimeType: videoType,
-      });
-      // init data storage for video chunks
-      this.chunks = [];
-      // listen for data from media recorder
-      this.mediaRecorder.ondataavailable = (e) => {
-        if (e.data && e.data.size > 0) {
-          this.chunks.push(e.data);
-        }
-      };
-      this.fetchProfile(this.props.user.id);
-    } catch (error) {
-      throw error;
+    if (this.props.user) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        // show it to user
+        this.video.srcObject = stream;
+        this.video.play();
+        // init recording
+        this.mediaRecorder = new MediaRecorder(stream, {
+          mimeType: videoType,
+        });
+        // init data storage for video chunks
+        this.chunks = [];
+        // listen for data from media recorder
+        this.mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            this.chunks.push(e.data);
+          }
+        };
+        this.fetchProfile(this.props.user.id);
+      } catch (error) {
+        throw error;
+      }
     }
   }
 
   async componentWillUnmount() {
-    if (this.video.srcObject) {
-      this.video.srcObject.getTracks().forEach(function (track) {
-        track.stop();
-      });
+    if (this.props.user) {
+      if (this.video.srcObject) {
+        this.video.srcObject.getTracks().forEach(function (track) {
+          track.stop();
+        });
+      }
     }
   }
 
@@ -256,6 +262,26 @@ export default class ReviewRecorder extends React.Component {
 
   render() {
     const { visible, recording, link, recorded, rating, title, message, uploading, firstname, lastname } = this.state;
+
+    if (!this.props.user)
+      return (
+        <div className="relative p-8 bg-gray-50 shadow space-y-8">
+          <button className="absolute top-1 right-1" onClick={(e) => this.handleClose(e)}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div className="text-lg">Please sign in to leave a review.</div>
+          <div className="flex items-center justify-center space-x-4">
+            <Link href={{ pathname: `/profile`, query: { view: "magic_link" } }}>
+              <a className={`text-purple hover:bg-gray-200 text-base font-medium border border-purple px-4 py-2`}>Sign in</a>
+            </Link>
+            <Link href={{ pathname: `/profile`, query: { view: "sign_up" } }}>
+              <a className={`text-white bg-purple hover:bg-purple-extradark inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-base font-medium`}>Sign up</a>
+            </Link>
+          </div>
+        </div>
+      );
 
     return (
       <div className="camera relative pb-4 bg-gray-50 shadow">

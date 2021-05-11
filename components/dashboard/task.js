@@ -1,11 +1,37 @@
-// import { useState, useEffect } from "react";
-// import { supabase } from "../../utils/initSupabase";
-// import Loading from "./sectionLoading";
+import { useState, useEffect } from "react";
+import { supabase } from "../../utils/initSupabase";
+import Loading from "./sectionLoading";
 
-export default function Task({ task }) {
+export default function Task({ productId }) {
+  const [loading, setLoading] = useState(true);
+  let [form, setForm] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    message: "",
+  });
+
+  // Fetch on load
+  useEffect(() => {
+    console.log(productId);
+    // fetchProducts(productId);
+  }, []);
+
+  const fetchProducts = async (id) => {
+    try {
+      let productData = await supabase.from("products").select(`*`).eq("id", id);
+      setForm();
+    } catch (error) {
+      alert(error);
+    }
+    setLoading(false);
+  };
+
+  if (loading) return <Loading />;
+
   return (
     <div className="shadow sm:overflow-hidden">
-      <div className="bg-white py-6 px-4 sm:p-6">{task.name} test</div>
+      <div className="bg-white py-6 px-4 sm:p-6">test</div>
     </div>
   );
 }

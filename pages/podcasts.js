@@ -1,6 +1,7 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Container from "../components/global/fullContainer";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -26,10 +27,14 @@ export default function Home() {
             </div>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/b2151ba927bb42e.png" alt="Riverside Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Riverside.FM</div>
-            </li>
+            <Link href="/product/1019?tier=1060">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/b2151ba927bb42e.png" alt="Riverside Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Riverside.FM</div>
+                </li>
+              </a>
+            </Link>
             <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
               <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/a6c740900a504b2.png" alt="Squadcast Logo" />
               <div className="flex items-center justify-center text-2xl font-medium pl-4">SquadCast.fm</div>
@@ -113,7 +118,6 @@ export default function Home() {
           </ul>
         </section>
       </Container>
-
       <Footer dark={true} />
     </>
   );

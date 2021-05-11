@@ -3,7 +3,7 @@ import Link from "next/link";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
 import PriceBlock from "../../components/search/priceBlock";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
@@ -71,10 +71,10 @@ const ImageSlider = (props) => {
         <div ref={sliderRef} className="keen-slider max-h-full max-w-full">
           {media &&
             media.map((obj) => (
-              <div key={obj.key} className="keen-slider__slide max-h-full max-w-full">
+              <div key={obj.key} className="keen-slider__slide max-h-full max-w-full flex flex-col justify-center items-center">
                 {/* if image, render image. else, render video player */}
                 {obj.type === "image" && <img className="max-h-full max-w-full" src={obj.src} onClick={() => openLightbox(obj.imgNum)} />}
-                {obj.type === "video" && <ReactPlayer className="max-h-full max-w-full" url={obj.src} controls playing={playing} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />}
+                {obj.type === "video" && <ReactPlayer width="100%" height="100%" className="max-h-full max-w-full" url={obj.src} controls playing={playing[obj.key]} onPlay={() => setPlaying({ [obj.key]: true })} onPause={() => setPlaying({ [obj.key]: false })} />}
               </div>
             ))}
         </div>
@@ -374,7 +374,14 @@ export default function Product({ product }) {
                   <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 `}>
                     <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
                     <ul className="mt-6 space-y-4">
-                      {index > 0 && <li className="text-sm text-gray-500 font-medium">All prior features plus...</li>}
+                      {index > 0 && (
+                        <li className="flex space-x-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                          </svg>
+                          <span className="text-sm text-gray-500 font-medium">All prior features, plus...</span>
+                        </li>
+                      )}
                       {obj.display_features &&
                         obj.display_features.map((feature, index) => (
                           <li key={index} className="flex space-x-3">
