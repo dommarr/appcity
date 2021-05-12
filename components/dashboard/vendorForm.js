@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
-import Loading from "./CardLoading";
+import Loading from "./cardLoading";
 
 export default function VendorForm({ vendorId }) {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState();
   const [message, setMessage] = useState();
+  // form fields
   const [vendorName, setVendorName] = useState("");
   const [website, setWebsite] = useState("");
   const [logo, setLogo] = useState("");
@@ -69,7 +70,7 @@ export default function VendorForm({ vendorId }) {
       >
         <div className="bg-white py-6 px-4 sm:p-6">
           <div>
-            <h2 id="account_details_heading" className="text-lg leading-6 font-medium text-gray-900">
+            <h2 id="company-details-heading" className="text-lg leading-6 font-medium text-gray-900">
               Company details
             </h2>
           </div>
