@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
-import Loading from "./CardLoading";
+import Loading from "./cardLoading";
 import VendorForm from "./vendorForm";
+import ProductForm from "./productForm";
 
 export default function Task({ productId }) {
   const [loading, setLoading] = useState(true);
@@ -35,5 +36,10 @@ export default function Task({ productId }) {
 
   if (loading) return <Loading />;
 
-  return <>{vendorId && <VendorForm vendorId={vendorId} />}</>;
+  return (
+    <>
+      {vendorId && <VendorForm vendorId={vendorId} />}
+      {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} />}
+    </>
+  );
 }
