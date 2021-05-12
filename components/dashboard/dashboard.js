@@ -6,7 +6,6 @@ import Account from "./account";
 import Favorites from "./favorites";
 import Reviews from "./reviews";
 import Products from "./products";
-import Vendor from "./vendor";
 import SectionLoading from "./sectionLoading";
 import AddApp from "./addApp";
 import TaskList from "./taskList";
