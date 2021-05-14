@@ -3,7 +3,9 @@ import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
 
 export default function ProductForm({ productId, vendorId }) {
+  // form loading
   const [loading, setLoading] = useState(true);
+  // form submission states
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState();
   const [message, setMessage] = useState();
@@ -13,6 +15,10 @@ export default function ProductForm({ productId, vendorId }) {
   const [priceModel, setPriceModel] = useState("");
   const [keywords, setKeywords] = useState("");
   const [media, setMedia] = useState([]);
+  // image upload states
+  const [imageUpload, setImageUpload] = useState(false);
+  const [imageSuccess, setImageSuccess] = useState();
+  const [imageMessage, setImageMessage] = useState();
 
   // Fetch on load
   useEffect(() => {
@@ -35,6 +41,8 @@ export default function ProductForm({ productId, vendorId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdating(true);
+    // let uploadMedia = [];
+    // media.forEach((element) => uploadMedia.push(element.link));
     const { data, error } = await supabase.from("products").update({ name: productName, price_link: priceLink, price_model: priceModel, keywords: keywords, media: media }).eq("id", productId);
     if (error) {
       handleFailure();
@@ -51,7 +59,7 @@ export default function ProductForm({ productId, vendorId }) {
     setMessage("Saved successfully.");
     setTimeout(function () {
       setMessage("");
-    }, 2000);
+    }, 4000);
   };
 
   const handleFailure = () => {
@@ -60,7 +68,74 @@ export default function ProductForm({ productId, vendorId }) {
     setMessage("There was an error. Please try again.");
     setTimeout(function () {
       setMessage("");
-    }, 2000);
+    }, 4000);
+  };
+
+  // const addImage = () => {
+  //   const blankImage = { type: "image", link: "" };
+  //   // setMedia(media.concat({ type: "image", link: "" }));
+  //   setMedia([...media, { ...blankImage }]);
+  // };
+
+  const addVideo = () => {
+    // const blankVideo = { type: "video", link: "" };
+    // setMedia([...media, { ...blankVideo }]);
+    setMedia([...media, ""]);
+    console.log(media);
+  };
+
+  const signUrl = async (path) => {
+    let { data, error } = await supabase.storage.from("product_images").createSignedUrl(path, 283824000);
+    if (error) {
+      throw error;
+    }
+    return data.signedURL;
+  };
+
+  const handleImageSuccess = () => {
+    setImageUpload(false);
+    setImageSuccess(true);
+    setImageMessage("Image uploaded. See links below.");
+    setTimeout(function () {
+      setImageMessage("");
+    }, 4000);
+  };
+
+  const handleImageFailure = () => {
+    setImageUpload(false);
+    setImageSuccess(false);
+    setImageMessage("There was an error. Please try again.");
+    setTimeout(function () {
+      setImageMessage("");
+    }, 4000);
+  };
+
+  const handleImageMediaChange = async (e) => {
+    setImageUpload(true);
+    let path = `${productId}_${media.length + 1}`;
+    let { data, error } = await supabase.storage.from("product_images").upload(path, e.target.files[0]);
+    if (error) {
+      handleImageFailure();
+      throw error;
+    }
+    if (data) {
+      let url = await signUrl(path);
+      const updatedMedia = [...media];
+      // updatedMedia[e.target.dataset.idx]["link"] = url;
+      // let imageObj = { type: "image", link: url };
+      updatedMedia.push(url);
+      setMedia(updatedMedia);
+      handleImageSuccess();
+    }
+  };
+
+  const handleVideoMediaChange = (e) => {
+    const updatedMedia = [...media];
+    // updatedMedia[e.target.dataset.idx]["link"] = e.target.value;
+    updatedMedia[e.target.dataset.idx] = e.target.value;
+    setMedia(updatedMedia);
+    console.log(updatedMedia);
+    console.log(media);
   };
 
   if (loading) return <Loading />;
@@ -108,13 +183,53 @@ export default function ProductForm({ productId, vendorId }) {
               <textarea type="text" name="keywords" id="keywords" placeholder="sales crm contact management marketing" value={keywords} onChange={(e) => setKeywords(e.target.value)} required className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
             </div>
             <div className="col-span-4 sm:col-span-2">
-              <label htmlFor="media" className="block text-sm font-medium text-gray-700">
-                Media
-              </label>
-              {/* {media && media.map((obj, index) => (
-                <input type="url" name="media" id="media" placeholder="https://www.hubspot.com/pricing/sales" value={media} onChange={(e) => setMedia(e.target.value)} required className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+              <h4 className="font-medium text-gray-900 mb-1">Media</h4>
 
-                ))} */}
+              {media &&
+                media.map((val, idx) => {
+                  const mediaId = `media-${idx}`;
+                  return (
+                    <div key={mediaId} className="my-2">
+                      <label htmlFor={mediaId} className="block text-sm font-medium text-gray-700">
+                        {`Media #${idx + 1}`}
+                      </label>
+                      {/* <input type="url" name={mediaId} id={mediaId} data-idx={idx} placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4" value={media[idx].link} onChange={handleVideoMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" /> */}
+
+                      <input type="url" name={mediaId} id={mediaId} data-idx={idx} placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4" value={media[idx]} onChange={handleVideoMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+
+                      {/* {val.type === "image" && val.link === "" && <input type="file" name={mediaId} id={mediaId} data-idx={idx} value={media[idx].link} onChange={handleImageMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />}
+                      {val.type === "image" && val.link && <input type="url" name={mediaId} id={mediaId} data-idx={idx} placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4" value={media[idx].link} onChange={handleVideoMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />}
+                      {val.type === "video" && <input type="url" name={mediaId} id={mediaId} data-idx={idx} placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4" value={media[idx].link} onChange={handleVideoMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />} */}
+                    </div>
+                  );
+                })}
+              <div className="flex flex-col items-center mt-4 p-2 border border-gray-300">
+                {/* <button type="button" onClick={addImage} className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0">
+                  Add image
+                </button> */}
+                <h6 className="underline">Add media</h6>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="space-y-2">
+                    {!imageUpload && (
+                      <div className="p-1 flex flex-col space-y-1">
+                        <span className="text-sm">Upload image:</span>
+                        <input type="file" onChange={handleImageMediaChange} className="block w-full focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+                      </div>
+                    )}
+                    {imageUpload && (
+                      <div className="px-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 animate-spin text-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                      </div>
+                    )}
+                    <span className={`flex items-center ${imageSuccess ? `text-green-600` : `text-red-600`}`}>{imageMessage}</span>
+                  </div>
+                  <button type="button" onClick={addVideo} className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0">
+                    Add video link
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
