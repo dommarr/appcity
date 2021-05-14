@@ -70,7 +70,7 @@ export default function TaskList(props) {
       <h1 className="text-2xl font-semibold text-gray-900">Tasks</h1>
       {listview && (
         <ol className="space-y-2">
-          {tasks.length === 0 && <NoTasks />}
+          {(tasks.length === 0 || !tasks) && <NoTasks />}
           {tasks.map((task) => (
             <li key={task.id}>
               <TaskCard task={task} />
