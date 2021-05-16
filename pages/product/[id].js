@@ -10,8 +10,7 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 // import { Breadcrumb } from "react-instantsearch-dom";
 import ReactPlayer from "react-player";
-import { SRLWrapper } from "simple-react-lightbox-pro";
-import { useLightbox } from "simple-react-lightbox-pro";
+import { SRLWrapper, useLightbox } from "simple-react-lightbox-pro";
 import { isMobile } from "react-device-detect";
 import ReviewRecorder from "../../components/review/reviewRecorder";
 import { Auth } from "@supabase/ui";
@@ -20,11 +19,13 @@ import ReviewGrid from "../../components/review/reviewGrid";
 import { StarIcon } from "@heroicons/react/outline";
 
 const Lightbox = (props) => {
-  return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}</div>)}</SRLWrapper>;
+  // return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.match(/\.(jpeg|jpg|gif|png)$/) && <img src={src} />}</div>)}</SRLWrapper>;
+  return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
 };
 
 const ImageSlider = (props) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [media, setMedia] = useState([]);
   const [sliderRef, slider] = useKeenSlider({
     loop: true,
     initial: 0,
@@ -35,25 +36,31 @@ const ImageSlider = (props) => {
   const [playing, setPlaying] = useState(false);
   const { openLightbox } = useLightbox();
 
-  const media = [];
-  let i = 0;
-  let key = 0;
-  props.media.forEach((elem) => {
-    let obj = {};
-    if (elem.match(/\.(jpeg|jpg|gif|png)$/)) {
-      obj.key = key;
-      obj.src = elem;
-      obj.type = "image";
-      obj.imgNum = i;
-      i = i + 1;
-    } else {
-      obj.key = key;
-      obj.src = elem;
-      obj.type = "video";
-    }
-    key = key + 1;
-    media.push(obj);
-  });
+  useEffect(() => {
+    let content = [];
+    let i = 0;
+    let key = 0;
+    props.media.forEach((elem) => {
+      let obj = {};
+      // if (elem.text().toLowerCase().match(/\.(jpeg|jpg|gif|png)$/)) {
+      // if (elem.toLowerCase().match(/\.(jpg|png|gif)/g)) {
+      if (elem.includes("supabase")) {
+        obj.key = key;
+        obj.src = elem;
+        obj.type = "image";
+        obj.imgNum = i;
+        i = i + 1;
+      } else {
+        obj.key = key;
+        obj.src = elem;
+        obj.type = "video";
+      }
+      key = key + 1;
+      content.push(obj);
+    });
+    setMedia(content);
+    setCurrentSlide(0);
+  }, []);
 
   const prevSlide = (e) => {
     e.stopPropagation() || slider.prev();
@@ -68,16 +75,17 @@ const ImageSlider = (props) => {
   return (
     <>
       <div className="navigation-wrapper max-h-full max-w-full relative">
-        <div ref={sliderRef} className="keen-slider max-h-full max-w-full">
-          {media &&
-            media.map((obj) => (
+        {media && (
+          <div ref={sliderRef} className="keen-slider max-h-full max-w-full">
+            {media.map((obj) => (
               <div key={obj.key} className="keen-slider__slide max-h-full max-w-full flex flex-col justify-center items-center">
                 {/* if image, render image. else, render video player */}
-                {obj.type === "image" && <img className="max-h-full max-w-full" src={obj.src} onClick={() => openLightbox(obj.imgNum)} />}
+                {obj.type === "image" && <img className="max-h-full max-w-full hover:cursor-pointer" src={obj.src} onClick={() => openLightbox(obj.imgNum)} />}
                 {obj.type === "video" && <ReactPlayer width="100%" height="100%" className="max-h-full max-w-full" url={obj.src} controls playing={playing[obj.key]} onPlay={() => setPlaying({ [obj.key]: true })} onPause={() => setPlaying({ [obj.key]: false })} />}
               </div>
             ))}
-        </div>
+          </div>
+        )}
 
         {slider && (
           <>

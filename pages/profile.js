@@ -60,7 +60,8 @@ const SupabaseLogin = () => {
           </div>
           <Card className="sm:mx-auto sm:w-full sm:max-w-md">
             <Space direction="vertical" size={8}>
-              <Auth supabaseClient={supabase} view={authView} providers={["google", "facebook"]} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
+              {/* <Auth supabaseClient={supabase} view={authView} providers={["google", "facebook"]} socialLayout="horizontal" socialColors socialButtonSize="tiny" /> */}
+              <Auth supabaseClient={supabase} view={authView} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
             </Space>
           </Card>
         </div>

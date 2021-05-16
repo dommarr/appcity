@@ -43,7 +43,17 @@ export default function ProductForm({ productId, vendorId }) {
     setUpdating(true);
     // let uploadMedia = [];
     // media.forEach((element) => uploadMedia.push(element.link));
-    const { data, error } = await supabase.from("products").update({ name: productName, price_link: priceLink, price_model: priceModel, keywords: keywords, media: media }).eq("id", productId);
+    const { data, error } = await supabase
+      .from("products")
+      .update({
+        vendor_id: vendorId,
+        name: productName,
+        price_link: priceLink,
+        price_model: priceModel,
+        keywords: keywords,
+        media: media,
+      })
+      .eq("id", productId);
     if (error) {
       handleFailure();
       throw error;
