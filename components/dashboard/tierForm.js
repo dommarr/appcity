@@ -44,6 +44,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures })
       throw error;
     }
     products[0].price_model ? setPriceModel(products[0].price_model) : "";
+    console.log(priceModel);
   };
 
   const fetchTierData = async (tier_id) => {
@@ -112,23 +113,29 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures })
     // if text instead of number, leave unit blank. otherwise, set unit based on the price model
     if (!pricePrimaryTextMonth) {
       if (priceModel === "flat-rate") {
+        console.log("flat-rate");
         updateObject.price_primary_unit_month = "per month";
       }
       if (priceModel === "per-user") {
+        console.log("flat-rate");
         updateObject.price_primary_unit_month = "per user per month";
       }
       if (priceModel === "usage-based") {
+        console.log("flat-rate");
         updateObject.price_primary_unit_month = "per month (starting)";
       }
     }
     if (!pricePrimaryTextYear) {
       if (priceModel === "flat-rate") {
+        console.log("flat-rate");
         updateObject.price_primary_unit_year = "per month";
       }
       if (priceModel === "per-user") {
+        console.log("flat-rate");
         updateObject.price_primary_unit_year = "per user per month";
       }
       if (priceModel === "usage-based") {
+        console.log("flat-rate");
         updateObject.price_primary_unit_year = "per month (starting)";
       }
     }
