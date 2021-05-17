@@ -35,14 +35,22 @@ export default function Home() {
                 </li>
               </a>
             </Link>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/a6c740900a504b2.png" alt="Squadcast Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">SquadCast.fm</div>
-            </li>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/0083c38b256a4ff.png" alt="Zencastr Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Zencastr</div>
-            </li>
+            <Link href="/product/1021">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/a6c740900a504b2.png" alt="Squadcast Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">SquadCast.fm</div>
+                </li>
+              </a>
+            </Link>
+            <Link href="/product/1020">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/0083c38b256a4ff.png" alt="Zencastr Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Zencastr</div>
+                </li>
+              </a>
+            </Link>
           </ul>
         </section>
         <section className="py-10">
@@ -55,18 +63,30 @@ export default function Home() {
             </div>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/a495cd2a2242446.png" alt="Descript Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Descript</div>
-            </li>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/474604458c44473.png" alt="Avid Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Avid Pro Tools</div>
-            </li>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/24a65c0921e547e.png" alt="Adobe Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Adobe Audition</div>
-            </li>
+            <Link href="/product/1022">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/a495cd2a2242446.png" alt="Descript Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Descript</div>
+                </li>
+              </a>
+            </Link>
+            <Link href="/product/1023">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/474604458c44473.png" alt="Avid Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Avid Pro Tools</div>
+                </li>
+              </a>
+            </Link>
+            <Link href="/product/1024">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/24a65c0921e547e.png" alt="Adobe Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Adobe Audition</div>
+                </li>
+              </a>
+            </Link>
           </ul>
         </section>
         <section className="py-10">
@@ -79,18 +99,30 @@ export default function Home() {
             </div>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/9001f85ea408464.png" alt="Anchor Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Anchor</div>
-            </li>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/4baf828b49164ac.png" alt="Transistor Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Transistor.fm</div>
-            </li>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/78f54b7a65a14eb.png" alt="Buzzsprout Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Buzzsprout</div>
-            </li>
+            <Link href="/product/1025">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/9001f85ea408464.png" alt="Anchor Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Anchor</div>
+                </li>
+              </a>
+            </Link>
+            <Link href="/product/1026">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/4baf828b49164ac.png" alt="Transistor Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Transistor.fm</div>
+                </li>
+              </a>
+            </Link>
+            <Link href="/product/1027">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/78f54b7a65a14eb.png" alt="Buzzsprout Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Buzzsprout</div>
+                </li>
+              </a>
+            </Link>
           </ul>
         </section>
         <section className="py-10 mb-20">
@@ -103,18 +135,30 @@ export default function Home() {
             </div>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/8114e729036f496.png" alt="Wavve Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Wavve</div>
-            </li>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/3bb26eb4c57546e.png" alt="Buffer Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Buffer</div>
-            </li>
-            <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
-              <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/f29bbc187961468.png" alt="Hootsuite Logo" />
-              <div className="flex items-center justify-center text-2xl font-medium pl-4">Hootsuite</div>
-            </li>
+            <Link href="/product/1028">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/8114e729036f496.png" alt="Wavve Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Wavve</div>
+                </li>
+              </a>
+            </Link>
+            <Link href="/product/1029">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/3bb26eb4c57546e.png" alt="Buffer Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Buffer</div>
+                </li>
+              </a>
+            </Link>
+            <Link href="/product/1030">
+              <a>
+                <li className="col-span-1 bg-white shadow divide-x divide-gray-200 flex p-4">
+                  <img className="w-28 h-28 mr-4" src="https://assets.brandfetch.io/f29bbc187961468.png" alt="Hootsuite Logo" />
+                  <div className="flex items-center justify-center text-2xl font-medium pl-4">Hootsuite</div>
+                </li>
+              </a>
+            </Link>
           </ul>
         </section>
       </Container>
