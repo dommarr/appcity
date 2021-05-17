@@ -2,11 +2,13 @@ import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Container from "../components/global/fullContainer";
 import Link from "next/link";
+import Head from "../components/global/head";
 
 export default function Home() {
   return (
     <>
       <Header style="dark" />
+      <Head title="Podcast Starter Kit" description="The best apps to run your podcast business." url="shopappcity.com/podcasts" />
       <Container>
         <div className="bg-white">
           <div className="max-w-7xl mx-auto py-10 px-4 sm:py-12 sm:px-6 lg:px-8">

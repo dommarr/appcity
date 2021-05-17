@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
+import Head from "../../components/global/head";
 import PriceBlock from "../../components/search/priceBlock";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
@@ -209,6 +210,7 @@ export default function Product({ product }) {
   return (
     <>
       <Header style="dark" />
+      <Head title={product.name} description={`${product.name} details and information.`} url={`shopappcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} />
       <div className="flex flex-col justify-center items-start m-5 md:hidden">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a className="mt-2 flex" href={product.vendors.website}>
