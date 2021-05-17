@@ -10,6 +10,7 @@ import LgSkyline from "../graphics/skyline/LgSkyline";
 import XlSkyline from "../graphics/skyline/XlSkyline";
 import XxlSkyline from "../graphics/skyline/XxlSkyline";
 import Link from "next/link";
+import Banner from "../global/banner";
 
 export const siteTitle = "AppCity";
 
@@ -28,6 +29,7 @@ export default function HomeLayout({ children }) {
   return (
     <>
       <div className="relative bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
+        <Banner />
         <Header style="trans" />
         <Head>
           <link rel="icon" href="/favicon.ico" />
