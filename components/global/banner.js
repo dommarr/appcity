@@ -5,9 +5,9 @@ export default function Example() {
   return (
     <div className="relative bg-indigo-600">
       <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
-        <div className="pr-16 sm:text-center sm:px-16">
+        <div className="text-center sm:px-16 flex items-center justify-center">
           <p className="font-medium text-white">
-            <span className="md:hidden">We're live!</span>
+            <span className="md:hidden">Welcome to the AppCity beta!</span>
             <span className="hidden md:inline">Welcome to the AppCity beta! Please excuse the limited catalog - we're on it!</span>
           </p>
         </div>

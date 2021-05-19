@@ -216,42 +216,6 @@ input[type="search"]::-webkit-search-results-decoration {
   @apply w-5 h-5 text-purple fill-current;
 }
 
-.navigation-wrapper {
-  position: relative;
-}
-
-.keen-slider__slide {
-  @apply flex flex-col justify-center items-center;
-}
-
-.dots {
-  display: flex;
-  padding: 10px 0;
-  justify-content: center;
-}
-
-.dot {
-  border: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin: 0 5px;
-  padding: 5px;
-  cursor: pointer;
-}
-
-.dot {
-  @apply bg-gray-200;
-}
-
-.dot:focus {
-  outline: none;
-}
-
-.dot.active {
-  @apply bg-gray-600;
-}
-
 .sbui-card {
   border-radius: 0px !important;
 }
