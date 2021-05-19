@@ -61,6 +61,10 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         logo: ["Poppins"],
       },
+      height: {
+        120: "30rem",
+        200: "40rem",
+      },
       minHeight: {
         block: "160px",
         "1/4": "25%",
@@ -69,6 +73,8 @@ module.exports = {
         "60vh": "60vh",
         "65vh": "65vh",
         "70vh": "70vh",
+        "75vh": "75vh",
+        "80vh": "80vh",
       },
       // maxWidth: {
       //   "max-w-screen-3xl": "max-width: 1920px",
