@@ -10,6 +10,7 @@ import Head from "../components/global/head";
 import Dashboard from "../components/dashboard/dashboard";
 import Loading from "../components/global/loading";
 import Logo from "../components/graphics/logo/Logo";
+import LogoWhite from "../components/graphics/logo/LogoWhite";
 import ProfileLoading from "../components/dashboard/profileLoading";
 
 const { Text } = Typography;
@@ -49,12 +50,12 @@ const SupabaseLogin = () => {
   const View = () => {
     if (!user)
       return (
-        <div className="min-h-screen min-w-screen bg-gradient-to-b from-purple-extradark to-purple-extralight flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="min-h-screen min-w-screen bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
             <div className="flex justify-center">
               <Link href="/">
                 <a>
-                  <Logo size={100} />
+                  <LogoWhite size={100} />
                 </a>
               </Link>
             </div>
