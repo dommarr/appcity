@@ -50,7 +50,7 @@ const SupabaseLogin = () => {
   const View = () => {
     if (!user)
       return (
-        <div className="min-h-screen min-w-screen bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight flex flex-col sm:justify-center pt-32 sm:py-12 sm:px-6 lg:px-8">
+        <div className="min-h-screen min-w-screen bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight flex flex-col sm:justify-center pt-16 sm:py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
             <div className="flex justify-center">
               <Link href="/">
@@ -63,7 +63,7 @@ const SupabaseLogin = () => {
           <Card className="sm:mx-auto sm:w-full sm:max-w-md">
             <Space direction="vertical" size={8}>
               {/* <Auth supabaseClient={supabase} view={authView} providers={["google", "facebook"]} socialLayout="horizontal" socialColors socialButtonSize="tiny" /> */}
-              <Auth supabaseClient={supabase} view={authView} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
+              <Auth supabaseClient={supabase} view={authView} providers={["google", "facebook"]} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
             </Space>
           </Card>
         </div>
