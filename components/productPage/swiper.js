@@ -44,7 +44,22 @@ export default function SwiperSlider({ media }) {
       {sortedMedia &&
         sortedMedia.map((val, idx) => (
           <SwiperSlide key={idx} className="w-full h-full flex flex-col items-center justify-center">
-            {val.includes("supabase") ? <img src={val} onClick={() => openLightbox(idx)} className={`object-contain hover:cursor-pointer`} /> : <ReactPlayer controls url={val} playing={playing[idx]} onPlay={() => setPlaying({ [idx]: true })} onPause={() => setPlaying({ [idx]: false })} className={`object-contain`} />}
+            {val.includes("supabase") ? (
+              <img src={val} onClick={() => openLightbox(idx)} className={`object-contain hover:cursor-pointer`} />
+            ) : (
+              <div className="w-full h-full py-20 sm:p-20 md:py-28 md:px-10 xl:p-20">
+                <ReactPlayer
+                  controls
+                  url={val}
+                  playing={playing[idx]}
+                  onPlay={() => setPlaying({ [idx]: true })}
+                  onPause={() => setPlaying({ [idx]: false })}
+                  width="100%"
+                  height="100%"
+                  className={``}
+                />
+              </div>
+            )}
           </SwiperSlide>
         ))}
     </Swiper>
