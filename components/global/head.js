@@ -4,7 +4,7 @@ import React from "react";
 
 const defaultDescription = "Shop for software like you shop for everything else.";
 const defaultOGURL = "shopappcity.com";
-const defaultOGImage = "";
+const defaultOGImage = "/sms-share-image.png";
 const defaultTitle = "AppCity";
 
 export const Head = (props) => (
@@ -29,7 +29,7 @@ export const Head = (props) => (
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <link rel="stylesheet" href="https://unpkg.com/react-instantsearch-theme-algolia@3.0.0/style.min.css" />
-    <link rel="stylesheet" href="../static/instantsearch.css" />
+    {/* <link rel="stylesheet" href="../../styles/instantsearch.css" /> */}
   </NextHead>
 );
 

@@ -27,8 +27,8 @@ export default function Contact() {
 
     const res = await fetch("/api/contact", {
       body: JSON.stringify({
-        From: "contact.form@tryappcity.com",
-        To: "contact@tryappcity.com",
+        From: "contact.form@shopappcity.com",
+        To: "contact@shopappcity.com",
         ReplyTo: form.email,
         Subject: "Contact Form Message",
         TextBody: `
@@ -93,7 +93,14 @@ export default function Contact() {
                     First name
                   </label>
                   <div className="mt-1">
-                    <input type="text" name="first_name" id="first_name" autoComplete="given-name" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" />
+                    <input
+                      type="text"
+                      name="first_name"
+                      id="first_name"
+                      autoComplete="given-name"
+                      onChange={handleChange}
+                      className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"
+                    />
                   </div>
                 </div>
                 <div>
@@ -101,7 +108,14 @@ export default function Contact() {
                     Last name
                   </label>
                   <div className="mt-1">
-                    <input type="text" name="last_name" id="last_name" autoComplete="family-name" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" />
+                    <input
+                      type="text"
+                      name="last_name"
+                      id="last_name"
+                      autoComplete="family-name"
+                      onChange={handleChange}
+                      className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"
+                    />
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -109,7 +123,14 @@ export default function Contact() {
                     Email
                   </label>
                   <div className="mt-1">
-                    <input id="email" name="email" type="email" autoComplete="email" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" />
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      onChange={handleChange}
+                      className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"
+                    />
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -117,11 +138,20 @@ export default function Contact() {
                     Message
                   </label>
                   <div className="mt-1">
-                    <textarea id="message" name="message" rows="4" onChange={handleChange} className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"></textarea>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows="4"
+                      onChange={handleChange}
+                      className="py-3 px-4 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300"
+                    ></textarea>
                   </div>
                 </div>
                 <div className="sm:col-span-2">
-                  <button type="submit" className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent shadow-sm text-base font-medium text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent shadow-sm text-base font-medium text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
                     Let's talk
                   </button>
                 </div>
