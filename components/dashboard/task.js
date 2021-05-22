@@ -4,11 +4,13 @@ import Loading from "./cardLoading";
 import VendorForm from "./vendorForm";
 import ProductForm from "./productForm";
 import TierForm from "./tierForm";
+import { PlusCircleIcon } from "@heroicons/react/outline";
 
 export default function Task({ productId }) {
   const [loading, setLoading] = useState(true);
   const [vendorId, setVendorId] = useState();
   const [tierIds, setTierIds] = useState([]);
+  const [priceModel, setPriceModel] = useState();
 
   // Fetch on load
   useEffect(() => {
@@ -76,6 +78,16 @@ export default function Task({ productId }) {
     }
   };
 
+  const handleAddTier = async () => {
+    const { data, error } = await supabase.from("tiers").insert([{ product_id: productId, number: tierIds.length + 1 }]);
+    if (error) {
+      throw error;
+    }
+    if (data) {
+      fetchTierIds(productId);
+    }
+  };
+
   //   tierIds.forEach((tier) => {
   //     let features = await getCumulativeFeatures(tier, product_id);
   //     const { data, error } = await supabase.from("tiers").update({ features: features }).eq("id", tier);
@@ -90,11 +102,21 @@ export default function Task({ productId }) {
   return (
     <>
       {vendorId && <VendorForm vendorId={vendorId} />}
-      {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} />}
+      {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} />}
       {tierIds &&
         tierIds.map((tierId, idx) => {
-          return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} />;
+          return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} priceModel={priceModel} fetchTierIds={fetchTierIds} />;
         })}
+      <div>
+        <button
+          type="button"
+          onClick={() => handleAddTier()}
+          className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
+        >
+          <PlusCircleIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+          Add tier
+        </button>
+      </div>
     </>
   );
 }

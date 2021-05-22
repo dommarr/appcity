@@ -5,10 +5,10 @@ import { useRouter } from "next/router";
 import Account from "./account";
 import Favorites from "./favorites";
 import Reviews from "./reviews";
-import Products from "./products";
 import SectionLoading from "./sectionLoading";
 import AddApp from "./addApp";
 import TaskList from "./taskList";
+import AddProduct from "./createNew";
 
 const navLinks = [
   {
@@ -48,6 +48,11 @@ const adminLinks = [
     label: "Tasks",
     route: "tasks",
     icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
+  },
+  {
+    label: "Add app",
+    route: "admin_add_app",
+    icon: "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z",
   },
 ];
 
@@ -119,10 +124,26 @@ export default function Dashboard(props) {
     <>
       <Transition show={showSidebar} className="md:hidden">
         <div className="fixed inset-0 flex z-40">
-          <Transition.Child enter="transition-opacity ease-linear duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity ease-linear duration-300" leaveFrom="opacity-100" leaveTo="opacity-0" className="fixed inset-0">
+          <Transition.Child
+            enter="transition-opacity ease-linear duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity ease-linear duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+            className="fixed inset-0"
+          >
             <div className="absolute inset-0 bg-gray-600 opacity-75"></div>
           </Transition.Child>
-          <Transition.Child enter="transition ease-in-out duration-300 transform" enterFrom="-translate-x-full" enterTo="translate-x-0" leave="transition ease-in-out duration-300 transform" leaveFrom="translate-x-0" leaveTo="-translate-x-full" className="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+          <Transition.Child
+            enter="transition ease-in-out duration-300 transform"
+            enterFrom="-translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition ease-in-out duration-300 transform"
+            leaveFrom="translate-x-0"
+            leaveTo="-translate-x-full"
+            className="relative flex-1 flex flex-col max-w-xs w-full bg-white"
+          >
             <div className="absolute top-0 right-0 -mr-12 pt-2">
               <button onClick={() => setShowSidebar(false)} className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                 <span className="sr-only">Close sidebar</span>
@@ -134,8 +155,21 @@ export default function Dashboard(props) {
             <div className="flex-1 h-0 pb-4 overflow-y-auto relative">
               <nav className="mt-5 px-2 space-y-1">
                 {navLinks.map(({ label, route, icon }) => (
-                  <button key={route} onClick={() => mobileSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
-                    <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <button
+                    key={route}
+                    onClick={() => mobileSidebarClick(route)}
+                    className={`${
+                      screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                    } group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}
+                  >
+                    <svg
+                      className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                     </svg>
                     {label}
@@ -152,8 +186,21 @@ export default function Dashboard(props) {
                       </div>
                     </div>
                     {vendorLinks.map(({ label, route, icon }) => (
-                      <button key={route} onClick={() => mobileSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
-                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <button
+                        key={route}
+                        onClick={() => mobileSidebarClick(route)}
+                        className={`${
+                          screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                        } group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}
+                      >
+                        <svg
+                          className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                         </svg>
                         {label}
@@ -172,8 +219,21 @@ export default function Dashboard(props) {
                       </div>
                     </div>
                     {adminLinks.map(({ label, route, icon }) => (
-                      <button key={route} onClick={() => mobileSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
-                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <button
+                        key={route}
+                        onClick={() => mobileSidebarClick(route)}
+                        className={`${
+                          screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                        } group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}
+                      >
+                        <svg
+                          className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                         </svg>
                         {label}
@@ -181,7 +241,10 @@ export default function Dashboard(props) {
                     ))}
                   </>
                 )}
-                <button onClick={() => signOut()} className={`absolute inset-x-0 bottom-4 mx-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 group flex items-center w-full px-2 py-2 text-sm font-medium`}>
+                <button
+                  onClick={() => signOut()}
+                  className={`absolute inset-x-0 bottom-4 mx-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 group flex items-center w-full px-2 py-2 text-sm font-medium`}
+                >
                   <svg className={`text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                   </svg>
@@ -201,8 +264,21 @@ export default function Dashboard(props) {
             <div className="flex-1 flex flex-col pb-4 overflow-y-auto">
               <nav className="mt-5 flex-1 px-2 bg-white space-y-1 relative">
                 {navLinks.map(({ label, route, icon }) => (
-                  <button key={route} onClick={() => desktopSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
-                    <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <button
+                    key={route}
+                    onClick={() => desktopSidebarClick(route)}
+                    className={`${
+                      screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                    } group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}
+                  >
+                    <svg
+                      className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                     </svg>
                     {label}
@@ -219,8 +295,21 @@ export default function Dashboard(props) {
                       </div>
                     </div>
                     {vendorLinks.map(({ label, route, icon }) => (
-                      <button key={route} onClick={() => desktopSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
-                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <button
+                        key={route}
+                        onClick={() => desktopSidebarClick(route)}
+                        className={`${
+                          screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                        } group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}
+                      >
+                        <svg
+                          className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                         </svg>
                         {label}
@@ -239,8 +328,21 @@ export default function Dashboard(props) {
                       </div>
                     </div>
                     {adminLinks.map(({ label, route, icon }) => (
-                      <button key={route} onClick={() => desktopSidebarClick(route)} className={`${screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"} group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}>
-                        <svg className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <button
+                        key={route}
+                        onClick={() => desktopSidebarClick(route)}
+                        className={`${
+                          screen === route ? "bg-gray-200 text-gray-900" : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                        } group flex items-center w-full px-2 py-2 text-sm font-medium focus:outline-none focus:ring-0`}
+                      >
+                        <svg
+                          className={`${screen === route ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500"} mr-3 h-6 w-6`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                         </svg>
                         {label}
@@ -248,7 +350,10 @@ export default function Dashboard(props) {
                     ))}
                   </>
                 )}
-                <button onClick={() => signOut()} className={`absolute inset-x-0 bottom-0 mx-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 group flex w-full items-center px-2 py-2 text-sm font-medium`}>
+                <button
+                  onClick={() => signOut()}
+                  className={`absolute inset-x-0 bottom-0 mx-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 group flex w-full items-center px-2 py-2 text-sm font-medium`}
+                >
                   <svg className={`text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                   </svg>
@@ -261,7 +366,10 @@ export default function Dashboard(props) {
       </div>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
-          <button onClick={() => setShowSidebar(true)} className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+          <button
+            onClick={() => setShowSidebar(true)}
+            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          >
             <span className="sr-only">Open sidebar</span>
             <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -279,6 +387,7 @@ export default function Dashboard(props) {
               {/* {screen === "Products" && <Products user={props.user} />} */}
               {screen === "add_app" && <AddApp user={props.user} />}
               {screen === "tasks" && <TaskList user={props.user} router={router} />}
+              {screen === "admin_add_app" && <AddProduct user={props.user} router={router} />}
               {/* /End replace */}
             </div>
           </div>

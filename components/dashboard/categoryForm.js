@@ -19,10 +19,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [imageUpload, setImageUpload] = useState(false);
   const [imageSuccess, setImageSuccess] = useState();
   const [imageMessage, setImageMessage] = useState();
+  const [allCategories, setAllCategories] = useState();
 
   // Fetch on load
   useEffect(() => {
     fetchProductData(productId);
+    fetchCategories();
     setLoading(false);
   }, []);
 
@@ -36,6 +38,15 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].price_model ? setPriceModel(products[0].price_model) : "";
     products[0].keywords ? setKeywords(products[0].keywords) : "";
     products[0].media ? setMedia(products[0].media) : "";
+  };
+
+  const fetchCategories = async () => {
+    let { data: categories, error } = await supabase.from("categories").select("*");
+    if (error) {
+      throw error;
+    }
+    setAllCategories(categories);
+    console.log(categories);
   };
 
   const handleSubmit = async (e) => {
@@ -294,6 +305,25 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                   </button>
                 </div>
               </div>
+            </div>
+            <div className="col-span-4 sm:col-span-2">
+              <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
+                Categories
+              </label>
+              <ul>
+                {allCategories &&
+                  allCategories.map((val, idx) => {
+                    if (val.parent_id === null) {
+                      return (
+                        <li key={idx}>
+                          <input type="checkbox" id={val.id} value={val.id} />
+                          <label htmlFor={val.id}>{val.name}</label>
+                        </li>
+                      );
+                    }
+                  })}
+              </ul>
+              <div className="grid grid-cols-4 gap-6"></div>
             </div>
           </div>
         </div>

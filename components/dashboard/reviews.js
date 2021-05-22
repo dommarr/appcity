@@ -19,6 +19,7 @@ export default function UserReviews({ user }) {
 
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [reviewArray, setReviewArray] = useState();
 
   // const refreshData = () => {
   //   router.replace(router.asPath);
@@ -30,9 +31,24 @@ export default function UserReviews({ user }) {
         return;
       } else {
         setCount(data.length);
+        setReviewArray(reviews);
       }
     },
   });
+
+  const fetchReviews = async () => {
+    let { data: reviews, error } = await supabase.from("reviews").select("*").eq("product", user.id);
+    if (error) {
+      throw error;
+    }
+    if (reviews.length > 0) {
+      setReviewArray(reviews);
+      setCount(reviews.length);
+    } else {
+      setReviewArray("");
+      setCount(0);
+    }
+  };
 
   async function deleteReview(review_id, user_id, product_id) {
     setLoading(true);
@@ -50,7 +66,7 @@ export default function UserReviews({ user }) {
             throw error;
           }
           if (data) {
-            // refreshData();
+            fetchReviews();
             setLoading(false);
             return;
           }
@@ -81,7 +97,9 @@ export default function UserReviews({ user }) {
               <span>To leave a review, search for the app and go to the bottom of the app page.</span>
               <Link href={`/search`}>
                 <a>
-                  <button className="bg-purple border border-transparent shadow-sm mt-2 py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">Search apps</button>
+                  <button className="bg-purple border border-transparent shadow-sm mt-2 py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">
+                    Search apps
+                  </button>
                 </a>
               </Link>
             </div>
@@ -102,34 +120,40 @@ export default function UserReviews({ user }) {
             </h2>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 mt-6">
-            {reviews.map((review) => (
-              <li key={review.id} className="col-span-1 flex flex-col bg-gray-50 shadow divide-y divide-gray-200">
-                <div className="flex-1 flex flex-col">
-                  <div className="flex justify-center items-center p-2">
-                    <StarIcon className={`h-7 w-7 text-purple ${review.rating > 0 ? "fill-current" : ""}`} />
-                    <StarIcon className={`h-7 w-7 text-purple ${review.rating > 1 ? "fill-current" : ""}`} />
-                    <StarIcon className={`h-7 w-7 text-purple ${review.rating > 2 ? "fill-current" : ""}`} />
-                    <StarIcon className={`h-7 w-7 text-purple ${review.rating > 3 ? "fill-current" : ""}`} />
-                    <StarIcon className={`h-7 w-7 text-purple ${review.rating > 4 ? "fill-current" : ""}`} />
+            {reviewArray &&
+              reviewArray.map((review) => (
+                <li key={review.id} className="col-span-1 flex flex-col bg-gray-50 shadow divide-y divide-gray-200">
+                  <div className="flex-1 flex flex-col">
+                    <div className="flex justify-center items-center p-2">
+                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 0 ? "fill-current" : ""}`} />
+                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 1 ? "fill-current" : ""}`} />
+                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 2 ? "fill-current" : ""}`} />
+                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 3 ? "fill-current" : ""}`} />
+                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 4 ? "fill-current" : ""}`} />
+                    </div>
+                    <div className="text-lg font-medium text-center">{review.title}</div>
+                    <div className="text-center pb-2">
+                      - {review.first_name} {review.last_name}
+                    </div>
+                    <video src={review.link} controls />
+                    <div className="p-4 flex justify-center items-center space-x-2">
+                      <Link href={`/product/${review.product}#reviews`}>
+                        <a>
+                          <button className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">
+                            Product page
+                          </button>
+                        </a>
+                      </Link>
+                      <button
+                        onClick={() => deleteReview(review.id, user.id, review.product)}
+                        className="bg-red-600 border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-0"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <div className="text-lg font-medium text-center">{review.title}</div>
-                  <div className="text-center pb-2">
-                    - {review.first_name} {review.last_name}
-                  </div>
-                  <video src={review.link} controls />
-                  <div className="p-4 flex justify-center items-center space-x-2">
-                    <Link href={`/product/${review.product}#reviews`}>
-                      <a>
-                        <button className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">Product page</button>
-                      </a>
-                    </Link>
-                    <button onClick={() => deleteReview(review.id, user.id, review.product)} className="bg-red-600 border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-0">
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              ))}
           </ul>
         </div>
       </div>

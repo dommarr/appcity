@@ -79,32 +79,70 @@ export default function VendorForm({ vendorId }) {
               <label htmlFor="vendorName" className="block text-sm font-medium text-gray-700">
                 Company name
               </label>
-              <input type="text" name="vendorName" id="vendorName" placeholder="Hubspot" value={vendorName} onChange={(e) => setVendorName(e.target.value)} required className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+              <input
+                type="text"
+                name="vendorName"
+                id="vendorName"
+                placeholder="Hubspot"
+                value={vendorName}
+                onChange={(e) => setVendorName(e.target.value)}
+                required
+                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
             </div>
             <div className="col-span-4 sm:col-span-2">
               <label htmlFor="website" className="block text-sm font-medium text-gray-700">
                 Company website
               </label>
-              <input type="url" name="website" id="website" placeholder="https://www.hubspot.com/" value={website} onChange={(e) => setWebsite(e.target.value)} required className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+              <input
+                type="url"
+                name="website"
+                id="website"
+                placeholder="https://www.hubspot.com/"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                required
+                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
             </div>
             <div className="col-span-4 sm:col-span-2">
               <label htmlFor="logo" className="block text-sm font-medium text-gray-700">
                 Company logo
               </label>
-              <input type="url" name="logo" id="logo" placeholder="https://assets.brandfetch.io/298f948a6d77483.png" value={logo} onChange={(e) => setLogo(e.target.value)} required className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+              <input
+                type="url"
+                name="logo"
+                id="logo"
+                placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
+                value={logo}
+                onChange={(e) => setLogo(e.target.value)}
+                required
+                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
+              <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${website}`} className="text-sm text-blue-600 underline mt-2 pl-2">
+                Get logo
+              </a>
             </div>
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">
           {!updating && (
-            <button type="submit" className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">
+            <button
+              type="submit"
+              className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
+            >
               Save
             </button>
           )}
           {updating && (
             <button className="bg-purple border border-transparent shadow-sm inline-flex py-1.5 px-5 justify-center items-center text-sm font-medium text-white focus:outline-none focus:ring-0">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+                />
               </svg>
             </button>
           )}
