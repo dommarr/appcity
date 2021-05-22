@@ -112,14 +112,14 @@ export default function Product({ product }) {
         {/* Left */}
         <div className="relative w-full md:w-3/5 h-96 sm:h-120 md:h-200 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black border border-black">
           {/* if media is not null, then display slider */}
-          {product.media && <Swiper media={product.media} />}
-          {!product.media && (
+          {product.media && product.media.length > 0 && <Swiper media={product.media} />}
+          {(!product.media || product.media.length === 0) && (
             <>
               <img className="object-contain object-center w-40 h-40 p-2 bg-white flex-shrink-0 mx-auto mt-10" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h3 className="text-white text-center text-2xl mt-5">Sorry!</h3>
-              <h4 className="text-white text-center text-base px-2">Looks like we don't have any media for this product.</h4>
+              <h4 className="text-white text-center text-base px-2">Looks like we don't have any media for {product.name}</h4>
               <a href={product.vendors.website} className="mt-3 mb-10 inline-flex items-center px-2.5 py-1.5 border border-white shadow-sm text-xs font-medium text-white hover:bg-gray-700">
-                Go to product site
+                Go to {product.name}
               </a>
             </>
           )}
@@ -147,10 +147,18 @@ export default function Product({ product }) {
           {/* Price Toggle */}
           {tier != null && (
             <div className="relative self-center bg-gray-100 p-0.5 flex">
-              <button type="button" onClick={() => setMonthly(true)} className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}>
+              <button
+                type="button"
+                onClick={() => setMonthly(true)}
+                className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
+              >
                 Monthly billing
               </button>
-              <button type="button" onClick={() => setMonthly(false)} className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}>
+              <button
+                type="button"
+                onClick={() => setMonthly(false)}
+                className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
+              >
                 Yearly billing
               </button>
             </div>
@@ -169,7 +177,9 @@ export default function Product({ product }) {
                       <button
                         key={obj.id}
                         type="button"
-                        className={`${tier != null && tier.id === obj.id ? "bg-gray-200" : ""} inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
+                        className={`${
+                          tier != null && tier.id === obj.id ? "bg-gray-200" : ""
+                        } inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
                         onClick={() => {
                           router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
                         }}
@@ -189,20 +199,22 @@ export default function Product({ product }) {
           {/* Buy Button */}
           {tier != null && (
             <div className="flex space-x-2 my-4">
-              <Link href={product.price_link}>
-                <a>
-                  <button type="button" className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-0">
-                    Buy now
-                  </button>
-                </a>
-              </Link>
-              <Link href={product.price_link}>
-                <a>
-                  <button type="button" className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0">
-                    App details
-                  </button>
-                </a>
-              </Link>
+              <a target="_blank" href={product.price_link}>
+                <button
+                  type="button"
+                  className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-0"
+                >
+                  Buy now
+                </button>
+              </a>
+              <a target="_blank" href={product.price_link}>
+                <button
+                  type="button"
+                  className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0"
+                >
+                  App details
+                </button>
+              </a>
             </div>
           )}
         </div>
@@ -219,21 +231,49 @@ export default function Product({ product }) {
           <div className="sm:flex sm:flex-col sm:align-center">
             <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Tiers</h1>
             <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
-              <button type="button" onClick={() => setMonthly(true)} className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}>
+              <button
+                type="button"
+                onClick={() => setMonthly(true)}
+                className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}
+              >
                 Monthly billing
               </button>
-              <button type="button" onClick={() => setMonthly(false)} className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}>
+              <button
+                type="button"
+                onClick={() => setMonthly(false)}
+                className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}
+              >
                 Yearly billing
               </button>
             </div>
           </div>
-          <div className={`safe mt-8 grid sm:gap-x-4 ${xlCols >= 5 ? "xl:gap-x-1" : ""} sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}>
+          <div
+            className={`safe mt-8 grid sm:gap-x-4 ${
+              xlCols >= 5 ? "xl:gap-x-1" : ""
+            } sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}
+          >
             {sortedTiers &&
               sortedTiers.map((obj, index) => (
-                <div key={index} className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(index + 1, 1, mdCols)} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 1, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}>
+                <div
+                  key={index}
+                  className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
+                    lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
+                  } bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(
+                    index + 1,
+                    1,
+                    mdCols
+                  )} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(
+                    order(index + 1, 1, mdCols),
+                    mdCols
+                  )} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}
+                >
                   <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
                   <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
-                  <a href={product.price_link} className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center">
+                  <a
+                    target="_blank"
+                    href={product.price_link}
+                    className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center"
+                  >
                     Buy {obj.name}
                   </a>
                 </div>
@@ -260,7 +300,17 @@ export default function Product({ product }) {
             ))} */}
             {sortedTiers &&
               sortedTiers.map((obj, index) => (
-                <div key={index} className={`safe index-${index + 1} order-${order(index + 1, 3, 1)} sm:order-${order(index + 1, 3, smCols)} md:order-${order(index + 1, 3, mdCols)} lg:order-${order(index + 1, 3, lgCols)} xl:order-${order(index + 1, 3, xlCols)} sm:row-start-${rowStart(order(index + 1, 3, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 3, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 3, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 3, xlCols), xlCols)}`}>
+                <div
+                  key={index}
+                  className={`safe index-${index + 1} order-${order(index + 1, 3, 1)} sm:order-${order(index + 1, 3, smCols)} md:order-${order(index + 1, 3, mdCols)} lg:order-${order(
+                    index + 1,
+                    3,
+                    lgCols
+                  )} xl:order-${order(index + 1, 3, xlCols)} sm:row-start-${rowStart(order(index + 1, 3, smCols), smCols)} md:row-start-${rowStart(
+                    order(index + 1, 3, mdCols),
+                    mdCols
+                  )} lg:row-start-${rowStart(order(index + 1, 3, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 3, xlCols), xlCols)}`}
+                >
                   <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 `}>
                     <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
                     <ul className="mt-6 space-y-4">
@@ -295,7 +345,11 @@ export default function Product({ product }) {
             <div className="self-center my-8 flex">
               {!review && !success && (
                 <div className="flex-col items-center space-y-2">
-                  <button type="button" onClick={() => setReview(true)} className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0">
+                  <button
+                    type="button"
+                    onClick={() => setReview(true)}
+                    className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
+                  >
                     Leave a video review
                   </button>
                   <Tooltip text="Why only video?" caption="Video reviews are more trustworthy. When someone puts their face and name on a video, you can better trust its authenticity." />
