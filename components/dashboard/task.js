@@ -3,6 +3,7 @@ import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
 import VendorForm from "./vendorForm";
 import ProductForm from "./productForm";
+import CategoryForm from "./categoryForm";
 import TierForm from "./tierForm";
 import { PlusCircleIcon } from "@heroicons/react/outline";
 
@@ -103,6 +104,7 @@ export default function Task({ productId }) {
     <>
       {vendorId && <VendorForm vendorId={vendorId} />}
       {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} />}
+      {productId && vendorId && <CategoryForm productId={productId} />}
       {tierIds &&
         tierIds.map((tierId, idx) => {
           return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} priceModel={priceModel} fetchTierIds={fetchTierIds} />;
