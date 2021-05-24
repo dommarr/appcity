@@ -12,6 +12,7 @@ export default function CreateNew(props) {
   const [vendorName, setVendorName] = useState("");
   const [website, setWebsite] = useState("");
   const [productName, setProductName] = useState("");
+  const [sameName, setSameName] = useState(false);
   const [checked, setChecked] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
 
@@ -49,13 +50,12 @@ export default function CreateNew(props) {
     }
   };
 
-  const handleCheckboxChange = () => {
-    setChecked(!checked);
-    setCheckbox(!checkbox);
-    if (!checked) {
+  const handleCheckboxChange = (e) => {
+    setSameName(e.target.checked);
+    if (e.target.checked) {
       setProductName(vendorName);
     }
-    if (checked) {
+    if (!e.target.checked) {
       setProductName("");
     }
   };
@@ -146,7 +146,7 @@ export default function CreateNew(props) {
                   className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 />
                 <div className="flex p-2 space-x-2 justify-start items-center">
-                  <input type="checkbox" value={checkbox} checked={checked} onChange={handleCheckboxChange}></input>
+                  <input type="checkbox" value={sameName} onChange={handleCheckboxChange}></input>
                   <label className="block text-sm text-gray-700">Same as company name</label>
                 </div>
               </div>
