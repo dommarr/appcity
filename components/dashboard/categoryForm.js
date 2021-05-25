@@ -66,13 +66,12 @@ export default function CategoryForm({ productId }) {
       obj.lvl = 0;
       obj.name = arr[i].name;
       obj.nesting = arr[i].name;
-
       let current_parent = arr[i].parent_id;
       // if parent_id is not null, it is not a top-level category, so update lvl and name
       // continue until we have gone up the chain to the top-level (parent_id === null)
       while (current_parent !== null) {
         obj.lvl++;
-        obj.nesting = cats[current_parent] + " > " + obj.name;
+        obj.nesting = cats[current_parent] + " > " + obj.nesting;
         obj.group = current_parent;
         let j;
         for (j = 0; j < arr.length; j++) {

@@ -6,17 +6,21 @@ import ProductForm from "./productForm";
 import CategoryForm from "./categoryForm";
 import TierForm from "./tierForm";
 import { PlusCircleIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon } from "@heroicons/react/solid";
 
-export default function Task({ productId }) {
+export default function Task({ props }) {
   const [loading, setLoading] = useState(true);
+  const [productId, setProductId] = useState();
   const [vendorId, setVendorId] = useState();
   const [tierIds, setTierIds] = useState([]);
   const [priceModel, setPriceModel] = useState();
+  const [complete, setComplete] = useState(false);
 
   // Fetch on load
   useEffect(() => {
-    fetchVendorId(productId);
-    fetchTierIds(productId);
+    setProductId(props.product_id);
+    fetchVendorId(props.product_id);
+    fetchTierIds(props.product_id);
     setLoading(false);
   }, []);
 
@@ -89,6 +93,22 @@ export default function Task({ productId }) {
     }
   };
 
+  const handleCompleteTask = async (task) => {
+    const { data, error } = await supabase.from("tasks").update({ complete: true }).eq("id", task.id);
+    if (error) {
+      throw error;
+    }
+    if (data) {
+      const { data, error } = await supabase.from("products").update({ complete: true }).eq("id", task.product_id);
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        setComplete(true);
+      }
+    }
+  };
+
   //   tierIds.forEach((tier) => {
   //     let features = await getCumulativeFeatures(tier, product_id);
   //     const { data, error } = await supabase.from("tiers").update({ features: features }).eq("id", tier);
@@ -97,11 +117,50 @@ export default function Task({ productId }) {
   //     }
   //   });
   // };
+  const TaskCard = ({ task }) => {
+    return (
+      <div className={`grid grid-cols-4 gap-x-2 bg-white shadow p-4`}>
+        <div className="col-span-1 font-bold text-lg underline">Task</div>
+        <div className="col-span-1 font-bold text-lg underline">Product ID</div>
+        <div className="col-span-1 font-bold text-lg underline">Notes</div>
+        <div className="col-span-1 font-bold text-lg underline">Complete?</div>
+        <div className="col-span-1 flex flex-col justify-center">
+          <span className="">{task.name}</span>
+          <span className="text-xs">Task ID: {task.id}</span>
+        </div>
+        <div className="col-span-1 flex flex-col justify-center">
+          <span className="">{task.product_name}</span>
+          <span className="text-xs">Product ID: {task.product_id}</span>
+        </div>
+        <ul className="col-span-1">
+          {task.notes &&
+            task.notes.map((note, idx) => (
+              <li key={idx} className="text-sm">
+                {note}
+              </li>
+            ))}
+        </ul>
+        <div className="col-span-1 flex justify-start items-center space-x-2">
+          {complete && <BadgeCheckIcon className="h-10 w-10 text-green-500" />}
+          {!complete && (
+            <button
+              type="button"
+              onClick={() => handleCompleteTask(props)}
+              className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0"
+            >
+              Mark complete
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   if (loading) return <Loading />;
 
   return (
     <>
+      {props && <TaskCard task={props} />}
       {vendorId && <VendorForm vendorId={vendorId} />}
       {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} />}
       {productId && vendorId && <CategoryForm productId={productId} />}
