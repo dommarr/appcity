@@ -319,7 +319,7 @@ export default function Product({ product }) {
                           <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                           </svg>
-                          <span className="text-sm text-gray-500 font-medium">All prior features, plus...</span>
+                          <span className="text-sm text-gray-500 font-bold">All prior features, plus...</span>
                         </li>
                       )}
                       {obj.display_features &&
@@ -378,7 +378,7 @@ export default function Product({ product }) {
 }
 
 export async function getStaticPaths() {
-  const res = await supabase.from("products").select("id");
+  const res = await supabase.from("products").select("id").eq("complete", true);
   const products = res.data;
 
   const paths = products.map((product) => ({
