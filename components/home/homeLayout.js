@@ -34,7 +34,12 @@ export default function HomeLayout({ children }) {
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <meta name="description" content="Shop for software like you shop for everything else" />
-          <meta property="og:image" content={`https://og-image.now.sh/${encodeURI(siteTitle)}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`} />
+          <meta
+            property="og:image"
+            content={`https://og-image.now.sh/${encodeURI(
+              siteTitle
+            )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+          />
           <meta name="og:title" content={siteTitle} />
           <meta name="twitter:card" content="summary_large_image" />
         </Head>
@@ -72,7 +77,15 @@ export default function HomeLayout({ children }) {
 
                 <div className="mt-1">
                   <form onSubmit={handleSubmit} className="flex">
-                    <input type="text" name="search" id="search" className="border border-gray-200 focus:ring-purple-extradark focus:border-purple-extradark w-full text-sm" placeholder="podcast, email, video, audio..." value={query} onChange={(event) => setQuery(event.target.value)} />
+                    <input
+                      type="text"
+                      name="search"
+                      id="search"
+                      className="border border-gray-200 focus:ring-purple-extradark focus:border-purple-extradark w-full text-lg"
+                      placeholder="podcast, email, video, audio..."
+                      value={query}
+                      onChange={(event) => setQuery(event.target.value)}
+                    />
                     <button type="submit" className="bg-gray-200 w-20 flex justify-center items-center focus:outline-none focus:ring-0">
                       <svg className="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
@@ -111,7 +124,11 @@ export default function HomeLayout({ children }) {
             <div className="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
               <Link href="/podcasts">
                 <a>
-                  <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2089&q=80" alt="" />
+                  <img
+                    className="absolute inset-0 h-full w-full object-cover"
+                    src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2089&q=80"
+                    alt=""
+                  />
                   <div className="absolute inset-0 bg-violet-500 opacity-50"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-violet-600 via-violet-600 opacity-90"></div>
                   <div className="absolute bottom-10 left-4">
@@ -122,7 +139,11 @@ export default function HomeLayout({ children }) {
             </div>
 
             <div className="row-span-1 col-span-1 sm:row-span-2 relative shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="" />
+              <img
+                className="absolute inset-0 h-full w-full object-cover"
+                src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+                alt=""
+              />
               <div className="absolute inset-0 bg-blue-500 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-600 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
@@ -131,7 +152,11 @@ export default function HomeLayout({ children }) {
             </div>
 
             <div className="row-span-1 col-span-1 sm:row-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1334&q=80" alt="" />
+              <img
+                className="absolute inset-0 h-full w-full object-cover"
+                src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1334&q=80"
+                alt=""
+              />
               <div className="absolute inset-0 bg-red-500 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-red-600 via-red-600 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
@@ -140,7 +165,11 @@ export default function HomeLayout({ children }) {
             </div>
 
             <div className="row-span-1 col-span-1 sm:row-span-2 md:row-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1559057287-ce0f595679a8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80" alt="" />
+              <img
+                className="absolute inset-0 h-full w-full object-cover"
+                src="https://images.unsplash.com/photo-1559057287-ce0f595679a8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
+                alt=""
+              />
               <div className="absolute inset-0 bg-amber-400 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-amber-400 via-amber-400 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
@@ -149,7 +178,11 @@ export default function HomeLayout({ children }) {
             </div>
 
             <div className="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-              <img className="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1567&q=80" alt="" />
+              <img
+                className="absolute inset-0 h-full w-full object-cover"
+                src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1567&q=80"
+                alt=""
+              />
               <div className="absolute inset-0 bg-pink-500 opacity-50"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-pink-600 via-pink-600 opacity-90"></div>
               <div className="absolute bottom-10 left-4">
@@ -181,7 +214,11 @@ export default function HomeLayout({ children }) {
               </div>
             </div>
             <div className="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">
-              <img className="transform translate-x-6 translate-y-6 rounded-md ring-1 ring-gray-200 object-cover object-left-top sm:translate-x-16 lg:translate-y-20" src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2gucG5nIiwiaWF0IjoxNjE2NjA3MTUxLCJleHAiOjE5MzE5NjcxNTF9.wFfSBDOw1D1LFtRB0PQfNISRZTauQ9ey_1X12D3AYLw" alt="AppCity search page" />
+              <img
+                className="transform translate-x-6 translate-y-6 rounded-md ring-1 ring-gray-200 object-cover object-left-top sm:translate-x-16 lg:translate-y-20"
+                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2gucG5nIiwiaWF0IjoxNjE2NjA3MTUxLCJleHAiOjE5MzE5NjcxNTF9.wFfSBDOw1D1LFtRB0PQfNISRZTauQ9ey_1X12D3AYLw"
+                alt="AppCity search page"
+              />
             </div>
           </div>
         </div>
@@ -195,13 +232,24 @@ export default function HomeLayout({ children }) {
               <div className="absolute inset-x-0 h-1/2 bg-gray-50 lg:hidden" aria-hidden="true"></div>
               <div className="max-w-md mx-auto px-4 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
                 <div className="aspect-w-10 aspect-h-6 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1">
-                  <img className="object-cover object-center shadow-2xl" src="https://images.unsplash.com/photo-1507207611509-ec012433ff52?ixlib=rb-1.2.1&ixqx=xo9z4lpu5k&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=934&q=80" alt="" />
+                  <img
+                    className="object-cover object-center shadow-2xl"
+                    src="https://images.unsplash.com/photo-1507207611509-ec012433ff52?ixlib=rb-1.2.1&ixqx=xo9z4lpu5k&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=934&q=80"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
             <div className="relative bg-purple lg:col-start-3 lg:row-start-1 lg:col-span-10 lg:grid lg:grid-cols-10 lg:items-center">
               <div className="hidden absolute inset-0 overflow-hidden lg:block" aria-hidden="true">
-                <svg className="absolute bottom-full left-full transform translate-y-1/3 -translate-x-2/3 xl:bottom-auto xl:top-0 xl:translate-y-0" width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">
+                <svg
+                  className="absolute bottom-full left-full transform translate-y-1/3 -translate-x-2/3 xl:bottom-auto xl:top-0 xl:translate-y-0"
+                  width="404"
+                  height="384"
+                  fill="none"
+                  viewBox="0 0 404 384"
+                  aria-hidden="true"
+                >
                   <defs>
                     <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
                       <rect x="0" y="0" width="4" height="4" className="text-purple-extralight" fill="currentColor" />
@@ -227,9 +275,13 @@ export default function HomeLayout({ children }) {
                     shop for everything else
                   </h2>
                 </div>
-                <p className="text-lg text-white">Finally. No side projects, just apps you can count on to run your business. With transparent pricing and trustworthy reviews, find the tools to take your business to the next level.</p>
+                <p className="text-lg text-white">
+                  Finally. No side projects, just apps you can count on to run your business. With transparent pricing and trustworthy reviews, find the tools to take your business to the next level.
+                </p>
                 <Link href="/search">
-                  <a className="block w-full py-3 px-5 text-center bg-white border border-transparent shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto">Start shopping</a>
+                  <a className="block w-full py-3 px-5 text-center bg-white border border-transparent shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto">
+                    Start shopping
+                  </a>
                 </Link>
               </div>
             </div>
