@@ -163,6 +163,14 @@ export default async function (req, res) {
       let level = "lvl" + match[0].lvl;
       obj.categories[level] = match[0].name;
     });
+
+    // if product is not complete, add tag hidden, else add empty tags
+    if (!elem.products.complete) {
+      obj._tags = ["hidden"];
+    } else {
+      obj._tags = [""];
+    }
+
     objects.push(obj);
   });
 

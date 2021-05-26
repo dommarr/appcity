@@ -283,7 +283,7 @@ export default class SearchApp extends React.Component {
                 <div className="md:flex-grow md:flex md:flex-col">
                   <nav className="px-2 space-y-1 md:flex-1 md:bg-white">
                     <ClearRefinements />
-                    <Configure hitsPerPage={24} />
+                    <Configure hitsPerPage={24} filters="NOT _tags:hidden" />
                     <RefinementBlock header="Price">
                       {/* Hide on empty */}
                       {this.props.searchState.query && (
