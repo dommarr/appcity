@@ -143,7 +143,7 @@ export default function Product({ product }) {
               </div>
             </a>
           </div>
-          <h2 className="text-3xl font-medium my-4">{tier === null ? "Select a tier:" : tier.name}</h2>
+          <h2 className={`text-3xl font-medium my-4 ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>
           {/* Price Toggle */}
           {tier != null && (
             <div className="relative self-center bg-gray-100 p-0.5 flex">
