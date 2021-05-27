@@ -54,7 +54,7 @@ export default function HomeLayout({ children }) {
                 <span className="block text-white">Shop for software like you </span>
                 <span className="block text-black">shop for everything else</span>
                 </h1> */}
-              <h1 className="text-5xl tracking-tight font-extrabold text-gray-900 md:text-6xl">
+              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block text-white mb-1">The app store for</span>
                 {/* <span className="block text-yellow">creators</span> */}
                 <RotatingText items={[" podcasters ", " writers ", " streamers ", " creators. "]} color="yellow" pause={2500} />
@@ -82,7 +82,7 @@ export default function HomeLayout({ children }) {
                       type="text"
                       name="search"
                       id="search"
-                      className="border border-gray-200 focus:ring-purple-extradark focus:border-purple-extradark w-full text-lg"
+                      className="border border-gray-200 focus:ring-purple-extradark focus:border-purple-extradark w-full md:text-lg"
                       placeholder="podcast, email, video, audio..."
                       value={query}
                       onChange={(event) => setQuery(event.target.value)}
