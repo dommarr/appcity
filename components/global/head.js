@@ -3,8 +3,8 @@ import { string } from "prop-types";
 import React from "react";
 
 const defaultDescription = "Shop for software like you shop for everything else.";
-const defaultOGURL = "shopappcity.com";
-const defaultOGImage = "/sms-share-image.png";
+const defaultOGURL = "https://www.shopappcity.com/";
+const defaultOGImage = "https://www.shopappcity.com/static/sms-share-image.png";
 const defaultTitle = "AppCity";
 
 export const Head = (props) => (

@@ -11,6 +11,7 @@ import XlSkyline from "../graphics/skyline/XlSkyline";
 import XxlSkyline from "../graphics/skyline/XxlSkyline";
 import Link from "next/link";
 import Banner from "../global/banner";
+import StarterKitFeature from "./startkitFeature";
 
 export const siteTitle = "AppCity";
 
@@ -53,7 +54,7 @@ export default function HomeLayout({ children }) {
                 <span className="block text-white">Shop for software like you </span>
                 <span className="block text-black">shop for everything else</span>
                 </h1> */}
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+              <h1 className="text-5xl tracking-tight font-extrabold text-gray-900 md:text-6xl">
                 <span className="block text-white mb-1">The app store for</span>
                 {/* <span className="block text-yellow">creators</span> */}
                 <RotatingText items={[" podcasters ", " writers ", " streamers ", " creators. "]} color="yellow" pause={2500} />
@@ -116,7 +117,8 @@ export default function HomeLayout({ children }) {
         <XlSkyline />
         <XxlSkyline />
       </div>
-      <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
+      <StarterKitFeature />
+      {/* <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Starter Kits</h1>
 
@@ -191,7 +193,7 @@ export default function HomeLayout({ children }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="bg-purple">
         <div className="max-w-7xl mx-auto py-32 px-4 sm:px-6 lg:px-8">
@@ -215,8 +217,13 @@ export default function HomeLayout({ children }) {
             </div>
             <div className="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">
               <img
-                className="transform translate-x-6 translate-y-6 rounded-md ring-1 ring-gray-200 object-cover object-left-top sm:translate-x-16 lg:translate-y-20"
-                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2gucG5nIiwiaWF0IjoxNjE2NjA3MTUxLCJleHAiOjE5MzE5NjcxNTF9.wFfSBDOw1D1LFtRB0PQfNISRZTauQ9ey_1X12D3AYLw"
+                className="transform translate-x-6 translate-y-6 rounded-md ring-1 ring-gray-200 object-cover object-left-top sm:translate-x-16 lg:translate-y-20 sm:hidden"
+                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/appcity_search_small.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9hcHBjaXR5X3NlYXJjaF9zbWFsbC5wbmciLCJpYXQiOjE2MjIxMzg2MDYsImV4cCI6MTkzNzQ5ODYwNn0.a5x0bhJZHFjncq7dONmsNJX11zmg8Hz6a8xlcMOdBaY"
+                alt="AppCity search page"
+              />
+              <img
+                className="transform translate-x-6 translate-y-6 rounded-md ring-1 ring-gray-200 object-cover object-left-top sm:translate-x-16 lg:translate-y-20 hidden sm:block"
+                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/appcity_search_medium.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9hcHBjaXR5X3NlYXJjaF9tZWRpdW0ucG5nIiwiaWF0IjoxNjIyMTM4NTkyLCJleHAiOjE5Mzc0OTg1OTJ9.u-9GIzccpJbYpB8ktylhh6acu-UzP5n323R2rFGg1Bw"
                 alt="AppCity search page"
               />
             </div>
@@ -226,16 +233,21 @@ export default function HomeLayout({ children }) {
 
       <div className="relative py-32 bg-white">
         <div className="hidden absolute top-0 inset-x-0 h-1/2 bg-gray-50 lg:block" aria-hidden="true"></div>
-        <div className="max-w-7xl mx-auto bg-indigo-600 lg:bg-transparent lg:px-8">
+        <div className="max-w-7xl mx-auto bg-purple lg:bg-transparent lg:px-8">
           <div className="lg:grid lg:grid-cols-12">
             <div className="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
-              <div className="absolute inset-x-0 h-1/2 bg-gray-50 lg:hidden" aria-hidden="true"></div>
+              <div className="absolute inset-x-0 h-1/2 bg-white lg:hidden" aria-hidden="true"></div>
               <div className="max-w-md mx-auto px-4 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
                 <div className="aspect-w-10 aspect-h-6 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1">
                   <img
-                    className="object-cover object-center shadow-2xl"
-                    src="https://images.unsplash.com/photo-1507207611509-ec012433ff52?ixlib=rb-1.2.1&ixqx=xo9z4lpu5k&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=934&q=80"
-                    alt=""
+                    className="object-cover object-center shadow-2xl sm:hidden"
+                    src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/couch_surfing_small.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9jb3VjaF9zdXJmaW5nX3NtYWxsLnBuZyIsImlhdCI6MTYyMjEzODU2OSwiZXhwIjoxOTM3NDk4NTY5fQ.iLiUDFwnd3DpdovSqo84DXWI9Ftcbb9MYTmfBa72-k8"
+                    alt="AppCity couch shopping"
+                  />
+                  <img
+                    className="object-cover object-center shadow-2xl hidden sm:block"
+                    src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/couch_surfing_medium.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9jb3VjaF9zdXJmaW5nX21lZGl1bS5wbmciLCJpYXQiOjE2MjIxMzg1ODAsImV4cCI6MTkzNzQ5ODU4MH0.Mw_HvP8tuO2qFEiOuzKGMdQbm5O_76eobvV2b4vWBgE"
+                    alt="AppCity couch shopping"
                   />
                 </div>
               </div>
@@ -268,10 +280,13 @@ export default function HomeLayout({ children }) {
               </div>
               <div className="relative max-w-md mx-auto py-12 px-4 space-y-6 sm:max-w-3xl sm:py-16 sm:px-6 lg:max-w-none lg:p-0 lg:col-start-4 lg:col-span-6">
                 <div>
-                  <h2 className="text-3xl font-extrabold text-white" id="join-heading">
+                  <h2 className="text-3xl font-extrabold text-white sm:hidden" id="join-heading">
+                    Shop for software like you shop for everything else
+                  </h2>
+                  <h2 className="text-3xl font-extrabold text-white hidden sm:block" id="join-heading">
                     Shop for software like you
                   </h2>
-                  <h2 className="text-3xl font-extrabold text-white" id="join-heading">
+                  <h2 className="text-3xl font-extrabold text-white hidden sm:block" id="join-heading">
                     shop for everything else
                   </h2>
                 </div>
