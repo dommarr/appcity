@@ -4,7 +4,8 @@ import React from "react";
 
 const defaultDescription = "Shop for software like you shop for everything else.";
 const defaultOGURL = "https://www.shopappcity.com/";
-const defaultOGImage = "https://www.shopappcity.com/static/sms-share-image.png";
+const defaultOGImage =
+  "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/sms-share-image.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zbXMtc2hhcmUtaW1hZ2UucG5nIiwiaWF0IjoxNjIyMTQ4OTQ1LCJleHAiOjE5Mzc1MDg5NDV9.eNnIsVFGHRZ5FGFizXv0drHbSSoTjtpWXoE5weLUIAs";
 const defaultTitle = "AppCity";
 
 export const Head = (props) => (
