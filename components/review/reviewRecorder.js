@@ -121,10 +121,12 @@ export default class ReviewRecorder extends React.Component {
   saveVideo() {
     // convert saved chunks to blob
     const blob = new Blob(this.chunks, { type: videoTypeMp4 });
+    console.log(blob);
     // reset chunks to empty array
     this.chunks = [];
     // generate video url from blob
     const videoURL = window.URL.createObjectURL(blob);
+    console.log(videoURL);
     // set state
     this.setState({ link: videoURL });
     this.setState({ uploadFile: blob });

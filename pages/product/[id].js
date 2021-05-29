@@ -9,12 +9,14 @@ import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
 // import { Breadcrumb } from "react-instantsearch-dom";
 import { SRLWrapper, useLightbox } from "simple-react-lightbox-pro";
-import ReviewRecorder from "../../components/review/reviewRecorder";
+//import ReviewRecorder from "../../components/review/reviewRecorder";
+import ReviewRecorder from "../../components/review/reviewRecorderMobile";
 import { Auth } from "@supabase/ui";
 import Tooltip from "../../components/global/tooltip";
 import ReviewGrid from "../../components/review/reviewGrid";
 import { StarIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
+import { VideoCameraIcon } from "@heroicons/react/solid";
 
 const Lightbox = (props) => {
   return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
@@ -348,8 +350,9 @@ export default function Product({ product }) {
                   <button
                     type="button"
                     onClick={() => setReview(true)}
-                    className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
+                    className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-md font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
                   >
+                    <VideoCameraIcon className="h-6 w-6 text-white mr-2" />
                     Leave a video review
                   </button>
                   <Tooltip text="Why only video?" caption="Video reviews are more trustworthy. When someone puts their face and name on a video, you can better trust its authenticity." />
@@ -363,8 +366,8 @@ export default function Product({ product }) {
               )}
               {success && (
                 <div className="flex flex-col justify-center items-center">
-                  <div className="text-green-600 font-medium">Review submitted successfully.</div>
-                  <div className="text-green-600 font-medium">Thank you!</div>
+                  <div className="text-green-600 text-lg font-medium">Review submitted successfully.</div>
+                  <div className="text-green-600 text-lg font-medium">Thank you!</div>
                 </div>
               )}
             </div>
