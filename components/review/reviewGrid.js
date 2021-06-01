@@ -102,28 +102,6 @@ export default function ReviewGrid(props) {
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         {displayReviews &&
           displayReviews.map((review) => {
-            console.log(review.poster);
-            {
-              /* let poster = "";
-            if (review.rating === 1) {
-              poster =
-                "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/reviews/video_poster_images/1_star.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJyZXZpZXdzL3ZpZGVvX3Bvc3Rlcl9pbWFnZXMvMV9zdGFyLnN2ZyIsImlhdCI6MTYyMjE1NDYyMSwiZXhwIjoxOTM3NTE0NjIxfQ.1ofX0KdOwWstRJ27rEMPeLO2Q9klG-B0u6c5ikbshcQ";
-            } else if (review.rating === 2) {
-              poster =
-                "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/reviews/video_poster_images/2_stars.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJyZXZpZXdzL3ZpZGVvX3Bvc3Rlcl9pbWFnZXMvMl9zdGFycy5zdmciLCJpYXQiOjE2MjIxNTQ2NDUsImV4cCI6MTkzNzUxNDY0NX0.8kKOlD812ZoVPGeHLW8_m8yrn7DgjLlbXS6A-1Y2xMA";
-            } else if (review.rating === 3) {
-              poster =
-                "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/reviews/video_poster_images/3_stars.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJyZXZpZXdzL3ZpZGVvX3Bvc3Rlcl9pbWFnZXMvM19zdGFycy5zdmciLCJpYXQiOjE2MjIxNTQ2NTEsImV4cCI6MTkzNzUxNDY1MX0.h-fyWAimiWUeXERVpRvBu5QbMr9gUxNl3uTxvpK2XmI";
-            } else if (review.rating === 4) {
-              poster =
-                "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/reviews/video_poster_images/4_stars.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJyZXZpZXdzL3ZpZGVvX3Bvc3Rlcl9pbWFnZXMvNF9zdGFycy5zdmciLCJpYXQiOjE2MjIxNTQ2NTksImV4cCI6MTkzNzUxNDY1OX0._D8KypFXFXe38EI-qFOo8vSx4assI9x6rQ1k4uc51Pc";
-            } else if (review.rating === 5) {
-              poster =
-                "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/reviews/video_poster_images/5_stars.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJyZXZpZXdzL3ZpZGVvX3Bvc3Rlcl9pbWFnZXMvNV9zdGFycy5zdmciLCJpYXQiOjE2MjIxNTM2MDcsImV4cCI6MTkzNzUxMzYwN30.23toDls6fhdNa6_ESebhnQ_HdlEnFGBmeDkA05Nraug";
-            } else {
-            } */
-            }
-
             return (
               <li key={review.id} className="col-span-1 flex flex-col bg-white border shadow divide-y divide-gray-200">
                 <div className="flex-1 flex flex-col">
