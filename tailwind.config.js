@@ -75,6 +75,7 @@ module.exports = {
         "70vh": "70vh",
         "75vh": "75vh",
         "80vh": "80vh",
+        "300px": "300px",
       },
       // maxWidth: {
       //   "max-w-screen-3xl": "max-width: 1920px",

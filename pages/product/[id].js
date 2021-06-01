@@ -9,14 +9,11 @@ import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
 // import { Breadcrumb } from "react-instantsearch-dom";
 import { SRLWrapper, useLightbox } from "simple-react-lightbox-pro";
-//import ReviewRecorder from "../../components/review/reviewRecorder";
-import ReviewRecorder from "../../components/review/reviewRecorderMobile";
 import { Auth } from "@supabase/ui";
-import Tooltip from "../../components/global/tooltip";
 import ReviewGrid from "../../components/review/reviewGrid";
+import ReviewRecorder from "../../components/review/reviewRecorder";
 import { StarIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
-import { VideoCameraIcon } from "@heroicons/react/solid";
 
 const Lightbox = (props) => {
   return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
@@ -344,33 +341,7 @@ export default function Product({ product }) {
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
           <div className="flex flex-col align-center">
             <h1 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h1>
-            <div className="self-center my-8 flex">
-              {!review && !success && (
-                <div className="flex-col items-center space-y-2">
-                  <button
-                    type="button"
-                    onClick={() => setReview(true)}
-                    className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-md font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
-                  >
-                    <VideoCameraIcon className="h-6 w-6 text-white mr-2" />
-                    Leave a video review
-                  </button>
-                  <Tooltip text="Why only video?" caption="Video reviews are more trustworthy. When someone puts their face and name on a video, you can better trust its authenticity." />
-                </div>
-              )}
-              {review && (
-                <div className="flex flex-col">
-                  <ReviewRecorder user={user} product={product} setReview={setReview} setSuccess={setSuccess} />
-                  <div className="w-full border-t border-gray-300 mt-8" />
-                </div>
-              )}
-              {success && (
-                <div className="flex flex-col justify-center items-center">
-                  <div className="text-green-600 text-lg font-medium">Review submitted successfully.</div>
-                  <div className="text-green-600 text-lg font-medium">Thank you!</div>
-                </div>
-              )}
-            </div>
+            <ReviewRecorder user={user} product={product} />
             <ReviewGrid product={product} count={count} rating={rating} setCount={setCount} setRating={setRating} />
           </div>
         </div>

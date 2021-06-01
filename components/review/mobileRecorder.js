@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Tooltip from "../global/tooltip";
 import { supabase } from "../../utils/initSupabase";
-import Link from "next/link";
 import { VideoCameraIcon } from "@heroicons/react/solid";
-import { StarIcon, XCircleIcon } from "@heroicons/react/outline";
+import { StarIcon, SupportIcon, XCircleIcon } from "@heroicons/react/outline";
+import Tooltip from "../global/tooltip";
+import Link from "next/link";
 
-export default function ReviewRecorderMobile({ user, product, setReview, setSuccess }) {
+export default function MobileRecorder({ user, product, setReview, setSuccess, handleClose }) {
   const [video, setVideo] = useState("");
   const [videoFile, setVideoFile] = useState("");
   const [recorded, setRecorded] = useState(false);
@@ -15,6 +15,7 @@ export default function ReviewRecorderMobile({ user, product, setReview, setSucc
   const [lastName, setLastName] = useState("");
   const [failure, setFailure] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   // Fetch on load
   useEffect(async () => {
@@ -42,11 +43,6 @@ export default function ReviewRecorderMobile({ user, product, setReview, setSucc
     setVideo(src);
     setVideoFile(e.target.files[0]);
     setRecorded(true);
-  };
-
-  const handleClose = (e) => {
-    e.preventDefault();
-    setReview(false);
   };
 
   const updateProfile = async (first, last, user_id) => {
@@ -97,6 +93,7 @@ export default function ReviewRecorderMobile({ user, product, setReview, setSucc
     } else {
       setErrorMessage("There was an error. Please try again.");
     }
+    setUploading(false);
     setFailure(true);
     setTimeout(() => {
       setErrorMessage("");
@@ -119,6 +116,7 @@ export default function ReviewRecorderMobile({ user, product, setReview, setSucc
       }, 4000);
       return;
     }
+    setUploading(true);
     // update profile
     let profile = await updateProfile(firstName, lastName, user.id);
     let path = `${user.id}_${product.id}.mp4`;
@@ -138,6 +136,7 @@ export default function ReviewRecorderMobile({ user, product, setReview, setSucc
       link: signedUrl,
     };
     let review = await createReview(reviewObj);
+    setUploading(false);
     setReview(false);
     setSuccess(true);
     setTimeout(() => {
@@ -184,11 +183,11 @@ export default function ReviewRecorderMobile({ user, product, setReview, setSucc
                   Rating
                 </label>
                 <div className="flex items-center justify-center">
-                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer ${rating > 0 ? "fill-current" : ""}`} onClick={() => setRating(1)} />
-                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer ${rating > 1 ? "fill-current" : ""}`} onClick={() => setRating(2)} />
-                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer ${rating > 2 ? "fill-current" : ""}`} onClick={() => setRating(3)} />
-                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer ${rating > 3 ? "fill-current" : ""}`} onClick={() => setRating(4)} />
-                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer ${rating > 4 ? "fill-current" : ""}`} onClick={() => setRating(5)} />
+                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer hover:fill-current ${rating > 0 ? "fill-current" : ""}`} onClick={() => setRating(1)} />
+                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer hover:fill-current ${rating > 1 ? "fill-current" : ""}`} onClick={() => setRating(2)} />
+                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer hover:fill-current ${rating > 2 ? "fill-current" : ""}`} onClick={() => setRating(3)} />
+                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer hover:fill-current ${rating > 3 ? "fill-current" : ""}`} onClick={() => setRating(4)} />
+                  <StarIcon className={`h-10 w-10 text-purple cursor-pointer hover:fill-current ${rating > 4 ? "fill-current" : ""}`} onClick={() => setRating(5)} />
                 </div>
               </div>
               <div className="col-span-4">
@@ -262,13 +261,13 @@ export default function ReviewRecorderMobile({ user, product, setReview, setSucc
                     type="submit"
                     className="bg-purple border border-transparent shadow-sm py-2 px-8 inline-flex justify-center text-md font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
                   >
-                    Submit
+                    {!uploading ? "Submit" : <SupportIcon className="h-6 w-6 text-white animate-spin mx-4" />}
                   </button>
                 )}
               </div>
 
               {failure && (
-                <div className="col-span-4 sm:col-span-2">
+                <div className="col-span-4">
                   <p className="text-md font-medium text-red-600 text-center">{errorMessage}</p>
                 </div>
               )}
