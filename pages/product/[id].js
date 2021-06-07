@@ -98,11 +98,11 @@ export default function Product({ product }) {
         </a>
         <a href="#reviews">
           <div className="flex mt-2 justify-center items-center">
-            <StarIcon className={`h-5 w-5 text-purple ${rating > 0 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating > 1 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating > 2 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating > 3 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating > 4 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
+            <StarIcon className={`h-5 w-5 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
             {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
           </div>
         </a>
@@ -133,11 +133,11 @@ export default function Product({ product }) {
             </a>
             <a href="#reviews">
               <div className="flex mt-2 justify-center items-center">
-                <StarIcon className={`h-5 w-5 text-purple ${rating > 0 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating > 1 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating > 2 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating > 3 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating > 4 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
+                <StarIcon className={`h-5 w-5 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
                 {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
               </div>
             </a>

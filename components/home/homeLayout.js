@@ -201,7 +201,7 @@ export default function HomeLayout({ children }) {
             <div className="pt-10 pb-12 px-6 sm:pt-16 sm:px-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
               <div className="lg:self-center">
                 <h2 className="text-3xl font-extrabold text-purple sm:text-4xl">
-                  <span className="block">Are you a vendor?</span>
+                  <span className="block">Are you a developer?</span>
                   <span className="block">List your app today.</span>
                 </h2>
                 <div className="flex flex-col">

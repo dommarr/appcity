@@ -70,12 +70,12 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
   };
 
   const signUrl = async (path) => {
-    const { signedURL, error } = await supabase.storage.from("reviews").createSignedUrl(path, 283824000);
+    const { data, error } = await supabase.storage.from("reviews").createSignedUrl(path, 283824000);
     if (error) {
       handleFailure(error);
       throw error;
     }
-    return signedURL;
+    return data.signedURL;
   };
 
   const createReview = async (reviewObj) => {
@@ -134,6 +134,7 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
       path: path,
       title: title,
       link: signedUrl,
+      video_available: true,
     };
     let review = await createReview(reviewObj);
     setUploading(false);

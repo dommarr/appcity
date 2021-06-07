@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { VideoCameraIcon } from "@heroicons/react/solid";
 import Tooltip from "../../components/global/tooltip";
 import MobileRecorder from "./mobileRecorder";
@@ -9,13 +9,24 @@ export default function ReviewRecorder({ user, product }) {
   const [review, setReview] = useState(false);
   const [success, setSuccess] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState();
+  const [closingCamera, setClosingCamera] = useState(false);
 
   const handleClose = (e) => {
     e.preventDefault();
     if (!isMobile) {
+      setClosingCamera(true);
       stopStream();
+      setTimeout(() => {
+        desktopCloseComplete();
+      }, 2000);
+    } else {
+      setReview(false);
     }
+  };
+
+  const desktopCloseComplete = () => {
     setReview(false);
+    setClosingCamera(false);
   };
 
   const stopStream = () => {
@@ -55,6 +66,7 @@ export default function ReviewRecorder({ user, product }) {
               mediaRecorder={mediaRecorder}
               setMediaRecorder={setMediaRecorder}
               stopStream={stopStream}
+              closingCamera={closingCamera}
             />
           )}
           <div className="w-full border-t border-gray-300 mt-8" />
