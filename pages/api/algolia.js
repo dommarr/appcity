@@ -38,7 +38,7 @@ async function getCatalog() {
 
 async function getReviews() {
   try {
-    let { data: reviews, error } = await supabase.from("reviews").select("*");
+    let { data: reviews, error } = await supabase.from("reviews").select("*").eq("video_available", true);
     if (error) {
       throw error;
     }
