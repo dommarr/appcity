@@ -1,6 +1,7 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Head from "../components/global/head";
+import Banner from "../components/global/banner";
 import { useState } from "react";
 
 export default function Contact() {
@@ -61,6 +62,7 @@ export default function Contact() {
 
   return (
     <>
+      <Banner />
       <Header style="dark" />
       <Head title="Contact" description="Drop us a line and we'll get back to you." url="shopappcity.com/contact" />
       <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">

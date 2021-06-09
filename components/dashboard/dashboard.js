@@ -182,7 +182,7 @@ export default function Dashboard(props) {
                         <div className="w-full border-t border-gray-300"></div>
                       </div>
                       <div className="relative flex justify-center">
-                        <span className="px-2 bg-white text-sm text-gray-500">Vendor</span>
+                        <span className="px-2 bg-white text-sm text-gray-500">App developer</span>
                       </div>
                     </div>
                     {vendorLinks.map(({ label, route, icon }) => (
@@ -291,7 +291,7 @@ export default function Dashboard(props) {
                         <div className="w-full border-t border-gray-300"></div>
                       </div>
                       <div className="relative flex justify-center">
-                        <span className="px-2 bg-white text-sm text-gray-500">Vendor</span>
+                        <span className="px-2 bg-white text-sm text-gray-500">App developer</span>
                       </div>
                     </div>
                     {vendorLinks.map(({ label, route, icon }) => (

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Head from "../components/global/head";
+import Banner from "../components/global/banner";
 import Dashboard from "../components/dashboard/dashboard";
 import Loading from "../components/global/loading";
 import Logo from "../components/graphics/logo/Logo";
@@ -72,6 +73,7 @@ const SupabaseLogin = () => {
     return (
       <>
         <div className="h-screen flex flex-col">
+          <Banner />
           <Header style="dark" />
           <Head title="AppCity Profile" description="Manage your AppCity profile." url="shopappcity.com/profile" />
           <div className="flex flex-1 overflow-hidden bg-gray-100">

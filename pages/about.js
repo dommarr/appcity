@@ -1,6 +1,7 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Head from "../components/global/head";
+import Banner from "../components/global/banner";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -28,6 +29,7 @@ export default function About() {
   return (
     <>
       <div className={`h-screen flex flex-col relative ${vendor ? "bg-white" : "bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple"}`}>
+        <Banner />
         <Header style={`${vendor ? "light" : "trans"}`} />
         <Head title="About" description="Shop for software like you shop for everything else." url="shopappcity.com/about" />
         <div className="absolute inset-0 flex flex-1 flex-col items-center justify-center text-center max-w-7xl mx-auto py-10 px-4 sm:py-12 sm:px-6 lg:px-8">
@@ -64,7 +66,7 @@ export default function About() {
               onClick={() => handleVendorClick()}
               className={`ml-0.5 relative ${vendor ? "bg-purple" : "bg-transparent"} py-2 text-sm font-medium text-white whitespace-nowrap focus:outline-none w-auto px-4 sm:px-8`}
             >
-              For vendors
+              For developers
             </button>
           </div>
         </div>
