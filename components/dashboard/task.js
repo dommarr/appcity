@@ -8,21 +8,31 @@ import TierForm from "./tierForm";
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 
-export default function Task({ props }) {
+export default function Task({ task, user }) {
   const [loading, setLoading] = useState(true);
   const [productId, setProductId] = useState();
   const [vendorId, setVendorId] = useState();
   const [tierIds, setTierIds] = useState([]);
   const [priceModel, setPriceModel] = useState();
   const [complete, setComplete] = useState(false);
+  const [superAdmin, setSuperAdmin] = useState(false);
 
   // Fetch on load
   useEffect(() => {
-    setProductId(props.product_id);
-    fetchVendorId(props.product_id);
-    fetchTierIds(props.product_id);
+    setProductId(task.product_id);
+    fetchVendorId(task.product_id);
+    fetchTierIds(task.product_id);
+    fetchUserProfile(user.id);
     setLoading(false);
   }, []);
+
+  const fetchUserProfile = async (user_id) => {
+    let { data: users, error } = await supabase.from("users").select("super_admin").eq("id", user_id);
+    if (error) {
+      throw error;
+    }
+    setSuperAdmin(users[0].super_admin);
+  };
 
   const fetchVendorId = async (product_id) => {
     let { data: products, error } = await supabase.from("products").select("vendor_id").eq("id", product_id);
@@ -145,7 +155,7 @@ export default function Task({ props }) {
           {!complete && (
             <button
               type="button"
-              onClick={() => handleCompleteTask(props)}
+              onClick={() => handleCompleteTask(task)}
               className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0"
             >
               Mark complete
@@ -160,10 +170,10 @@ export default function Task({ props }) {
 
   return (
     <>
-      {props && <TaskCard task={props} />}
+      {task && <TaskCard task={task} />}
       {vendorId && <VendorForm vendorId={vendorId} />}
       {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} />}
-      {productId && vendorId && <CategoryForm productId={productId} />}
+      {productId && vendorId && superAdmin && <CategoryForm productId={productId} />}
       {tierIds &&
         tierIds.map((tierId, idx) => {
           return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} priceModel={priceModel} fetchTierIds={fetchTierIds} />;

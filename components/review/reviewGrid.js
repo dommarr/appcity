@@ -3,6 +3,8 @@ import { StarIcon } from "@heroicons/react/outline";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import { supabase } from "../../utils/initSupabase";
+import { isMobile } from "react-device-detect";
+import ReviewRecorder from "./reviewRecorder";
 
 const fetcher = async (id) => {
   try {
@@ -24,7 +26,6 @@ const downloadVideo = async (path) => {
 export default function ReviewGrid(props) {
   const [loading, setLoading] = useState(true);
   const [displayReviews, setDisplayReviews] = useState([]);
-  const [mobile, setMobile] = useState(false);
 
   const { data: reviews } = useSWR(`/api/product_reviews/${props.product.id}`, fetcher, {
     onSuccess: (data) => {
@@ -46,7 +47,7 @@ export default function ReviewGrid(props) {
       let videoURL = window.URL.createObjectURL(blob);
       arr[i].file = videoURL;
       let poster = "";
-      if (mobile) {
+      if (isMobile) {
         let path = `${arr[i].rating}_star_mobile.svg`;
         poster = await fetchPoster(path);
         poster = window.URL.createObjectURL(poster);
@@ -86,7 +87,7 @@ export default function ReviewGrid(props) {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mb-8 space-y-2 sm:space-y-1">
+      <div className="flex flex-col justify-center items-center mt-4 space-y-2 sm:space-y-1">
         <div className="flex justify-center items-center flex-col sm:flex-row">
           <div className="flex justify-center items-center p-2">
             <StarIcon className={`h-10 w-10 text-purple ${props.rating >= 0.5 ? "fill-current" : ""}`} />
@@ -99,6 +100,7 @@ export default function ReviewGrid(props) {
         </div>
         {props.count === 1 ? <div className="text-xl">{props.count} review</div> : <div className="text-xl">{props.count} reviews</div>}
       </div>
+      <ReviewRecorder user={props.user} product={props.product} />
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         {displayReviews &&
           displayReviews.map((review) => {

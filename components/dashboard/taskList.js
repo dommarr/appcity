@@ -119,7 +119,7 @@ export default function TaskList(props) {
               Back to task list
             </button>
           </div>
-          <Task props={currenttask} />
+          <Task task={currenttask} user={props.user} />
         </div>
       )}
     </section>

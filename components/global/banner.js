@@ -6,9 +6,9 @@ export default function Example() {
     <div className="relative bg-indigo-600">
       <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
         <div className="text-center sm:px-16 flex items-center justify-center">
-          <p className="font-medium text-white">
-            <span className="md:hidden">Welcome to the AppCity beta!</span>
-            <span className="hidden md:inline">Welcome to the AppCity beta! Please excuse the limited catalog - we're on it!</span>
+          <p className=" text-white">
+            <span className="md:hidden">🛠️ 🚧 Under construction. Have a look!</span>
+            <span className="hidden md:inline">🛠️ 🚧 We're under construction, but feel free to look around!</span>
           </p>
         </div>
         {/* <div className="absolute inset-y-0 right-0 pt-1 pr-1 flex items-start sm:pt-1 sm:pr-2 sm:items-start">

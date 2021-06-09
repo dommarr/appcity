@@ -3,6 +3,7 @@ import Link from "next/link";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
 import Head from "../../components/global/head";
+import Banner from "../../components/global/banner";
 import PriceBlock from "../../components/search/priceBlock";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
@@ -88,6 +89,7 @@ export default function Product({ product }) {
 
   return (
     <>
+      <Banner />
       <Header style="dark" />
       <Head title={product.name} description={`${product.name} details and information.`} url={`shopappcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} />
       <div className="flex flex-col justify-center items-start m-5 md:hidden">
@@ -341,8 +343,8 @@ export default function Product({ product }) {
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
           <div className="flex flex-col align-center">
             <h1 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h1>
-            <ReviewRecorder user={user} product={product} />
-            <ReviewGrid product={product} count={count} rating={rating} setCount={setCount} setRating={setRating} />
+            {/* <ReviewRecorder user={user} product={product} /> */}
+            <ReviewGrid user={user} product={product} count={count} rating={rating} setCount={setCount} setRating={setRating} />
           </div>
         </div>
       </div>

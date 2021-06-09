@@ -25,7 +25,7 @@ export default function Footer({ children, dark }) {
                         query: { customer: "vendor" },
                       }}
                     >
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For vendors</a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For app developers</a>
                     </Link>
                   </li>
                 </ul>
