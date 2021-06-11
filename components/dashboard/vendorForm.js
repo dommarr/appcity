@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
+import FormTip from "./formTip";
 
 export default function VendorForm({ vendorId }) {
   const [loading, setLoading] = useState(true);
@@ -11,6 +12,8 @@ export default function VendorForm({ vendorId }) {
   const [vendorName, setVendorName] = useState("");
   const [website, setWebsite] = useState("");
   const [logo, setLogo] = useState("");
+  // video tips
+  const [logoTip, setLogoTip] = useState(false);
 
   // Fetch on load
   useEffect(() => {
@@ -86,7 +89,6 @@ export default function VendorForm({ vendorId }) {
                 placeholder="Hubspot"
                 value={vendorName}
                 onChange={(e) => setVendorName(e.target.value)}
-                required
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
@@ -101,14 +103,22 @@ export default function VendorForm({ vendorId }) {
                 placeholder="https://www.hubspot.com/"
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}
-                required
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
+              <a target="_blank" href={website} className="text-sm text-blue-600 underline mt-2 pl-2">
+                Go to website
+              </a>
             </div>
             <div className="col-span-4 sm:col-span-2">
-              <label htmlFor="logo" className="block text-sm font-medium text-gray-700">
-                Company logo
-              </label>
+              <div className="flex justify-between items-center">
+                <label htmlFor="logo" className="text-sm font-medium text-gray-700">
+                  Company logo
+                </label>
+                <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${website}`} className="text-sm text-blue-600 underline mt-2 pl-2">
+                  Get logo
+                </a>
+              </div>
+
               <input
                 type="url"
                 name="logo"
@@ -116,13 +126,11 @@ export default function VendorForm({ vendorId }) {
                 placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
                 value={logo}
                 onChange={(e) => setLogo(e.target.value)}
-                required
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
-              <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${website}`} className="text-sm text-blue-600 underline mt-2 pl-2">
-                Get logo
-              </a>
+              <FormTip video_id="413844e4d9274c9e9af740e53d45dc74" />
             </div>
+            <div className="col-span-4 sm:col-span-2"></div>
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">

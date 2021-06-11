@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
+import FormTip from "./formTip";
 
 export default function TierForm({ tierNum, tierId, productId, updateFeatures, priceModel, fetchTierIds }) {
   // form loading
@@ -242,14 +243,13 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
-            <div className="col-span-4 sm:col-span-2 flex space-x-2">
+            <div className="col-span-4 sm:col-span-2 flex flex-col space-x-2">
               <div className="grid grid-cols-4 gap-2">
-                <div className="col-span-2 xl:col-span-1">
+                <div className="col-span-1 xl:col-span-1">
                   <label htmlFor="tierName" className="block text-sm font-medium text-gray-700">
                     Tier number
                   </label>
                   <input
-                    required
                     type="number"
                     name="tierNumber"
                     id="tierNumber"
@@ -259,12 +259,11 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                     className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   />
                 </div>
-                <div className="col-span-2 xl:col-span-3">
+                <div className="col-span-3 xl:col-span-3">
                   <label htmlFor="tierName" className="block text-sm font-medium text-gray-700">
                     Tier name
                   </label>
                   <input
-                    required
                     type="text"
                     name="tierName"
                     id="tierName"
@@ -275,8 +274,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                   />
                 </div>
               </div>
+              <FormTip video_id="ef32b696bb48402abebe499b62af07a6" />
             </div>
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 sm:col-span-2 flex flex-col">
               <label htmlFor="priceNote" className="block text-sm font-medium text-gray-700">
                 Price note
               </label>
@@ -289,46 +289,12 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 onChange={(e) => setPriceNote(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
+              <FormTip video_id="6bc3e5ef8bec49b0a3ddca5fde71d0f8" />
             </div>
-            <div className="col-span-4 sm:col-span-2">
-              <label htmlFor="pricePrimaryNumberMonth" className="block text-sm font-medium text-gray-700">
-                Price per month, paid monthly
-              </label>
-              <div className="grid grid-cols-5">
-                <div className="col-span-2">
-                  <span className="text-xs pl-2">If number:</span>
-                  <input
-                    type="number"
-                    name="pricePrimaryNumberMonth"
-                    id="pricePrimaryNumberMonth"
-                    placeholder="50"
-                    value={pricePrimaryNumberMonth}
-                    onChange={(e) => handlePriceChange(e.target.value, true, true)}
-                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                  />
-                </div>
-                <div className="col-span-1 flex flex-col items-center justify-center mt-4">or</div>
-                <div className="col-span-2">
-                  <span className="text-xs pl-2">If text:</span>
-                  <input
-                    type="text"
-                    name="pricePrimaryTextMonth"
-                    id="pricePrimaryTextMonth"
-                    placeholder="Upon request"
-                    value={pricePrimaryTextMonth}
-                    onChange={(e) => handlePriceChange(e.target.value, false, true)}
-                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                  />
-                </div>
-              </div>
-              {/* <div className="flex flex-col space-y-1">
-                <input type="text" name="pricePrimaryUnitMonth" id="pricePrimaryUnitMonth" placeholder="per user per month" value={pricePrimaryUnitMonth} onChange={(e) => setPricePrimaryUnitMonth(e.target.value)} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
-                <span className="text-xs pl-2">unit</span>
-              </div> */}
-            </div>
-            <div className="col-span-4 sm:col-span-2">
+
+            <div className="col-span-4 sm:col-span-2 flex flex-col">
               <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
-                Price per month, paid yearly
+                Price, paid yearly
               </label>
               <div className="grid grid-cols-5">
                 <div className="col-span-2">
@@ -361,9 +327,48 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 <input type="text" name="pricePrimaryUnitYear" id="pricePrimaryUnitYear" placeholder="per user per month" value={pricePrimaryUnitYear} onChange={(e) => setPricePrimaryUnitYear(e.target.value)} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
                 <span className="text-xs pl-2">unit</span>
               </div> */}
+              <FormTip video_id="e63ab414e7344396bd058a0a5745fd10" />
             </div>
 
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 sm:col-span-2 flex flex-col">
+              <label htmlFor="pricePrimaryNumberMonth" className="block text-sm font-medium text-gray-700">
+                Price, paid monthly
+              </label>
+              <div className="grid grid-cols-5">
+                <div className="col-span-2">
+                  <span className="text-xs pl-2">If number:</span>
+                  <input
+                    type="number"
+                    name="pricePrimaryNumberMonth"
+                    id="pricePrimaryNumberMonth"
+                    placeholder="50"
+                    value={pricePrimaryNumberMonth}
+                    onChange={(e) => handlePriceChange(e.target.value, true, true)}
+                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  />
+                </div>
+                <div className="col-span-1 flex flex-col items-center justify-center mt-4">or</div>
+                <div className="col-span-2">
+                  <span className="text-xs pl-2">If text:</span>
+                  <input
+                    type="text"
+                    name="pricePrimaryTextMonth"
+                    id="pricePrimaryTextMonth"
+                    placeholder="Upon request"
+                    value={pricePrimaryTextMonth}
+                    onChange={(e) => handlePriceChange(e.target.value, false, true)}
+                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  />
+                </div>
+              </div>
+              {/* <div className="flex flex-col space-y-1">
+                <input type="text" name="pricePrimaryUnitMonth" id="pricePrimaryUnitMonth" placeholder="per user per month" value={pricePrimaryUnitMonth} onChange={(e) => setPricePrimaryUnitMonth(e.target.value)} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+                <span className="text-xs pl-2">unit</span>
+              </div> */}
+              <FormTip video_id="15ff902c77e0442786873bdb619e5044" />
+            </div>
+
+            <div className="col-span-4 sm:col-span-2 flex flex-col">
               <h4 className="font-medium text-gray-900 mb-1">Features</h4>
               {displayFeatures &&
                 displayFeatures.map((val, idx) => {
@@ -387,14 +392,17 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                   );
                 })}
               {/* <div className="flex flex-col items-center mt-4 p-2 border border-gray-300"> */}
-              <button
-                type="button"
-                onClick={addFeature}
-                className="inline-flex items-center my-2 px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0"
-              >
-                Add feature
-              </button>
+              <div>
+                <button
+                  type="button"
+                  onClick={addFeature}
+                  className="inline-flex items-center my-2 px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0"
+                >
+                  Add feature
+                </button>
+              </div>
               {/* </div> */}
+              <FormTip video_id="62898882f9504093b066d6e0e233f39b" />
             </div>
           </div>
         </div>

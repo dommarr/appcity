@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
+import FormTip from "./formTip";
 
-export default function ProductForm({ productId, vendorId, priceModel, setPriceModel }) {
+export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin }) {
   // form loading
   const [loading, setLoading] = useState(true);
   // form submission states
@@ -91,7 +92,6 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     // const blankVideo = { type: "video", link: "" };
     // setMedia([...media, { ...blankVideo }]);
     setMedia([...media, ""]);
-    console.log(media);
   };
 
   const signUrl = async (path) => {
@@ -144,8 +144,6 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     // updatedMedia[e.target.dataset.idx]["link"] = e.target.value;
     updatedMedia[e.target.dataset.idx] = e.target.value;
     setMedia(updatedMedia);
-    console.log(updatedMedia);
-    console.log(media);
   };
 
   if (loading) return <Loading />;
@@ -175,7 +173,6 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 placeholder="Hubspot Sales Hub"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
-                required
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
@@ -190,9 +187,9 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 placeholder="https://www.hubspot.com/pricing/sales"
                 value={priceLink}
                 onChange={(e) => setPriceLink(e.target.value)}
-                required
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
+              <FormTip video_id="d5ef42a2ab1d413689ee584bf7370f79" />
             </div>
             <div className="col-span-4 sm:col-span-2">
               <label htmlFor="priceModel" className="block text-sm font-medium text-gray-700">
@@ -205,30 +202,34 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 placeholder="Flat-rate pricing"
                 value={priceModel}
                 onChange={(e) => setPriceModel(e.target.value)}
-                required
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               >
+                <option hidden disabled selected value>
+                  -- select an option --
+                </option>
                 <option value="per-user">Per-user pricing</option>
                 <option value="usage-based">Usage-based pricing</option>
                 <option value="flat-rate">Flat-rate pricing</option>
               </select>
+              <FormTip video_id="ce695925b7074d5d9522229d174c9a34" />
             </div>
-            <div className="col-span-4 sm:col-span-2">
-              <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
-                Keywords
-              </label>
-              <textarea
-                type="text"
-                name="keywords"
-                id="keywords"
-                placeholder="sales crm contact management marketing"
-                value={keywords}
-                onChange={(e) => setKeywords(e.target.value)}
-                required
-                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-              />
-            </div>
-            <div className="col-span-4 sm:col-span-2">
+            {superAdmin && (
+              <div className="col-span-4 sm:col-span-2">
+                <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
+                  Keywords
+                </label>
+                <textarea
+                  type="text"
+                  name="keywords"
+                  id="keywords"
+                  placeholder="sales crm contact management marketing"
+                  value={keywords}
+                  onChange={(e) => setKeywords(e.target.value)}
+                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+              </div>
+            )}
+            <div className="col-span-4 sm:col-span-3">
               <h4 className="font-medium text-gray-900 mb-1">Media</h4>
 
               {media &&
@@ -268,7 +269,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                     {!imageUpload && (
                       <div className="p-1 flex flex-col space-y-1">
                         <span className="text-sm">Upload image:</span>
-                        <input type="file" onChange={handleImageMediaChange} className="block w-full focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
+                        <input type="file" onChange={handleImageMediaChange} className="block w-full focus:outline-none focus:ring-gray-900 focus:border-gray-900 text-xs" />
                       </div>
                     )}
                     {imageUpload && (
@@ -288,11 +289,14 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                   <button
                     type="button"
                     onClick={addVideo}
-                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0"
+                    className="inline-flex items-center px-2.5 py-1.5 border border-black text-xs text-black bg-gray-100 hover:bg-gray-200 rounded-sm focus:outline-none focus:ring-0"
                   >
                     Add video link
                   </button>
                 </div>
+              </div>
+              <div className="max-w-lg">
+                <FormTip video_id="54a35d2579604edf943d29ae237952bb" />
               </div>
             </div>
           </div>
