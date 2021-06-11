@@ -3,6 +3,7 @@ import { supabase } from "../../utils/initSupabase";
 import Loading from "./sectionLoading";
 import Task from "./task";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
+import FormTip from "./formTip";
 
 export default function TaskList(props) {
   const [tasks, setTasks] = useState([]);
@@ -95,6 +96,9 @@ export default function TaskList(props) {
   return (
     <section className="py-4 space-y-4">
       <h1 className="text-2xl font-semibold text-gray-900">Tasks</h1>
+      <div className="max-w-lg">
+        <FormTip video_id="c3aed7f9f8194fecb7af2cf30157eaee" />
+      </div>
       {listview && (
         <div className="grid grid-cols-4 gap-x-2 bg-white shadow p-4">
           <div className="col-span-1 font-bold text-lg underline">Task</div>

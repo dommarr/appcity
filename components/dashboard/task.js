@@ -5,6 +5,7 @@ import VendorForm from "./vendorForm";
 import ProductForm from "./productForm";
 import CategoryForm from "./categoryForm";
 import TierForm from "./tierForm";
+import FormTip from "./formTip";
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 
@@ -119,15 +120,15 @@ export default function Task({ task, user }) {
     }
   };
 
-  //   tierIds.forEach((tier) => {
-  //     let features = await getCumulativeFeatures(tier, product_id);
-  //     const { data, error } = await supabase.from("tiers").update({ features: features }).eq("id", tier);
-  //     if (error) {
-  //       throw error;
-  //     }
-  //   });
-  // };
+  const taskTips = [
+    {
+      name: "Missing Data",
+      tip: "1c675e66d2784cf28223aa2b0f8df435",
+    },
+  ];
+
   const TaskCard = ({ task }) => {
+    let tipVid = taskTips.filter((tip) => task.name === tip.name);
     return (
       <div className={`grid grid-cols-4 gap-x-2 bg-white shadow p-4`}>
         <div className="col-span-1 font-bold text-lg underline">Task</div>
@@ -162,6 +163,9 @@ export default function Task({ task, user }) {
             </button>
           )}
         </div>
+        <div className="row-start-3 col-span-4 lg:col-span-2">
+          <FormTip video_id={tipVid[0].tip} />
+        </div>
       </div>
     );
   };
@@ -172,21 +176,24 @@ export default function Task({ task, user }) {
     <>
       {task && <TaskCard task={task} />}
       {vendorId && <VendorForm vendorId={vendorId} />}
-      {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} />}
+      {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} superAdmin={superAdmin} />}
       {productId && vendorId && superAdmin && <CategoryForm productId={productId} />}
       {tierIds &&
         tierIds.map((tierId, idx) => {
           return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} priceModel={priceModel} fetchTierIds={fetchTierIds} />;
         })}
-      <div>
-        <button
-          type="button"
-          onClick={() => handleAddTier()}
-          className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
-        >
-          <PlusCircleIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-          Add tier
-        </button>
+      <div className="flex flex-col max-w-sm">
+        <div>
+          <button
+            type="button"
+            onClick={() => handleAddTier()}
+            className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
+          >
+            <PlusCircleIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+            Add tier
+          </button>
+        </div>
+        <FormTip video_id="8dc9d72b64b14c959e12b0c477997165" />
       </div>
     </>
   );
