@@ -1,0 +1,15 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Algolia-Sync-Everyday
+
+on:
+  schedule:
+    - cron: '0   18  *   *   *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Algolia api route
+        run: |
+          curl --request POST \
+          --url 'https://www.shopappcity.com/api/algolia' \
