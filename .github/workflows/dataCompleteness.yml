@@ -1,0 +1,13 @@
+name: Data-Completeness-Everyday
+
+on:
+  schedule:
+    - cron: '0   18  *   *   *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call dataCompleteness api route
+        run: |
+          curl --request POST \
+          --url 'https://www.shopappcity.com/api/dataCompleteness' \
