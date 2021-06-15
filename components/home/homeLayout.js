@@ -116,6 +116,7 @@ export default function HomeLayout({ children }) {
         <LgSkyline />
         <XlSkyline />
         <XxlSkyline />
+        <div className="absolute bottom-0 md:-bottom-12 right-4 sm:right-14 md:right-32 h-20 w-20 sm:h-40 sm:w-40 rounded-full bg-yellow filter blur-xl z-0"></div>
       </div>
       <StarterKitFeature />
       {/* <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">

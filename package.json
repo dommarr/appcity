@@ -39,7 +39,7 @@
     "simple-react-lightbox-pro": "^1.2.2",
     "swiper": "^6.6.2",
     "swr": "^0.4.2",
-    "tailwindcss": "^2.0.2",
+    "tailwindcss": "^2.1.4",
     "vercel": "^21.2.1",
     "webrtc-adapter": "^7.7.1"
   }
