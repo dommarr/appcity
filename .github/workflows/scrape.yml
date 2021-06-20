@@ -1,8 +1,8 @@
-name: Data-Completeness-Everyday
+name: Scrape-Everyday
 
 on:
   schedule:
-    - cron: "0   17  *   *   *"
+    - cron: "0   14  *   *   *"
 jobs:
   cron:
     runs-on: ubuntu-latest
