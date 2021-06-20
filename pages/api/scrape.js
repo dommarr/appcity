@@ -11,7 +11,7 @@ export default async function (req, res) {
 
   let updateArray = [];
 
-  const hashUrl = (url) => {
+  const hashUrl = async (url) => {
     const response = await fetch(url);
     const text = await response.text();
     const dom = new jsdom.JSDOM(text);
