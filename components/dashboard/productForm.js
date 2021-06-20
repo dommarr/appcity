@@ -39,9 +39,30 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].media ? setMedia(products[0].media) : "";
   };
 
+  const updateDynamic = async (product_id, pricing_page_link) => {
+    const data = {
+      product: product_id,
+      price_page: pricing_page_link,
+    };
+    fetch("/api/checkDynamic", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdating(true);
+    if (priceLink) {
+      updateDynamic(productId, priceLink);
+    }
     // let uploadMedia = [];
     // media.forEach((element) => uploadMedia.push(element.link));
     const { data, error } = await supabase
