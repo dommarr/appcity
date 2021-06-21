@@ -7,12 +7,12 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   purge: {
     content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-  //   options: {
-  //     safelist: {
-  //       greedy: ["/safe$/"],
-  //     },
-  //   },
-  // },
+    options: {
+      safelist: {
+        greedy: ["/safe$/"],
+      },
+    },
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
@@ -57,6 +57,44 @@ module.exports = {
       //   facebook: "#1778F2",
       //   "facebook-light": "#5DA1F6",
       // },
+      keyframes: {
+        sunset: {
+          // "0%": {
+          //   transform: "translateY(-200px)",
+          //   // "background-image": "linear-gradient(to bottom right, var(--tw-gradient-stops))",
+          //   // "--tw-gradient-from": "#ffff00",
+          //   // "--tw-gradient-stops": "var(--tw-gradient-from), var(--tw-gradient-to, rgba(252, 211, 77, 0))",
+          //   // "--tw-gradient-to": "#fbbf24",
+          //   "background-color": "#ffff00",
+          // },
+          // "100%": {
+          //   transform: "translateY(0px)",
+          //   // "background-image": "linear-gradient(to bottom right, var(--tw-gradient-stops))",
+          //   // "--tw-gradient-from": "#ffff00",
+          //   // "--tw-gradient-stops": "var(--tw-gradient-from), var(--tw-gradient-to, rgba(252, 211, 77, 0))",
+          //   // "--tw-gradient-to": "#ef4444",
+          //   "background-color": "#FCD34D",
+          // },
+          "0%": {
+            transform: "translateY(-200px)",
+            "background-position": "left top",
+          },
+          "50%": {
+            transform: "translateY(-100px)",
+            "background-position": "center",
+          },
+          "100%": {
+            transform: "translateY(0px)",
+            "background-position": "right",
+          },
+        },
+      },
+      animation: {
+        sunset: "sunset 2s linear 1",
+      },
+      backgroundSize: {
+        400: "400% 400%",
+      },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         logo: ["Poppins"],
