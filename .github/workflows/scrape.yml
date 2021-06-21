@@ -7,7 +7,7 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Call dataCompleteness api route
+      - name: Call scrape api route
         run: |
           curl --request POST \
-          --url 'https://www.shopappcity.com/api/dataCompleteness' \
+          --url 'https://www.shopappcity.com/api/scrape' \
