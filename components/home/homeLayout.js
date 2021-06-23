@@ -29,7 +29,7 @@ export default function HomeLayout({ children }) {
 
   return (
     <>
-      <div className="relative bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
+      <div className="relative z-10 bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
         <Banner />
         <Header style="trans" />
         <Head>
@@ -116,7 +116,7 @@ export default function HomeLayout({ children }) {
         <LgSkyline />
         <XlSkyline />
         <XxlSkyline />
-        <div className="animate-sunset absolute bottom-0 md:-bottom-12 right-4 sm:right-14 md:right-32 h-20 w-20 sm:h-40 sm:w-40 rounded-full bg-400 bg-right bg-gradient-to-br from-yellow to-red-500 via-amber-300 filter blur-lg z-0"></div>
+        <div className="animate-sunset absolute bottom-0 md:-bottom-12 right-4 sm:right-14 md:right-32 h-20 w-20 sm:h-40 sm:w-40 rounded-full bg-400 bg-right bg-gradient-to-br from-yellow to-red-500 via-amber-300 filter blur-lg z-10"></div>
       </div>
       <StarterKitFeature />
       {/* <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
