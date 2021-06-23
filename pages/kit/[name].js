@@ -20,9 +20,12 @@ const capitalizeEveryWord = (words) => {
 const formatSentence = (sentence) => {
   let sentenceArray = sentence.split(" ");
   sentenceArray[0] = sentenceArray[0][0].toUpperCase() + sentenceArray[0].substring(1);
-  let last = sentenceArray.length - 1;
-  if (sentenceArray[last] !== ".") {
-    sentenceArray.push(".");
+  let lastWordIndex = sentenceArray.length - 1;
+  let lastLettersArray = sentenceArray[lastWordIndex].split("");
+  let lastLetterIndex = lastLettersArray.length - 1;
+  if (lastLettersArray[lastLetterIndex] !== ".") {
+    lastLettersArray.push(".");
+    sentenceArray[lastWordIndex] = lastLettersArray.join("");
   }
   sentenceArray = sentenceArray.join(" ");
   return sentenceArray;
