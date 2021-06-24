@@ -17,9 +17,10 @@ export default function VendorForm({ vendorId }) {
 
   // Fetch on load
   useEffect(() => {
+    setLoading(true);
     fetchVendorData(vendorId);
     setLoading(false);
-  }, []);
+  }, [vendorId]);
 
   const fetchVendorData = async (vendor_id) => {
     let { data: vendors, error } = await supabase.from("vendors").select("*").eq("id", vendor_id);

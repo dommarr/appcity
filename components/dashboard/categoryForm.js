@@ -19,6 +19,7 @@ export default function CategoryForm({ productId }) {
 
   // Fetch on load
   useEffect(() => {
+    setLoading(true);
     // get category data and build out hierarchy (categories and sub-categories)
     const fetchCategories = async () => {
       // get all categories
@@ -51,7 +52,7 @@ export default function CategoryForm({ productId }) {
     };
     fetchCategories();
     setLoading(false);
-  }, []);
+  }, [productId]);
 
   // categories
   const createCatTable = (cats, arr) => {

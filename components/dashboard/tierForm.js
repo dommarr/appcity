@@ -34,10 +34,11 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
 
   // Fetch on load
   useEffect(() => {
+    setLoading(true);
     // fetchPriceModel(productId);
     fetchTierData(tierId);
     setLoading(false);
-  }, []);
+  }, [tierId]);
 
   // const fetchPriceModel = async (product_id) => {
   //   let { data: products, error } = await supabase.from("products").select("*").eq("id", product_id);
