@@ -9,6 +9,7 @@ import SectionLoading from "./sectionLoading";
 import AddApp from "./addApp";
 import TaskList from "./taskList";
 import AddProduct from "./createNew";
+import EditApps from "./editApps";
 
 const navLinks = [
   {
@@ -48,6 +49,11 @@ const adminLinks = [
     label: "Tasks",
     route: "tasks",
     icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
+  },
+  {
+    label: "Edit apps",
+    route: "edit",
+    icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z",
   },
 ];
 
@@ -436,6 +442,7 @@ export default function Dashboard(props) {
               {/* {screen === "Products" && <Products user={props.user} />} */}
               {screen === "add_app" && <AddApp user={props.user} />}
               {screen === "tasks" && <TaskList user={props.user} router={router} />}
+              {screen === "edit" && <EditApps user={props.user} router={router} />}
               {screen === "admin_add_app" && <AddProduct user={props.user} router={router} />}
               {/* /End replace */}
             </div>

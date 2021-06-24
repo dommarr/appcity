@@ -23,9 +23,10 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
 
   // Fetch on load
   useEffect(() => {
+    setLoading(true);
     fetchProductData(productId);
     setLoading(false);
-  }, []);
+  }, [productId]);
 
   const fetchProductData = async (product_id) => {
     let { data: products, error } = await supabase.from("products").select("*").eq("id", product_id);
