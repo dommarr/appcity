@@ -25,6 +25,7 @@ export default function Task({ task, user }) {
     fetchTierIds(task.product_id);
     fetchUserProfile(user.id);
     setLoading(false);
+    console.log(user);
   }, []);
 
   const fetchUserProfile = async (user_id) => {
@@ -105,7 +106,8 @@ export default function Task({ task, user }) {
   };
 
   const handleCompleteTask = async (task) => {
-    const { data, error } = await supabase.from("tasks").update({ complete: true }).eq("id", task.id);
+    let datetime = new Date().toLocaleString("en-US", { timeZone: "UTC" });
+    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email }).eq("id", task.id);
     if (error) {
       throw error;
     }

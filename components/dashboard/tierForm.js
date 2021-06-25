@@ -397,7 +397,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                           onChange={handleFeatureChange}
                           className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
-                        <MinusCircleIcon onClick={(e) => deleteFeature(idx)} className="text-red-600 h-5 w-5 hover:cursor-pointer" />
+                        <MinusCircleIcon onClick={(e) => deleteFeature(idx)} className="text-gray-400 h-5 w-5 hover:cursor-pointer hover:text-gray-600" />
                       </div>
                     </div>
                   );

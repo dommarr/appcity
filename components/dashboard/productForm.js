@@ -270,7 +270,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                           onChange={handleVideoMediaChange}
                           className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                         />
-                        <MinusCircleIcon onClick={(e) => deleteMedia(idx)} className="text-red-600 h-5 w-5 hover:cursor-pointer" />
+                        <MinusCircleIcon onClick={(e) => deleteMedia(idx)} className="text-gray-400 h-5 w-5 hover:cursor-pointer hover:text-gray-600" />
                       </div>
 
                       {/* {val.type === "image" && val.link === "" && <input type="file" name={mediaId} id={mediaId} data-idx={idx} value={media[idx].link} onChange={handleImageMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />}
