@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
 import FormTip from "./formTip";
+import { MinusCircleIcon } from "@heroicons/react/solid";
 
 export default function TierForm({ tierNum, tierId, productId, updateFeatures, priceModel, fetchTierIds }) {
   // form loading
@@ -203,6 +204,12 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     setDisplayFeatures([...displayFeatures, ""]);
   };
 
+  const deleteFeature = (index) => {
+    const updatedFeatures = [...displayFeatures];
+    updatedFeatures.splice(index, 1);
+    setDisplayFeatures(updatedFeatures);
+  };
+
   const handleFeatureChange = (e) => {
     const updatedFeatures = [...displayFeatures];
     updatedFeatures[e.target.dataset.idx] = e.target.value;
@@ -379,16 +386,19 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                       <label htmlFor={featureId} className="block text-sm font-medium text-gray-700">
                         {`Feature #${idx + 1}`}
                       </label>
-                      <input
-                        type="text"
-                        name={featureId}
-                        id={featureId}
-                        data-idx={idx}
-                        placeholder="Reporting dashboard"
-                        value={displayFeatures[idx]}
-                        onChange={handleFeatureChange}
-                        className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                      />
+                      <div className="flex space-x-2 items-center">
+                        <input
+                          type="text"
+                          name={featureId}
+                          id={featureId}
+                          data-idx={idx}
+                          placeholder="Reporting dashboard"
+                          value={displayFeatures[idx]}
+                          onChange={handleFeatureChange}
+                          className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        />
+                        <MinusCircleIcon onClick={(e) => deleteFeature(idx)} className="text-red-600 h-5 w-5 hover:cursor-pointer" />
+                      </div>
                     </div>
                   );
                 })}
