@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
 import FormTip from "./formTip";
+import { MinusCircleIcon } from "@heroicons/react/solid";
 
 export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin }) {
   // form loading
@@ -104,15 +105,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     }, 4000);
   };
 
-  // const addImage = () => {
-  //   const blankImage = { type: "image", link: "" };
-  //   // setMedia(media.concat({ type: "image", link: "" }));
-  //   setMedia([...media, { ...blankImage }]);
-  // };
-
   const addVideo = () => {
-    // const blankVideo = { type: "video", link: "" };
-    // setMedia([...media, { ...blankVideo }]);
     setMedia([...media, ""]);
   };
 
@@ -153,8 +146,6 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     if (data) {
       let url = await signUrl(path);
       const updatedMedia = [...media];
-      // updatedMedia[e.target.dataset.idx]["link"] = url;
-      // let imageObj = { type: "image", link: url };
       updatedMedia.push(url);
       setMedia(updatedMedia);
       handleImageSuccess();
@@ -163,8 +154,13 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
 
   const handleVideoMediaChange = (e) => {
     const updatedMedia = [...media];
-    // updatedMedia[e.target.dataset.idx]["link"] = e.target.value;
     updatedMedia[e.target.dataset.idx] = e.target.value;
+    setMedia(updatedMedia);
+  };
+
+  const deleteMedia = (index) => {
+    const updatedMedia = [...media];
+    updatedMedia.splice(index, 1);
     setMedia(updatedMedia);
   };
 
@@ -263,17 +259,19 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                         {`Media #${idx + 1}`}
                       </label>
                       {/* <input type="url" name={mediaId} id={mediaId} data-idx={idx} placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4" value={media[idx].link} onChange={handleVideoMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" /> */}
-
-                      <input
-                        type="url"
-                        name={mediaId}
-                        id={mediaId}
-                        data-idx={idx}
-                        placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4"
-                        value={media[idx]}
-                        onChange={handleVideoMediaChange}
-                        className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                      />
+                      <div className="flex space-x-2 items-center">
+                        <input
+                          type="url"
+                          name={mediaId}
+                          id={mediaId}
+                          data-idx={idx}
+                          placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4"
+                          value={media[idx]}
+                          onChange={handleVideoMediaChange}
+                          className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        />
+                        <MinusCircleIcon onClick={(e) => deleteMedia(idx)} className="text-red-600 h-5 w-5 hover:cursor-pointer" />
+                      </div>
 
                       {/* {val.type === "image" && val.link === "" && <input type="file" name={mediaId} id={mediaId} data-idx={idx} value={media[idx].link} onChange={handleImageMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />}
                       {val.type === "image" && val.link && <input type="url" name={mediaId} id={mediaId} data-idx={idx} placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4" value={media[idx].link} onChange={handleVideoMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />}
