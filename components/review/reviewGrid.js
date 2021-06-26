@@ -72,6 +72,7 @@ export default function ReviewGrid(props) {
   if (!reviews || reviews.length < 1)
     return (
       <div className="flex flex-col justify-center items-center p-2 space-y-2">
+        <ReviewRecorder user={props.user} product={props.product} />
         <div className="flex justify-center items-center p-2 animate-pulse">
           <StarIcon className={`h-10 w-10 text-purple`} />
           <StarIcon className={`h-10 w-10 text-purple`} />
