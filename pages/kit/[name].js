@@ -158,5 +158,6 @@ export async function getStaticProps({ params }) {
 
   return {
     props: { kit, sections },
+    revalidate: 10,
   };
 }

@@ -120,7 +120,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const handleImageSuccess = () => {
     setImageUpload(false);
     setImageSuccess(true);
-    setImageMessage("Image uploaded. See links below.");
+    setImageMessage("Image uploaded. See links above.");
     setTimeout(function () {
       setImageMessage("");
     }, 4000);
