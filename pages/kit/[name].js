@@ -148,7 +148,7 @@ export async function getStaticPaths() {
     params: { name: kit.name },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: "blocking" };
 }
 
 export async function getStaticProps({ params }) {
@@ -158,6 +158,6 @@ export async function getStaticProps({ params }) {
 
   return {
     props: { kit, sections },
-    revalidate: 10,
+    revalidate: 60,
   };
 }
