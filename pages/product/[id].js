@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
+// import Link from "next/link";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
 import Head from "../../components/global/head";
 import Banner from "../../components/global/banner";
 import PriceBlock from "../../components/search/priceBlock";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../../utils/initSupabase";
-import Image from "next/image";
+// import Image from "next/image";
 // import { Breadcrumb } from "react-instantsearch-dom";
 import { SRLWrapper, useLightbox } from "simple-react-lightbox-pro";
 import { Auth } from "@supabase/ui";
 import ReviewGrid from "../../components/review/reviewGrid";
-import ReviewRecorder from "../../components/review/reviewRecorder";
+import { ArrowNarrowDownIcon, ChevronDoubleDownIcon } from "@heroicons/react/solid";
 import { StarIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
 
@@ -191,8 +191,9 @@ export default function Product({ product }) {
                 </div>
               </div>
 
-              <a href="#compare" className="dotted text-sm text-gray-400 mt-2">
-                Compare tiers
+              <a href="#compare" className="flex underline text-sm text-blue-500 mt-2">
+                <span>Compare tiers</span>
+                <ArrowNarrowDownIcon className="h-5 w-5" />
               </a>
             </div>
           )}
@@ -361,7 +362,7 @@ export async function getStaticPaths() {
     params: { id: product.id.toString() },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: "blocking" };
 }
 
 export async function getStaticProps({ params }) {
@@ -370,6 +371,6 @@ export async function getStaticProps({ params }) {
 
   return {
     props: { product },
-    revalidate: 10,
+    revalidate: 60,
   };
 }
