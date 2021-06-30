@@ -77,7 +77,7 @@ export default function About() {
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-gray-100"></div>
         <div className="relative">
           <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
-            <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
+            <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0">
               {/* Creator Feature #1 */}
               {!vendor && (
                 <div>
@@ -95,7 +95,10 @@ export default function About() {
                   </div>
                   <div className="mt-6">
                     <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">Shop online like you expect</h2>
-                    <p className="mt-4 text-lg text-gray-500">Search and compare the best apps. With transparent pricing and trustworthy reviews.</p>
+                    <p className="mt-4 text-lg text-gray-500">
+                      Search, filter, and compare the best apps just like you shop for everything else online. With transparent pricing and trustworthy reviews, you can be sure you'll find the best
+                      apps to get you going.
+                    </p>
                     <div className="mt-6">
                       <Link href="/search">
                         <a className="inline-flex px-4 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-gradient-to-r from-purple to-indigo-600 hover:from-purple-extradark hover:to-indigo-700">
@@ -152,15 +155,26 @@ export default function About() {
               </blockquote>
             </div> */}
             </div>
-            <div className="mt-12 sm:mt-16 lg:mt-0">
+
+            <div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-2">
               <div className="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
                 <img
                   className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
-                  src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2gucG5nIiwiaWF0IjoxNjE2NjA3MTUxLCJleHAiOjE5MzE5NjcxNTF9.wFfSBDOw1D1LFtRB0PQfNISRZTauQ9ey_1X12D3AYLw"
+                  src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00"
                   alt="Search page"
                 />
               </div>
             </div>
+
+            {/* <div className="mt-12 sm:mt-16 lg:mt-0">
+              <div className="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
+                <img
+                  className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                  src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00"
+                  alt="Search page"
+                />
+              </div>
+            </div> */}
           </div>
         </div>
         <div className="mt-24">
@@ -184,8 +198,8 @@ export default function About() {
                   <div className="mt-6">
                     <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">Discover the best apps</h2>
                     <p className="mt-4 text-lg text-gray-500">
-                      We survey top creators to learn what apps they use to create our "starter kits". Whether you want to start a podcast, newsletter, or YouTube channel we have a starter kit to help
-                      you hit the ground running.
+                      Learn what apps top creators use with our "starter kits". Whether you want to start a podcast, newsletter, or YouTube channel, we have a starter kit to help you hit the ground
+                      running.
                     </p>
                     <div className="mt-6">
                       <Link href="/kit">
@@ -233,7 +247,7 @@ export default function About() {
                 {!vendor && (
                   <img
                     className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
-                    src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/podcast_starter_kit_cropped.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9wb2RjYXN0X3N0YXJ0ZXJfa2l0X2Nyb3BwZWQucG5nIiwiaWF0IjoxNjE2NjA3NTU2LCJleHAiOjE5MzE5Njc1NTZ9.MymkOu8J2hspi4x2x2O0RC8iKd0jqydIxtUxcg409zg"
+                    src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/starter_kit_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zdGFydGVyX2tpdF80LmpwZyIsImlhdCI6MTYyNTAxMzEzNywiZXhwIjoxOTQwMzczMTM3fQ.wHUUVKlVRRvPEft0DX6OVRCu7B44p-4oTrrzuVtPIaI"
                     alt="Podcast starter kit"
                   />
                 )}

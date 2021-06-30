@@ -97,11 +97,11 @@ export default function Footer({ children, dark }) {
                     </Link>
                   </li>
 
-                  {/* <li>
-                    <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                      Blog
-                    </a>
-                  </li> */}
+                  <li>
+                    <Link href="/blog">
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Blog</a>
+                    </Link>
+                  </li>
 
                   {/* <li>
                     <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
