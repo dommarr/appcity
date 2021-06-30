@@ -201,7 +201,7 @@ export default function HomeLayout({ children }) {
           <div className="bg-white shadow-xl overflow-hidden lg:grid lg:grid-cols-2 lg:gap-4">
             <div className="pt-10 pb-12 px-6 sm:pt-16 sm:px-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
               <div className="lg:self-center">
-                <h2 className="text-3xl font-extrabold text-purple sm:text-4xl">
+                <h2 className="text-4xl font-extrabold text-purple sm:text-4xl">
                   <span className="block">Are you a developer?</span>
                   <span className="block">List your app today.</span>
                 </h2>
@@ -281,13 +281,13 @@ export default function HomeLayout({ children }) {
               </div>
               <div className="relative max-w-md mx-auto py-12 px-4 space-y-6 sm:max-w-3xl sm:py-16 sm:px-6 lg:max-w-none lg:p-0 lg:col-start-4 lg:col-span-6">
                 <div>
-                  <h2 className="text-3xl font-extrabold text-white sm:hidden" id="join-heading">
+                  <h2 className="text-4xl font-extrabold text-white sm:hidden" id="join-heading">
                     Shop for software like you shop for everything else
                   </h2>
-                  <h2 className="text-3xl font-extrabold text-white hidden sm:block" id="join-heading">
+                  <h2 className="text-4xl font-extrabold text-white hidden sm:block" id="join-heading">
                     Shop for software like you
                   </h2>
-                  <h2 className="text-3xl font-extrabold text-white hidden sm:block" id="join-heading">
+                  <h2 className="text-4xl font-extrabold text-white hidden sm:block" id="join-heading">
                     shop for everything else
                   </h2>
                 </div>
