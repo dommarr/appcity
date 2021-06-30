@@ -5,7 +5,6 @@ import Header from "../../components/global/header";
 
 export default function IndexPage(props) {
   let posts = props.posts;
-  console.log(posts);
   return (
     <>
       <Header style="dark" />
@@ -97,5 +96,6 @@ export async function getStaticProps(context) {
 
   return {
     props: { posts },
+    revalidate: 60,
   };
 }

@@ -152,8 +152,15 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  let sections = "";
   let kit = await fetchKit(params.name);
-  let sections = await fetchSections(kit[0].id);
+  if (kit.length === 0) {
+    return {
+      notFound: true,
+    };
+  } else {
+    sections = await fetchSections(kit[0].id);
+  }
   kit = kit[0];
 
   return {

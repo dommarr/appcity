@@ -1,26 +1,16 @@
 import { getSinglePost, getPosts, getSixPosts } from "../../lib/posts";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function PostPage(props) {
-  const [morePosts, setMorePosts] = useState([]);
-  let post = props.post;
-  let author = props.post.primary_author;
+export default function PostPage({ post, morePosts }) {
+  let author = post.primary_author;
   const options = {
     year: "numeric",
     month: "short",
     day: "numeric",
   };
   let date = new Intl.DateTimeFormat("en-US", options).format(new Date(post.published_at));
-  console.log(post);
-
-  // Fetch on load
-  useEffect(async () => {
-    let sixBlogs = await getSixPosts(post.slug);
-    setMorePosts(sixBlogs);
-  }, [props]);
 
   return (
     <>
@@ -156,13 +146,14 @@ export async function getStaticPaths() {
   }));
 
   // { fallback: false } means posts not found should 404.
-  return { paths, fallback: false };
+  return { paths, fallback: "blocking" };
 }
 
 // Pass the page slug over to the "getSinglePost" function
 // In turn passing it to the posts.read() to query the Ghost Content API
 export async function getStaticProps(context) {
   const post = await getSinglePost(context.params.slug);
+  const morePosts = await getSixPosts(context.params.slug);
 
   if (!post) {
     return {
@@ -171,6 +162,7 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: { post },
+    props: { post, morePosts },
+    revalidate: 60,
   };
 }
