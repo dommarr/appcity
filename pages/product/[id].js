@@ -366,8 +366,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await supabase.from("products").select(`*, vendors (*), tiers (*)`).eq("id", params.id);
-  const product = res.data[0];
+  let { data: products, error } = await supabase.from("products").select(`*, vendors (*), tiers (*)`).eq("id", params.id);
+  if (error || products.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
+  const product = products[0];
 
   return {
     props: { product },
