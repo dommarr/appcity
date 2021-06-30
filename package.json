@@ -19,6 +19,7 @@
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/typography": "^0.3.1",
     "@tippyjs/react": "^4.2.4",
+    "@tryghost/content-api": "^1.5.9",
     "algoliasearch": "^4.8.5",
     "autoprefixer": "^10.2.1",
     "axios": "^0.21.1",
