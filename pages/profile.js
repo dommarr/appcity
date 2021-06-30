@@ -75,7 +75,7 @@ const SupabaseLogin = () => {
         <div className="h-screen flex flex-col">
           <Banner />
           <Header style="dark" />
-          <Head title="AppCity Profile" description="Manage your AppCity profile." url="shopappcity.com/profile" />
+          <Head title="Your profile" description="Manage your AppCity profile." url="shopappcity.com/profile" />
           <div className="flex flex-1 overflow-hidden bg-gray-100">
             {user && (
               <>
