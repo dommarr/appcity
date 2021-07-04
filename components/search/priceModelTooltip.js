@@ -15,6 +15,8 @@ const PriceModelTooltip = ({ model }) => {
       return `A variable rate based on usage. For example, email lists commonly charge a price based on the number of subscribers or contacts. You pay more as your subscriber count grows.`;
     } else if (model === "flat-rate") {
       return `A fixed rate per month. Typically includes limitations on the number of users and/or features, where you can pay more for more features.`;
+    } else if (model === "revenue-fee") {
+      return `Free until you start making revenue, then the developer takes a percentage of revenue. Fees can vary widely, from 3-30%.`;
     } else {
       return;
     }

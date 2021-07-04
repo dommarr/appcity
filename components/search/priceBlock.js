@@ -8,12 +8,27 @@ import PriceModelTooltip from "./priceModelTooltip";
 
 const PriceBlock = ({ tier, model, large, monthly, search }) => {
   const formatPrice = (price) => {
-    if (price % 1 != 0) {
+    if (model === "revenue-fee") {
+      let str = price.toString();
+      return str.concat("%");
+    } else if (price % 1 != 0) {
       let num = Number(Math.round(price + "e2") + "e-2");
       num = num.toFixed(2);
       return "$".concat(num);
     } else {
       let num = price.toLocaleString("en");
+      return "$".concat(num);
+    }
+  };
+
+  const calcAnnualPrice = (price) => {
+    let total = price * 12;
+    if (total % 1 != 0) {
+      let num = Number(Math.round(total + "e2") + "e-2");
+      num = num.toFixed(2);
+      return "$".concat(num);
+    } else {
+      let num = total.toLocaleString("en");
       return "$".concat(num);
     }
   };
@@ -36,6 +51,8 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
   let secondary_price_month = tier.price_secondary_number_month || tier.price_secondary_number_month === 0 ? formatPrice(tier.price_secondary_number_month) : tier.price_secondary_text_month;
   let secondary_price_month_unit = tier.price_secondary_unit_month;
 
+  let annualPrice = tier.price_primary_number_year || tier.price_primary_number_year === 0 ? calcAnnualPrice(tier.price_primary_number_year) : "";
+
   return (
     <div className={`price-block-2-2 ${large ? "py-4 px-12 my-4 border border-gray-100 min-h-block" : "py-2 px-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
       <PriceModelTooltip model={model} />
@@ -43,7 +60,8 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
         <div className="flex flex-col justify-center items-center">
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid yearly</dd>
+          {model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>{annualPrice} paid yearly</dd>}
+          {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>deducted from payment</dd>}
         </div>
         {secondary_price_year && (
           <dt className={`${large ? "text-xs" : "text-xs"} text-gray-900`}>
@@ -55,7 +73,8 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
         <div className="flex flex-col justify-center items-center">
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
-          <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>
+          {model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>}
+          {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>deducted from payment</dd>}
         </div>
         {secondary_price_month && (
           <dt className={`${large ? "text-xs" : "text-xs"} text-gray-900`}>

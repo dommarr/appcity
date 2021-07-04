@@ -15,6 +15,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [productName, setProductName] = useState("");
   const [priceLink, setPriceLink] = useState("");
   // const [priceModel, setPriceModel] = useState("");
+  const [description, setDescription] = useState("");
   const [keywords, setKeywords] = useState("");
   const [media, setMedia] = useState([]);
   // image upload states
@@ -37,6 +38,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].name ? setProductName(products[0].name) : "";
     products[0].price_link ? setPriceLink(products[0].price_link) : "";
     products[0].price_model ? setPriceModel(products[0].price_model) : "";
+    products[0].description ? setDescription(products[0].description) : "";
     products[0].keywords ? setKeywords(products[0].keywords) : "";
     products[0].media ? setMedia(products[0].media) : "";
   };
@@ -74,6 +76,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         name: productName,
         price_link: priceLink,
         price_model: priceModel,
+        description: description,
         keywords: keywords,
         media: media,
       })
@@ -181,9 +184,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
             <div className="col-span-4 sm:col-span-2">
-              <label htmlFor="productName" className="block text-sm font-medium text-gray-700">
-                Product name
-              </label>
+              <div className="flex space-x-2">
+                <label htmlFor="productName" className="block text-sm font-medium text-gray-700">
+                  App name
+                </label>
+                <span className="italic text-sm text-gray-400">required</span>
+              </div>
               <input
                 type="text"
                 name="productName"
@@ -195,9 +201,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               />
             </div>
             <div className="col-span-4 sm:col-span-2">
-              <label htmlFor="priceLink" className="block text-sm font-medium text-gray-700">
-                Pricing page link
-              </label>
+              <div className="flex space-x-2">
+                <label htmlFor="priceLink" className="block text-sm font-medium text-gray-700">
+                  Pricing page link
+                </label>
+                <span className="italic text-sm text-gray-400">required</span>
+              </div>
               <input
                 type="url"
                 name="priceLink"
@@ -210,9 +219,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               <FormTip video_id="d5ef42a2ab1d413689ee584bf7370f79" />
             </div>
             <div className="col-span-4 sm:col-span-2">
-              <label htmlFor="priceModel" className="block text-sm font-medium text-gray-700">
-                Pricing model
-              </label>
+              <div className="flex space-x-2">
+                <label htmlFor="priceModel" className="block text-sm font-medium text-gray-700">
+                  Pricing model
+                </label>
+                <span className="italic text-sm text-gray-400">required</span>
+              </div>
               <select
                 type="text"
                 name="priceModel"
@@ -228,8 +240,29 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 <option value="per-user">Per-user pricing</option>
                 <option value="usage-based">Usage-based pricing</option>
                 <option value="flat-rate">Flat-rate pricing</option>
+                <option value="revenue-fee">Revenue-fee pricing</option>
               </select>
-              <FormTip video_id="ce695925b7074d5d9522229d174c9a34" />
+              <FormTip video_id="c14acb3e5f1e41ddbbac81d0eb9b22d1" recent={true} />
+            </div>
+            <div className="col-span-4 sm:col-span-2">
+              <div className="flex space-x-2">
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                  App description
+                </label>
+                <span className="italic text-sm text-gray-400">required</span>
+              </div>
+              <textarea
+                type="text"
+                name="description"
+                id="description"
+                placeholder="Sales Hub eliminates friction by bringing all your tools and data together on one easy-to-use, powerful platform your whole team will love."
+                maxLength="140"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
+              <span className="text-xs text-gray-500 italic">140 character maximum</span>
+              <FormTip video_id="76d32cc65dbf4a9399d435b6a9d24a0a" recent={true} />
             </div>
             {superAdmin && (
               <div className="col-span-4 sm:col-span-2">
@@ -248,7 +281,10 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               </div>
             )}
             <div className="col-span-4 sm:col-span-3">
-              <h4 className="font-medium text-gray-900 mb-1">Media</h4>
+              <div className="flex space-x-2 items-center mb-1">
+                <h4 className="font-medium text-gray-900">Media</h4>
+                <span className="italic text-sm text-gray-400">required</span>
+              </div>
 
               {media &&
                 media.map((val, idx) => {

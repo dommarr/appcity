@@ -25,7 +25,6 @@ export default function Task({ task, user }) {
     fetchTierIds(task.product_id);
     fetchUserProfile(user.id);
     setLoading(false);
-    console.log(user);
   }, []);
 
   const fetchUserProfile = async (user_id) => {
