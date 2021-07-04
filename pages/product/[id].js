@@ -5,7 +5,7 @@ import Header from "../../components/global/header";
 import Head from "../../components/global/head";
 import Banner from "../../components/global/banner";
 import PriceBlock from "../../components/search/priceBlock";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 // import Image from "next/image";
 // import { Breadcrumb } from "react-instantsearch-dom";
@@ -32,6 +32,13 @@ export default function Product({ product }) {
   const tierCount = product.tiers.length;
 
   const tier = product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
+
+  useEffect(() => {
+    if (product.tiers.length === 1 && tier === null) {
+      let tId = product.tiers[0].id;
+      router.push(`/product/${product.id}?tier=${tId}`, undefined, { shallow: true });
+    }
+  }, []);
 
   function compare(a, b) {
     const tierNumA = a.number;
