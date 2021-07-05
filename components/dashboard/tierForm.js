@@ -11,6 +11,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState();
   const [message, setMessage] = useState();
+  const [totalAnnualPrice, setTotalAnnualPrice] = useState();
   // price model from product fetch
   // const [priceModel, setPriceModel] = useState("");
   // form fields
@@ -64,6 +65,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     // primary price
     tiers[0].price_primary_number_month || tiers[0].price_primary_number_month === 0 ? setPricePrimaryNumberMonth(tiers[0].price_primary_number_month) : "";
     tiers[0].price_primary_number_year || tiers[0].price_primary_number_year === 0 ? setPricePrimaryNumberYear(tiers[0].price_primary_number_year) : "";
+
+    tiers[0].price_primary_number_year || tiers[0].price_primary_number_year === 0 ? setTotalAnnualPrice(tiers[0].price_primary_number_year * 12) : "";
+
     tiers[0].price_primary_text_month ? setPricePrimaryTextMonth(tiers[0].price_primary_text_month) : "";
     tiers[0].price_primary_text_year ? setPricePrimaryTextYear(tiers[0].price_primary_text_year) : "";
     // tiers[0].price_primary_unit_month ? setPricePrimaryUnitMonth(tiers[0].price_primary_unit_month) : "";
@@ -232,6 +236,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     }
     if (number && !month) {
       setPricePrimaryNumberYear(val);
+      setTotalAnnualPrice(val * 12);
       setPricePrimaryTextYear("");
     }
     if (!number && month) {
@@ -408,13 +413,14 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 <input type="text" name="pricePrimaryUnitYear" id="pricePrimaryUnitYear" placeholder="per user per month" value={pricePrimaryUnitYear} onChange={(e) => setPricePrimaryUnitYear(e.target.value)} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
                 <span className="text-xs pl-2">unit</span>
               </div> */}
+                  <span className="mt-1 ml-2 text-xs text-gray-500 italic">${totalAnnualPrice} total for the year</span>
                   <FormTip video_id="97784b949bdd4ac295abace40a40df47" recent={true} />
                 </div>
 
                 <div className="col-span-4 sm:col-span-2 sm:row-start-3 flex flex-col">
                   <div className="flex space-x-2">
                     <label htmlFor="pricePrimaryNumberMonth" className="block text-sm font-medium text-gray-700">
-                      Price, paid monthly
+                      Price per month, paid monthly
                     </label>
                     <span className="italic text-sm text-gray-400">required</span>
                   </div>

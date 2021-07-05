@@ -256,12 +256,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 name="description"
                 id="description"
                 placeholder="Sales Hub eliminates friction by bringing all your tools and data together on one easy-to-use, powerful platform your whole team will love."
-                maxLength="140"
+                maxLength="280"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
-              <span className="text-xs text-gray-500 italic">140 character maximum</span>
+              <span className="text-xs text-gray-500 italic">280 character maximum</span>
               <FormTip video_id="76d32cc65dbf4a9399d435b6a9d24a0a" recent={true} />
             </div>
             {superAdmin && (

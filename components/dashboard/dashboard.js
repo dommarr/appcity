@@ -8,7 +8,8 @@ import Reviews from "./reviews";
 import SectionLoading from "./sectionLoading";
 import AddApp from "./addApp";
 import TaskList from "./taskList";
-import AddProduct from "./createNew";
+//import AddProduct from "./createNew";
+import AdminCreateApp from "./admin_create_app/createApp";
 import EditApps from "./editApps";
 
 const navLinks = [
@@ -60,7 +61,7 @@ const adminLinks = [
 const superAdminLinks = [
   {
     label: "Add app",
-    route: "admin_add_app",
+    route: "admin_create_app",
     icon: "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z",
   },
 ];
@@ -443,7 +444,7 @@ export default function Dashboard(props) {
               {screen === "add_app" && <AddApp user={props.user} />}
               {screen === "tasks" && <TaskList user={props.user} router={router} />}
               {screen === "edit" && <EditApps user={props.user} router={router} />}
-              {screen === "admin_add_app" && <AddProduct user={props.user} router={router} />}
+              {screen === "admin_create_app" && <AdminCreateApp user={props.user} router={router} />}
               {/* /End replace */}
             </div>
           </div>

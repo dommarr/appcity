@@ -60,8 +60,8 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
         <div className="flex flex-col justify-center items-center">
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>
-          {model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>{annualPrice} paid yearly</dd>}
-          {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>deducted from payment</dd>}
+          {model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>{annualPrice} paid yearly</dd>}
+          {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>deducted from payment</dd>}
         </div>
         {secondary_price_year && (
           <dt className={`${large ? "text-xs" : "text-xs"} text-gray-900`}>
@@ -73,8 +73,8 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
         <div className="flex flex-col justify-center items-center">
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
           <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>
-          {model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>paid monthly</dd>}
-          {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400`}>deducted from payment</dd>}
+          {model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>paid monthly</dd>}
+          {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>deducted from payment</dd>}
         </div>
         {secondary_price_month && (
           <dt className={`${large ? "text-xs" : "text-xs"} text-gray-900`}>
