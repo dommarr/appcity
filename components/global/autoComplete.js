@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { PencilIcon, SearchIcon } from "@heroicons/react/solid";
+import { PencilIcon, SearchIcon, PlusCircleIcon } from "@heroicons/react/solid";
 
 export class Autocomplete extends Component {
   static propTypes = {
@@ -14,13 +14,9 @@ export class Autocomplete extends Component {
   };
 
   onChange = (e) => {
-    console.log("onChanges");
-
     const { options } = this.props;
     const userInput = e.currentTarget.value;
-
     const filteredOptions = options.filter((optionName) => optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
-
     this.setState({
       activeOption: 0,
       filteredOptions,
@@ -53,7 +49,6 @@ export class Autocomplete extends Component {
       this.setState({ activeOption: activeOption - 1 });
     } else if (e.keyCode === 40) {
       if (activeOption === filteredOptions.length - 1) {
-        console.log(activeOption);
         return;
       }
       this.setState({ activeOption: activeOption + 1 });
@@ -119,8 +114,18 @@ export class Autocomplete extends Component {
             className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
             onClick={(e) => this.props.buttonClick(userInput)}
           >
-            <PencilIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-            <span>Edit this app</span>
+            {!this.props.select && (
+              <>
+                <PencilIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <span>Edit this app</span>
+              </>
+            )}
+            {this.props.select && (
+              <>
+                <PlusCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <span>Add app for this company</span>
+              </>
+            )}
           </button>
         </div>
         {optionList}
