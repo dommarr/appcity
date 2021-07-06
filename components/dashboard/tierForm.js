@@ -229,15 +229,36 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     setDisplayFeatures(updatedFeatures);
   };
 
-  const handlePriceChange = (val, number, month) => {
+  const handlePriceChange = (val, number, month, total) => {
     if (number && month) {
       setPricePrimaryNumberMonth(val);
       setPricePrimaryTextMonth("");
     }
+    // for price, paid yearly - need to calc either the monthly or yearly price
     if (number && !month) {
-      setPricePrimaryNumberYear(val);
-      setTotalAnnualPrice(val * 12);
-      setPricePrimaryTextYear("");
+      if (total) {
+        // needs to clear both when empty
+        if (val === "") {
+          setPricePrimaryNumberYear("");
+          setTotalAnnualPrice("");
+          setPricePrimaryTextYear("");
+        } else {
+          setPricePrimaryNumberYear(val / 12);
+          setTotalAnnualPrice(val);
+          setPricePrimaryTextYear("");
+        }
+      } else {
+        // needs to clear both when empty
+        if (val === "") {
+          setPricePrimaryNumberYear("");
+          setTotalAnnualPrice("");
+          setPricePrimaryTextYear("");
+        } else {
+          setPricePrimaryNumberYear(val);
+          setTotalAnnualPrice(val * 12);
+          setPricePrimaryTextYear("");
+        }
+      }
     }
     if (!number && month) {
       setPricePrimaryTextMonth(val);
@@ -246,6 +267,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     if (!number && !month) {
       setPricePrimaryTextYear(val);
       setPricePrimaryNumberYear("");
+      setTotalAnnualPrice("");
     }
   };
 
@@ -378,22 +400,41 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 <div className="col-span-4 sm:col-span-2 sm:row-start-3 flex flex-col">
                   <div className="flex space-x-2">
                     <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
-                      Price per month, paid yearly
+                      Price, paid yearly
                     </label>
                     <span className="italic text-sm text-gray-400">required</span>
                   </div>
                   <div className="grid grid-cols-5">
                     <div className="col-span-2">
                       <span className="text-xs pl-2">If number:</span>
-                      <input
-                        type="number"
-                        name="pricePrimaryNumberYear"
-                        id="pricePrimaryNumberYear"
-                        placeholder="45"
-                        value={pricePrimaryNumberYear}
-                        onChange={(e) => handlePriceChange(e.target.value, true, false)}
-                        className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                      />
+                      <div className="flex space-x-2">
+                        <div className="flex flex-col">
+                          <input
+                            type="number"
+                            name="pricePrimaryNumberYear"
+                            id="pricePrimaryNumberYear"
+                            placeholder="45"
+                            step="any"
+                            value={pricePrimaryNumberYear}
+                            onChange={(e) => handlePriceChange(e.target.value, true, false)}
+                            className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          />
+                          <span className="mt-1 ml-2 text-xs text-gray-500 italic">per month</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <input
+                            type="number"
+                            name="totalAnnualPrice"
+                            id="totalAnnualPrice"
+                            placeholder="540"
+                            step="any"
+                            value={totalAnnualPrice}
+                            onChange={(e) => handlePriceChange(e.target.value, true, false, true)}
+                            className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                          />
+                          <span className="mt-1 ml-2 text-xs text-gray-500 italic">per year</span>
+                        </div>
+                      </div>
                     </div>
                     <div className="col-span-1 flex flex-col items-center justify-center mt-4">or</div>
                     <div className="col-span-2">
@@ -413,8 +454,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 <input type="text" name="pricePrimaryUnitYear" id="pricePrimaryUnitYear" placeholder="per user per month" value={pricePrimaryUnitYear} onChange={(e) => setPricePrimaryUnitYear(e.target.value)} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
                 <span className="text-xs pl-2">unit</span>
               </div> */}
-                  <span className="mt-1 ml-2 text-xs text-gray-500 italic">${totalAnnualPrice} total for the year</span>
-                  <FormTip video_id="97784b949bdd4ac295abace40a40df47" recent={true} />
+                  <FormTip video_id="b49d350447364191a8e3aa4cf63c3a25" recent={true} />
                 </div>
 
                 <div className="col-span-4 sm:col-span-2 sm:row-start-3 flex flex-col">
@@ -427,15 +467,19 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                   <div className="grid grid-cols-5">
                     <div className="col-span-2">
                       <span className="text-xs pl-2">If number:</span>
-                      <input
-                        type="number"
-                        name="pricePrimaryNumberMonth"
-                        id="pricePrimaryNumberMonth"
-                        placeholder="50"
-                        value={pricePrimaryNumberMonth}
-                        onChange={(e) => handlePriceChange(e.target.value, true, true)}
-                        className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                      />
+                      <div className="flex flex-col">
+                        <input
+                          type="number"
+                          name="pricePrimaryNumberMonth"
+                          id="pricePrimaryNumberMonth"
+                          placeholder="50"
+                          step="any"
+                          value={pricePrimaryNumberMonth}
+                          onChange={(e) => handlePriceChange(e.target.value, true, true)}
+                          className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        />
+                        <span className="mt-1 ml-2 text-xs text-gray-500 italic">per month</span>
+                      </div>
                     </div>
                     <div className="col-span-1 flex flex-col items-center justify-center mt-4">or</div>
                     <div className="col-span-2">

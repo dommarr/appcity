@@ -194,7 +194,7 @@ export default function Task({ task, user }) {
             Add tier
           </button>
         </div>
-        <FormTip video_id="8dc9d72b64b14c959e12b0c477997165" />
+        <FormTip video_id="1bbc4437ff1d4951b071a509bcc458dd" recent={true} />
       </div>
     </>
   );
