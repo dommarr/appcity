@@ -34,8 +34,9 @@ export default function Product({ product }) {
   const tier = product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
 
   useEffect(() => {
-    if (product.tiers.length === 1 && tier === null) {
-      let tId = product.tiers[0].id;
+    if (tier === null) {
+      let firstTier = product.tiers.filter((tier) => tier.number === 1);
+      let tId = firstTier[0].id;
       router.push(`/product/${product.id}?tier=${tId}`, undefined, { shallow: true });
     }
   }, []);
