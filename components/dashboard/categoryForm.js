@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
 
-export default function CategoryForm({ productId }) {
+export default function CategoryForm(props) {
   // form loading
   const [loading, setLoading] = useState(true);
   // form submission states
@@ -25,7 +25,7 @@ export default function CategoryForm({ productId }) {
       // get all categories
       const catArray = await getCategories();
       // get categories for current product
-      const productCats = await getProductCategories(productId);
+      const productCats = await getProductCategories(props.productId);
       const catNames = {};
       catArray.forEach((elem) => (catNames[elem.id] = elem.name));
       // create category hierarchy
@@ -52,7 +52,7 @@ export default function CategoryForm({ productId }) {
     };
     fetchCategories();
     setLoading(false);
-  }, [productId]);
+  }, [props.productId]);
 
   // categories
   const createCatTable = (cats, arr) => {
@@ -114,7 +114,7 @@ export default function CategoryForm({ productId }) {
     let removed = beginCategories.filter((cat) => !endCategories.includes(cat));
     // create arrays for insert and delete
     let insert = [];
-    added.forEach((elem) => insert.push({ product_id: productId, category_id: parseInt(elem) }));
+    added.forEach((elem) => insert.push({ product_id: props.productId, category_id: parseInt(elem) }));
     let deleteArr = [];
     removed.forEach((elem) => deleteArr.push(parseInt(elem)));
     // insert added categories
@@ -130,7 +130,7 @@ export default function CategoryForm({ productId }) {
     }
     // delete removed categories
     if (deleteArr.length) {
-      const { data, error } = await supabase.from("products_categories").delete().eq("product_id", productId).in("category_id", deleteArr);
+      const { data, error } = await supabase.from("products_categories").delete().eq("product_id", props.productId).in("category_id", deleteArr);
       if (error) {
         handleFailure();
         throw error;
@@ -138,6 +138,10 @@ export default function CategoryForm({ productId }) {
       if (data) {
         handleSuccess();
       }
+    }
+    if (props.setCategoryForm) {
+      props.setCategoryForm(false);
+      props.setProductId(false);
     }
     setUpdating(false);
   };

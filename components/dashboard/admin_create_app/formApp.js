@@ -65,7 +65,7 @@ export default function AppForm(props) {
     setUpdating(true);
     let product = await createProduct();
     if (product) {
-      handleSuccess();
+      handleSuccess(product.id);
     }
   };
 
@@ -79,7 +79,7 @@ export default function AppForm(props) {
     }
   };
 
-  const handleSuccess = () => {
+  const handleSuccess = (pid) => {
     setUpdating(false);
     setSuccess(true);
     setSelected(false);
@@ -89,6 +89,10 @@ export default function AppForm(props) {
     setProductName("");
     setChecked(false);
     setCheckbox(false);
+    setSameName(false);
+    props.setAppOnly(false);
+    props.setCategoryForm(true);
+    props.setProductId(pid);
     setTimeout(function () {
       setMessage("");
     }, 2000);

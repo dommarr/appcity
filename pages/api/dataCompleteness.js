@@ -181,6 +181,7 @@ export default async function (req, res) {
     appObj.product_name = elem.name;
     appObj.price_link = elem.price_link;
     appObj.price_model = elem.price_model;
+    appObj.description = elem.description;
     appObj.keywords = elem.keywords;
     appObj.media = elem.media ? elem.media.length : null;
     // category data

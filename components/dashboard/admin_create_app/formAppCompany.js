@@ -50,7 +50,7 @@ export default function AppCompanyForm(props) {
     let vendor = await createVendor();
     let product = await createProduct(vendor.id);
     if (product) {
-      handleSuccess();
+      handleSuccess(product.id);
     }
   };
 
@@ -64,7 +64,7 @@ export default function AppCompanyForm(props) {
     }
   };
 
-  const handleSuccess = () => {
+  const handleSuccess = (pid) => {
     setUpdating(false);
     setSuccess(true);
     setMessage("App created successfully");
@@ -73,6 +73,10 @@ export default function AppCompanyForm(props) {
     setProductName("");
     setChecked(false);
     setCheckbox(false);
+    setSameName(false);
+    props.setAppCompany(false);
+    props.setCategoryForm(true);
+    props.setProductId(pid);
     setTimeout(function () {
       setMessage("");
     }, 2000);

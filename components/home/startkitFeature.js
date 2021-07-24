@@ -44,7 +44,7 @@ export default function StarterKitFeature() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-rows-5 md:grid-rows-3 grid-flow-row gap-2">
           <div className="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-            <Link href={`/kit/${kits[0].name}`}>
+            <Link href={`/kits/${kits[0].name}`}>
               <a>
                 <img className="absolute inset-0 h-full w-full object-cover" src={kits[0].image} alt={`${kits[0].name} starter kit`} />
                 <div className="absolute inset-0 bg-violet-500 opacity-50"></div>

@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ["global-uploads.webflow.com"],
+    domains: ["global-uploads.webflow.com", "dnlvkovcawtkzuvpmmgr.supabase.co"],
   },
 };
