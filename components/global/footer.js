@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 export default function Footer({ children, dark }) {
+  const handleSubmit = () => {};
+
   return (
     <footer className={`${dark ? "bg-purple-extradark" : "bg-white"}`} aria-labelledby="footerHeading">
       <h2 id="footerHeading" className="sr-only">
@@ -146,16 +148,29 @@ export default function Footer({ children, dark }) {
               </div> */}
             </div>
           </div>
-          {/* <div className="mt-8 xl:mt-0">
+          {/* <div className="mt-8 xl:mt-0 p-4 border border-white bg-gradient-to-br from-purple to-purple-extradark">
             <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Subscribe to our newsletter</h3>
             <p className={`mt-4 text-base ${dark ? "text-white" : "text-gray-500"}`}>Insights on the best business software sent to your inbox weekly.</p>
             <form className="mt-4 sm:flex sm:max-w-md">
               <label htmlFor="emailAddress" className="sr-only">
                 Email address
               </label>
-              <input type="email" name="emailAddress" id="emailAddress" autoComplete="email" required className="appearance-none min-w-0 w-full bg-white border border-gray-300 shadow-sm py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-purple-extralight focus:border-purple-extralight focus:placeholder-gray-400" placeholder="Enter your email" />
+              <input
+                type="email"
+                name="emailAddress"
+                id="emailAddress"
+                autoComplete="email"
+                required
+                className="appearance-none min-w-0 w-full bg-white border border-gray-300 shadow-sm py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-purple-extralight focus:border-purple-extralight focus:placeholder-gray-400"
+                placeholder="Enter your email"
+              />
               <div className="mt-3 sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                <button type="submit" className={`w-full ${dark ? "bg-white text-purple-extradark hover:bg-gray-300" : "bg-purple text-white hover:bg-purple-extradark"}  flex items-center justify-center border border-transparent py-2 px-4 text-base font-medium focus:ring-2 focus:ring-offset-2 focus:ring-purple-extralight`}>
+                <button
+                  type="submit"
+                  className={`w-full ${
+                    dark ? "bg-white text-purple-dark hover:bg-gray-300" : "bg-purple text-white hover:bg-purple-extradark"
+                  }  flex items-center justify-center border border-transparent py-2 px-4 text-base font-medium focus:ring-2 focus:ring-offset-2 focus:ring-purple-extralight`}
+                >
                   Subscribe
                 </button>
               </div>

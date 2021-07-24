@@ -43,7 +43,7 @@ const KitCard = ({ kit, index }) => {
 
   return (
     <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-      <Link href={`/kit/${kit.name}`}>
+      <Link href={`/kits/${kit.name}`}>
         <a>
           <img className="absolute inset-0 h-full w-full object-cover" src={kit.image} alt={`${kit.name} starter kit`} />
           <div className={background}></div>
