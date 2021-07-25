@@ -31,7 +31,7 @@ const PriceModelTooltip = ({ model }) => {
   };
 
   return (
-    <Tippy content={caption} touch="hold">
+    <Tippy className="select-none" content={caption} touch="hold">
       <div onClick={handleClick} className="flex justify-center items-center cursor-pointer pb-2 select-none">
         <span className="dotted hover:no-underline text-sm text-gray-400 text-center">{price_model} Pricing</span>
       </div>

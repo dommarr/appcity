@@ -2,6 +2,7 @@ import { getSinglePost, getPosts, getSixPosts } from "../../lib/posts";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
 import Head from "../../components/global/head";
+import Banner from "../../components/global/banner";
 import Link from "next/link";
 
 export default function PostPage({ post, morePosts }) {
@@ -16,6 +17,7 @@ export default function PostPage({ post, morePosts }) {
   console.log(post);
   return (
     <>
+      <Banner />
       <Head title={post.title} description={post.excerpt} ogImage={post.feature_image} url={`shopappcity.com/blog/${post.slug}`} />
       <Header style="dark" />
       <div className="relative py-16 bg-white overflow-hidden">

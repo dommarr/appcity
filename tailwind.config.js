@@ -59,22 +59,6 @@ module.exports = {
       // },
       keyframes: {
         sunset: {
-          // "0%": {
-          //   transform: "translateY(-200px)",
-          //   // "background-image": "linear-gradient(to bottom right, var(--tw-gradient-stops))",
-          //   // "--tw-gradient-from": "#ffff00",
-          //   // "--tw-gradient-stops": "var(--tw-gradient-from), var(--tw-gradient-to, rgba(252, 211, 77, 0))",
-          //   // "--tw-gradient-to": "#fbbf24",
-          //   "background-color": "#ffff00",
-          // },
-          // "100%": {
-          //   transform: "translateY(0px)",
-          //   // "background-image": "linear-gradient(to bottom right, var(--tw-gradient-stops))",
-          //   // "--tw-gradient-from": "#ffff00",
-          //   // "--tw-gradient-stops": "var(--tw-gradient-from), var(--tw-gradient-to, rgba(252, 211, 77, 0))",
-          //   // "--tw-gradient-to": "#ef4444",
-          //   "background-color": "#FCD34D",
-          // },
           "0%": {
             transform: "translateY(-200px)",
             "background-position": "left top",

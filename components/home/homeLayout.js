@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Head from "next/head";
 import Header from "../global/header";
 import Footer from "../global/footer";
 const RotatingText = require("react-rotating-text");
@@ -12,8 +11,6 @@ import XxlSkyline from "../graphics/skyline/XxlSkyline";
 import Link from "next/link";
 import Banner from "../global/banner";
 import StarterKitFeature from "./startkitFeature";
-
-export const siteTitle = "AppCity";
 
 export default function HomeLayout({ children }) {
   const router = useRouter();
@@ -32,19 +29,6 @@ export default function HomeLayout({ children }) {
       <div className="relative z-10 bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
         <Banner />
         <Header style="trans" />
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-          <meta name="description" content="Shop for software like you shop for everything else" />
-          <meta
-            property="og:image"
-            content={`https://og-image.now.sh/${encodeURI(
-              siteTitle
-            )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-          />
-          <meta name="og:title" content={siteTitle} />
-          <meta name="twitter:card" content="summary_large_image" />
-        </Head>
-
         {/* Page Content */}
         <div className="relative pt-16 pb-32 min-h-60vh sm:min-h-70vh flex flex-col justify-center items-center">
           <main className="mx-auto max-w-7xl px-4">

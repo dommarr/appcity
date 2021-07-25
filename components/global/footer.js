@@ -4,7 +4,7 @@ export default function Footer({ children, dark }) {
   const handleSubmit = () => {};
 
   return (
-    <footer className={`${dark ? "bg-purple-extradark" : "bg-white"}`} aria-labelledby="footerHeading">
+    <footer className={`select-none ${dark ? "bg-purple-extradark" : "bg-white"}`} aria-labelledby="footerHeading">
       <h2 id="footerHeading" className="sr-only">
         Footer
       </h2>

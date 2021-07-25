@@ -96,7 +96,10 @@ export default function Custom404() {
     <div className="bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight">
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex-shrink-0 pt-16">
-          <div className="relative h-48 w-full">{gif && <Image src={gif} alt="Cartoon searching for page" layout="fill" objectFit="contain" objectPosition="50% 50%" />}</div>
+          <div className="relative h-48 w-full flex items-center justify-center">
+            {gif && <Image src={gif} alt="Cartoon searching for page" layout="fill" objectFit="contain" objectPosition="50% 50%" />}
+            {!gif && <div className="h-full w-60 bg-gray-400 filter blur-xl"></div>}
+          </div>
         </div>
         <div className="max-w-xl mx-auto py-16 sm:py-16">
           <div className="text-center">

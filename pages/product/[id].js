@@ -100,7 +100,7 @@ export default function Product({ product }) {
       <Banner />
       <Header style="dark" />
       <Head title={product.name} description={`${product.name} details and information.`} url={`shopappcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} />
-      <div className="flex flex-col justify-center items-start m-5 md:hidden">
+      <div className="flex flex-col justify-center items-start m-5 md:hidden select-none">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a className="mt-2 flex" href={product.vendors.website}>
           <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
@@ -117,7 +117,7 @@ export default function Product({ product }) {
           </div>
         </a>
       </div>
-      <div className="block md:flex md:flex-row h-4/5 max-w-screen-3xl mx-auto">
+      <div className="block md:flex md:flex-row h-4/5 max-w-screen-3xl mx-auto select-none">
         {/* Left */}
         <div className="relative w-full md:w-3/5 h-96 sm:h-120 md:h-200 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black border border-black">
           {/* if media is not null, then display slider */}
@@ -236,7 +236,7 @@ export default function Product({ product }) {
         </div>
       )}
       {/* Tier Comparison */}
-      <div id="compare" className="bg-gray-50">
+      <div id="compare" className="bg-gray-50 select-none">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 ${xlCols >= 5 ? "xl:px-1" : ""}`}>
           <div className="sm:flex sm:flex-col sm:align-center">
             <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Tiers</h1>
@@ -348,7 +348,7 @@ export default function Product({ product }) {
           </div>
         </div>
       </div>
-      <div id="reviews" className="bg-white">
+      <div id="reviews" className="bg-white select-none">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
           <div className="flex flex-col align-center">
             <h1 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h1>
