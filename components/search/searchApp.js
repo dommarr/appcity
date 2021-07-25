@@ -232,7 +232,9 @@ export default class SearchApp extends React.Component {
 
   render() {
     return (
-      <div id="top" className="flex bg-gray-100">
+      <div id="top" className="flex bg-gray-100 select-none">
+        {/* prevent auto-zoom when selecting the sort-by dropdown menu on mobile */}
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
         <InstantSearch
           searchClient={this.props.searchClient}
           resultsState={this.props.resultsState}

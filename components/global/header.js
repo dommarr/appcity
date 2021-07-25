@@ -30,7 +30,7 @@ export default function Header(props) {
   const { user, session } = Auth.useUser();
 
   return (
-    <div className={`${props.style === "dark" ? "bg-purple-extradark" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
+    <div className={`select-none ${props.style === "dark" ? "bg-purple-extradark" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 max-w-screen-3xl mx-auto">
         <div className="flex items-center justify-center">
           <Link href="/">
