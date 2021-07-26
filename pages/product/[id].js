@@ -12,7 +12,7 @@ import { supabase } from "../../utils/initSupabase";
 import { SRLWrapper, useLightbox } from "simple-react-lightbox-pro";
 import { Auth } from "@supabase/ui";
 import ReviewGrid from "../../components/review/reviewGrid";
-import { ArrowNarrowDownIcon, ChevronDoubleDownIcon } from "@heroicons/react/solid";
+import { ArrowNarrowDownIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import { StarIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
 
@@ -24,6 +24,7 @@ export default function Product({ product }) {
   const router = useRouter();
   const { user } = Auth.useUser();
   const [monthly, setMonthly] = useState(true);
+  const [description, setDescription] = useState(false);
   const [review, setReview] = useState(false);
   const [success, setSuccess] = useState(false);
   const [rating, setRating] = useState("");
@@ -95,27 +96,40 @@ export default function Product({ product }) {
   const mdRows = rows(mdCols);
   const smRows = rows(smCols);
 
+  const handleDescriptionClick = () => {
+    setDescription(!description);
+  };
+
   return (
     <>
       <Banner />
       <Header style="dark" />
       <Head title={product.name} description={`${product.name} details and information.`} url={`shopappcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} />
-      <div className="flex flex-col justify-center items-start m-5 md:hidden select-none">
+      <div className="flex flex-col justify-center items-start m-5 md:hidden select-none space-y-1">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
-        <a className="mt-2 flex" href={product.vendors.website}>
+        <a target="_blank" className="flex" href={product.vendors.website}>
           <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
           <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
         </a>
-        <a href="#reviews">
-          <div className="flex mt-2 justify-center items-center">
-            <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
-            <StarIcon className={`h-5 w-5 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
-            {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
+        <div className="flex space-x-2">
+          <a href="#reviews">
+            <div className="flex justify-center items-center">
+              <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
+              <StarIcon className={`h-5 w-5 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
+              {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
+            </div>
+          </a>
+          <span>|</span>
+          <div onClick={() => handleDescriptionClick()} className="flex space-x-2 hover:cursor-pointer">
+            <h5 className="">Description</h5>
+            {!description && <ChevronDownIcon className="h-6 w-6" />}
+            {description && <ChevronUpIcon className="h-6 w-6" />}
           </div>
-        </a>
+        </div>
+        <p className={`${description ? `block` : `hidden`} text-sm mt-1 text-gray-600`}>{product.description}</p>
       </div>
       <div className="block md:flex md:flex-row h-4/5 max-w-screen-3xl mx-auto select-none">
         {/* Left */}
@@ -135,24 +149,39 @@ export default function Product({ product }) {
         </div>
         {/* Right */}
         <div className="h-full w-full md:w-2/5 flex flex-col justify-center items-center p-5">
-          <div className="hidden md:flex flex-col justify-center items-start w-full">
+          <div className="hidden md:flex flex-col justify-center items-start w-full space-y-1">
             <h1 className="text-4xl font-bold">{product.name}</h1>
-            <a className="mt-2 flex" href={product.vendors.website}>
+            <a target="_blank" className="flex" href={product.vendors.website}>
               <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
-              <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
+              <h3 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h3>
             </a>
-            <a href="#reviews">
-              <div className="flex mt-2 justify-center items-center">
-                <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
-                <StarIcon className={`h-5 w-5 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
-                {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
+            <div className="flex md:flex-col lg:flex-row space-x-2">
+              <a href="#reviews">
+                <div className="flex justify-center items-center">
+                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
+                  {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
+                </div>
+              </a>
+              <span className="hidden lg:block">|</span>
+              <div onClick={() => handleDescriptionClick()} className="flex hover:cursor-pointer">
+                <h5 className="">Description</h5>
+                {!description && <ChevronDownIcon className="h-6 w-6 ml-2" />}
+                {description && <ChevronUpIcon className="h-6 w-6 ml-2" />}
               </div>
-            </a>
+            </div>
+            <p className={`${description ? `block` : `hidden`} text-sm mt-1 text-gray-600`}>{product.description}</p>
           </div>
-          <h2 className={`text-3xl font-medium my-4 ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>
+          <h2 className={`text-2xl font-medium mt-4 ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>
+          <div className="flex flex-col space-y-2 items-center mt-1 mb-3 xl:w-9/12">
+            {tier?.description && <p className="text-gray-500 text-sm text-center">{tier.description}</p>}
+            {tier?.description && tier?.limit && <hr className="border-t border-gray-200 w-16"></hr>}
+            {tier?.limit && <p className="text-gray-500 text-sm text-center">{tier.limit}</p>}
+          </div>
+
           {/* Price Toggle */}
           {tier != null && (
             <div className="relative self-center bg-gray-100 p-0.5 flex">
@@ -179,8 +208,8 @@ export default function Product({ product }) {
           {product.tiers.length > 1 && (
             <div className="flex flex-col justify-center items-center">
               <div className="justify-start items-start">
-                {tier != null && <h3>Select tier:</h3>}
-                <div className="flex flex-wrap justify-center mt-2">
+                {tier != null && <h4 className="text-sm">Select tier:</h4>}
+                <div className="flex flex-wrap justify-center mt-1">
                   {sortedTiers &&
                     sortedTiers.map((obj) => (
                       <button
@@ -188,7 +217,7 @@ export default function Product({ product }) {
                         type="button"
                         className={`${
                           tier != null && tier.id === obj.id ? "bg-gray-200" : ""
-                        } inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
+                        } inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
                         onClick={() => {
                           router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
                         }}
@@ -279,6 +308,12 @@ export default function Product({ product }) {
                 >
                   <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
                   <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
+                  <div className="flex flex-col space-y-2 items-center">
+                    {(obj?.description || obj?.limit) && <hr className="border-t border-gray-200 w-16"></hr>}
+                    {obj?.description && <p className="text-gray-500 text-sm text-center">{obj.description}</p>}
+                    {obj?.description && obj?.limit && <hr className="border-t border-gray-200 w-16"></hr>}
+                    {obj?.limit && <p className="text-gray-500 text-sm text-center">{obj.limit}</p>}
+                  </div>
                   <a
                     target="_blank"
                     href={product.price_link}
