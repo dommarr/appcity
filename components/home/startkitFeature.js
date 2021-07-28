@@ -38,10 +38,9 @@ export default function StarterKitFeature() {
   if (loading) return <Loading />;
 
   return (
-    <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
+    <section className="max-w-7xl mx-auto pb-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Starter Kits</h1>
-
+        <h2 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Starter Kits</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-rows-5 md:grid-rows-3 grid-flow-row gap-2">
           <div className="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
             <Link href={`/kits/${kits[0].name}`}>
@@ -55,7 +54,6 @@ export default function StarterKitFeature() {
               </a>
             </Link>
           </div>
-
           <div className="row-span-1 col-span-1 sm:row-span-2 relative shadow-xl overflow-hidden">
             <img className="absolute inset-0 h-full w-full object-cover" src={kits[3].image} alt={`${kits[3].name} starter kit`} />
             <div className="absolute inset-0 bg-blue-500 opacity-50"></div>
@@ -93,6 +91,6 @@ export default function StarterKitFeature() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
