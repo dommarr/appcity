@@ -12,7 +12,7 @@ import Link from "next/link";
 import Banner from "../global/banner";
 import StarterKitFeature from "./startkitFeature";
 
-export default function HomeLayout({ children }) {
+export default function HomeLayout({ apps }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
 
@@ -24,9 +24,18 @@ export default function HomeLayout({ children }) {
     });
   };
 
+  const truncate = (text) => {
+    if (text.length > 110) {
+      let sub = text.substring(0, 107);
+      return sub.concat("...");
+    } else {
+      return text;
+    }
+  };
+
   return (
     <>
-      <div className="relative z-10 bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
+      <section id="search" className="relative z-10 bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
         <Banner />
         <Header style="trans" />
         {/* Page Content */}
@@ -79,20 +88,60 @@ export default function HomeLayout({ children }) {
                   </form>
                 </div>
 
-                {/* <div className="flex justify-center items-center flex-wrap pt-4">
-                  <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
-                    CRM
-                  </a>
-                  <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
-                    Video Conferencing
-                  </a>
-                  <a href="/" className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
-                    Analytics
-                  </a>
-                </div> */}
+                <div className="flex justify-center items-center flex-wrap pt-4">
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: { query: "podcast recorder" },
+                    }}
+                  >
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                      Podcast recorder
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: { query: "email newsletter" },
+                    }}
+                  >
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                      Email newsletter
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: { query: "community" },
+                    }}
+                  >
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                      Community
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: { query: "ecommerce store" },
+                    }}
+                  >
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                      Ecommerce store
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: { query: "website builder" },
+                    }}
+                  >
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                      Website builder
+                    </a>
+                  </Link>
+                </div>
               </div>
             </div>
-            <div>{children}</div>
           </main>
         </div>
         <SmSkyline />
@@ -101,7 +150,44 @@ export default function HomeLayout({ children }) {
         <XlSkyline />
         <XxlSkyline />
         <div className="animate-sunset absolute bottom-0 md:-bottom-12 right-4 sm:right-14 md:right-32 h-20 w-20 sm:h-40 sm:w-40 rounded-full bg-400 bg-right bg-gradient-to-br from-yellow to-red-500 via-amber-300 filter blur-lg z-10"></div>
-      </div>
+      </section>
+      {/* <section className="bg-white max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Featured Apps</h1>
+          <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">{apps[0].name}</h1>
+        </div>
+      </section> */}
+      <section id="featured-apps" className="bg-white">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+          <h2 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Featured Apps</h2>
+          <div className="mt-6 grid grid-cols-1 gap-0.5 md:grid-cols-2 lg:grid-cols-3 lg:mt-8">
+            {apps &&
+              apps.map(({ id, name, vendors, categories }, idx) => {
+                return (
+                  <Link href={`/product/${id}`} key={idx}>
+                    <a>
+                      <div className="col-span-1 flex items-center py-8 px-8 bg-gray-50 space-x-4 h-full">
+                        <img className="w-24 h-24 flex-shrink-0" src={vendors.logo} alt={name} />
+                        <div className="flex flex-col space-y-1">
+                          <h5 className="text-xl font-medium">{name}</h5>
+                          <div className="flex flex-wrap overflow-hidden">
+                            {categories.map((category, idy) => {
+                              return (
+                                <span key={idy} className="py-0.5 px-2 bg-indigo-100 text-xs text-indigo-500 whitespace-nowrap mt-1 mr-1">
+                                  {category.name}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </Link>
+                );
+              })}
+          </div>
+        </div>
+      </section>
       <StarterKitFeature />
       {/* <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
