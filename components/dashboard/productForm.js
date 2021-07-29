@@ -3,6 +3,7 @@ import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
 import FormTip from "./formTip";
 import { MinusCircleIcon } from "@heroicons/react/solid";
+import Iframe from "./iFrame";
 
 export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin }) {
   // form loading
@@ -22,6 +23,8 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [imageUpload, setImageUpload] = useState(false);
   const [imageSuccess, setImageSuccess] = useState();
   const [imageMessage, setImageMessage] = useState();
+  // for use in image search
+  const [companyWebsite, setCompanyWebsite] = useState("");
 
   // Fetch on load
   useEffect(() => {
@@ -31,7 +34,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   }, [productId]);
 
   const fetchProductData = async (product_id) => {
-    let { data: products, error } = await supabase.from("products").select("*").eq("id", product_id);
+    let { data: products, error } = await supabase.from("products").select(`*, vendors(website)`).eq("id", product_id);
     if (error) {
       throw error;
     }
@@ -41,6 +44,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].description ? setDescription(products[0].description) : "";
     products[0].keywords ? setKeywords(products[0].keywords) : "";
     products[0].media ? setMedia(products[0].media) : "";
+    products[0].vendors.website ? setCompanyWebsite(products[0].vendors.website) : "";
   };
 
   const updateDynamic = async (product_id, pricing_page_link) => {
@@ -264,26 +268,18 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               <span className="text-xs text-gray-500 italic">280 character maximum</span>
               <FormTip video_id="76d32cc65dbf4a9399d435b6a9d24a0a" recent={true} />
             </div>
-            {superAdmin && (
-              <div className="col-span-4 sm:col-span-2">
-                <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
-                  Keywords
-                </label>
-                <textarea
-                  type="text"
-                  name="keywords"
-                  id="keywords"
-                  placeholder="sales crm contact management marketing"
-                  value={keywords}
-                  onChange={(e) => setKeywords(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                />
-              </div>
-            )}
-            <div className="col-span-4 sm:col-span-3">
-              <div className="flex space-x-2 items-center mb-1">
+            <div className="col-span-4 lg:col-span-2">
+              <div className="flex space-x-2 items-center">
                 <h4 className="font-medium text-gray-900">Media</h4>
                 <span className="italic text-sm text-gray-400">required</span>
+              </div>
+              <div className="flex space-x-4 mb-4">
+                <a target="_blank" href={`https://www.google.com/search?q=site:${companyWebsite} ${productName}&tbm=isch&tbs=isz:l`} className="text-sm text-blue-600 underline">
+                  Search images
+                </a>
+                <a target="_blank" href={`https://www.youtube.com/results?search_query=${productName}&sp=EgIQAg%253D%253D`} className="text-sm text-blue-600 underline">
+                  Search videos
+                </a>
               </div>
 
               {media &&
@@ -351,10 +347,65 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                   </button>
                 </div>
               </div>
-              <div className="max-w-lg">
-                <FormTip video_id="54a35d2579604edf943d29ae237952bb" />
-              </div>
             </div>
+            <div className="col-span-4 lg:col-span-2">
+              <h6 className="block text-sm font-bold text-gray-700 py-2">Media tips</h6>
+              <ol className="flex flex-col text-sm list-decimal px-4">
+                <li className="mt-2">Image 1: Screenshot of the app home screen or dashboard.</li>
+                <dd>
+                  <a target="_blank" href="https://blog.close.com/content/images/hubfs/315483/product-hero-large-1.png" className="text-xs text-blue-600 underline">
+                    Example: Close CRM Inbox
+                  </a>
+                </dd>
+                <li className="mt-2">Image 2: Screenshot of a different section of the app.</li>
+                <dd>
+                  <a target="_blank" href="https://blog.close.com/content/images/hubfs/sales-20pipeline-20view-20in-20CRM.png" className="text-xs text-blue-600 underline">
+                    Example: Close CRM Pipeline View
+                  </a>
+                </dd>
+                <li className="mt-2">Image 3: Screenshot of a different section of the app.</li>
+                <dd>
+                  <a target="_blank" href="https://i.ytimg.com/vi/JgNRfLlp_JU/maxresdefault.jpg" className="text-xs text-blue-600 underline">
+                    Example: Close CRM Reporting View
+                  </a>
+                </dd>
+                <li className="mt-2">Video 1: App introduction video, showing the app in-use. Preferably 1-4 minutes long.</li>
+                <dd>
+                  <a target="_blank" href="https://www.youtube.com/watch?v=bR8z2vqboyE" className="text-xs text-blue-600 underline">
+                    Example: Close CRM Intro
+                  </a>
+                </dd>
+                <li className="mt-2">Video 2: Explaining a feature of the app or showing the app in-use.</li>
+                <dd>
+                  <a target="_blank" href="https://www.youtube.com/watch?v=vQdX1eE75GY" className="text-xs text-blue-600 underline">
+                    Example: Close CRM Custom Activities Feature
+                  </a>
+                </dd>
+              </ol>
+              <div className="mt-4 text-sm font-medium">See videos for more tips:</div>
+              <ul className="flex flex-col text-sm list-disc pl-4">
+                <li className="mt-2">Images:</li>
+                <FormTip video_id="70ef54ca4f1047eb804ee1f5e3af6c7b" />
+                <li className="mt-2">Videos:</li>
+                <FormTip video_id="9f7f88d888414deb8dafc8344c51b45c" />
+              </ul>
+            </div>
+            {superAdmin && (
+              <div className="col-span-4 sm:col-span-2">
+                <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
+                  Keywords
+                </label>
+                <textarea
+                  type="text"
+                  name="keywords"
+                  id="keywords"
+                  placeholder="sales crm contact management marketing"
+                  value={keywords}
+                  onChange={(e) => setKeywords(e.target.value)}
+                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">
