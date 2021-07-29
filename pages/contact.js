@@ -28,8 +28,8 @@ export default function Contact() {
 
     const res = await fetch("/api/contact", {
       body: JSON.stringify({
-        From: "contact.form@shopappcity.com",
-        To: "contact@shopappcity.com",
+        From: "contact.form@appcity.com",
+        To: "contact@appcity.com",
         ReplyTo: form.email,
         Subject: "Contact Form Message",
         TextBody: `
