@@ -14,6 +14,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [message, setMessage] = useState();
   // form fields
   const [productName, setProductName] = useState("");
+  const [productLink, setProductLink] = useState("");
   const [priceLink, setPriceLink] = useState("");
   // const [priceModel, setPriceModel] = useState("");
   const [description, setDescription] = useState("");
@@ -39,6 +40,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
       throw error;
     }
     products[0].name ? setProductName(products[0].name) : "";
+    products[0].product_link ? setProductLink(products[0].product_link) : "";
     products[0].price_link ? setPriceLink(products[0].price_link) : "";
     products[0].price_model ? setPriceModel(products[0].price_model) : "";
     products[0].description ? setDescription(products[0].description) : "";
@@ -78,6 +80,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
       .update({
         vendor_id: vendorId,
         name: productName,
+        product_link: productLink,
         price_link: priceLink,
         price_model: priceModel,
         description: description,
@@ -187,7 +190,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 lg:col-span-2 lg:row-start-1">
               <div className="flex space-x-2">
                 <label htmlFor="productName" className="block text-sm font-medium text-gray-700">
                   App name
@@ -204,7 +207,24 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 lg:col-span-2 lg:row-start-1">
+              <div className="flex space-x-2">
+                <label htmlFor="productLink" className="block text-sm font-medium text-gray-700">
+                  App link
+                </label>
+                <span className="italic text-sm text-gray-400">required</span>
+              </div>
+              <input
+                type="url"
+                name="productLink"
+                id="productLink"
+                placeholder="https://www.hubspot.com/products/sales"
+                value={productLink}
+                onChange={(e) => setProductLink(e.target.value)}
+                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
+            </div>
+            <div className="col-span-4 lg:col-span-2 lg:row-start-2">
               <div className="flex space-x-2">
                 <label htmlFor="priceLink" className="block text-sm font-medium text-gray-700">
                   Pricing page link
@@ -222,7 +242,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               />
               <FormTip video_id="d5ef42a2ab1d413689ee584bf7370f79" />
             </div>
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 lg:col-span-2 lg:row-start-2">
               <div className="flex space-x-2">
                 <label htmlFor="priceModel" className="block text-sm font-medium text-gray-700">
                   Pricing model
@@ -248,7 +268,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               </select>
               <FormTip video_id="c14acb3e5f1e41ddbbac81d0eb9b22d1" recent={true} />
             </div>
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 lg:col-span-2 lg:row-start-3">
               <div className="flex space-x-2">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                   App description
@@ -268,7 +288,23 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               <span className="text-xs text-gray-500 italic">280 character maximum</span>
               <FormTip video_id="76d32cc65dbf4a9399d435b6a9d24a0a" recent={true} />
             </div>
-            <div className="col-span-4 lg:col-span-2">
+            {superAdmin && (
+              <div className="col-span-4 lg:col-span-2 lg:row-start-3">
+                <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
+                  Keywords
+                </label>
+                <textarea
+                  type="text"
+                  name="keywords"
+                  id="keywords"
+                  placeholder="sales crm contact management marketing"
+                  value={keywords}
+                  onChange={(e) => setKeywords(e.target.value)}
+                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+              </div>
+            )}
+            <div className="col-span-4 lg:col-span-2 lg:row-start-4">
               <div className="flex space-x-2 items-center">
                 <h4 className="font-medium text-gray-900">Media</h4>
                 <span className="italic text-sm text-gray-400">required</span>
@@ -348,7 +384,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 </div>
               </div>
             </div>
-            <div className="col-span-4 lg:col-span-2">
+            <div className="col-span-4 lg:col-span-2 lg:row-start-4">
               <h6 className="block text-sm font-bold text-gray-700 py-2">Media tips</h6>
               <ol className="flex flex-col text-sm list-decimal px-4">
                 <li className="mt-2">Image 1: Screenshot of the app home screen or dashboard.</li>
@@ -390,22 +426,6 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 <FormTip video_id="9f7f88d888414deb8dafc8344c51b45c" />
               </ul>
             </div>
-            {superAdmin && (
-              <div className="col-span-4 sm:col-span-2">
-                <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
-                  Keywords
-                </label>
-                <textarea
-                  type="text"
-                  name="keywords"
-                  id="keywords"
-                  placeholder="sales crm contact management marketing"
-                  value={keywords}
-                  onChange={(e) => setKeywords(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                />
-              </div>
-            )}
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">

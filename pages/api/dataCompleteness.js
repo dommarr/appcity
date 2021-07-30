@@ -180,6 +180,7 @@ export default async function (req, res) {
     appObj.product_id = elem.id;
     appObj.product_name = elem.name;
     appObj.price_link = elem.price_link;
+    appObj.product_link = elem.product_link;
     appObj.price_model = elem.price_model;
     appObj.description = elem.description;
     appObj.keywords = elem.keywords;

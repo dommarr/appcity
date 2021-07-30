@@ -79,7 +79,7 @@ export default function VendorForm({ vendorId }) {
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 lg:col-span-2">
               <label htmlFor="vendorName" className="block text-sm font-medium text-gray-700">
                 Company name
               </label>
@@ -93,7 +93,7 @@ export default function VendorForm({ vendorId }) {
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 lg:col-span-2">
               <label htmlFor="website" className="block text-sm font-medium text-gray-700">
                 Company website
               </label>
@@ -110,7 +110,7 @@ export default function VendorForm({ vendorId }) {
                 Go to website
               </a>
             </div>
-            <div className="col-span-4 sm:col-span-2">
+            <div className="col-span-4 lg:col-span-2">
               <div className="flex justify-between items-center">
                 <label htmlFor="logo" className="text-sm font-medium text-gray-700">
                   Company logo
@@ -131,7 +131,6 @@ export default function VendorForm({ vendorId }) {
               />
               <FormTip video_id="413844e4d9274c9e9af740e53d45dc74" />
             </div>
-            <div className="col-span-4 sm:col-span-2"></div>
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">

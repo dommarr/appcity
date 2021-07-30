@@ -57,9 +57,11 @@ export default function Product({ product }) {
 
   const sortedTiers = product.tiers.slice().sort(compare);
 
+  let totalSections = 5;
+
   function order(index, section, cols) {
     let group = Math.ceil(index / cols);
-    let groupCount = cols * 3;
+    let groupCount = cols * totalSections;
     return index + (section - 1) * cols + (groupCount - cols) * (group - 1);
   }
 
@@ -74,7 +76,7 @@ export default function Product({ product }) {
 
   // mc for max content - to set row height to content rather than fr
   function rows(cols) {
-    return Math.ceil(tierCount / cols) * 3 + "mc";
+    return Math.ceil(tierCount / cols) * totalSections + "mc";
   }
 
   // function rows(cols) {
@@ -131,9 +133,9 @@ export default function Product({ product }) {
         </div>
         <p className={`${description ? `block` : `hidden`} text-sm mt-1 text-gray-600`}>{product.description}</p>
       </div>
-      <div className="block md:flex md:flex-row h-4/5 max-w-screen-3xl mx-auto select-none">
+      <div className="block md:h-80vh md:flex md:flex-row max-w-screen-3xl mx-auto select-none">
         {/* Left */}
-        <div className="relative w-full md:w-3/5 h-96 sm:h-120 md:h-200 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black border border-black">
+        <div className="relative h-50vh sm:h-60vh md:h-full w-full md:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black border border-black">
           {/* if media is not null, then display slider */}
           {product.media && product.media.length > 0 && <Swiper media={product.media} />}
           {(!product.media || product.media.length === 0) && (
@@ -148,12 +150,12 @@ export default function Product({ product }) {
           )}
         </div>
         {/* Right */}
-        <div className="h-full w-full md:w-2/5 flex flex-col justify-center items-center p-5">
+        <div className="h-70vh sm:h-70vh md:h-full w-full md:w-2/5 flex flex-col justify-center items-center p-5">
           <div className="hidden md:flex flex-col justify-center items-start w-full space-y-1">
             <h1 className="text-4xl font-bold">{product.name}</h1>
             <a target="_blank" className="flex" href={product.vendors.website}>
               <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
-              <h3 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h3>
+              <h4 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h4>
             </a>
             <div className="flex md:flex-col lg:flex-row space-x-2">
               <a href="#reviews">
@@ -175,11 +177,12 @@ export default function Product({ product }) {
             </div>
             <p className={`${description ? `block` : `hidden`} text-sm mt-1 text-gray-600`}>{product.description}</p>
           </div>
-          <h2 className={`text-2xl font-medium mt-4 ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>
-          <div className="flex flex-col space-y-2 items-center mt-1 mb-3 xl:w-9/12">
+          {product.tiers.length > 1 && <h2 className={`text-2xl font-medium mt-6 ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>}
+          {product.tiers.length === 1 && <div className="h-24"></div>}
+          <div className="flex flex-col space-y-2 items-center mt-1 mb-4 xl:w-9/12">
             {tier?.description && <p className="text-gray-500 text-sm text-center">{tier.description}</p>}
-            {tier?.description && tier?.limit && <hr className="border-t border-gray-200 w-16"></hr>}
-            {tier?.limit && <p className="text-gray-500 text-sm text-center">{tier.limit}</p>}
+            {/* {tier?.description && tier?.limit && <hr className="border-t border-gray-200 w-16"></hr>}
+            {tier?.limit && <p className="text-gray-500 text-sm text-center">{tier.limit}</p>} */}
           </div>
 
           {/* Price Toggle */}
@@ -203,12 +206,13 @@ export default function Product({ product }) {
           )}
           {/* Price Block */}
           {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} />}
-
+          {/* Tier Limit */}
+          {tier?.limit && <p className="text-gray-500 text-sm text-center mb-8">{tier.limit}</p>}
           {/* Tier Selection */}
           {product.tiers.length > 1 && (
             <div className="flex flex-col justify-center items-center">
               <div className="justify-start items-start">
-                {tier != null && <h4 className="text-sm">Select tier:</h4>}
+                {tier != null && <h4 className="text-sm font-medium">Select tier:</h4>}
                 <div className="flex flex-wrap justify-center mt-1">
                   {sortedTiers &&
                     sortedTiers.map((obj) => (
@@ -228,9 +232,17 @@ export default function Product({ product }) {
                 </div>
               </div>
 
-              <a href="#compare" className="flex underline text-sm text-blue-500 mt-2">
+              <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
                 <span>Compare tiers</span>
-                <ArrowNarrowDownIcon className="h-5 w-5" />
+                <ArrowNarrowDownIcon className="h-4 w-4" />
+              </a>
+            </div>
+          )}
+          {product.tiers.length === 1 && (
+            <div className="flex flex-col justify-center items-center">
+              <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
+                <span>Learn more</span>
+                <ArrowNarrowDownIcon className="h-4 w-4" />
               </a>
             </div>
           )}
@@ -268,7 +280,8 @@ export default function Product({ product }) {
       <div id="compare" className="bg-gray-50 select-none">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 ${xlCols >= 5 ? "xl:px-1" : ""}`}>
           <div className="sm:flex sm:flex-col sm:align-center">
-            <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Tiers</h1>
+            {product.tiers.length === 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing</h1>}
+            {product.tiers.length > 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Plans</h1>}
             <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
               <button
                 type="button"
@@ -291,95 +304,168 @@ export default function Product({ product }) {
               xlCols >= 5 ? "xl:gap-x-1" : ""
             } sm:grid-cols-${smCols} sm:grid-rows-${smRows} md:grid-cols-${mdCols} md:grid-rows-${mdRows} lg:grid-cols-${lgCols} lg:grid-rows-${lgRows} xl:grid-cols-${xlCols} xl:grid-rows-${xlRows}`}
           >
+            {/* section 1 - tier name and description */}
             {sortedTiers &&
-              sortedTiers.map((obj, index) => (
-                <div
-                  key={index}
-                  className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
-                    lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
-                  } bg-white p-6 flex flex-col justify-between items-center border border-gray-200 order-${order(index + 1, 1, 1)} sm:order-${order(index + 1, 1, smCols)} md:order-${order(
-                    index + 1,
-                    1,
-                    mdCols
-                  )} lg:order-${order(index + 1, 1, lgCols)} xl:order-${order(index + 1, 1, xlCols)} sm:row-start-${rowStart(order(index + 1, 1, smCols), smCols)} md:row-start-${rowStart(
-                    order(index + 1, 1, mdCols),
-                    mdCols
-                  )} lg:row-start-${rowStart(order(index + 1, 1, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 1, xlCols), xlCols)}`}
-                >
-                  <h2 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h2>
-                  <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
-                  <div className="flex flex-col space-y-2 items-center">
-                    {(obj?.description || obj?.limit) && <hr className="border-t border-gray-200 w-16"></hr>}
+              sortedTiers.map((obj, index) => {
+                let section = 1;
+                return (
+                  <div
+                    key={index}
+                    className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
+                      lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
+                    } bg-white pt-6 px-2 pb-2 flex flex-col justify-between items-center border border-gray-200 border-b-0 order-${order(index + 1, section, 1)} sm:order-${order(
+                      index + 1,
+                      section,
+                      smCols
+                    )} md:order-${order(index + 1, section, mdCols)} lg:order-${order(index + 1, section, lgCols)} xl:order-${order(index + 1, section, xlCols)} sm:row-start-${rowStart(
+                      order(index + 1, section, smCols),
+                      smCols
+                    )} md:row-start-${rowStart(order(index + 1, section, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, section, lgCols), lgCols)} xl:row-start-${rowStart(
+                      order(index + 1, section, xlCols),
+                      xlCols
+                    )}`}
+                  >
+                    {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h3>}
                     {obj?.description && <p className="text-gray-500 text-sm text-center">{obj.description}</p>}
-                    {obj?.description && obj?.limit && <hr className="border-t border-gray-200 w-16"></hr>}
+                  </div>
+                );
+              })}
+            {/* section 2 - price */}
+            {sortedTiers &&
+              sortedTiers.map((obj, index) => {
+                let section = 2;
+                return (
+                  <div
+                    key={index}
+                    className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
+                      lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
+                    } bg-white flex flex-col justify-between items-center border border-gray-200 border-b-0 border-t-0 order-${order(index + 1, section, 1)} sm:order-${order(
+                      index + 1,
+                      section,
+                      smCols
+                    )} md:order-${order(index + 1, section, mdCols)} lg:order-${order(index + 1, section, lgCols)} xl:order-${order(index + 1, section, xlCols)} sm:row-start-${rowStart(
+                      order(index + 1, section, smCols),
+                      smCols
+                    )} md:row-start-${rowStart(order(index + 1, section, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, section, lgCols), lgCols)} xl:row-start-${rowStart(
+                      order(index + 1, section, xlCols),
+                      xlCols
+                    )}`}
+                  >
+                    <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
+                  </div>
+                );
+              })}
+            {/* section 3 - tier limit */}
+            {sortedTiers &&
+              sortedTiers.map((obj, index) => {
+                let section = 3;
+                return (
+                  <div
+                    key={index}
+                    className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
+                      lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
+                    } bg-white px-2 flex flex-col justify-between items-center border border-gray-200 border-b-0 border-t-0 order-${order(index + 1, section, 1)} sm:order-${order(
+                      index + 1,
+                      section,
+                      smCols
+                    )} md:order-${order(index + 1, section, mdCols)} lg:order-${order(index + 1, section, lgCols)} xl:order-${order(index + 1, section, xlCols)} sm:row-start-${rowStart(
+                      order(index + 1, section, smCols),
+                      smCols
+                    )} md:row-start-${rowStart(order(index + 1, section, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, section, lgCols), lgCols)} xl:row-start-${rowStart(
+                      order(index + 1, section, xlCols),
+                      xlCols
+                    )}`}
+                  >
                     {obj?.limit && <p className="text-gray-500 text-sm text-center">{obj.limit}</p>}
                   </div>
-                  <a
-                    target="_blank"
-                    href={product.price_link}
-                    className="block w-full bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center"
-                  >
-                    Buy {obj.name}
-                  </a>
-                </div>
-              ))}
-            {/* {sortedTiers.map((obj, index) => (
-              <div key={index} className={`safe flex flex-col index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} bg-white px-6 py-4 border-l border-r border-gray-200 order-${order(index + 1, 2, 1)} sm:order-${order(index + 1, 2, smCols)} md:order-${order(index + 1, 2, mdCols)} lg:order-${order(index + 1, 2, lgCols)} xl:order-${order(index + 1, 2, xlCols)} sm:row-start-${rowStart(order(index + 1, 2, smCols), smCols)} md:row-start-${rowStart(order(index + 1, 2, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, 2, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 2, xlCols), xlCols)}`}>
-                <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Limits</h3>
-                <ul className="mt-6 space-y-4">
-                  <li className="flex space-x-3">
-                    <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-sm text-gray-500">Potenti felis, in cras at at ligula nunc.</span>
-                  </li>
-
-                  <li className="flex space-x-3">
-                    <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-sm text-gray-500">Orci neque eget pellentesque.</span>
-                  </li>
-                </ul>
-              </div>
-            ))} */}
+                );
+              })}
+            {/* section 4 - buy button */}
             {sortedTiers &&
-              sortedTiers.map((obj, index) => (
-                <div
-                  key={index}
-                  className={`safe index-${index + 1} order-${order(index + 1, 3, 1)} sm:order-${order(index + 1, 3, smCols)} md:order-${order(index + 1, 3, mdCols)} lg:order-${order(
-                    index + 1,
-                    3,
-                    lgCols
-                  )} xl:order-${order(index + 1, 3, xlCols)} sm:row-start-${rowStart(order(index + 1, 3, smCols), smCols)} md:row-start-${rowStart(
-                    order(index + 1, 3, mdCols),
-                    mdCols
-                  )} lg:row-start-${rowStart(order(index + 1, 3, lgCols), lgCols)} xl:row-start-${rowStart(order(index + 1, 3, xlCols), xlCols)}`}
-                >
-                  <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 `}>
-                    <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
-                    <ul className="mt-6 space-y-4">
-                      {index > 0 && (
-                        <li className="flex space-x-3">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                          </svg>
-                          <span className="text-sm text-gray-500 font-bold">All prior features, plus...</span>
-                        </li>
-                      )}
-                      {obj.display_features &&
-                        obj.display_features.map((feature, index) => (
-                          <li key={index} className="flex space-x-3">
-                            <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                            <span className="text-sm text-gray-500">{feature}</span>
-                          </li>
-                        ))}
-                    </ul>
+              sortedTiers.map((obj, index) => {
+                let section = 4;
+                return (
+                  <div
+                    key={index}
+                    className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
+                      lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
+                    } bg-white pt-2 pb-4 px-2 flex flex-col justify-between items-center border border-gray-200 border-t-0 order-${order(index + 1, section, 1)} sm:order-${order(
+                      index + 1,
+                      section,
+                      smCols
+                    )} md:order-${order(index + 1, section, mdCols)} lg:order-${order(index + 1, section, lgCols)} xl:order-${order(index + 1, section, xlCols)} sm:row-start-${rowStart(
+                      order(index + 1, section, smCols),
+                      smCols
+                    )} md:row-start-${rowStart(order(index + 1, section, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, section, lgCols), lgCols)} xl:row-start-${rowStart(
+                      order(index + 1, section, xlCols),
+                      xlCols
+                    )}`}
+                  >
+                    {product.tiers.length > 1 && (
+                      <a
+                        target="_blank"
+                        href={product.price_link}
+                        className="block w-5/6 bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center"
+                      >
+                        Buy {obj.name}
+                      </a>
+                    )}
+                    {product.tiers.length === 1 && (
+                      <a
+                        target="_blank"
+                        href={product.price_link}
+                        className="block w-5/6 bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center"
+                      >
+                        Buy {product.name}
+                      </a>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
+            {/* section 5 - features */}
+            {sortedTiers &&
+              sortedTiers.map((obj, index) => {
+                let section = 5;
+                return (
+                  <div
+                    key={index}
+                    className={`safe index-${index + 1} mb-4 order-${order(index + 1, section, 1)} sm:order-${order(index + 1, section, smCols)} md:order-${order(
+                      index + 1,
+                      section,
+                      mdCols
+                    )} lg:order-${order(index + 1, section, lgCols)} xl:order-${order(index + 1, section, xlCols)} sm:row-start-${rowStart(
+                      order(index + 1, section, smCols),
+                      smCols
+                    )} md:row-start-${rowStart(order(index + 1, section, mdCols), mdCols)} lg:row-start-${rowStart(order(index + 1, section, lgCols), lgCols)} xl:row-start-${rowStart(
+                      order(index + 1, section, xlCols),
+                      xlCols
+                    )}`}
+                  >
+                    <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 h-full`}>
+                      <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
+                      <ul className="mt-6 space-y-4">
+                        {index > 0 && (
+                          <li className="flex space-x-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            <span className="text-sm text-gray-500 font-bold">All prior features, plus...</span>
+                          </li>
+                        )}
+                        {obj.display_features &&
+                          obj.display_features.map((feature, index) => (
+                            <li key={index} className="flex space-x-3">
+                              <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                              <span className="text-sm text-gray-500">{feature}</span>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
