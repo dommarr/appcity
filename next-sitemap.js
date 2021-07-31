@@ -1,9 +1,10 @@
 const siteUrl = "https://www.appcity.com";
 
 module.exports = {
-  siteUrl,
+  siteUrl: siteUrl,
   generateRobotsTxt: true,
+  exclude: ["/server-sitemap.xml", "/login"],
   robotsTxtOptions: {
-    additionalSitemaps: [`${siteUrl}/sitemap.xml`, `${siteUrl}/server-sitemap.xml`],
+    additionalSitemaps: [`${siteUrl}/server-sitemap.xml`],
   },
 };
