@@ -52,6 +52,7 @@ const SupabaseLogin = () => {
     if (!user)
       return (
         <div className="min-h-screen min-w-screen bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight flex flex-col sm:justify-center pt-16 sm:py-12 sm:px-6 lg:px-8">
+          <Head title="Sign up or sign in" description="Sign into your AppCity profile." url="shopappcity.com/profile" />
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
             <div className="flex justify-center">
               <Link href="/">
