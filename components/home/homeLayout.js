@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect, useReducer } from "react";
 import Header from "../global/header";
 import Footer from "../global/footer";
 const RotatingText = require("react-rotating-text");
@@ -11,6 +11,7 @@ import XxlSkyline from "../graphics/skyline/XxlSkyline";
 import Link from "next/link";
 import Banner from "../global/banner";
 import StarterKitFeature from "./startkitFeature";
+import Image from "next/image";
 
 export default function HomeLayout({ apps }) {
   const router = useRouter();
@@ -50,7 +51,8 @@ export default function HomeLayout({ apps }) {
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block text-white mb-1">The app store for</span>
                 {/* <span className="block text-yellow">creators</span> */}
-                <RotatingText items={[" podcasters ", " writers ", " streamers ", " creators. "]} color="yellow" pause={2500} />
+                {/* <RotatingText items={["podcasters ", " writers ", " streamers ", " creators. "]} color="yellow" pause={2500} /> */}
+                <RotatingText items={["creators", "founders", "indiehackers", " builders. "]} color="yellow" pause={2500} />
               </h1>
 
               {/* Search */}
@@ -95,7 +97,7 @@ export default function HomeLayout({ apps }) {
                       query: { query: "podcast recorder" },
                     }}
                   >
-                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
                       Podcast recorder
                     </a>
                   </Link>
@@ -105,7 +107,7 @@ export default function HomeLayout({ apps }) {
                       query: { query: "email newsletter" },
                     }}
                   >
-                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
                       Email newsletter
                     </a>
                   </Link>
@@ -115,7 +117,7 @@ export default function HomeLayout({ apps }) {
                       query: { query: "community" },
                     }}
                   >
-                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
                       Community
                     </a>
                   </Link>
@@ -125,7 +127,7 @@ export default function HomeLayout({ apps }) {
                       query: { query: "ecommerce store" },
                     }}
                   >
-                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
                       Ecommerce store
                     </a>
                   </Link>
@@ -135,7 +137,7 @@ export default function HomeLayout({ apps }) {
                       query: { query: "website builder" },
                     }}
                   >
-                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-1 border border-white shadow-sm text-sm font-light">
+                    <a className="hidden sm:inline-flex text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
                       Website builder
                     </a>
                   </Link>
@@ -159,7 +161,7 @@ export default function HomeLayout({ apps }) {
       </section> */}
       <section id="featured-apps" className="bg-white">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-          <h2 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Featured Apps</h2>
+          <h2 className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">Featured Apps</h2>
           <div className="mt-6 grid grid-cols-1 gap-0.5 md:grid-cols-2 lg:grid-cols-3 lg:mt-8">
             {apps &&
               apps.map(({ id, name, vendors, categories }, idx) => {
@@ -167,13 +169,13 @@ export default function HomeLayout({ apps }) {
                   <Link href={`/product/${id}`} key={idx}>
                     <a>
                       <div className="col-span-1 flex items-center py-8 px-8 bg-gray-50 space-x-4 h-full">
-                        <img className="w-24 h-24 flex-shrink-0" src={vendors.logo} alt={name} />
+                        <Image src={vendors.logo} alt={name} placeholder="blur" width={100} height={100} />
                         <div className="flex flex-col space-y-1">
                           <h5 className="text-xl font-medium">{name}</h5>
                           <div className="flex flex-wrap overflow-hidden">
                             {categories.map((category, idy) => {
                               return (
-                                <span key={idy} className="py-0.5 px-2 bg-indigo-100 text-xs text-indigo-500 whitespace-nowrap mt-1 mr-1">
+                                <span key={idy} className="py-0.5 px-2 bg-indigo-100 text-sm sm:text-xs text-indigo-500 whitespace-nowrap mt-1 mr-1">
                                   {category.name}
                                 </span>
                               );
@@ -276,7 +278,7 @@ export default function HomeLayout({ apps }) {
                   <span className="block">List your app today.</span>
                 </h2>
                 <div className="flex flex-col">
-                  <p className="mt-4 text-lg leading-6 text-gray-900">Sign up, add your app to our catalog, and reach thousands of creators.</p>
+                  <p className="mt-4 text-lg leading-6 text-gray-900">Sign up, add your app to our catalog, and reach thousands of builders.</p>
                   <Link href="/about?customer=vendor">
                     <a className="text-lg leading-6 text-gray-900 underline hover:no-underline">Learn more</a>
                   </Link>
@@ -287,15 +289,13 @@ export default function HomeLayout({ apps }) {
               </div>
             </div>
             <div className="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">
-              <img
-                className="transform translate-x-6 translate-y-6 rounded-md ring-1 ring-gray-200 object-cover object-left-top sm:translate-x-16 lg:translate-y-20 sm:hidden"
-                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/appcity_search_small.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9hcHBjaXR5X3NlYXJjaF9zbWFsbC5wbmciLCJpYXQiOjE2MjIxMzg2MDYsImV4cCI6MTkzNzQ5ODYwNn0.a5x0bhJZHFjncq7dONmsNJX11zmg8Hz6a8xlcMOdBaY"
+              <Image
+                className="transform translate-x-6 translate-y-6 sm:translate-x-16 lg:translate-y-20 object-cover object-left-top rounded-md ring-1 ring-gray-200"
+                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00"
                 alt="AppCity search page"
-              />
-              <img
-                className="transform translate-x-6 translate-y-6 rounded-md ring-1 ring-gray-200 object-cover object-left-top sm:translate-x-16 lg:translate-y-20 hidden sm:block"
-                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/appcity_search_medium.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9hcHBjaXR5X3NlYXJjaF9tZWRpdW0ucG5nIiwiaWF0IjoxNjIyMTM4NTkyLCJleHAiOjE5Mzc0OTg1OTJ9.u-9GIzccpJbYpB8ktylhh6acu-UzP5n323R2rFGg1Bw"
-                alt="AppCity search page"
+                placeholder="blur"
+                layout="fill"
+                objectFit="cover"
               />
             </div>
           </div>
@@ -310,15 +310,13 @@ export default function HomeLayout({ apps }) {
               <div className="absolute inset-x-0 h-1/2 bg-white lg:hidden" aria-hidden="true"></div>
               <div className="max-w-md mx-auto px-4 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
                 <div className="aspect-w-10 aspect-h-6 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1">
-                  <img
-                    className="object-cover object-center shadow-2xl sm:hidden"
-                    src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/couch_surfing_small.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9jb3VjaF9zdXJmaW5nX3NtYWxsLnBuZyIsImlhdCI6MTYyMjEzODU2OSwiZXhwIjoxOTM3NDk4NTY5fQ.iLiUDFwnd3DpdovSqo84DXWI9Ftcbb9MYTmfBa72-k8"
-                    alt="AppCity couch shopping"
-                  />
-                  <img
-                    className="object-cover object-center shadow-2xl hidden sm:block"
-                    src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/couch_surfing_medium.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9jb3VjaF9zdXJmaW5nX21lZGl1bS5wbmciLCJpYXQiOjE2MjIxMzg1ODAsImV4cCI6MTkzNzQ5ODU4MH0.Mw_HvP8tuO2qFEiOuzKGMdQbm5O_76eobvV2b4vWBgE"
-                    alt="AppCity couch shopping"
+                  <Image
+                    className="shadow-2xl"
+                    src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/shopping_med?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wcGluZ19tZWQiLCJpYXQiOjE2Mjc4Mzk3NDQsImV4cCI6MTk0MzE5OTc0NH0.2_g-e5jkTERWS42LGZcn7xBpCEIYO1_-S62P5QY_ucg"
+                    alt="AppCity shopping"
+                    placeholder="blur"
+                    layout="fill"
+                    objectFit="cover"
                   />
                 </div>
               </div>

@@ -106,7 +106,7 @@ export default function Task({ task, user }) {
 
   const handleCompleteTask = async (task) => {
     let datetime = new Date().toLocaleString("en-US", { timeZone: "UTC" });
-    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email }).eq("id", task.id);
+    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email, in_progress: false }).eq("id", task.id);
     if (error) {
       throw error;
     }

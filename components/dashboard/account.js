@@ -84,7 +84,7 @@ export default function Account(props) {
                   type="text"
                   name="first_name"
                   id="first_name"
-                  placeholder="Jane"
+                  placeholder="Larry"
                   value={firstname}
                   onChange={(e) => setFirstname(e.target.value)}
                   autoComplete="given-name"
@@ -100,7 +100,7 @@ export default function Account(props) {
                   type="text"
                   name="last_name"
                   id="last_name"
-                  placeholder="Doe"
+                  placeholder="David"
                   value={lastname}
                   onChange={(e) => setLastname(e.target.value)}
                   autoComplete="family-name"
