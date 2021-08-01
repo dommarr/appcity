@@ -16,8 +16,8 @@ export default function About() {
     }
   }, []);
 
-  const handleCreatorClick = () => {
-    router.push(`/about?customer=creator`, undefined, { shallow: true });
+  const handleBuilderClick = () => {
+    router.push(`/about?customer=builder`, undefined, { shallow: true });
     setVendor(false);
   };
 
@@ -56,10 +56,10 @@ export default function About() {
           <div className={`${vendor ? "border border-purple" : "border border-white"} p-0.5 shadow-lg`}>
             <button
               type="button"
-              onClick={() => handleCreatorClick()}
+              onClick={() => handleBuilderClick()}
               className={`relative ${vendor ? "bg-transparent" : "bg-white"} text-purple py-2 text-sm font-medium whitespace-nowrap focus:outline-none w-auto px-4 sm:px-8`}
             >
-              For creators
+              For builders
             </button>
             <button
               type="button"
@@ -78,7 +78,7 @@ export default function About() {
         <div className="relative">
           <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
             <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0">
-              {/* Creator Feature #1 */}
+              {/* Builder Feature #1 */}
               {!vendor && (
                 <div>
                   <div>
@@ -180,7 +180,7 @@ export default function About() {
         <div className="mt-24">
           <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
             <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
-              {/* Creator Feature #2 */}
+              {/* Builder Feature #2 */}
               {!vendor && (
                 <div>
                   <div>
@@ -198,11 +198,10 @@ export default function About() {
                   <div className="mt-6">
                     <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">Discover the best apps</h2>
                     <p className="mt-4 text-lg text-gray-500">
-                      Learn what apps top creators use with our "starter kits". Whether you want to start a podcast, newsletter, or YouTube channel, we have a starter kit to help you hit the ground
-                      running.
+                      Learn what apps top builders use with our "starter kits". Whether you want to start a podcast, startup, or online store, we have a starter kit to help you hit the ground running.
                     </p>
                     <div className="mt-6">
-                      <Link href="/kit">
+                      <Link href="/kits">
                         <a className="inline-flex px-4 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-gradient-to-r from-purple to-indigo-600 hover:from-purple-extradark hover:to-indigo-700">
                           Browse starter kits
                         </a>

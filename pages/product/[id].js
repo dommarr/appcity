@@ -313,7 +313,7 @@ export default function Product({ product }) {
                     key={index}
                     className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
                       lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
-                    } bg-white pt-6 px-2 pb-2 flex flex-col justify-between items-center border border-gray-200 border-b-0 order-${order(index + 1, section, 1)} sm:order-${order(
+                    } bg-white pt-6 px-2 pb-2 flex flex-col justify-start items-center border border-gray-200 border-b-0 order-${order(index + 1, section, 1)} sm:order-${order(
                       index + 1,
                       section,
                       smCols
@@ -364,7 +364,7 @@ export default function Product({ product }) {
                     key={index}
                     className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
                       lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
-                    } bg-white px-2 flex flex-col justify-between items-center border border-gray-200 border-b-0 border-t-0 order-${order(index + 1, section, 1)} sm:order-${order(
+                    } bg-white px-2 flex flex-col justify-center items-center border border-gray-200 border-b-0 border-t-0 order-${order(index + 1, section, 1)} sm:order-${order(
                       index + 1,
                       section,
                       smCols

@@ -97,17 +97,19 @@ export default function KitHome() {
         <div className="mb-20">
           <div className="bg-white">
             <div className="max-w-7xl mx-auto py-10 px-4 sm:py-12 sm:px-6 lg:px-8">
-              <div className="text-center">
-                <h1 className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Starter Kits</h1>
-                <p className="max-w-xl mt-5 mx-auto text-xl text-gray-500">The best apps to get your project up and running.</p>
+              <div className="flex flex-col space-y-2 mb-8 text-center">
+                <h1 className="text-5xl font-extrabold sm:tracking-tight sm:text-6xl text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">
+                  Starter Kits
+                </h1>
+                <p className="max-w-xl mx-auto text-xl text-gray-500">The best apps to get your project up and running.</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {kits &&
+                  kits.map((kit, idx) => {
+                    return <KitCard key={idx} kit={kit} index={idx} />;
+                  })}
               </div>
             </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {kits &&
-              kits.map((kit, idx) => {
-                return <KitCard key={idx} kit={kit} index={idx} />;
-              })}
           </div>
         </div>
       </Container>

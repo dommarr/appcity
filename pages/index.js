@@ -11,7 +11,7 @@ export default function Home({ apps }) {
   );
 }
 
-const appIds = [1022, 1032, 1044, 1005, 1029, 1012];
+const appIds = [1032, 1044, 1005, 1029, 1012, 1035];
 
 const fetchApps = async (ids) => {
   let { data: products, error } = await supabase

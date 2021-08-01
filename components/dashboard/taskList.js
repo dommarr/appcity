@@ -28,8 +28,22 @@ export default function TaskList(props) {
     }
   };
 
+  const setTaskInProgress = async (task, bool, fetchTasksBool) => {
+    const { data, error } = await supabase.from("tasks").update({ in_progress: bool }).eq("id", task.id);
+    if (error) {
+      throw error;
+    }
+    if (data) {
+      if (fetchTasksBool) {
+        fetchTasks();
+      }
+      return;
+    }
+  };
+
   function handleTaskClick({ task }) {
     setListview(false);
+    setTaskInProgress(task, true);
     setCurrenttask(task);
     // props.router.push(`/profile?screen=tasks&task=${task.id}`, undefined, { shallow: true });
   }
@@ -40,7 +54,7 @@ export default function TaskList(props) {
 
   const handleCompleteTask = async (task) => {
     let datetime = new Date().toLocaleString("en-US", { timeZone: "UTC" });
-    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email }).eq("id", task.id);
+    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email, in_progress: false }).eq("id", task.id);
     if (error) {
       throw error;
     }
@@ -56,13 +70,19 @@ export default function TaskList(props) {
   };
 
   const handleBack = async () => {
-    fetchTasks();
+    setTaskInProgress(currenttask, false, true);
     setListview(true);
   };
 
   const TaskCard = ({ task, index }) => {
     return (
-      <div className={`col-span-4 grid grid-cols-4 gap-x-2 p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
+      <div className={`relative col-span-4 grid grid-cols-4 gap-x-2 p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
+        {task.in_progress && (
+          <div className="absolute inset-0 bg-blue-200 bg-opacity-90 h-full w-full flex flex-col items-center justify-center">
+            <h5 className="text-xl font-bold">Task in progress</h5>
+            <p className="text-sm">Someone else is working on this task. Skip to the next one.</p>
+          </div>
+        )}
         <div onClick={() => handleTaskClick({ task })} className="col-span-1 flex flex-col justify-center hover:cursor-pointer ">
           <span className="">{task.name}</span>
           <span className="text-xs">Task ID: {task.id}</span>
