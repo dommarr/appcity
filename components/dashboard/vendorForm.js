@@ -106,9 +106,8 @@ export default function VendorForm({ vendorId }) {
                 onChange={(e) => setWebsite(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
-              <a target="_blank" href={website} className="text-sm text-blue-600 underline mt-2 pl-2">
-                Go to website
-              </a>
+
+              <p className="text-sm mt-2 pl-2 italic">See "App link" below</p>
             </div>
             <div className="col-span-4 lg:col-span-2">
               <div className="flex justify-between items-center">

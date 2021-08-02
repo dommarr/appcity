@@ -66,7 +66,7 @@ export default function About() {
               onClick={() => handleVendorClick()}
               className={`ml-0.5 relative ${vendor ? "bg-purple" : "bg-transparent"} py-2 text-sm font-medium text-white whitespace-nowrap focus:outline-none w-auto px-4 sm:px-8`}
             >
-              For developers
+              For companies
             </button>
           </div>
         </div>

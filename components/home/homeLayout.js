@@ -52,7 +52,7 @@ export default function HomeLayout({ apps }) {
                 <span className="block text-white mb-1">The app store for</span>
                 {/* <span className="block text-yellow">creators</span> */}
                 {/* <RotatingText items={["podcasters ", " writers ", " streamers ", " creators. "]} color="yellow" pause={2500} /> */}
-                <RotatingText items={["creators", "founders", "indiehackers", " builders. "]} color="yellow" pause={2500} />
+                <RotatingText items={["creators", "founders", "indie hackers", " builders. "]} color="yellow" pause={2500} />
               </h1>
 
               {/* Search */}
@@ -268,46 +268,12 @@ export default function HomeLayout({ apps }) {
         </div>
       </div> */}
 
-      <div className="bg-purple">
-        <div className="max-w-7xl mx-auto py-32 px-4 sm:px-6 lg:px-8">
-          <div className="bg-white shadow-xl overflow-hidden lg:grid lg:grid-cols-2 lg:gap-4">
-            <div className="pt-10 pb-12 px-6 sm:pt-16 sm:px-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
-              <div className="lg:self-center">
-                <h2 className="text-4xl font-extrabold text-purple sm:text-4xl">
-                  <span className="block">Are you a developer?</span>
-                  <span className="block">List your app today.</span>
-                </h2>
-                <div className="flex flex-col">
-                  <p className="mt-4 text-lg leading-6 text-gray-900">Sign up, add your app to our catalog, and reach thousands of builders.</p>
-                  <Link href="/about?customer=vendor">
-                    <a className="text-lg leading-6 text-gray-900 underline hover:no-underline">Learn more</a>
-                  </Link>
-                </div>
-                <Link href="/profile">
-                  <a className="mt-8 bg-purple border border-transparent shadow px-5 py-3 inline-flex items-center text-base font-medium text-white hover:bg-purple-extradark">Sign up for free</a>
-                </Link>
-              </div>
-            </div>
-            <div className="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">
-              <Image
-                className="transform translate-x-6 translate-y-6 sm:translate-x-16 lg:translate-y-20 object-cover object-left-top rounded-md ring-1 ring-gray-200"
-                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00"
-                alt="AppCity search page"
-                placeholder="blur"
-                layout="fill"
-                objectFit="cover"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative py-32 bg-white">
-        <div className="hidden absolute top-0 inset-x-0 h-1/2 bg-gray-50 lg:block" aria-hidden="true"></div>
-        <div className="max-w-7xl mx-auto bg-purple lg:bg-transparent lg:px-8">
+      <div className="relative py-32 bg-purple">
+        <div className="hidden absolute top-0 inset-x-0 h-1/2 bg-purple lg:block" aria-hidden="true"></div>
+        <div className="max-w-7xl mx-auto bg-white lg:bg-transparent lg:px-8">
           <div className="lg:grid lg:grid-cols-12">
             <div className="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
-              <div className="absolute inset-x-0 h-1/2 bg-white lg:hidden" aria-hidden="true"></div>
+              <div className="absolute inset-x-0 h-1/2 bg-purple lg:hidden" aria-hidden="true"></div>
               <div className="max-w-md mx-auto px-4 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
                 <div className="aspect-w-10 aspect-h-6 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1">
                   <Image
@@ -321,7 +287,7 @@ export default function HomeLayout({ apps }) {
                 </div>
               </div>
             </div>
-            <div className="relative bg-purple lg:col-start-3 lg:row-start-1 lg:col-span-10 lg:grid lg:grid-cols-10 lg:items-center">
+            <div className="relative bg-white lg:col-start-3 lg:row-start-1 lg:col-span-10 lg:grid lg:grid-cols-10 lg:items-center">
               <div className="hidden absolute inset-0 overflow-hidden lg:block" aria-hidden="true">
                 <svg
                   className="absolute bottom-full left-full transform translate-y-1/3 -translate-x-2/3 xl:bottom-auto xl:top-0 xl:translate-y-0"
@@ -333,7 +299,7 @@ export default function HomeLayout({ apps }) {
                 >
                   <defs>
                     <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <rect x="0" y="0" width="4" height="4" className="text-purple-extralight" fill="currentColor" />
+                      <rect x="0" y="0" width="4" height="4" className="text-gray-200" fill="currentColor" />
                     </pattern>
                   </defs>
                   <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />
@@ -341,7 +307,7 @@ export default function HomeLayout({ apps }) {
                 <svg className="absolute top-full transform -translate-y-1/3 -translate-x-1/3 xl:-translate-y-1/2" width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">
                   <defs>
                     <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <rect x="0" y="0" width="4" height="4" className="text-purple-extralight" fill="currentColor" />
+                      <rect x="0" y="0" width="4" height="4" className="text-gray-200" fill="currentColor" />
                     </pattern>
                   </defs>
                   <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />
@@ -349,25 +315,59 @@ export default function HomeLayout({ apps }) {
               </div>
               <div className="relative max-w-md mx-auto py-12 px-4 space-y-6 sm:max-w-3xl sm:py-16 sm:px-6 lg:max-w-none lg:p-0 lg:col-start-4 lg:col-span-6">
                 <div>
-                  <h2 className="text-4xl font-extrabold text-white sm:hidden" id="join-heading">
+                  <h2 className="text-4xl font-extrabold text-purple sm:hidden" id="join-heading">
                     Shop for software like you shop for everything else
                   </h2>
-                  <h2 className="text-4xl font-extrabold text-white hidden sm:block" id="join-heading">
+                  <h2 className="text-4xl font-extrabold text-purple hidden sm:block" id="join-heading">
                     Shop for software like you
                   </h2>
-                  <h2 className="text-4xl font-extrabold text-white hidden sm:block" id="join-heading">
+                  <h2 className="text-4xl font-extrabold text-purple hidden sm:block" id="join-heading">
                     shop for everything else
                   </h2>
                 </div>
-                <p className="text-lg text-white">
-                  Finally. No side projects, just apps you can count on to run your business. With transparent pricing and trustworthy reviews, find the tools to take your business to the next level.
+                <p className="text-lg text-gray-600">
+                  You know the drill. Search, filter, buy and move on. With trustworthy reviews and transparent pricing, find the tools to take your business to the next level.
                 </p>
                 <Link href="/search">
-                  <a className="block w-full py-3 px-5 text-center bg-white border border-transparent shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto">
+                  <a className="block w-full py-3 px-5 text-center bg-purple border border-transparent shadow-md text-base font-medium text-white hover:bg-purple-dark sm:inline-block sm:w-auto">
                     Start shopping
                   </a>
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto py-32 px-4 sm:px-6 lg:px-8">
+          <div className="bg-purple shadow-xl overflow-hidden lg:grid lg:grid-cols-2 lg:gap-4">
+            <div className="pt-10 pb-12 px-6 sm:pt-16 sm:px-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
+              <div className="lg:self-center">
+                <h2 className="text-4xl font-extrabold text-white sm:text-4xl">
+                  <span className="block">Are you a developer?</span>
+                  <span className="block">List your app today.</span>
+                </h2>
+                <div className="flex flex-col">
+                  <p className="mt-4 text-lg leading-6 text-white">Sign up, add your app to our catalog, and reach thousands of builders.</p>
+                  <Link href="/about?customer=vendor">
+                    <a className="text-lg leading-6 text-white underline hover:no-underline">Learn more</a>
+                  </Link>
+                </div>
+                <Link href="/profile">
+                  <a className="mt-8 bg-white border border-transparent shadow px-5 py-3 inline-flex items-center text-base font-medium text-purple hover:bg-gray-200">Sign up for free</a>
+                </Link>
+              </div>
+            </div>
+            <div className="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">
+              <Image
+                className="transform translate-x-6 translate-y-6 sm:translate-x-16 lg:translate-y-20 object-cover object-left-top rounded-md"
+                src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00"
+                alt="AppCity search page"
+                placeholder="blur"
+                layout="fill"
+                objectFit="cover"
+              />
             </div>
           </div>
         </div>
