@@ -157,7 +157,7 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
             <a className={`text-purple hover:bg-gray-200 text-base font-medium border border-purple px-4 py-2`}>Sign in</a>
           </Link>
           <Link href={{ pathname: `/profile`, query: { view: "sign_up" } }}>
-            <a className={`text-white bg-purple hover:bg-purple-extradark inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-base font-medium`}>Sign up</a>
+            <a className={`text-white bg-purple hover:bg-purple-dark inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-base font-medium`}>Sign up</a>
           </Link>
         </div>
       </div>
@@ -260,7 +260,7 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
                 {recorded && (
                   <button
                     type="submit"
-                    className="bg-purple border border-transparent shadow-sm py-2 px-8 inline-flex justify-center text-md font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
+                    className="bg-purple border border-transparent shadow-sm py-2 px-8 inline-flex justify-center text-md font-medium text-white hover:bg-purple-dark focus:outline-none focus:ring-0"
                   >
                     {!uploading ? "Submit" : <SupportIcon className="h-6 w-6 text-white animate-spin mx-4" />}
                   </button>

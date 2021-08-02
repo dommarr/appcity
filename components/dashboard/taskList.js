@@ -78,9 +78,17 @@ export default function TaskList(props) {
     return (
       <div className={`relative col-span-4 grid grid-cols-4 gap-x-2 p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
         {task.in_progress && (
-          <div className="absolute inset-0 bg-blue-200 bg-opacity-90 h-full w-full flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-blue-200 bg-opacity-90 h-full w-full flex flex-col items-center justify-center space-y-1">
             <h5 className="text-xl font-bold">Task in progress</h5>
             <p className="text-sm">Someone else is working on this task. Skip to the next one.</p>
+            <button
+              onClick={() => {
+                setTaskInProgress(task, false, true);
+              }}
+              className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2"
+            >
+              It was me. Unblock.
+            </button>
           </div>
         )}
         <div onClick={() => handleTaskClick({ task })} className="col-span-1 flex flex-col justify-center hover:cursor-pointer ">

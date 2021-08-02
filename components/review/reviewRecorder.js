@@ -44,7 +44,7 @@ export default function ReviewRecorder({ user, product }) {
           <button
             type="button"
             onClick={() => setReview(true)}
-            className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-md font-medium text-white hover:bg-purple-extradark focus:outline-none focus:ring-0"
+            className="bg-purple border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-md font-medium text-white hover:bg-purple-dark focus:outline-none focus:ring-0"
           >
             <VideoCameraIcon className="h-6 w-6 text-white mr-2" />
             Leave a video review

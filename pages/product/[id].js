@@ -253,12 +253,12 @@ export default function Product({ product }) {
               <a target="_blank" href={product.price_link}>
                 <button
                   type="button"
-                  className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-extradark focus:outline-none focus:ring-0"
+                  className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
                 >
                   Buy now
                 </button>
               </a>
-              <a target="_blank" href={product.price_link}>
+              <a target="_blank" href={product.product_link}>
                 <button
                   type="button"
                   className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0"
@@ -311,9 +311,9 @@ export default function Product({ product }) {
                 return (
                   <div
                     key={index}
-                    className={`safe index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
+                    className={`safe space-y-1 index-${index + 1} ${lgCols === 2 ? "xl:mx-10" : ""} ${
                       lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""
-                    } bg-white pt-6 px-2 pb-2 flex flex-col justify-start items-center border border-gray-200 border-b-0 order-${order(index + 1, section, 1)} sm:order-${order(
+                    } bg-white pt-6 px-2 flex flex-col justify-start items-center border border-gray-200 border-b-0 order-${order(index + 1, section, 1)} sm:order-${order(
                       index + 1,
                       section,
                       smCols
@@ -325,7 +325,7 @@ export default function Product({ product }) {
                       xlCols
                     )}`}
                   >
-                    {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900">{obj.name}</h3>}
+                    {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{obj.name}</h3>}
                     {obj?.description && <p className="text-gray-500 text-sm text-center">{obj.description}</p>}
                   </div>
                 );
@@ -405,7 +405,7 @@ export default function Product({ product }) {
                       <a
                         target="_blank"
                         href={product.price_link}
-                        className="block w-5/6 bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center"
+                        className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center"
                       >
                         Buy {obj.name}
                       </a>
@@ -414,7 +414,7 @@ export default function Product({ product }) {
                       <a
                         target="_blank"
                         href={product.price_link}
-                        className="block w-5/6 bg-purple hover:bg-purple-extradark border border-gray-800 py-2 mt-4 text-sm font-semibold text-white text-center"
+                        className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center"
                       >
                         Buy {product.name}
                       </a>

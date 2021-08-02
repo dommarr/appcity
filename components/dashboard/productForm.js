@@ -223,6 +223,9 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 onChange={(e) => setProductLink(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
+              <a target="_blank" href={productLink} className="text-sm text-blue-600 underline mt-2 pl-2">
+                Go to website
+              </a>
             </div>
             <div className="col-span-4 lg:col-span-2 lg:row-start-2">
               <div className="flex space-x-2">
