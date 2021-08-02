@@ -2,8 +2,9 @@ import NextHead from "next/head";
 import { string } from "prop-types";
 import React from "react";
 
-const defaultDescription = "Shop for software like you shop for everything else.";
-const defaultOGURL = "https://www.shopappcity.com/";
+const defaultDescription =
+  "Shop for software like you shop for everything else with AppCity. We are the app store for business software, where creators, founders, and small business owners of any kind can find and buy the best business apps to take their business to the next level.";
+const defaultOGURL = "https://www.appcity.com/";
 const defaultOGImage =
   "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/sms-share-image.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zbXMtc2hhcmUtaW1hZ2UucG5nIiwiaWF0IjoxNjIyMTQ4OTQ1LCJleHAiOjE5Mzc1MDg5NDV9.eNnIsVFGHRZ5FGFizXv0drHbSSoTjtpWXoE5weLUIAs";
 const defaultTitle = "AppCity";

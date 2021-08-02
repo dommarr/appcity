@@ -4,6 +4,7 @@ import { AcademicCapIcon, SearchIcon, QuestionMarkCircleIcon, TemplateIcon } fro
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import Head from "../components/global/head";
 
 const links = [
   { title: "Search", description: "Search for apps to take your business to the next level", icon: SearchIcon, page: "/search" },
@@ -94,6 +95,7 @@ export default function Custom404() {
 
   return (
     <div className="bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight">
+      <Head title="Page not found" description="Sorry, we couldn't find that page." url="https://www.appcity.com/404" />
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex-shrink-0 pt-16">
           <div className="relative h-48 w-full flex items-center justify-center">

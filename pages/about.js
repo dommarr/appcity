@@ -31,7 +31,11 @@ export default function About() {
       <div className={`h-screen flex flex-col relative ${vendor ? "bg-white" : "bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple"}`}>
         <Banner />
         <Header style={`${vendor ? "light" : "trans"}`} />
-        <Head title="About" description="Shop for software like you shop for everything else." url="shopappcity.com/about" />
+        <Head
+          title="About"
+          description="Our mission is to make it easy for small business owners to find and buy the best business software to take their business to the next level. Whether you are a founder, content creator, or small business owner, we have business apps that will help you run your business."
+          url="https://www.appcity.com/about"
+        />
         <div className="absolute inset-0 flex flex-1 flex-col items-center justify-center text-center max-w-7xl mx-auto py-10 px-4 sm:py-12 sm:px-6 lg:px-8">
           {vendor && (
             <>

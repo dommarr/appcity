@@ -106,7 +106,8 @@ export default function Product({ product }) {
     <>
       <Banner />
       <Header style="dark" />
-      <Head title={product.name} description={`${product.name} details and information.`} url={`shopappcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} />
+      {/* <Head title={product.name} description={product.description} url={`www.appcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} /> */}
+      <Head title={product.name} description={product.description} url={`https://www.appcity.com/product/${product.id}`} />
       <div className="flex flex-col justify-center items-start m-5 md:hidden select-none space-y-1">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a target="_blank" className="flex" href={product.vendors.website}>

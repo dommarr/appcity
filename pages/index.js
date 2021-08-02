@@ -2,10 +2,13 @@ import Head from "../components/global/head";
 import HomeLayout from "../components/home/homeLayout";
 import { supabase } from "../utils/initSupabase";
 
+const description =
+  "Shop for software like you shop for everything else with AppCity. We are the app store for business software, where creators, founders, and small business owners of any kind can find and buy the best business apps to take their business to the next level.";
+
 export default function Home({ apps }) {
   return (
     <>
-      <Head title="AppCity" description="Shop for software like you shop for everything else." url="shopappcity.com" />
+      <Head title="AppCity" description={description} url="https://www.appcity.com" />
       <HomeLayout apps={apps} />
     </>
   );

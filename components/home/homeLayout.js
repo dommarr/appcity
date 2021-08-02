@@ -48,6 +48,7 @@ export default function HomeLayout({ apps }) {
                 <span className="block text-white">Shop for software like you </span>
                 <span className="block text-black">shop for everything else</span>
                 </h1> */}
+              <h1 className="hidden">AppCity, the app store for business software and small business.</h1>
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block text-white mb-1">The app store for</span>
                 {/* <span className="block text-yellow">creators</span> */}
