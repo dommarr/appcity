@@ -48,12 +48,13 @@ export default function HomeLayout({ apps }) {
                 <span className="block text-white">Shop for software like you </span>
                 <span className="block text-black">shop for everything else</span>
                 </h1> */}
-              <h1 className="hidden">AppCity, the app store for business software and small business.</h1>
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block text-white mb-1">The app store for</span>
-                {/* <span className="block text-yellow">creators</span> */}
-                {/* <RotatingText items={["podcasters ", " writers ", " streamers ", " creators. "]} color="yellow" pause={2500} /> */}
-                <RotatingText items={["creators", "founders", "indie hackers", " builders. "]} color="yellow" pause={2500} />
+              <h1 className="hidden">AppCity, the business app store for business software and small business.</h1>
+              <h1 className="text-3xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
+                <span className="block text-white sm:mb-1">The business app store</span>
+                <div className="flex text-center items-center justify-center space-x-2 sm:space-x-3 mx-0">
+                  <span className="block text-white">for</span>
+                  <RotatingText items={["creators", "founders", "indie hackers", "builders. "]} color="yellow" pause={2500} />
+                </div>
               </h1>
 
               {/* Search */}
@@ -300,7 +301,7 @@ export default function HomeLayout({ apps }) {
                 >
                   <defs>
                     <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <rect x="0" y="0" width="4" height="4" className="text-gray-200" fill="currentColor" />
+                      <rect x="0" y="0" width="4" height="4" className="text-gray-100" fill="currentColor" />
                     </pattern>
                   </defs>
                   <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />
@@ -308,7 +309,7 @@ export default function HomeLayout({ apps }) {
                 <svg className="absolute top-full transform -translate-y-1/3 -translate-x-1/3 xl:-translate-y-1/2" width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">
                   <defs>
                     <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <rect x="0" y="0" width="4" height="4" className="text-gray-200" fill="currentColor" />
+                      <rect x="0" y="0" width="4" height="4" className="text-gray-100" fill="currentColor" />
                     </pattern>
                   </defs>
                   <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />
@@ -326,8 +327,8 @@ export default function HomeLayout({ apps }) {
                     shop for everything else
                   </h2>
                 </div>
-                <p className="text-lg text-gray-600">
-                  You know the drill. Search, filter, buy and move on. With trustworthy reviews and transparent pricing, find the tools to take your business to the next level.
+                <p className="text-lg text-gray-500">
+                  You know the drill. Search, filter, compare, and buy. With trustworthy reviews and transparent pricing, find the tools to take your business to the next level.
                 </p>
                 <Link href="/search">
                   <a className="block w-full py-3 px-5 text-center bg-purple border border-transparent shadow-md text-base font-medium text-white hover:bg-purple-dark sm:inline-block sm:w-auto">
@@ -350,7 +351,7 @@ export default function HomeLayout({ apps }) {
                   <span className="block">List your app today.</span>
                 </h2>
                 <div className="flex flex-col">
-                  <p className="mt-4 text-lg leading-6 text-white">Sign up, add your app to our catalog, and reach thousands of builders.</p>
+                  <p className="mt-4 text-lg leading-6 text-white">Sign up, add your business app to our catalog, and reach thousands of builders.</p>
                   <Link href="/about?customer=vendor">
                     <a className="text-lg leading-6 text-white underline hover:no-underline">Learn more</a>
                   </Link>

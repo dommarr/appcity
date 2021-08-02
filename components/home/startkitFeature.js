@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "../../utils/initSupabase";
-import Loading from "../global/loading";
 import Image from "next/image";
+import Container from "../global/mobilePaddingContainer";
 
 export const siteTitle = "AppCity";
 
@@ -34,9 +34,24 @@ export default function StarterKitFeature() {
     kits = kits.sort((a, b) => a.id - b.id);
     setKits(kits);
     setLoading(false);
-  }, []);
+  }, [kits]);
 
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <Container>
+        <div className="animate-pulse my-20">
+          <div className="grid grid-cols-3">
+            <h1 className="col-start-2 text-2xl font-semibold text-gray-900 bg-gray-300 h-8"></h1>
+          </div>
+          <div className="grid grid-cols-3 gap-4 mt-20 mb-40 p-4 bg-white shadow">
+            <div className="bg-gray-200 col-span-1 h-6"></div>
+            <div className="bg-gray-200 col-span-3 h-6"></div>
+            <div className="bg-gray-200 col-span-3 h-6"></div>
+            <div className="bg-gray-200 col-span-2 h-6"></div>
+          </div>
+        </div>
+      </Container>
+    );
 
   return (
     <section className="max-w-7xl mx-auto pb-32 px-4 sm:px-6 lg:px-8">

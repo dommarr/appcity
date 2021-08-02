@@ -208,7 +208,7 @@ export default function Product({ product }) {
           {/* Price Block */}
           {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} />}
           {/* Tier Limit */}
-          {tier?.limit && <p className="text-gray-500 text-sm text-center mb-8">{tier.limit}</p>}
+          {tier?.limit && <p className="text-gray-500 text-sm text-center mb-8 italic">{tier.limit}</p>}
           {/* Tier Selection */}
           {product.tiers.length > 1 && (
             <div className="flex flex-col justify-center items-center">
@@ -377,7 +377,7 @@ export default function Product({ product }) {
                       xlCols
                     )}`}
                   >
-                    {obj?.limit && <p className="text-gray-500 text-sm text-center">{obj.limit}</p>}
+                    {obj?.limit && <p className="text-gray-500 text-sm text-center italic">{obj.limit}</p>}
                   </div>
                 );
               })}
