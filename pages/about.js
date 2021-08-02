@@ -100,8 +100,8 @@ export default function About() {
                   <div className="mt-6">
                     <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">Shop online like you expect</h2>
                     <p className="mt-4 text-lg text-gray-500">
-                      Search, filter, and compare the best apps just like you shop for everything else online. With transparent pricing and trustworthy reviews, you can be sure you'll find the best
-                      apps to get you going.
+                      Search, filter, and compare the best business software just like you shop for everything else online. With transparent pricing and trustworthy reviews, you can be sure you'll
+                      find the best business apps to get you going.
                     </p>
                     <div className="mt-6">
                       <Link href="/search">
@@ -202,7 +202,8 @@ export default function About() {
                   <div className="mt-6">
                     <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">Discover the best apps</h2>
                     <p className="mt-4 text-lg text-gray-500">
-                      Learn what apps top builders use with our "starter kits". Whether you want to start a podcast, startup, or online store, we have a starter kit to help you hit the ground running.
+                      Learn what software top builders use with our "starter kits". Whether you want to start a podcast, startup, or online store, we have a starter kit to help you hit the ground
+                      running.
                     </p>
                     <div className="mt-6">
                       <Link href="/kits">
@@ -232,7 +233,7 @@ export default function About() {
                       <span className="font-bold">browsers</span>
                       <span> with Google and Facebook. Reach high intent </span>
                       <span className="font-bold">shoppers</span>
-                      <span> who come to discover and buy.</span>
+                      <span> who come to discover and buy business software.</span>
                     </p>
                     <div className="mt-6">
                       <Link href="/contact">
