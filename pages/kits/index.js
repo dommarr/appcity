@@ -92,7 +92,11 @@ export default function KitHome() {
     <>
       <Banner />
       <Header style="dark" />
-      <Head title="Starter Kits" description="App starter kits to hit the ground running." url="shopappcity.com/kit" />
+      <Head
+        title="Starter Kits"
+        description="Business software starter kits, so you can hit the ground runnning. Start a podcast, launch an online store, or found a startup with our business app starter kits."
+        url="https://www.appcity.com/kits"
+      />
       <Container>
         <div className="mb-20">
           <div className="bg-white">
