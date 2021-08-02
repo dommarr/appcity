@@ -6,8 +6,10 @@ const defaultDescription =
   "Shop for software like you shop for everything else with AppCity. We are the app store for business software, where creators, founders, and small business owners of any kind can find and buy the best business apps to take their business to the next level.";
 const defaultOGURL = "https://www.appcity.com/";
 const defaultOGImage =
-  "https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/sms-share-image.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zbXMtc2hhcmUtaW1hZ2UucG5nIiwiaWF0IjoxNjIyMTQ4OTQ1LCJleHAiOjE5Mzc1MDg5NDV9.eNnIsVFGHRZ5FGFizXv0drHbSSoTjtpWXoE5weLUIAs";
+  "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/sms_share_image.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zbXNfc2hhcmVfaW1hZ2UuanBnIiwiaWF0IjoxNjI3OTM0MzcyLCJleHAiOjE5NDMyOTQzNzJ9.AiHix8EmE3uEd6pl6xxWsLGirE5F2EhibFRs2Ggoef8";
 const defaultTitle = "AppCity";
+const twitterImage =
+  "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/twitter_card.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy90d2l0dGVyX2NhcmQuanBnIiwiaWF0IjoxNjI3OTM1NTQwLCJleHAiOjE5NDMyOTU1NDB9.xGBbJ9Mqy2v1fO3rc4ZX4DEPqa0Doos76Nc0jXZ9DGI";
 
 export const Head = (props) => (
   <NextHead>
@@ -24,9 +26,13 @@ export const Head = (props) => (
     <meta property="og:url" content={props.url || defaultOGURL} />
     <meta property="og:title" content={props.title || defaultTitle} />
     <meta property="og:description" content={props.description || defaultDescription} />
-    <meta name="twitter:site" content={props.url || defaultOGURL} />
+    {/* https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/summary-card-with-large-image */}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={props.ogImage || defaultOGImage} />
+    <meta name="twitter:site" content={props.url || defaultOGURL} />
+    <meta name="twitter:creator" content="@dommmarr" />
+    <meta name="twitter:title" content="AppCity" />
+    <meta name="twitter:description" content="Shop for software like you shop for everything else." />
+    <meta name="twitter:image" content={twitterImage} />
     <meta property="og:image" content={props.ogImage || defaultOGImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
