@@ -176,7 +176,7 @@ export default function Task({ task, user }) {
   return (
     <>
       {task && <TaskCard task={task} />}
-      {vendorId && <VendorForm vendorId={vendorId} />}
+      {vendorId && <VendorForm vendorId={vendorId} superAdmin={superAdmin} />}
       {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} superAdmin={superAdmin} />}
       {productId && vendorId && superAdmin && <CategoryForm productId={productId} />}
       {tierIds &&

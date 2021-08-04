@@ -3,7 +3,7 @@ import { supabase } from "../../utils/initSupabase";
 import Loading from "./cardLoading";
 import FormTip from "./formTip";
 
-export default function VendorForm({ vendorId }) {
+export default function VendorForm({ vendorId, superAdmin }) {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState();
@@ -12,6 +12,7 @@ export default function VendorForm({ vendorId }) {
   const [vendorName, setVendorName] = useState("");
   const [website, setWebsite] = useState("");
   const [logo, setLogo] = useState("");
+  const [refLink, setRefLink] = useState("");
   // video tips
   const [logoTip, setLogoTip] = useState(false);
 
@@ -30,6 +31,7 @@ export default function VendorForm({ vendorId }) {
     vendors[0].name ? setVendorName(vendors[0].name) : "";
     vendors[0].website ? setWebsite(vendors[0].website) : "";
     vendors[0].logo ? setLogo(vendors[0].logo) : "";
+    vendors[0].ref_link ? setRefLink(vendors[0].ref_link) : "";
   };
 
   const handleSubmit = async (e) => {
@@ -106,7 +108,6 @@ export default function VendorForm({ vendorId }) {
                 onChange={(e) => setWebsite(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
-
               <p className="text-sm mt-2 pl-2 italic">See "App link" below</p>
             </div>
             <div className="col-span-4 lg:col-span-2">
@@ -114,11 +115,10 @@ export default function VendorForm({ vendorId }) {
                 <label htmlFor="logo" className="text-sm font-medium text-gray-700">
                   Company logo
                 </label>
-                <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${website}`} className="text-sm text-blue-600 underline mt-2 pl-2">
+                <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${website}`} className="text-sm text-blue-600 underline pl-2">
                   Get logo
                 </a>
               </div>
-
               <input
                 type="url"
                 name="logo"
@@ -130,6 +130,22 @@ export default function VendorForm({ vendorId }) {
               />
               <FormTip video_id="413844e4d9274c9e9af740e53d45dc74" />
             </div>
+            {superAdmin && (
+              <div className="col-span-4 lg:col-span-2">
+                <label htmlFor="refLink" className="block text-sm font-medium text-gray-700">
+                  Referral link
+                </label>
+                <input
+                  type="url"
+                  name="refLink"
+                  id="refLink"
+                  placeholder="https://webflow.grsm.io/appcity?sub="
+                  value={refLink}
+                  onChange={(e) => setRefLink(e.target.value)}
+                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">

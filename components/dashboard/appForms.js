@@ -108,7 +108,7 @@ export default function AppForms({ appId, user }) {
 
   return (
     <div key={appId} className="space-y-4">
-      {vendorId && <VendorForm vendorId={vendorId} />}
+      {vendorId && <VendorForm vendorId={vendorId} superAdmin={superAdmin} />}
       {productId && vendorId && <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} superAdmin={superAdmin} />}
       {productId && vendorId && superAdmin && <CategoryForm productId={productId} />}
       {tierIds &&
