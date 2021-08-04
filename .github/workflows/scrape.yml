@@ -10,4 +10,4 @@ jobs:
       - name: Call scrape api route
         run: |
           curl --request POST \
-          --url 'https://www.shopappcity.com/api/scrape' \
+          --url 'https://www.appcity.com/api/scrape' \

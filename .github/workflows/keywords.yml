@@ -1,0 +1,13 @@
+name: Keywords-Everyday
+
+on:
+  schedule:
+    - cron: "0   16  *   *   *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call keywords api route
+        run: |
+          curl --request POST \
+          --url 'https://www.appcity.com/api/keywords' \
