@@ -78,9 +78,9 @@ export default function TaskList(props) {
     return (
       <div className={`relative col-span-4 grid grid-cols-4 gap-x-2 p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
         {task.in_progress && (
-          <div className="absolute inset-0 bg-blue-200 bg-opacity-90 h-full w-full flex flex-col items-center justify-center space-y-1">
+          <div className="absolute inset-0 bg-blue-200 bg-opacity-90 h-full w-full flex flex-row items-center justify-around px-2 border">
             <h5 className="text-xl font-bold">Task in progress</h5>
-            <p className="text-sm">Someone else is working on this task. Skip to the next one.</p>
+            <p className="text-md">Someone else is working on this task. Skip to the next one.</p>
             <button
               onClick={() => {
                 setTaskInProgress(task, false, true);

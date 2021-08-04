@@ -10,4 +10,4 @@ jobs:
       - name: Call dataCompleteness api route
         run: |
           curl --request POST \
-          --url 'https://www.shopappcity.com/api/dataCompleteness' \
+          --url 'https://www.appcity.com/api/dataCompleteness' \
