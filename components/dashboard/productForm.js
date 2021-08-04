@@ -20,6 +20,9 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [description, setDescription] = useState("");
   const [keywords, setKeywords] = useState("");
   const [media, setMedia] = useState([]);
+  const [productLogo, setProductLogo] = useState("");
+  const [priceSubdomain, setPriceSubdomain] = useState("");
+  const [productSubdomain, setProductSubdomain] = useState("");
   // image upload states
   const [imageUpload, setImageUpload] = useState(false);
   const [imageSuccess, setImageSuccess] = useState();
@@ -45,8 +48,11 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].price_model ? setPriceModel(products[0].price_model) : "";
     products[0].description ? setDescription(products[0].description) : "";
     products[0].keywords ? setKeywords(products[0].keywords) : "";
+    products[0].product_logo ? setProductLogo(products[0].product_logo) : "";
     products[0].media ? setMedia(products[0].media) : "";
     products[0].vendors.website ? setCompanyWebsite(products[0].vendors.website) : "";
+    products[0].price_subdomain ? setPriceSubdomain(products[0].price_subdomain) : "";
+    products[0].product_subdomain ? setProductSubdomain(products[0].product_subdomain) : "";
   };
 
   const updateDynamic = async (product_id, pricing_page_link) => {
@@ -86,6 +92,9 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         description: description,
         keywords: keywords,
         media: media,
+        product_logo: productLogo,
+        price_subdomain: priceSubdomain,
+        product_subdomain: productSubdomain,
       })
       .eq("id", productId);
     if (error) {
@@ -174,6 +183,22 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     setMedia(updatedMedia);
   };
 
+  const handlePriceLinkChange = (val) => {
+    setPriceLink(val);
+    let domain = val.split("//")[1];
+    let subdomain = domain.split("/");
+    subdomain.shift();
+    setPriceSubdomain(subdomain.join("/"));
+  };
+
+  const handleProductLinkChange = (val) => {
+    setProductLink(val);
+    let domain = val.split("//")[1];
+    let subdomain = domain.split("/");
+    subdomain.shift();
+    setProductSubdomain(subdomain.join("/"));
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -208,24 +233,27 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               />
             </div>
             <div className="col-span-4 lg:col-span-2 lg:row-start-1">
-              <div className="flex space-x-2">
-                <label htmlFor="productLink" className="block text-sm font-medium text-gray-700">
-                  App link
-                </label>
-                <span className="italic text-sm text-gray-400">required</span>
+              <div className="flex justify-between">
+                <div className="flex space-x-2">
+                  <label htmlFor="productLink" className="block text-sm font-medium text-gray-700">
+                    App link
+                  </label>
+                  <span className="italic text-sm text-gray-400">required</span>
+                </div>
+                <a target="_blank" href={productLink} className="text-sm text-blue-600 underline pl-2">
+                  Go to website
+                </a>
               </div>
+
               <input
                 type="url"
                 name="productLink"
                 id="productLink"
                 placeholder="https://www.hubspot.com/products/sales"
                 value={productLink}
-                onChange={(e) => setProductLink(e.target.value)}
+                onChange={(e) => handleProductLinkChange(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
-              <a target="_blank" href={productLink} className="text-sm text-blue-600 underline mt-2 pl-2">
-                Go to website
-              </a>
             </div>
             <div className="col-span-4 lg:col-span-2 lg:row-start-2">
               <div className="flex space-x-2">
@@ -240,7 +268,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 id="priceLink"
                 placeholder="https://www.hubspot.com/pricing/sales"
                 value={priceLink}
-                onChange={(e) => setPriceLink(e.target.value)}
+                onChange={(e) => handlePriceLinkChange(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
               <FormTip video_id="d5ef42a2ab1d413689ee584bf7370f79" />
@@ -429,6 +457,27 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 <FormTip video_id="9f7f88d888414deb8dafc8344c51b45c" />
               </ul>
             </div>
+            {superAdmin && (
+              <div className="col-span-4 lg:col-span-2 row-start-5">
+                <div className="flex justify-between items-center">
+                  <label htmlFor="productLogo" className="text-sm font-medium text-gray-700">
+                    Product logo
+                  </label>
+                  <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${productLink}`} className="text-sm text-blue-600 underline pl-2">
+                    Get logo
+                  </a>
+                </div>
+                <input
+                  type="url"
+                  name="productLogo"
+                  id="productLogo"
+                  placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
+                  value={productLogo}
+                  onChange={(e) => setProductLogo(e.target.value)}
+                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">

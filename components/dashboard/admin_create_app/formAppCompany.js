@@ -16,7 +16,7 @@ export default function AppCompanyForm(props) {
   const [vendorId, setVendorId] = useState("");
   const [website, setWebsite] = useState("");
   const [productName, setProductName] = useState("");
-  const [productWebsite, setProductWebsite] = useState("");
+  const [productLink, setProductLink] = useState("");
   const [sameName, setSameName] = useState(false);
   const [checked, setChecked] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
@@ -36,7 +36,7 @@ export default function AppCompanyForm(props) {
   };
 
   const createProduct = async (vendor_id) => {
-    let { data, error } = await supabase.from("products").insert([{ name: productName, vendor_id: vendor_id, product_link: productWebsite }]);
+    let { data, error } = await supabase.from("products").insert([{ name: productName, vendor_id: vendor_id, product_link: productLink }]);
     if (error) {
       handleFailure();
       throw error;
@@ -59,11 +59,11 @@ export default function AppCompanyForm(props) {
     setSameName(e.target.checked);
     if (e.target.checked) {
       setProductName(vendorName);
-      setProductWebsite(website);
+      setProductLink(website);
     }
     if (!e.target.checked) {
       setProductName("");
-      setProductWebsite("");
+      setProductLink("");
     }
   };
 
@@ -74,7 +74,7 @@ export default function AppCompanyForm(props) {
     setVendorName("");
     setWebsite("");
     setProductName("");
-    setProductWebsite("");
+    setProductLink("");
     setChecked(false);
     setCheckbox(false);
     setSameName(false);
@@ -160,16 +160,16 @@ export default function AppCompanyForm(props) {
             </div>
           </div>
           <div className="col-span-4 sm:col-span-2">
-            <label htmlFor="productWebsite" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="productLink" className="block text-sm font-medium text-gray-700">
               App website
             </label>
             <input
               type="url"
-              name="productWebsite"
-              id="productWebsite"
+              name="productLink"
+              id="productLink"
               placeholder="https://www.hubspot.com/products/sales"
-              value={productWebsite}
-              onChange={(e) => setProductWebsite(e.target.value)}
+              value={productLink}
+              onChange={(e) => setProductLink(e.target.value)}
               required
               className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
             />

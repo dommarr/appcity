@@ -102,6 +102,30 @@ export default function Product({ product }) {
     setDescription(!description);
   };
 
+  const createPriceLink = () => {
+    if (product.vendors.ref_link && product.price_subdomain) {
+      return `${product.vendors.ref_link}${product.price_subdomain}`;
+    } else if (product.vendors.ref_link && !product.price_subdomain) {
+      return product.vendors.ref_link;
+    } else {
+      return product.price_link;
+    }
+  };
+
+  const createProductLink = () => {
+    if (product.vendors.ref_link && product.product_subdomain) {
+      return `${product.vendors.ref_link}${product.product_subdomain}`;
+    } else if (product.vendors.ref_link && !product.product_subdomain) {
+      return product.vendors.ref_link;
+    } else {
+      return product.product_link;
+    }
+  };
+
+  let vendorLink = product.vendors.ref_link ? product.vendors.ref_link : product.vendors.website;
+  let priceLink = createPriceLink();
+  let productLink = createProductLink();
+
   return (
     <>
       <Banner />
@@ -110,7 +134,7 @@ export default function Product({ product }) {
       <Head title={product.name} description={product.description} url={`https://www.appcity.com/product/${product.id}`} />
       <div className="flex flex-col justify-center items-start m-5 md:hidden select-none space-y-1">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
-        <a target="_blank" className="flex" href={product.vendors.website}>
+        <a target="_blank" className="flex" href={vendorLink}>
           <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
           <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
         </a>
@@ -144,7 +168,7 @@ export default function Product({ product }) {
               <img className="object-contain object-center w-40 h-40 p-2 bg-white flex-shrink-0 mx-auto mt-10" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h3 className="text-white text-center text-2xl mt-5">Sorry!</h3>
               <h4 className="text-white text-center text-base px-2">Looks like we don't have any media for {product.name}</h4>
-              <a href={product.vendors.website} className="mt-3 mb-10 inline-flex items-center px-2.5 py-1.5 border border-white shadow-sm text-xs font-medium text-white hover:bg-gray-700">
+              <a href={vendorLink} className="mt-3 mb-10 inline-flex items-center px-2.5 py-1.5 border border-white shadow-sm text-xs font-medium text-white hover:bg-gray-700">
                 Go to {product.name}
               </a>
             </>
@@ -154,7 +178,7 @@ export default function Product({ product }) {
         <div className="h-70vh sm:h-70vh md:h-full w-full md:w-2/5 flex flex-col justify-center items-center p-5">
           <div className="hidden md:flex flex-col justify-center items-start w-full space-y-1">
             <h1 className="text-4xl font-bold">{product.name}</h1>
-            <a target="_blank" className="flex" href={product.vendors.website}>
+            <a target="_blank" className="flex" href={vendorLink}>
               <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h4 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h4>
             </a>
@@ -251,7 +275,7 @@ export default function Product({ product }) {
           {/* Buy Button */}
           {tier != null && (
             <div className="flex space-x-2 my-4">
-              <a target="_blank" href={product.price_link}>
+              <a target="_blank" href={priceLink}>
                 <button
                   type="button"
                   className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
@@ -259,7 +283,7 @@ export default function Product({ product }) {
                   Buy now
                 </button>
               </a>
-              <a target="_blank" href={product.product_link}>
+              <a target="_blank" href={productLink}>
                 <button
                   type="button"
                   className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0"
@@ -403,20 +427,12 @@ export default function Product({ product }) {
                     )}`}
                   >
                     {product.tiers.length > 1 && (
-                      <a
-                        target="_blank"
-                        href={product.price_link}
-                        className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center"
-                      >
+                      <a target="_blank" href={priceLink} className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center">
                         Buy {obj.name}
                       </a>
                     )}
                     {product.tiers.length === 1 && (
-                      <a
-                        target="_blank"
-                        href={product.price_link}
-                        className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center"
-                      >
+                      <a target="_blank" href={priceLink} className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center">
                         Buy {product.name}
                       </a>
                     )}
