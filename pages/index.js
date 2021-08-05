@@ -8,7 +8,7 @@ const description =
 export default function Home({ apps }) {
   return (
     <>
-      <Head title="AppCity" description={description} url="https://www.appcity.com" />
+      <Head title="AppCity: The Business App Store" description={description} url="https://www.appcity.com" />
       <HomeLayout apps={apps} />
     </>
   );

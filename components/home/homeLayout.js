@@ -283,6 +283,7 @@ export default function HomeLayout({ apps }) {
                     src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/shopping_med?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wcGluZ19tZWQiLCJpYXQiOjE2Mjc4Mzk3NDQsImV4cCI6MTk0MzE5OTc0NH0.2_g-e5jkTERWS42LGZcn7xBpCEIYO1_-S62P5QY_ucg"
                     alt="AppCity shopping"
                     placeholder="blur"
+                    blurdataurl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8eP7gfwAIPANicW2+CgAAAABJRU5ErkJggg=="
                     layout="fill"
                     objectFit="cover"
                   />
@@ -367,6 +368,7 @@ export default function HomeLayout({ apps }) {
                 src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00"
                 alt="AppCity search page"
                 placeholder="blur"
+                blurdataurl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8+uX7fwAJpwPh3jeWxAAAAABJRU5ErkJggg=="
                 layout="fill"
                 objectFit="cover"
               />

@@ -32,13 +32,14 @@ export default function Header(props) {
   return (
     <div className={`select-none ${props.style === "dark" ? "bg-purple-extradark" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 max-w-screen-3xl mx-auto">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center relative">
           <Link href="/">
             <a className="flex items-center justify-center">
               {(props.style === "dark" || props.style === "trans") && <Logo size={50} alt={appName} />}
               {props.style === "light" && <LogoLight size={50} alt={appName} />}
               <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} font-logo pl-2 text-4xl font-light`}>app</span>
               <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} font-logo pr-2 text-4xl text-white font-semibold`}>city</span>
+              <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} absolute -bottom-3 right-8 text-white`}>beta</span>
             </a>
           </Link>
         </div>
