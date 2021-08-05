@@ -32,7 +32,7 @@ export default function About() {
         <Banner />
         <Header style={`${vendor ? "light" : "trans"}`} />
         <Head
-          title="About"
+          title="About Us | AppCity"
           description="Our mission is to make it easy for small business owners to find and buy the best business software to take their business to the next level. Whether you are a founder, content creator, or small business owner, we have business apps that will help you run your business."
           url="https://www.appcity.com/about"
         />

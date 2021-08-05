@@ -10,7 +10,7 @@ export default function IndexPage(props) {
   return (
     <>
       <Banner />
-      <Head title={`Blog`} description="Resources to help you get the most out of your business apps." url="https://www.appcity.com/blog" />
+      <Head title={`Blog | AppCity`} description="Resources to help you get the most out of your business apps." url="https://www.appcity.com/blog" />
       <Header style="dark" />
       <div className="relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
         <div className="absolute inset-0">

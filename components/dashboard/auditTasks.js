@@ -3,7 +3,7 @@ import { supabase } from "../../utils/initSupabase";
 import Loading from "./sectionLoading";
 import Task from "./task";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
-import FormTip from "./formTip";
+var moment = require("moment");
 
 export default function TaskList(props) {
   const [tasks, setTasks] = useState([]);
@@ -17,80 +17,51 @@ export default function TaskList(props) {
   }, []);
 
   const fetchTasks = async () => {
-    let { data: tasks, error } = await supabase.from("tasks").select("*").eq("complete", false);
+    let { data: tasks, error } = await supabase.from("tasks").select("*").eq("complete", true).eq("audited", false);
     if (error) {
       setLoading(false);
       throw error;
     }
     if (tasks) {
+      let sortedTasks = tasks.slice().sort((a, b) => new Date(b.date_complete) - new Date(a.date_complete));
+      setTasks(sortedTasks);
       setLoading(false);
-      setTasks(tasks);
-    }
-  };
-
-  const setTaskInProgress = async (task, bool, fetchTasksBool) => {
-    const { data, error } = await supabase.from("tasks").update({ in_progress: bool }).eq("id", task.id);
-    if (error) {
-      throw error;
-    }
-    if (data) {
-      if (fetchTasksBool) {
-        fetchTasks();
-      }
-      return;
     }
   };
 
   function handleTaskClick({ task }) {
     setListview(false);
-    setTaskInProgress(task, true);
     setCurrenttask(task);
-    // props.router.push(`/profile?screen=tasks&task=${task.id}`, undefined, { shallow: true });
   }
 
   const NoTasks = () => {
     return <div className="col-span-4 p-2 bg-gray-200">There are currently no tasks.</div>;
   };
 
-  const handleCompleteTask = async (task) => {
-    let datetime = new Date().toLocaleString("en-US", { timeZone: "UTC" });
-    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email, in_progress: false }).eq("id", task.id);
+  const handleBack = async () => {
+    setListview(true);
+  };
+
+  const handleAuditClick = async (task) => {
+    const { data, error } = await supabase.from("tasks").update({ audited: true }).eq("id", task.id);
     if (error) {
       throw error;
     }
     if (data) {
-      const { data, error } = await supabase.from("products").update({ complete: true }).eq("id", task.product_id);
-      if (error) {
-        throw error;
-      }
-      if (data) {
-        fetchTasks();
-      }
+      fetchTasks();
     }
   };
 
-  const handleBack = async () => {
-    setTaskInProgress(currenttask, false, true);
-    setListview(true);
-  };
-
   const TaskCard = ({ task, index }) => {
+    let date = moment(task.date_complete).format("MMMM Do YYYY, h:mm:ss a");
+    let relativeDate = moment(task.date_complete, "YYYYMMDD").fromNow();
     return (
-      <div className={`relative col-span-4 grid grid-cols-4 gap-x-2 p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
-        {task.in_progress && (
-          <div className="absolute inset-0 bg-blue-200 bg-opacity-90 h-full w-full flex flex-row items-center justify-around px-2 border">
-            <h5 className="text-xl font-bold">Task in progress</h5>
-            <p className="text-md">Someone else is working on this task. Skip to the next one.</p>
-            <button
-              onClick={() => {
-                setTaskInProgress(task, false, true);
-              }}
-              className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2 focus:outline-none focus:ring-0"
-            >
-              It was me. Unblock.
-            </button>
-          </div>
-        )}
+      <div className={`relative col-span-5 grid grid-cols-5 gap-x-2 p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
+        <div onClick={() => handleTaskClick({ task })} className="col-span-1 flex flex-col justify-center space-y-1 hover:cursor-pointer ">
+          <span className="">{relativeDate}</span>
+          <span className="text-sm">By: {task.completed_by}</span>
+          <span className="text-xs">{date}</span>
+        </div>
         <div onClick={() => handleTaskClick({ task })} className="col-span-1 flex flex-col justify-center hover:cursor-pointer ">
           <span className="">{task.name}</span>
           <span className="text-xs">Task ID: {task.id}</span>
@@ -108,8 +79,8 @@ export default function TaskList(props) {
             ))}
         </ul>
         <div className="col-span-1 flex justify-start items-center space-x-2">
-          <button type="button" onClick={() => handleCompleteTask(task)} className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2 focus:outline-none focus:ring-0">
-            Mark complete
+          <button type="button" onClick={() => handleAuditClick(task)} className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2 focus:outline-none focus:ring-0">
+            Audit complete
           </button>
         </div>
       </div>
@@ -120,18 +91,16 @@ export default function TaskList(props) {
 
   return (
     <section className="py-4 space-y-4">
-      <h1 className="text-2xl font-semibold text-gray-900">Tasks</h1>
-      <div className="max-w-lg">
-        <FormTip video_id="c3aed7f9f8194fecb7af2cf30157eaee" />
-      </div>
+      <h1 className="text-2xl font-semibold text-gray-900">Completed tasks</h1>
       {listview && (
-        <div className="grid grid-cols-4 gap-x-2 bg-white shadow p-4">
+        <div className="grid grid-cols-5 gap-x-2 bg-white shadow p-4">
+          <div className="col-span-1 font-bold text-lg underline">Completed</div>
           <div className="col-span-1 font-bold text-lg underline">Task</div>
           <div className="col-span-1 font-bold text-lg underline">Product</div>
           <div className="col-span-1 font-bold text-lg underline">Notes</div>
-          <div className="col-span-1 font-bold text-lg underline">Complete?</div>
-          {(tasks.length === 0 || !tasks) && <NoTasks />}
-          {tasks.map((task, idx) => (
+          <div className="col-span-1 font-bold text-lg underline">Audited?</div>
+          {(tasks?.length === 0 || !tasks) && <NoTasks />}
+          {tasks?.map((task, idx) => (
             <TaskCard key={task.id} task={task} index={idx} />
           ))}
         </div>

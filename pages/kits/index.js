@@ -93,7 +93,7 @@ export default function KitHome() {
       <Banner />
       <Header style="dark" />
       <Head
-        title="Starter Kits"
+        title="Starter Kits | AppCity"
         description="Business software starter kits, so you can hit the ground runnning. Start a podcast, launch an online store, or found a startup with our business app starter kits."
         url="https://www.appcity.com/kits"
       />

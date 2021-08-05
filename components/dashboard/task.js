@@ -141,7 +141,9 @@ export default function Task({ task, user }) {
           <span className="text-xs">Task ID: {task.id}</span>
         </div>
         <div className="col-span-1 flex flex-col justify-center">
-          <span className="">{task.product_name}</span>
+          <a target="_blank" href={`https://www.appcity.com/product/${task.product_id}`}>
+            <span className="underline text-blue-700">{task.product_name}</span>
+          </a>
           <span className="text-xs">Product ID: {task.product_id}</span>
         </div>
         <ul className="col-span-1">
@@ -158,7 +160,7 @@ export default function Task({ task, user }) {
             <button
               type="button"
               onClick={() => handleCompleteTask(task)}
-              className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0"
+              className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2 focus:outline-none focus:ring-0"
             >
               Mark complete
             </button>
