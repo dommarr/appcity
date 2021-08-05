@@ -4,6 +4,7 @@ import Loading from "./sectionLoading";
 import Task from "./task";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
 import FormTip from "./formTip";
+var moment = require("moment");
 
 export default function TaskList(props) {
   const [tasks, setTasks] = useState([]);
@@ -53,7 +54,7 @@ export default function TaskList(props) {
   };
 
   const handleCompleteTask = async (task) => {
-    let datetime = new Date().toLocaleString("en-US", { timeZone: "UTC" });
+    let datetime = moment();
     const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email, in_progress: false }).eq("id", task.id);
     if (error) {
       throw error;

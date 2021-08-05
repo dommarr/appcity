@@ -29,7 +29,7 @@ export default function CreateNew(props) {
           Back to options
         </button>
       )}
-      <div className="shadow sm:overflow-hidden">
+      <div className="shadow">
         {!appOnly && !appCompany && !categoryForm && (
           <div className="bg-white py-6 px-4 sm:p-6">
             <div>

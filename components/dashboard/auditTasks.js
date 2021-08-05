@@ -54,7 +54,7 @@ export default function TaskList(props) {
 
   const TaskCard = ({ task, index }) => {
     let date = moment(task.date_complete).format("MMMM Do YYYY, h:mm:ss a");
-    let relativeDate = moment(task.date_complete, "YYYYMMDD").fromNow();
+    let relativeDate = moment(task.date_complete).fromNow();
     return (
       <div className={`relative col-span-5 grid grid-cols-5 gap-x-2 p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
         <div onClick={() => handleTaskClick({ task })} className="col-span-1 flex flex-col justify-center space-y-1 hover:cursor-pointer ">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../../utils/initSupabase";
 import Loading from "./../sectionLoading";
+import Select from "react-select";
 
 export default function AppCompanyForm(props) {
   const [loading, setLoading] = useState(true);
@@ -11,12 +12,16 @@ export default function AppCompanyForm(props) {
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState();
   const [message, setMessage] = useState();
+
+  // industries array
+  const [industryList, setIndustryList] = useState([]);
   // form fields
   const [vendorName, setVendorName] = useState("");
   const [vendorId, setVendorId] = useState("");
   const [website, setWebsite] = useState("");
   const [productName, setProductName] = useState("");
   const [productLink, setProductLink] = useState("");
+  const [productIndustry, setProductIndustry] = useState(1);
   const [sameName, setSameName] = useState(false);
   const [checked, setChecked] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
@@ -24,7 +29,21 @@ export default function AppCompanyForm(props) {
   // Fetch on load
   useEffect(() => {
     setLoading(false);
+    fetchIndustries();
   }, []);
+
+  const fetchIndustries = async () => {
+    let { data: industries, error } = await supabase.from("industries").select("*");
+    if (error) {
+      throw error;
+    }
+    let list = [];
+    industries.forEach(function (element) {
+      list.push({ label: element.name, value: element.id });
+    });
+    setIndustryList(list);
+    return;
+  };
 
   const createVendor = async () => {
     let { data, error } = await supabase.from("vendors").insert([{ name: vendorName, website: website }]);
@@ -36,7 +55,7 @@ export default function AppCompanyForm(props) {
   };
 
   const createProduct = async (vendor_id) => {
-    let { data, error } = await supabase.from("products").insert([{ name: productName, vendor_id: vendor_id, product_link: productLink }]);
+    let { data, error } = await supabase.from("products").insert([{ name: productName, vendor_id: vendor_id, product_link: productLink, industry_id: productIndustry }]);
     if (error) {
       handleFailure();
       throw error;
@@ -75,6 +94,7 @@ export default function AppCompanyForm(props) {
     setWebsite("");
     setProductName("");
     setProductLink("");
+    setProductIndustry("");
     setChecked(false);
     setCheckbox(false);
     setSameName(false);
@@ -172,6 +192,20 @@ export default function AppCompanyForm(props) {
               onChange={(e) => setProductLink(e.target.value)}
               required
               className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+            />
+          </div>
+          <div className="col-span-4 sm:col-span-2">
+            <div className="flex justify-between items-center">
+              <label htmlFor="industry" className="block text-sm font-medium text-gray-700">
+                App industry
+              </label>
+            </div>
+            <Select
+              options={industryList}
+              isSearchable={true}
+              className="mt-1 z-10"
+              value={industryList.filter((option) => option.value === productIndustry)}
+              onChange={(option) => setProductIndustry(option.value)}
             />
           </div>
         </div>

@@ -4,6 +4,7 @@ import Loading from "./cardLoading";
 import FormTip from "./formTip";
 import { MinusCircleIcon } from "@heroicons/react/solid";
 import Iframe from "./iFrame";
+import Select from "react-select";
 
 export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin }) {
   // form loading
@@ -12,17 +13,19 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState();
   const [message, setMessage] = useState();
+  // industries array
+  const [industryList, setIndustryList] = useState([]);
   // form fields
   const [productName, setProductName] = useState("");
   const [productLink, setProductLink] = useState("");
   const [priceLink, setPriceLink] = useState("");
-  // const [priceModel, setPriceModel] = useState("");
   const [description, setDescription] = useState("");
   const [keywords, setKeywords] = useState("");
   const [media, setMedia] = useState([]);
   const [productLogo, setProductLogo] = useState("");
   const [priceSubdomain, setPriceSubdomain] = useState("");
   const [productSubdomain, setProductSubdomain] = useState("");
+  const [industry, setIndustry] = useState("");
   // image upload states
   const [imageUpload, setImageUpload] = useState(false);
   const [imageSuccess, setImageSuccess] = useState();
@@ -33,9 +36,23 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   // Fetch on load
   useEffect(() => {
     setLoading(true);
+    fetchIndustries();
     fetchProductData(productId);
     setLoading(false);
   }, [productId]);
+
+  const fetchIndustries = async () => {
+    let { data: industries, error } = await supabase.from("industries").select("*");
+    if (error) {
+      throw error;
+    }
+    let list = [];
+    industries.forEach(function (element) {
+      list.push({ label: element.name, value: element.id });
+    });
+    setIndustryList(list);
+    return;
+  };
 
   const fetchProductData = async (product_id) => {
     let { data: products, error } = await supabase.from("products").select(`*, vendors(website)`).eq("id", product_id);
@@ -53,6 +70,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].vendors.website ? setCompanyWebsite(products[0].vendors.website) : "";
     products[0].price_subdomain ? setPriceSubdomain(products[0].price_subdomain) : "";
     products[0].product_subdomain ? setProductSubdomain(products[0].product_subdomain) : "";
+    products[0].industry_id ? setIndustry(products[0].industry_id) : "";
   };
 
   const updateDynamic = async (product_id, pricing_page_link) => {
@@ -95,6 +113,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         product_logo: productLogo,
         price_subdomain: priceSubdomain,
         product_subdomain: productSubdomain,
+        industry_id: industry,
       })
       .eq("id", productId);
     if (error) {
@@ -202,7 +221,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   if (loading) return <Loading />;
 
   return (
-    <div className="shadow sm:overflow-hidden">
+    <div className="shadow">
       <form
         onSubmit={(e) => {
           handleSubmit(e);
@@ -462,25 +481,41 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               </ul>
             </div>
             {superAdmin && (
-              <div className="col-span-4 lg:col-span-2 row-start-5">
-                <div className="flex justify-between items-center">
-                  <label htmlFor="productLogo" className="text-sm font-medium text-gray-700">
-                    Product logo
-                  </label>
-                  <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${productLink}`} className="text-sm text-blue-600 underline pl-2">
-                    Get logo
-                  </a>
+              <>
+                <div className="col-span-4 lg:col-span-2 row-start-5">
+                  <div className="flex justify-between items-center">
+                    <label htmlFor="productLogo" className="text-sm font-medium text-gray-700">
+                      Product logo
+                    </label>
+                    <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${productLink}`} className="text-sm text-blue-600 underline pl-2">
+                      Get logo
+                    </a>
+                  </div>
+                  <input
+                    type="url"
+                    name="productLogo"
+                    id="productLogo"
+                    placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
+                    value={productLogo}
+                    onChange={(e) => setProductLogo(e.target.value)}
+                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  />
                 </div>
-                <input
-                  type="url"
-                  name="productLogo"
-                  id="productLogo"
-                  placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
-                  value={productLogo}
-                  onChange={(e) => setProductLogo(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                />
-              </div>
+                <div className="col-span-4 lg:col-span-2 row-start-5">
+                  <div className="flex justify-between items-center">
+                    <label htmlFor="industry" className="block text-sm font-medium text-gray-700">
+                      Industry
+                    </label>
+                  </div>
+                  <Select
+                    options={industryList}
+                    isSearchable={true}
+                    className="mt-1 z-10"
+                    value={industryList.filter((option) => option.value === industry)}
+                    onChange={(option) => setIndustry(option.value)}
+                  />
+                </div>
+              </>
             )}
           </div>
         </div>
