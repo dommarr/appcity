@@ -103,7 +103,7 @@ export default async function (req, res) {
     obj.vendor = elem.products.vendors.name;
     obj.keywords = elem.products.keywords;
     obj.vendor_website = elem.products.vendors.website;
-    obj.logo = elem.products.vendors.logo;
+    obj.logo = elem.products.product_logo ? elem.products.product_logo : elem.products.vendors.logo;
     obj.price_model = elem.products.price_model;
 
     // old pricing setup.....................

@@ -90,7 +90,7 @@ export default function Kit({ kit, sections }) {
     <>
       <Banner />
       <Header style="dark" />
-      <Head title={`${name} Starter Kit`} description={description} url={`https://www.appcity.com/kits/${kit.name}`} />
+      <Head title={`${name} Starter Kit | AppCity`} description={description} url={`https://www.appcity.com/kits/${kit.name}`} />
       <Container>
         <div className="mb-20">
           <div className="bg-white">

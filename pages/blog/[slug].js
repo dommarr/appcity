@@ -18,7 +18,7 @@ export default function PostPage({ post, morePosts }) {
   return (
     <>
       <Banner />
-      <Head title={post.title} description={post.excerpt} ogImage={post.feature_image} url={`https://www.appcity.com/blog/${post.slug}`} />
+      <Head title={`${post.title} | AppCity`} description={post.excerpt} ogImage={post.feature_image} url={`https://www.appcity.com/blog/${post.slug}`} />
       <Header style="dark" />
       <div className="relative py-16 bg-white overflow-hidden">
         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">

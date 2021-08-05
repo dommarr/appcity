@@ -535,11 +535,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 })}
               {/* <div className="flex flex-col items-center mt-4 p-2 border border-gray-300"> */}
               <div>
-                <button
-                  type="button"
-                  onClick={addFeature}
-                  className="inline-flex items-center my-2 px-2.5 py-1.5 border border-transparent text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-0"
-                >
+                <button type="button" onClick={addFeature} className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2 focus:outline-none focus:ring-0">
                   Add feature
                 </button>
               </div>

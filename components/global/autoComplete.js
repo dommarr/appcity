@@ -71,9 +71,9 @@ export class Autocomplete extends Component {
             {filteredOptions.map((optionName, index) => {
               let className;
               if (index === activeOption) {
-                className = "option-active bg-gray-200 px-2 py-1";
+                className = "option-active bg-gray-300 px-2 py-1";
               } else {
-                className = "px-2 py-1";
+                className = "px-2 py-1 hover:bg-gray-100";
               }
               return (
                 <li className={className} key={optionName} onClick={onClick}>

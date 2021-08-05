@@ -11,6 +11,7 @@ import TaskList from "./taskList";
 //import AddProduct from "./createNew";
 import AdminCreateApp from "./admin_create_app/createApp";
 import EditApps from "./editApps";
+import AuditTasks from "./auditTasks";
 
 const navLinks = [
   {
@@ -63,6 +64,11 @@ const superAdminLinks = [
     label: "Add app",
     route: "admin_create_app",
     icon: "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    label: "Audit tasks",
+    route: "audit_tasks",
+    icon: "M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z",
   },
 ];
 
@@ -445,6 +451,7 @@ export default function Dashboard(props) {
               {screen === "tasks" && <TaskList user={props.user} router={router} />}
               {screen === "edit" && <EditApps user={props.user} router={router} />}
               {screen === "admin_create_app" && <AdminCreateApp user={props.user} router={router} />}
+              {screen === "audit_tasks" && <AuditTasks user={props.user} router={router} />}
               {/* /End replace */}
             </div>
           </div>

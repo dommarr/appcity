@@ -131,7 +131,7 @@ export default function Product({ product }) {
       <Banner />
       <Header style="dark" />
       {/* <Head title={product.name} description={product.description} url={`www.appcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} /> */}
-      <Head title={product.name} description={product.description} url={`https://www.appcity.com/product/${product.id}`} />
+      <Head title={`${product.name} | AppCity`} description={product.description} url={`https://www.appcity.com/product/${product.id}`} />
       <div className="flex flex-col justify-center items-start m-5 md:hidden select-none space-y-1">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a target="_blank" className="flex" href={vendorLink}>
@@ -237,7 +237,7 @@ export default function Product({ product }) {
           {product.tiers.length > 1 && (
             <div className="flex flex-col justify-center items-center">
               <div className="justify-start items-start">
-                {tier != null && <h4 className="text-sm font-medium">Select tier:</h4>}
+                {tier != null && <h4 className="text-sm font-medium">Select plan:</h4>}
                 <div className="flex flex-wrap justify-center mt-1">
                   {sortedTiers &&
                     sortedTiers.map((obj) => (
@@ -258,7 +258,7 @@ export default function Product({ product }) {
               </div>
 
               <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
-                <span>Compare tiers</span>
+                <span>Compare plans</span>
                 <ArrowNarrowDownIcon className="h-4 w-4" />
               </a>
             </div>
@@ -463,7 +463,7 @@ export default function Product({ product }) {
                       <ul className="mt-6 space-y-4">
                         {index > 0 && (
                           <li className="flex space-x-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 h-5 w-5 text-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
                             <span className="text-sm text-gray-500 font-bold">All prior features, plus...</span>

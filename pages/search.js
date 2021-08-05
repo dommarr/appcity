@@ -82,7 +82,7 @@ class Search extends React.Component {
       <>
         <Banner />
         <Header style="dark" />
-        <Head title="Search" description="Search for apps to take your business to the next level." url="https://www.appcity.com/search" />
+        <Head title="Search | AppCity" description="Search for apps to take your business to the next level." url="https://www.appcity.com/search" />
         <SearchApp {...DEFAULT_PROPS} searchState={this.state.searchState} resultsState={this.props.resultsState} onSearchStateChange={this.onSearchStateChange} createURL={createURL} />
         <Footer dark={true} />
       </>

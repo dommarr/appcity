@@ -341,7 +341,11 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 <span className="italic text-sm text-gray-400">required</span>
               </div>
               <div className="flex space-x-4 mb-4">
-                <a target="_blank" href={`https://www.google.com/search?q=site:${companyWebsite} ${productName}&tbm=isch&tbs=isz:l`} className="text-sm text-blue-600 underline">
+                <a
+                  target="_blank"
+                  href={`https://www.google.com/search?q=site:${productLink ? productLink : companyWebsite} ${productName}&tbm=isch&tbs=isz:l`}
+                  className="text-sm text-blue-600 underline"
+                >
                   Search images
                 </a>
                 <a target="_blank" href={`https://www.youtube.com/results?search_query=${productName}&sp=EgIQAg%253D%253D`} className="text-sm text-blue-600 underline">
