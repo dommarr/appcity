@@ -318,6 +318,9 @@ export default class SearchApp extends React.Component {
                     <RefinementBlock header="Category">
                       {this.props.searchState.query && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} showMore />}
                     </RefinementBlock>
+                    <RefinementBlock header="Industry" tooltip="Many apps are general use, others are built for a specific industry.">
+                      {this.props.searchState.query && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}
+                    </RefinementBlock>
                     <RefinementBlock header="Rating">{this.props.searchState.query && <RatingMenu attribute="rating" />}</RefinementBlock>
                     <RefinementBlock header="Developer">{this.props.searchState.query && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}</RefinementBlock>
                     <RefinementBlock header="Features">{this.props.searchState.query && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}</RefinementBlock>

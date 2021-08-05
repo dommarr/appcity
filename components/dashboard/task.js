@@ -8,6 +8,7 @@ import TierForm from "./tierForm";
 import FormTip from "./formTip";
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
+var moment = require("moment");
 
 export default function Task({ task, user }) {
   const [loading, setLoading] = useState(true);
@@ -105,7 +106,7 @@ export default function Task({ task, user }) {
   };
 
   const handleCompleteTask = async (task) => {
-    let datetime = new Date().toLocaleString("en-US", { timeZone: "UTC" });
+    let datetime = moment();
     const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email, in_progress: false }).eq("id", task.id);
     if (error) {
       throw error;

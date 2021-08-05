@@ -15,6 +15,14 @@ async function getCategories() {
   }
 }
 
+const fetchIndustries = async () => {
+  let { data: industries, error } = await supabase.from("industries").select("*");
+  if (error) {
+    throw error;
+  }
+  return industries;
+};
+
 async function getCatalog() {
   try {
     let response = await supabase.from("tiers").select(`
@@ -84,6 +92,9 @@ export default async function (req, res) {
   catArray.forEach((elem) => (catNames[elem.id] = elem.name));
   const categories = createCatTable(catNames, catArray);
 
+  // get industries
+  const industries = await fetchIndustries();
+
   // get all reviews
   const reviews = await getReviews();
 
@@ -105,6 +116,7 @@ export default async function (req, res) {
     obj.vendor_website = elem.products.vendors.website;
     obj.logo = elem.products.product_logo ? elem.products.product_logo : elem.products.vendors.logo;
     obj.price_model = elem.products.price_model;
+    obj.industry = industries.filter((industry) => industry.id === elem.products.industry_id)[0].name;
 
     // old pricing setup.....................
     // obj.starting_price_year = elem.starting_price_year;
