@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { useState, useEffect, useReducer } from "react";
+import React from "react";
+import { useState } from "react";
 import Header from "../global/header";
 import Footer from "../global/footer";
 const RotatingText = require("react-rotating-text");
@@ -13,7 +14,7 @@ import Banner from "../global/banner";
 import StarterKitFeature from "./startkitFeature";
 import Image from "next/image";
 
-export default function HomeLayout({ apps }) {
+export default function HomeLayout({ apps, kits }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
 
@@ -171,7 +172,15 @@ export default function HomeLayout({ apps }) {
                   <Link href={`/product/${id}`} key={idx}>
                     <a>
                       <div className="col-span-1 flex items-center py-8 px-8 bg-gray-50 space-x-4 h-full">
-                        <Image src={vendors.logo} alt={name} placeholder="blur" width={100} height={100} />
+                        <Image
+                          src={vendors.logo}
+                          alt={name}
+                          placeholder="blur"
+                          //blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8+uX7fwAJpwPh3jeWxAAAAABJRU5ErkJggg=="
+                          blurDataURL={`/_next/image?url=${vendors.logo}&w=16&q=1`}
+                          width={100}
+                          height={100}
+                        />
                         <div className="flex flex-col space-y-1">
                           <h5 className="text-xl font-medium">{name}</h5>
                           <div className="flex flex-wrap overflow-hidden">
@@ -192,7 +201,7 @@ export default function HomeLayout({ apps }) {
           </div>
         </div>
       </section>
-      <StarterKitFeature />
+      <StarterKitFeature kits={kits} />
       {/* <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">Starter Kits</h1>
@@ -283,7 +292,8 @@ export default function HomeLayout({ apps }) {
                     src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/shopping_med?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wcGluZ19tZWQiLCJpYXQiOjE2Mjc4Mzk3NDQsImV4cCI6MTk0MzE5OTc0NH0.2_g-e5jkTERWS42LGZcn7xBpCEIYO1_-S62P5QY_ucg"
                     alt="AppCity shopping"
                     placeholder="blur"
-                    blurdataurl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8eP7gfwAIPANicW2+CgAAAABJRU5ErkJggg=="
+                    //blurDataUrl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8eP7gfwAIPANicW2+CgAAAABJRU5ErkJggg=="
+                    blurDataURL={`/_next/image?url=https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/shopping_med?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wcGluZ19tZWQiLCJpYXQiOjE2Mjc4Mzk3NDQsImV4cCI6MTk0MzE5OTc0NH0.2_g-e5jkTERWS42LGZcn7xBpCEIYO1_-S62P5QY_ucg&w=16&q=1`}
                     layout="fill"
                     objectFit="cover"
                   />
@@ -368,7 +378,8 @@ export default function HomeLayout({ apps }) {
                 src="https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00"
                 alt="AppCity search page"
                 placeholder="blur"
-                blurdataurl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8+uX7fwAJpwPh3jeWxAAAAABJRU5ErkJggg=="
+                //blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8+uX7fwAJpwPh3jeWxAAAAABJRU5ErkJggg=="
+                blurDataURL={`/_next/image?url=https://dnlvkovcawtkzuvpmmgr.supabase.co/storage/v1/object/sign/website_images/search_page_4.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zZWFyY2hfcGFnZV80LmpwZyIsImlhdCI6MTYyNTAxMzE0NiwiZXhwIjoxOTQwMzczMTQ2fQ.DZXqFfAyFVzU7Jx0tvzCJ5RC40vFHDGA8PmrZlmTu00&w=16&q=1`}
                 layout="fill"
                 objectFit="cover"
               />

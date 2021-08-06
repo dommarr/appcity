@@ -21,6 +21,7 @@ import PriceBlock from "./priceBlock";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import React from "react";
+React.useLayoutEffect = React.useEffect;
 import { useRouter } from "next/router";
 import { StarIcon } from "@heroicons/react/outline";
 import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";

@@ -29,7 +29,7 @@
     "crypto-js": "^4.0.0",
     "jsdom": "^16.6.0",
     "moment": "^2.29.1",
-    "next": "10.0.6",
+    "next": "^11.0.1",
     "next-sitemap": "^1.6.140",
     "postcss": "^8.2.4",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -46,7 +46,7 @@
     "simple-react-lightbox-pro": "^1.2.2",
     "swiper": "^6.6.2",
     "swr": "^0.4.2",
-    "tailwindcss": "^2.1.4",
+    "tailwindcss": "^2.2.7",
     "vercel": "^21.2.1",
     "webrtc-adapter": "^7.7.1"
   }
