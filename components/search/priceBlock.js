@@ -54,7 +54,7 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
   let annualPrice = tier.price_primary_number_year || tier.price_primary_number_year === 0 ? calcAnnualPrice(tier.price_primary_number_year) : "";
 
   return (
-    <div className={`price-block-2-2 ${large ? "py-4 px-12 my-2" : "py-2 px-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
+    <div className={`price-block-2-2 ${large ? "py-4 px-12" : "py-2 px-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
       <PriceModelTooltip model={model} />
       <dl className={`price-block-year ${monthly ? "hidden" : "flex"} flex-col justify-center items-center space-y-2 ${search ? "" : "h-full flex-grow"}`}>
         <div className="flex flex-col justify-center items-center">

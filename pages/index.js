@@ -5,11 +5,11 @@ import { supabase } from "../utils/initSupabase";
 const description =
   "Shop for software like you shop for everything else with AppCity. We are the app store for business software, where creators, founders, and small business owners of any kind can find and buy the best business apps to take their business to the next level.";
 
-export default function Home({ apps }) {
+export default function Home({ apps, kits }) {
   return (
     <>
       <Head title="AppCity: The Business App Store" description={description} url="https://www.appcity.com" />
-      <HomeLayout apps={apps} />
+      <HomeLayout apps={apps} kits={kits} />
     </>
   );
 }
@@ -38,6 +38,14 @@ const fetchCategories = async (ids) => {
   return cats;
 };
 
+const fetchKits = async () => {
+  let { data: kits, error } = await supabase.from("kits").select("*");
+  if (error) {
+    throw error;
+  }
+  return kits;
+};
+
 export async function getStaticProps() {
   let apps = await fetchApps(appIds);
   if (!apps) {
@@ -58,7 +66,16 @@ export async function getStaticProps() {
     elem.categories = result;
   });
 
+  let kits = await fetchKits();
+  kits = kits.sort((a, b) => a.id - b.id);
+
+  if (!kits) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
-    props: { apps },
+    props: { apps, kits },
   };
 }

@@ -132,13 +132,14 @@ export default function Product({ product }) {
       <Header style="dark" />
       {/* <Head title={product.name} description={product.description} url={`www.appcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} /> */}
       <Head title={`${product.name} | AppCity`} description={product.description} url={`https://www.appcity.com/product/${product.id}`} />
+      {/* Product Header for Mobile */}
       <div className="flex flex-col justify-center items-start m-5 md:hidden select-none space-y-1">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a target="_blank" className="flex" href={vendorLink}>
           <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
           <h5 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h5>
         </a>
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 items-center">
           <a href="#reviews">
             <div className="flex justify-center items-center">
               <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
@@ -150,13 +151,13 @@ export default function Product({ product }) {
             </div>
           </a>
           <span>|</span>
-          <div onClick={() => handleDescriptionClick()} className="flex space-x-2 hover:cursor-pointer">
+          <div onClick={() => handleDescriptionClick()} className="flex space-x-2 hover:cursor-pointer items-center">
             <h5 className="">Description</h5>
-            {!description && <ChevronDownIcon className="h-6 w-6" />}
-            {description && <ChevronUpIcon className="h-6 w-6" />}
+            {description && <ChevronDownIcon className="h-6 w-6" />}
+            {!description && <ChevronUpIcon className="h-6 w-6" />}
           </div>
         </div>
-        <p className={`${description ? `block` : `hidden`} text-sm mt-1 text-gray-600`}>{product.description}</p>
+        <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600`}>{product.description}</p>
       </div>
       <div className="block md:h-80vh md:flex md:flex-row max-w-screen-3xl mx-auto select-none">
         {/* Left */}
@@ -175,124 +176,128 @@ export default function Product({ product }) {
           )}
         </div>
         {/* Right */}
-        <div className="h-70vh sm:h-70vh md:h-full w-full md:w-2/5 flex flex-col justify-center items-center p-5">
-          <div className="hidden md:flex flex-col justify-center items-start w-full space-y-1">
+        <div className="h-70vh sm:h-70vh md:h-full w-full md:w-2/5 flex flex-col justify-start items-center px-4 py-3">
+          {/* Product Header - Desktop */}
+          <div className="hidden md:flex flex-col justify-start items-start w-full space-y-1">
             <h1 className="text-4xl font-bold">{product.name}</h1>
             <a target="_blank" className="flex" href={vendorLink}>
               <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h4 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h4>
             </a>
-            <div className="flex md:flex-col lg:flex-row space-x-2">
+            <div className="flex sm:flex-col md:flex-row space-x-2">
               <a href="#reviews">
                 <div className="flex justify-center items-center">
-                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
-                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
-                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
-                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
-                  <StarIcon className={`h-5 w-5 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
-                  {count === 1 ? <div className="ml-2">{count} review</div> : <div className="ml-2">{count} reviews</div>}
+                  <StarIcon className={`h-4 w-4 text-purple ${rating >= 0.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-4 w-4 text-purple ${rating >= 1.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-4 w-4 text-purple ${rating >= 2.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-4 w-4 text-purple ${rating >= 3.5 ? "fill-current" : ""}`} />
+                  <StarIcon className={`h-4 w-4 text-purple ${rating >= 4.5 ? "fill-current" : ""}`} />
+                  {count === 1 ? <div className="ml-2 text-sm">{count} review</div> : <div className="ml-2 text-sm">{count} reviews</div>}
                 </div>
               </a>
-              <span className="hidden lg:block">|</span>
+              <span className="hidden md:block text-sm">|</span>
               <div onClick={() => handleDescriptionClick()} className="flex hover:cursor-pointer">
-                <h5 className="">Description</h5>
-                {!description && <ChevronDownIcon className="h-6 w-6 ml-2" />}
-                {description && <ChevronUpIcon className="h-6 w-6 ml-2" />}
+                <h5 className="text-sm">Description</h5>
+                {description && <ChevronDownIcon className="h-5 w-5 ml-1" />}
+                {!description && <ChevronUpIcon className="h-5 w-5 ml-1" />}
               </div>
             </div>
-            <p className={`${description ? `block` : `hidden`} text-sm mt-1 text-gray-600`}>{product.description}</p>
+            <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600 pb-1 border-b w-full`}>{product.description}</p>
           </div>
-          {product.tiers.length > 1 && <h2 className={`text-2xl font-medium mt-6 ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>}
-          {product.tiers.length === 1 && <div className="h-24"></div>}
-          <div className="flex flex-col space-y-2 items-center mt-1 mb-4 xl:w-9/12">
-            {tier?.description && <p className="text-gray-500 text-sm text-center">{tier.description}</p>}
-            {/* {tier?.description && tier?.limit && <hr className="border-t border-gray-200 w-16"></hr>}
-            {tier?.limit && <p className="text-gray-500 text-sm text-center">{tier.limit}</p>} */}
-          </div>
-
-          {/* Price Toggle */}
-          {tier != null && (
-            <div className="relative self-center bg-gray-100 p-0.5 flex">
-              <button
-                type="button"
-                onClick={() => setMonthly(true)}
-                className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
-              >
-                Monthly billing
-              </button>
-              <button
-                type="button"
-                onClick={() => setMonthly(false)}
-                className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
-              >
-                Yearly billing
-              </button>
+          <div className="flex flex-col items-center justify-around h-full">
+            <div className="flex flex-col items-center justify-start mt-3">
+              {product.tiers.length > 1 && <h2 className={`text-2xl font-medium${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>}
+              {/* {product.tiers.length === 1 && <div className=""></div>} */}
+              <div className="flex flex-col space-y-2 items-center mt-1 xl:w-9/12">{tier?.description && <p className="text-gray-500 text-sm text-center">{tier.description}</p>}</div>
             </div>
-          )}
-          {/* Price Block */}
-          {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} />}
-          {/* Tier Limit */}
-          {tier?.limit && <p className="text-gray-500 text-sm text-center mb-8 italic">{tier.limit}</p>}
-          {/* Tier Selection */}
-          {product.tiers.length > 1 && (
-            <div className="flex flex-col justify-center items-center">
-              <div className="justify-start items-start">
-                {tier != null && <h4 className="text-sm font-medium">Select plan:</h4>}
-                <div className="flex flex-wrap justify-center mt-1">
-                  {sortedTiers &&
-                    sortedTiers.map((obj) => (
-                      <button
-                        key={obj.id}
-                        type="button"
-                        className={`${
-                          tier != null && tier.id === obj.id ? "bg-gray-200" : ""
-                        } inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
-                        onClick={() => {
-                          router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
-                        }}
-                      >
-                        {obj.name}
-                      </button>
-                    ))}
+            <div className="flex flex-col items-center justify-center">
+              {/* Price Toggle */}
+              {tier != null && (
+                <div className="relative self-center bg-gray-100 p-0.5 flex">
+                  <button
+                    type="button"
+                    onClick={() => setMonthly(true)}
+                    className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
+                  >
+                    Monthly billing
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMonthly(false)}
+                    className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
+                  >
+                    Yearly billing
+                  </button>
                 </div>
-              </div>
+              )}
+              {/* Price Block */}
+              {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} />}
+              {/* Tier Limit */}
+              {tier?.limit && <p className="text-gray-500 text-sm text-center italic">{tier.limit}</p>}
+            </div>
+            <div className="flex flex-col items-center justify-end">
+              {/* Tier Selection */}
+              {product.tiers.length > 1 && (
+                <div className="flex flex-col justify-center items-center">
+                  <div className="justify-start items-start">
+                    {tier != null && <h4 className="text-sm font-medium">Select plan:</h4>}
+                    <div className="flex flex-wrap justify-center mt-1">
+                      {sortedTiers &&
+                        sortedTiers.map((obj) => (
+                          <button
+                            key={obj.id}
+                            type="button"
+                            className={`${
+                              tier != null && tier.id === obj.id ? "bg-gray-200" : ""
+                            } inline-flex items-center mx-1 my-1 px-4 py-2 border border-gray-300 shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple`}
+                            onClick={() => {
+                              router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
+                            }}
+                          >
+                            {obj.name}
+                          </button>
+                        ))}
+                    </div>
+                  </div>
 
-              <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
-                <span>Compare plans</span>
-                <ArrowNarrowDownIcon className="h-4 w-4" />
-              </a>
-            </div>
-          )}
-          {product.tiers.length === 1 && (
-            <div className="flex flex-col justify-center items-center">
-              <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
-                <span>Learn more</span>
-                <ArrowNarrowDownIcon className="h-4 w-4" />
-              </a>
-            </div>
-          )}
+                  <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
+                    <span>Compare plans</span>
+                    <ArrowNarrowDownIcon className="h-4 w-4" />
+                  </a>
+                </div>
+              )}
+              {product.tiers.length === 1 && (
+                <div className="flex flex-col justify-center items-center">
+                  <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
+                    <span>Learn more</span>
+                    <ArrowNarrowDownIcon className="h-4 w-4" />
+                  </a>
+                </div>
+              )}
 
-          {/* Buy Button */}
-          {tier != null && (
-            <div className="flex space-x-2 my-4">
-              <a target="_blank" href={priceLink}>
-                <button
-                  type="button"
-                  className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
-                >
-                  Buy now
-                </button>
-              </a>
-              <a target="_blank" href={productLink}>
-                <button
-                  type="button"
-                  className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0"
-                >
-                  App details
-                </button>
-              </a>
+              {/* Buy Button */}
+              {tier != null && (
+                <div className="flex space-x-2 my-4">
+                  <a target="_blank" href={priceLink}>
+                    <button
+                      type="button"
+                      className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
+                    >
+                      Buy now
+                    </button>
+                  </a>
+                  <a target="_blank" href={productLink}>
+                    <button
+                      type="button"
+                      className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0"
+                    >
+                      App details
+                    </button>
+                  </a>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
       {/* LightBox */}
