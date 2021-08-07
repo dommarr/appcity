@@ -12,6 +12,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
   const [success, setSuccess] = useState();
   const [message, setMessage] = useState();
   const [totalAnnualPrice, setTotalAnnualPrice] = useState();
+  // delete tier
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+
   // price model from product fetch
   // const [priceModel, setPriceModel] = useState("");
   // form fields
@@ -276,6 +279,16 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     setPricePrimaryTextMonth("");
     setPricePrimaryNumberYear(val);
     setPricePrimaryTextYear("");
+  };
+
+  const deleteTier = async (id) => {
+    const { data, error } = await supabase.from("tiers").delete().eq("id", id);
+    if (error) {
+      throw error;
+    }
+    setDeleteConfirm(false);
+    fetchTierIds(productId);
+    return data;
   };
 
   if (loading) return <Loading />;
@@ -544,7 +557,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
             </div>
           </div>
         </div>
-        <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6 space-x-4">
           {!updating && (
             <button
               type="submit"
@@ -564,6 +577,27 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 />
               </svg>
             </button>
+          )}
+          {!deleteConfirm && (
+            <button
+              type="button"
+              onClick={() => setDeleteConfirm(true)}
+              className="bg-red-600 hover:bg-red-700 border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-0"
+            >
+              Delete
+            </button>
+          )}
+          {deleteConfirm && (
+            <div className="flex space-x-2 items-center justify-center">
+              <p className="">Are you sure? Deleting a tier cannot be undone.</p>
+              <button
+                type="button"
+                onClick={() => deleteTier(tierId)}
+                className="bg-red-600 hover:bg-red-700 border border-transparent shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-0"
+              >
+                Yes, I'm sure.
+              </button>
+            </div>
           )}
           <div className={`flex items-center ml-4 ${success ? `text-green-600` : `text-red-600`}`}>{message}</div>
         </div>

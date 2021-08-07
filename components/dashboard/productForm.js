@@ -175,7 +175,8 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
 
   const handleImageMediaChange = async (e) => {
     setImageUpload(true);
-    let path = `${productId}_${media.length + 1}`;
+    let rand = Math.floor(Math.random() * 10000);
+    let path = `${productId}_${media.length + 1}_${rand}`;
     let { data, error } = await supabase.storage.from("product_images").upload(path, e.target.files[0]);
     if (error) {
       handleImageFailure();
@@ -196,7 +197,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     setMedia(updatedMedia);
   };
 
-  const deleteMedia = (index) => {
+  const deleteMedia = async (index) => {
     const updatedMedia = [...media];
     updatedMedia.splice(index, 1);
     setMedia(updatedMedia);
