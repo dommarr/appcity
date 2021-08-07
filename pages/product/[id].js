@@ -205,9 +205,9 @@ export default function Product({ product }) {
             <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600 pb-1 border-b w-full`}>{product.description}</p>
           </div>
           <div className="flex flex-col items-center justify-around h-full">
-            <div className="flex flex-col items-center justify-start mt-3">
-              {product.tiers.length > 1 && <h2 className={`text-2xl font-medium${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>}
-              {/* {product.tiers.length === 1 && <div className=""></div>} */}
+            <div className="flex flex-col items-center justify-start w-full mt-3">
+              {product.tiers.length > 1 && <h2 className={`text-2xl font-medium ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>}
+              {product.tiers.length === 1 && <div className="text-2xl font-medium">{product.name}</div>}
               <div className="flex flex-col space-y-2 items-center mt-1 xl:w-9/12">{tier?.description && <p className="text-gray-500 text-sm text-center">{tier.description}</p>}</div>
             </div>
             <div className="flex flex-col items-center justify-center">
@@ -356,6 +356,7 @@ export default function Product({ product }) {
                     )}`}
                   >
                     {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{obj.name}</h3>}
+                    {product.tiers.length === 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{product.name}</h3>}
                     {obj?.description && <p className="text-gray-500 text-sm text-center">{obj.description}</p>}
                   </div>
                 );

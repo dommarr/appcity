@@ -38,14 +38,14 @@ export default function SwiperSlider({ media }) {
         type: "progressbar",
       }}
       navigation={true}
-      className="w-full h-full flex flex-col items-center justify-center"
+      className="w-full h-full min-h-full flex flex-col items-center justify-center"
       onSlideChange={() => setPlaying(false)}
     >
       {sortedMedia &&
         sortedMedia.map((val, idx) => (
-          <SwiperSlide key={idx} className="w-full h-full flex flex-col items-center justify-center">
+          <SwiperSlide key={idx} className="w-full h-full flex flex-col items-center justify-center;">
             {val.includes("supabase") ? (
-              <img src={val} onClick={() => openLightbox(idx)} className={`object-contain hover:cursor-pointer`} />
+              <img src={val} onClick={() => openLightbox(idx)} className={`h-auto w-auto max-w-full max-h-full hover:cursor-pointer`} />
             ) : (
               <div className="w-full h-full py-20 sm:p-20 md:py-28 md:px-10 xl:p-20">
                 <ReactPlayer
