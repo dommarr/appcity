@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ReactPlayer from "react-player";
 import { useLightbox } from "simple-react-lightbox-pro";
+import Image from "next/image";
 
 // Import Swiper styles
 import "swiper/swiper.min.css";
@@ -43,7 +44,7 @@ export default function SwiperSlider({ media }) {
     >
       {sortedMedia &&
         sortedMedia.map((val, idx) => (
-          <SwiperSlide key={idx} className="w-full h-full flex flex-col items-center justify-center;">
+          <SwiperSlide key={idx} className="w-full h-full flex flex-col items-center justify-center">
             {val.includes("supabase") ? (
               <img src={val} onClick={() => openLightbox(idx)} className={`h-auto w-auto max-w-full max-h-full hover:cursor-pointer`} />
             ) : (
