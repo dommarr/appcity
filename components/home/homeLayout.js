@@ -80,13 +80,16 @@ export default function HomeLayout({ apps, kits }) {
                       type="text"
                       name="search"
                       id="search"
-                      className="border border-gray-200 focus:ring-purple-extradark focus:border-purple-extradark w-full md:text-lg"
+                      className="border border-white bg-transparent text-white placeholder-white focus:ring-0 focus:outline-none focus:ring-white focus:border-white w-full md:text-lg"
                       placeholder="podcast, email, video, audio..."
                       value={query}
                       onChange={(event) => setQuery(event.target.value)}
                     />
-                    <button type="submit" className="bg-gray-200 w-20 flex justify-center items-center focus:outline-none focus:ring-0">
-                      <svg className="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <button
+                      type="submit"
+                      className="text-white hover:text-purple hover:bg-white bg-transparent border-t border-b border-r border-white w-20 flex justify-center items-center focus:outline-none focus:ring-0"
+                    >
+                      <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                       </svg>
                     </button>

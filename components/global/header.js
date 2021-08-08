@@ -35,11 +35,11 @@ export default function Header(props) {
         <div className="flex items-center justify-center relative">
           <Link href="/">
             <a className="flex items-center justify-center">
-              {(props.style === "dark" || props.style === "trans") && <Logo size={50} alt={appName} />}
-              {props.style === "light" && <LogoLight size={50} alt={appName} />}
-              <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} font-logo pl-2 text-4xl font-light`}>app</span>
-              <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} font-logo pr-2 text-4xl text-white font-semibold`}>city</span>
-              <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} absolute -bottom-3 right-8 text-white`}>beta</span>
+              {(props.style === "dark" || props.style === "trans") && <Logo size={40} alt={appName} />}
+              {props.style === "light" && <LogoLight size={40} alt={appName} />}
+              <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} font-logo pl-1 text-3xl font-light`}>app</span>
+              <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} font-logo pr-2 text-3xl text-white font-semibold`}>city</span>
+              <span className={`${props.style === "dark" || props.style === "trans" ? "text-white" : "text-purple"} absolute -bottom-3 right-7 text-white text-sm`}>beta</span>
             </a>
           </Link>
         </div>
