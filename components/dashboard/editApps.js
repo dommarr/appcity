@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import Loading from "./sectionLoading";
-import Task from "./task";
+import AppForms from "./app_forms/appForms";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
-import FormTip from "./formTip";
 import Autocomplete from "../global/autoComplete";
-import AppForms from "./appForms";
 
 export default function EditApps(props) {
   const [apps, setApps] = useState([]);
@@ -70,7 +68,7 @@ export default function EditApps(props) {
               Back to search
             </button>
           </div>
-          <AppForms user={props.user} appId={selected} />
+          <AppForms user={props.user} pId={selected} />
         </div>
       )}
     </section>

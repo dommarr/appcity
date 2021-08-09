@@ -7,7 +7,7 @@ import Favorites from "./favorites";
 import Reviews from "./reviews";
 import SectionLoading from "./sectionLoading";
 import AddApp from "./addApp";
-import TaskList from "./taskList";
+import TaskList from "./tasks/taskList";
 //import AddProduct from "./createNew";
 import AdminCreateApp from "./admin_create_app/createApp";
 import EditApps from "./editApps";

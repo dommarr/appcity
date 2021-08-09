@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../utils/initSupabase";
-import Loading from "./sectionLoading";
-import Task from "./task";
+import { supabase } from "../../../utils/initSupabase";
+import Loading from "../sectionLoading";
+import AppForms from "../app_forms/appForms";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
-import FormTip from "./formTip";
+import FormTip from "../app_forms/formTip";
 var moment = require("moment");
 
 export default function TaskList(props) {
@@ -149,7 +149,7 @@ export default function TaskList(props) {
               Back to task list
             </button>
           </div>
-          <Task task={currenttask} user={props.user} />
+          <AppForms pId={currenttask.product_id} task={currenttask} user={props.user} />
         </div>
       )}
     </section>

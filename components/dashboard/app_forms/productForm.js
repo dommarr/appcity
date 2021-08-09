@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../utils/initSupabase";
-import Loading from "./cardLoading";
+import { supabase } from "../../../utils/initSupabase";
+import Loading from "../cardLoading";
 import FormTip from "./formTip";
 import { MinusCircleIcon } from "@heroicons/react/solid";
-import Iframe from "./iFrame";
+import Iframe from "../iFrame";
 import Select from "react-select";
 
-export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin }) {
+export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin, updateTierPriceUnits }) {
   // form loading
   const [loading, setLoading] = useState(true);
   // form submission states
@@ -97,6 +97,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     if (priceLink) {
       updateDynamic(productId, priceLink);
     }
+    updateTierPriceUnits(priceModel);
     // let uploadMedia = [];
     // media.forEach((element) => uploadMedia.push(element.link));
     const { data, error } = await supabase

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Iframe from "./iFrame";
+import Iframe from "../iFrame";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 
 export default function FormTip({ video_id, recent }) {

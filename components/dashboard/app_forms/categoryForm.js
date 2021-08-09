@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../utils/initSupabase";
-import Loading from "./cardLoading";
+import { supabase } from "../../../utils/initSupabase";
+import Loading from "../cardLoading";
 
 export default function CategoryForm(props) {
   // form loading
