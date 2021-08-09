@@ -53,6 +53,7 @@ export default async function (req, res) {
   };
 
   for (let i = 0; i < products.length; i++) {
+    console.log(products[i].price_link);
     // check if price page is dynamic and update if yes
     let dynamic = await checkDynamic(products[i].price_link, products[i].id);
     // if hash, check changes. else, get hash
@@ -69,7 +70,7 @@ export default async function (req, res) {
           updateObj.product_id = products[i].id;
           updateObj.product_name = products[i].name;
           updateObj.new_hash = hash;
-          updateObj.note = ["Dynamic price page", "Weekly check"];
+          updateObj.note = ["Dynamic price page", "Weekly check", "Please check accuracy of current data vs. this app's price page."];
           updateArray.push(updateObj);
         }
         // not a dynamic page, check if hash is different
@@ -81,7 +82,7 @@ export default async function (req, res) {
           updateObj.product_id = products[i].id;
           updateObj.product_name = products[i].name;
           updateObj.new_hash = hash;
-          updateObj.note = ["Detected page change"];
+          updateObj.note = ["Detected page change", "Please check accuracy of current data vs. this app's price page."];
           updateArray.push(updateObj);
         }
       }

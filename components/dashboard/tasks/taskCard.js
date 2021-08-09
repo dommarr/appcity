@@ -9,6 +9,10 @@ const taskTips = [
     name: "Missing Data",
     tip: "1c675e66d2784cf28223aa2b0f8df435",
   },
+  {
+    name: "Check Data",
+    tip: "a23b2323560244a1bf1cc93c27a66e42",
+  },
 ];
 
 export default function TaskCard({ task, user }) {
