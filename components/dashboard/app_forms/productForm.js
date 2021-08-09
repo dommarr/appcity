@@ -277,11 +277,16 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               />
             </div>
             <div className="col-span-4 lg:col-span-2 lg:row-start-2">
-              <div className="flex space-x-2">
-                <label htmlFor="priceLink" className="block text-sm font-medium text-gray-700">
-                  Pricing page link
-                </label>
-                <span className="italic text-sm text-gray-400">required</span>
+              <div className="flex justify-between">
+                <div className="flex space-x-2">
+                  <label htmlFor="priceLink" className="block text-sm font-medium text-gray-700">
+                    Pricing page link
+                  </label>
+                  <span className="italic text-sm text-gray-400">required</span>
+                </div>
+                <a target="_blank" href={productLink} className="text-sm text-blue-600 underline pl-2">
+                  Go to price page
+                </a>
               </div>
               <input
                 type="url"
