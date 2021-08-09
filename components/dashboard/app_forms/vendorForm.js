@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../utils/initSupabase";
-import Loading from "./cardLoading";
+import { supabase } from "../../../utils/initSupabase";
+import Loading from "../cardLoading";
 import FormTip from "./formTip";
 
 export default function VendorForm({ vendorId, superAdmin }) {

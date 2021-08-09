@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../utils/initSupabase";
-import Loading from "./cardLoading";
+import { supabase } from "../../../utils/initSupabase";
+import Loading from "../cardLoading";
 import FormTip from "./formTip";
 import { MinusCircleIcon } from "@heroicons/react/solid";
 
@@ -133,39 +133,40 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     //   updateObject.price_primary_text_year = pricePrimaryTextYear;
     // }
     // if text instead of number, leave unit blank. otherwise, set unit based on the price model
-    if (!pricePrimaryTextMonth) {
-      if (priceModel === "flat-rate") {
-        updateObject.price_primary_unit_month = "per month";
-      }
-      if (priceModel === "per-user") {
-        updateObject.price_primary_unit_month = "per user per month";
-      }
-      if (priceModel === "usage-based") {
-        updateObject.price_primary_unit_month = "per month (starting)";
-      }
-      if (priceModel === "revenue-fee") {
-        updateObject.price_primary_unit_month = "of revenue";
-      }
-    } else {
-      updateObject.price_primary_unit_month = "";
-    }
+    // if (!pricePrimaryTextMonth) {
+    //   if (priceModel === "flat-rate") {
+    //     updateObject.price_primary_unit_month = "per month";
+    //   }
+    //   if (priceModel === "per-user") {
+    //     updateObject.price_primary_unit_month = "per user per month";
+    //   }
+    //   if (priceModel === "usage-based") {
+    //     updateObject.price_primary_unit_month = "per month (starting)";
+    //   }
+    //   if (priceModel === "revenue-fee") {
+    //     updateObject.price_primary_unit_month = "of revenue";
+    //   }
+    // } else {
+    //   updateObject.price_primary_unit_month = "";
+    // }
 
-    if (!pricePrimaryTextYear) {
-      if (priceModel === "flat-rate") {
-        updateObject.price_primary_unit_year = "per month";
-      }
-      if (priceModel === "per-user") {
-        updateObject.price_primary_unit_year = "per user per month";
-      }
-      if (priceModel === "usage-based") {
-        updateObject.price_primary_unit_year = "per month (starting)";
-      }
-      if (priceModel === "revenue-fee") {
-        updateObject.price_primary_unit_year = "of revenue";
-      }
-    } else {
-      updateObject.price_primary_unit_year = "";
-    }
+    // if (!pricePrimaryTextYear) {
+    //   if (priceModel === "flat-rate") {
+    //     updateObject.price_primary_unit_year = "per month";
+    //   }
+    //   if (priceModel === "per-user") {
+    //     updateObject.price_primary_unit_year = "per user per month";
+    //   }
+    //   if (priceModel === "usage-based") {
+    //     updateObject.price_primary_unit_year = "per month (starting)";
+    //   }
+    //   if (priceModel === "revenue-fee") {
+    //     updateObject.price_primary_unit_year = "of revenue";
+    //   }
+    // } else {
+    //   updateObject.price_primary_unit_year = "";
+    // }
+
     // secondary price
     if (priceSecondaryNumberMonth) {
       updateObject.price_secondary_number_month = priceSecondaryNumberMonth;
@@ -548,7 +549,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 })}
               {/* <div className="flex flex-col items-center mt-4 p-2 border border-gray-300"> */}
               <div>
-                <button type="button" onClick={addFeature} className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2 focus:outline-none focus:ring-0">
+                <button type="button" onClick={addFeature} className="text-sm bg-gray-100 hover:bg-gray-200 rounded-sm border border-gray-900 py-1 px-2 mt-2 focus:outline-none focus:ring-0">
                   Add feature
                 </button>
               </div>

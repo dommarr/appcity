@@ -2,7 +2,7 @@ import { useState } from "react";
 import AppForm from "./formApp";
 import AppCompanyForm from "./formAppCompany";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
-import CategoryForm from "../categoryForm";
+import CategoryForm from "../app_forms/categoryForm";
 
 export default function CreateNew(props) {
   const [appOnly, setAppOnly] = useState(false);
