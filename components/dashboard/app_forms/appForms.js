@@ -95,7 +95,21 @@ export default function Task({ pId, user, task }) {
   };
 
   const handleAddTier = async () => {
-    const { data, error } = await supabase.from("tiers").insert([{ product_id: productId, number: tierIds.length + 1 }]);
+    let unit = "";
+    if (priceModel === "flat-rate") {
+      unit = "per month";
+    }
+    if (priceModel === "per-user") {
+      unit = "per user per month";
+    }
+    if (priceModel === "usage-based") {
+      unit = "per month (starting)";
+    }
+    if (priceModel === "revenue-fee") {
+      unit = "of revenue";
+    }
+
+    const { data, error } = await supabase.from("tiers").insert([{ product_id: productId, number: tierIds.length + 1, price_primary_unit_year: unit, price_primary_unit_month: unit }]);
     if (error) {
       throw error;
     }
@@ -105,7 +119,6 @@ export default function Task({ pId, user, task }) {
   };
 
   const updateTierPriceUnits = async (model) => {
-    console.log("called");
     let unit = "";
     if (model === "flat-rate") {
       unit = "per month";
