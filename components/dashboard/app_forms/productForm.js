@@ -15,6 +15,8 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [message, setMessage] = useState();
   // industries array
   const [industryList, setIndustryList] = useState([]);
+  // drag and drop media
+  const [dragIndex, setDragIndex] = useState();
   // form fields
   const [productName, setProductName] = useState("");
   const [productLink, setProductLink] = useState("");
@@ -220,6 +222,19 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     setProductSubdomain(subdomain.join("/"));
   };
 
+  const handleDrag = (e) => {
+    setDragIndex(e.target.dataset.idx);
+  };
+
+  const handleDrop = (e) => {
+    let updatedMedia = [...media];
+    let moveMedia = updatedMedia[dragIndex];
+    const dropIndex = e.target.dataset.idx;
+    updatedMedia.splice(dragIndex, 1);
+    updatedMedia.splice(dropIndex, 0, moveMedia);
+    setMedia(updatedMedia);
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -390,6 +405,10 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                       {/* <input type="url" name={mediaId} id={mediaId} data-idx={idx} placeholder="https://www.youtube.com/watch?v=qDCyvvdzND4" value={media[idx].link} onChange={handleVideoMediaChange} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" /> */}
                       <div className="flex space-x-2 items-center">
                         <input
+                          draggable={true}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDragStart={handleDrag}
+                          onDrop={handleDrop}
                           type="url"
                           name={mediaId}
                           id={mediaId}

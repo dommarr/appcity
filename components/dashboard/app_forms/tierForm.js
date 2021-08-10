@@ -14,6 +14,8 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
   const [totalAnnualPrice, setTotalAnnualPrice] = useState();
   // delete tier
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+  // drag and drop features
+  const [dragIndex, setDragIndex] = useState();
 
   // price model from product fetch
   // const [priceModel, setPriceModel] = useState("");
@@ -292,6 +294,19 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     return data;
   };
 
+  const handleDrag = (e) => {
+    setDragIndex(e.target.dataset.idx);
+  };
+
+  const handleDrop = (e) => {
+    let updatedFeatures = [...displayFeatures];
+    let moveFeature = updatedFeatures[dragIndex];
+    const dropIndex = e.target.dataset.idx;
+    updatedFeatures.splice(dragIndex, 1);
+    updatedFeatures.splice(dropIndex, 0, moveFeature);
+    setDisplayFeatures(updatedFeatures);
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -533,6 +548,10 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                       </label>
                       <div className="flex space-x-2 items-center">
                         <input
+                          draggable={true}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDragStart={handleDrag}
+                          onDrop={handleDrop}
                           type="text"
                           name={featureId}
                           id={featureId}
