@@ -166,7 +166,11 @@ export default function Product({ product }) {
           {product.media && product.media.length > 0 && <Swiper media={product.media} />}
           {(!product.media || product.media.length === 0) && (
             <>
-              <img className="object-contain object-center w-40 h-40 p-2 bg-white flex-shrink-0 mx-auto mt-10" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
+              <img
+                className="object-contain object-center w-40 h-40 p-2 bg-white flex-shrink-0 mx-auto mt-10"
+                src={product.product_logo ? product.product_logo : product.vendors.logo}
+                alt={`${product.name} logo`}
+              />
               <h3 className="text-white text-center text-2xl mt-5">Sorry!</h3>
               <h4 className="text-white text-center text-base px-2">Looks like we don't have any media for {product.name}</h4>
               <a href={vendorLink} className="mt-3 mb-10 inline-flex items-center px-2.5 py-1.5 border border-white shadow-sm text-xs font-medium text-white hover:bg-gray-700">
