@@ -53,7 +53,7 @@ function Hits({ hits, monthlyPrice }) {
                 {/* Header Block */}
                 <div className="flex flex-col justify-center items-center h-20">
                   <h2 className="text-gray-900 text-base font-medium">{hit.product}</h2>
-                  <h3 className="mt-1 text-gray-500 text-sm font-normal">{hit.tier}</h3>
+                  {!hit.single_tier && <h3 className="mt-1 text-gray-500 text-sm font-normal">{hit.tier}</h3>}
                 </div>
               </a>
             </Link>

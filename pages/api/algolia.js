@@ -118,6 +118,13 @@ export default async function (req, res) {
     obj.price_model = elem.products.price_model;
     obj.industry = industries.filter((industry) => industry.id === elem.products.industry_id)[0].name;
 
+    let tierCount = catalog.filter((tier) => tier.products.id === elem.products.id).length;
+    if (tierCount === 1) {
+      obj.single_tier = true;
+    } else {
+      obj.single_tier = false;
+    }
+
     // old pricing setup.....................
     // obj.starting_price_year = elem.starting_price_year;
     // obj.starting_price_year_other = elem.starting_price_year_other;

@@ -16,7 +16,9 @@ const PriceModelTooltip = ({ model }) => {
     } else if (model === "flat-rate") {
       return `A fixed rate per month. Typically includes limitations on the number of users and/or features, where you can pay more for more features.`;
     } else if (model === "revenue-fee") {
-      return `Free until you start making revenue, then the developer takes a percentage of revenue. Fees can vary widely, from 3-30%.`;
+      return `Free until you start making revenue through the app, then the developer takes a percentage of revenue.`;
+    } else if (model === "one-time") {
+      return `A one-time price (not recurring monthly or yearly). `;
     } else {
       return;
     }
