@@ -78,16 +78,10 @@ const emptyTiers = (obj) => {
   // month - unit is empty, but shouldn't
   if (empty.includes("price_primary_unit_month") && empty.includes("price_primary_text_month") && !empty.includes("price_primary_number_month")) {
     empty.push("price_unit_month should be populated");
-    // month - unit is populated, but shouldn't
-  } else if (!empty.includes("price_primary_unit_month") && !empty.includes("price_primary_text_month") && empty.includes("price_primary_number_month")) {
-    empty.push("price_unit_month should not be populated");
   }
   // year - unit is empty, but shouldn't
   if (empty.includes("price_primary_unit_year") && empty.includes("price_primary_text_year") && !empty.includes("price_primary_number_year")) {
     empty.push("price_unit_year should be populated");
-    // month - unit is populated, but shouldn't
-  } else if (!empty.includes("price_primary_unit_year") && !empty.includes("price_primary_text_year") && empty.includes("price_primary_number_year")) {
-    empty.push("price_unit_year should not be populated");
   }
 
   empty = empty.filter((elem) => !elem.startsWith("price_primary"));

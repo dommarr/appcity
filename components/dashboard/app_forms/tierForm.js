@@ -4,7 +4,7 @@ import Loading from "../cardLoading";
 import FormTip from "./formTip";
 import { MinusCircleIcon } from "@heroicons/react/solid";
 
-export default function TierForm({ tierNum, tierId, productId, updateFeatures, priceModel, fetchTierIds }) {
+export default function TierForm({ tierNum, tierId, productId, updateFeatures, priceModel, fetchTierIds, user }) {
   // form loading
   const [loading, setLoading] = useState(true);
   // form submission states
@@ -100,6 +100,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     pricePrimaryNumberYear === "" ? (updateObject.price_primary_number_year = null) : (updateObject.price_primary_number_year = pricePrimaryNumberYear);
     updateObject.price_primary_text_month = pricePrimaryTextMonth;
     updateObject.price_primary_text_year = pricePrimaryTextYear;
+    updateObject.last_updated_by = user.email;
     // if (tierName) {
     //   updateObject.name = tierName;
     // }
@@ -323,9 +324,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
-            <div className="col-span-4 sm:col-span-2 flex flex-col space-x-2">
-              <div className="grid grid-cols-4 gap-2">
-                <div className="col-span-1 xl:col-span-1">
+            <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2">
+              <div className="flex space-x-2">
+                <div className="w-1/4">
                   <label htmlFor="tierName" className="block text-sm font-medium text-gray-700">
                     Tier number
                   </label>
@@ -339,7 +340,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                     className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   />
                 </div>
-                <div className="col-span-3 xl:col-span-3">
+                <div className="w-3/4">
                   <div className="flex space-x-2">
                     <label htmlFor="tierName" className="block text-sm font-medium text-gray-700">
                       Tier name
@@ -359,7 +360,8 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
               </div>
               <FormTip video_id="ef32b696bb48402abebe499b62af07a6" />
             </div>
-            <div className="col-span-4 sm:col-span-2 sm:row-start-2 flex flex-col">
+            <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
+            <div className="col-span-4 lg:col-span-2 flex flex-col">
               <div className="flex space-x-2">
                 <label htmlFor="tierDescription" className="block text-sm font-medium text-gray-700">
                   Tier description
@@ -377,9 +379,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
               <span className="mt-1 text-xs text-gray-500 italic">140 character maximum</span>
-              <FormTip video_id="327ac54bac794ba1895f98cc0143a46d" recent={true} />
+              <FormTip video_id="327ac54bac794ba1895f98cc0143a46d" />
             </div>
-            <div className="col-span-4 sm:col-span-2 sm:row-start-2 flex flex-col">
+            <div className="col-span-4 lg:col-span-2 flex flex-col">
               <div className="flex space-x-2">
                 <label htmlFor="tierLimit" className="block text-sm font-medium text-gray-700">
                   Tier limit
@@ -397,36 +399,65 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
               <span className="mt-1 text-xs text-gray-500 italic">140 character maximum</span>
-              <FormTip video_id="327ac54bac794ba1895f98cc0143a46d" recent={true} />
+              <FormTip video_id="327ac54bac794ba1895f98cc0143a46d" />
             </div>
 
             {priceModel === "revenue-fee" && (
-              <div className="col-span-4 sm:col-span-2 sm:row-start-3 flex flex-col">
-                <div className="flex space-x-2">
-                  <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
-                    Revenue fee percentage
-                  </label>
-                  <span className="italic text-sm text-gray-400">required</span>
+              <>
+                <div className="col-span-4 lg:col-span-2 flex flex-col">
+                  <div className="flex space-x-2">
+                    <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
+                      Revenue fee percentage
+                    </label>
+                    <span className="italic text-sm text-gray-400">required</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="number"
+                      name="pricePrimaryNumberYear"
+                      id="pricePrimaryNumberYear"
+                      placeholder="4.5"
+                      value={pricePrimaryNumberYear}
+                      onChange={(e) => handleFeePrice(e.target.value)}
+                      className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                    <span className="text-lg">%</span>
+                  </div>
+                  <FormTip video_id="9c67988816354e4895cffc0be2209d7c" />
                 </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="number"
-                    name="pricePrimaryNumberYear"
-                    id="pricePrimaryNumberYear"
-                    placeholder="4.5"
-                    value={pricePrimaryNumberYear}
-                    onChange={(e) => handleFeePrice(e.target.value)}
-                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                  />
-                  <span className="text-lg">%</span>
-                </div>
-                <FormTip video_id="9c67988816354e4895cffc0be2209d7c" recent={true} />
-              </div>
+                <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
+              </>
             )}
 
-            {priceModel !== "revenue-fee" && (
+            {priceModel === "one-time" && (
               <>
-                <div className="col-span-4 sm:col-span-2 sm:row-start-3 flex flex-col">
+                <div className="col-span-4 lg:col-span-2 flex flex-col">
+                  <div className="flex space-x-2">
+                    <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
+                      One-time payment
+                    </label>
+                    <span className="italic text-sm text-gray-400">required</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="number"
+                      name="pricePrimaryNumberYear"
+                      id="pricePrimaryNumberYear"
+                      placeholder="300"
+                      value={pricePrimaryNumberYear}
+                      onChange={(e) => handleFeePrice(e.target.value)}
+                      className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                  </div>
+                  <FormTip video_id="9c67988816354e4895cffc0be2209d7c" />
+                </div>
+                <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
+              </>
+            )}
+
+            {priceModel !== "revenue-fee" && priceModel !== "one-time" && (
+              <>
+                <div className="col-span-4 lg:col-span-2 flex flex-col">
                   <div className="flex space-x-2">
                     <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
                       Price, paid yearly
@@ -483,10 +514,10 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                 <input type="text" name="pricePrimaryUnitYear" id="pricePrimaryUnitYear" placeholder="per user per month" value={pricePrimaryUnitYear} onChange={(e) => setPricePrimaryUnitYear(e.target.value)} className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" />
                 <span className="text-xs pl-2">unit</span>
               </div> */}
-                  <FormTip video_id="b49d350447364191a8e3aa4cf63c3a25" recent={true} />
+                  <FormTip video_id="b49d350447364191a8e3aa4cf63c3a25" />
                 </div>
 
-                <div className="col-span-4 sm:col-span-2 sm:row-start-3 flex flex-col">
+                <div className="col-span-4 lg:col-span-2 flex flex-col">
                   <div className="flex space-x-2">
                     <label htmlFor="pricePrimaryNumberMonth" className="block text-sm font-medium text-gray-700">
                       Price per month, paid monthly
@@ -533,7 +564,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
               </>
             )}
 
-            <div className="col-span-4 sm:col-span-2 sm:row-start-4 flex flex-col">
+            <div className="col-span-4 lg:col-span-2 flex flex-col">
               <div className="flex space-x-2 items-center mb-1">
                 <h4 className="font-medium text-gray-900">Features</h4>
                 <span className="italic text-sm text-gray-400">required</span>

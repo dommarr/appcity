@@ -3,7 +3,7 @@ import { supabase } from "../../../utils/initSupabase";
 import Loading from "../cardLoading";
 import FormTip from "./formTip";
 
-export default function VendorForm({ vendorId, superAdmin }) {
+export default function VendorForm({ vendorId, superAdmin, user }) {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState();
@@ -37,7 +37,7 @@ export default function VendorForm({ vendorId, superAdmin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdating(true);
-    const { data, error } = await supabase.from("vendors").update({ name: vendorName, website: website, logo: logo }).eq("id", vendorId);
+    const { data, error } = await supabase.from("vendors").update({ name: vendorName, website: website, logo: logo, last_updated_by: user.email }).eq("id", vendorId);
     if (error) {
       handleFailure();
       throw error;

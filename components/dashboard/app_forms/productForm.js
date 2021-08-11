@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../../utils/initSupabase";
 import Loading from "../cardLoading";
 import FormTip from "./formTip";
-import { MinusCircleIcon } from "@heroicons/react/solid";
+import { MinusCircleIcon, UserAddIcon } from "@heroicons/react/solid";
 import Iframe from "../iFrame";
 import Select from "react-select";
 
-export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin, updateTierPriceUnits }) {
+export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin, updateTierPriceUnits, fetchTierIds, user }) {
   // form loading
   const [loading, setLoading] = useState(true);
   // form submission states
@@ -28,6 +28,9 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [priceSubdomain, setPriceSubdomain] = useState("");
   const [productSubdomain, setProductSubdomain] = useState("");
   const [industry, setIndustry] = useState("");
+  const [internalNotes, setInternalNotes] = useState("");
+  // edit internal notes show/hide
+  const [editNotes, setEditNotes] = useState(false);
   // image upload states
   const [imageUpload, setImageUpload] = useState(false);
   const [imageSuccess, setImageSuccess] = useState();
@@ -73,6 +76,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].price_subdomain ? setPriceSubdomain(products[0].price_subdomain) : "";
     products[0].product_subdomain ? setProductSubdomain(products[0].product_subdomain) : "";
     products[0].industry_id ? setIndustry(products[0].industry_id) : "";
+    products[0].internal_notes ? setInternalNotes(products[0].internal_notes) : "";
   };
 
   const updateDynamic = async (product_id, pricing_page_link) => {
@@ -117,6 +121,8 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         price_subdomain: priceSubdomain,
         product_subdomain: productSubdomain,
         industry_id: industry,
+        last_updated_by: user.email,
+        internal_notes: internalNotes,
       })
       .eq("id", productId);
     if (error) {
@@ -222,6 +228,11 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     setProductSubdomain(subdomain.join("/"));
   };
 
+  const handlePriceModelChange = (val) => {
+    setPriceModel(val);
+    fetchTierIds();
+  };
+
   const handleDrag = (e) => {
     setDragIndex(e.target.dataset.idx);
   };
@@ -251,7 +262,37 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
             </h2>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
-            <div className="col-span-4 lg:col-span-2 lg:row-start-1">
+            <div className="col-span-4 space-y-2">
+              <div className="flex flex-col lg:flex-row space-x-2">
+                <label htmlFor="productName" className="block text-sm font-medium text-gray-700">
+                  Internal Notes
+                </label>
+                <span className="italic text-sm text-gray-400">notes to help with data entry - for internal use only (not customer-facing)</span>
+              </div>
+              {!editNotes && <p className="text-sm text-red-700">{internalNotes}</p>}
+              {editNotes && (
+                <textarea
+                  type="text"
+                  name="internalNotes"
+                  id="internalNotes"
+                  placeholder="Provide notes that will help with data entry."
+                  value={internalNotes}
+                  onChange={(e) => setInternalNotes(e.target.value)}
+                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+              )}
+              <div className="flex space-x-2 items-center">
+                <button
+                  type="button"
+                  onClick={(e) => setEditNotes(!editNotes)}
+                  className="inline-flex items-center px-2.5 py-1.5 border border-black text-xs text-black bg-gray-100 hover:bg-gray-200 rounded-sm focus:outline-none focus:ring-0"
+                >
+                  {editNotes ? "Done" : "Add/edit notes"}
+                </button>
+                {editNotes && <span className="italic text-sm text-gray-400">Don't forget to save at the bottom of this form.</span>}
+              </div>
+            </div>
+            <div className="col-span-4 lg:col-span-2">
               <div className="flex space-x-2">
                 <label htmlFor="productName" className="block text-sm font-medium text-gray-700">
                   App name
@@ -268,7 +309,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
-            <div className="col-span-4 lg:col-span-2 lg:row-start-1">
+            <div className="col-span-4 lg:col-span-2">
               <div className="flex justify-between">
                 <div className="flex space-x-2">
                   <label htmlFor="productLink" className="block text-sm font-medium text-gray-700">
@@ -291,7 +332,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
-            <div className="col-span-4 lg:col-span-2 lg:row-start-2">
+            <div className="col-span-4 lg:col-span-2">
               <div className="flex justify-between">
                 <div className="flex space-x-2">
                   <label htmlFor="priceLink" className="block text-sm font-medium text-gray-700">
@@ -314,7 +355,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               />
               <FormTip video_id="d5ef42a2ab1d413689ee584bf7370f79" />
             </div>
-            <div className="col-span-4 lg:col-span-2 lg:row-start-2">
+            <div className="col-span-4 lg:col-span-2">
               <div className="flex space-x-2">
                 <label htmlFor="priceModel" className="block text-sm font-medium text-gray-700">
                   Pricing model
@@ -327,7 +368,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 id="priceModel"
                 placeholder="Flat-rate pricing"
                 value={priceModel}
-                onChange={(e) => setPriceModel(e.target.value)}
+                onChange={(e) => handlePriceModelChange(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               >
                 <option hidden disabled selected value>
@@ -337,10 +378,11 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 <option value="usage-based">Usage-based pricing</option>
                 <option value="flat-rate">Flat-rate pricing</option>
                 <option value="revenue-fee">Revenue-fee pricing</option>
+                <option value="one-time">One-time payment</option>
               </select>
-              <FormTip video_id="c14acb3e5f1e41ddbbac81d0eb9b22d1" recent={true} />
+              <FormTip video_id="c14acb3e5f1e41ddbbac81d0eb9b22d1" />
             </div>
-            <div className="col-span-4 lg:col-span-2 lg:row-start-3">
+            <div className="col-span-4 lg:col-span-2">
               <div className="flex space-x-2">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                   App description
@@ -358,25 +400,10 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
               <span className="text-xs text-gray-500 italic">280 character maximum</span>
-              <FormTip video_id="76d32cc65dbf4a9399d435b6a9d24a0a" recent={true} />
+              <FormTip video_id="76d32cc65dbf4a9399d435b6a9d24a0a" />
             </div>
-            {superAdmin && (
-              <div className="col-span-4 lg:col-span-2 lg:row-start-3">
-                <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
-                  Keywords
-                </label>
-                <textarea
-                  type="text"
-                  name="keywords"
-                  id="keywords"
-                  placeholder="sales crm contact management marketing"
-                  value={keywords}
-                  onChange={(e) => setKeywords(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                />
-              </div>
-            )}
-            <div className="col-span-4 lg:col-span-2 lg:row-start-4">
+            <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
+            <div className="col-span-4 lg:col-span-2">
               <div className="flex space-x-2 items-center">
                 <h4 className="font-medium text-gray-900">Media</h4>
                 <span className="italic text-sm text-gray-400">required</span>
@@ -464,7 +491,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 </div>
               </div>
             </div>
-            <div className="col-span-4 lg:col-span-2 lg:row-start-4">
+            <div className="col-span-4 lg:col-span-2">
               <h6 className="block text-sm font-bold text-gray-700 py-2">Media tips</h6>
               <ol className="flex flex-col text-sm list-decimal px-4">
                 <li className="mt-2">Image 1: Screenshot of the app home screen or dashboard.</li>
@@ -508,7 +535,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
             </div>
             {superAdmin && (
               <>
-                <div className="col-span-4 lg:col-span-2 row-start-5">
+                <div className="col-span-4 lg:col-span-2">
                   <div className="flex justify-between items-center">
                     <label htmlFor="productLogo" className="text-sm font-medium text-gray-700">
                       Product logo
@@ -527,7 +554,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                     className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   />
                 </div>
-                <div className="col-span-4 lg:col-span-2 row-start-5">
+                <div className="col-span-4 lg:col-span-2">
                   <div className="flex justify-between items-center">
                     <label htmlFor="industry" className="block text-sm font-medium text-gray-700">
                       Industry
@@ -539,6 +566,20 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                     className="mt-1 z-10"
                     value={industryList.filter((option) => option.value === industry)}
                     onChange={(option) => setIndustry(option.value)}
+                  />
+                </div>
+                <div className="col-span-4 lg:col-span-2">
+                  <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
+                    Keywords
+                  </label>
+                  <textarea
+                    type="text"
+                    name="keywords"
+                    id="keywords"
+                    placeholder="sales crm contact management marketing"
+                    value={keywords}
+                    onChange={(e) => setKeywords(e.target.value)}
+                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                   />
                 </div>
               </>
