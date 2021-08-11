@@ -108,8 +108,13 @@ export default function Task({ pId, user, task }) {
     if (priceModel === "revenue-fee") {
       unit = "of revenue";
     }
+    if (priceModel === "one-time") {
+      unit = "one-time payment";
+    }
 
-    const { data, error } = await supabase.from("tiers").insert([{ product_id: productId, number: tierIds.length + 1, price_primary_unit_year: unit, price_primary_unit_month: unit }]);
+    const { data, error } = await supabase
+      .from("tiers")
+      .insert([{ product_id: productId, number: tierIds.length + 1, price_primary_unit_year: unit, price_primary_unit_month: unit, last_updated_by: user.email }]);
     if (error) {
       throw error;
     }
@@ -132,9 +137,13 @@ export default function Task({ pId, user, task }) {
     if (model === "revenue-fee") {
       unit = "of revenue";
     }
+    if (priceModel === "one-time") {
+      unit = "one-time payment";
+    }
     let updateObj = {
       price_primary_unit_year: unit,
       price_primary_unit_month: unit,
+      last_updated_by: user.email,
     };
     const { data, error } = await supabase.from("tiers").update(updateObj).in("id", tierIds);
     if (error) {
@@ -150,14 +159,23 @@ export default function Task({ pId, user, task }) {
   return (
     <>
       {task && <TaskCard task={task} user={user} />}
-      {vendorId && <VendorForm vendorId={vendorId} superAdmin={superAdmin} />}
+      {vendorId && <VendorForm vendorId={vendorId} superAdmin={superAdmin} user={user} />}
       {productId && vendorId && (
-        <ProductForm productId={productId} vendorId={vendorId} priceModel={priceModel} setPriceModel={setPriceModel} updateTierPriceUnits={updateTierPriceUnits} superAdmin={superAdmin} />
+        <ProductForm
+          productId={productId}
+          vendorId={vendorId}
+          priceModel={priceModel}
+          setPriceModel={setPriceModel}
+          updateTierPriceUnits={updateTierPriceUnits}
+          superAdmin={superAdmin}
+          fetchTierIds={fetchTierIds}
+          user={user}
+        />
       )}
       {productId && vendorId && superAdmin && <CategoryForm productId={productId} />}
       {tierIds &&
         tierIds.map((tierId, idx) => {
-          return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} priceModel={priceModel} fetchTierIds={fetchTierIds} />;
+          return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} priceModel={priceModel} fetchTierIds={fetchTierIds} user={user} />;
         })}
       <div className="flex flex-col max-w-sm">
         <div>
