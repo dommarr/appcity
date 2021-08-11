@@ -340,7 +340,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                   </label>
                   <span className="italic text-sm text-gray-400">required</span>
                 </div>
-                <a target="_blank" href={productLink} className="text-sm text-blue-600 underline pl-2">
+                <a target="_blank" href={priceLink} className="text-sm text-blue-600 underline pl-2">
                   Go to price page
                 </a>
               </div>
