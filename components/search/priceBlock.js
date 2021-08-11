@@ -60,8 +60,8 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
         <div className="flex flex-col justify-center items-center">
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_year}</dt>
           {!tier.price_primary_text_year && <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_year_unit}</dd>}
-          {tier.price_primary_text_year && model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>{`(yearly billing)`}</dd>}
-          {!tier.price_primary_text_year && model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>{annualPrice} paid yearly</dd>}
+          {tier.price_primary_text_year && model !== "revenue-fee" && model !== "one-time" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>{`(yearly billing)`}</dd>}
+          {!tier.price_primary_text_year && model !== "revenue-fee" && model !== "one-time" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>{annualPrice} paid yearly</dd>}
           {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>deducted from payment</dd>}
         </div>
         {secondary_price_year && (
@@ -74,8 +74,8 @@ const PriceBlock = ({ tier, model, large, monthly, search }) => {
         <div className="flex flex-col justify-center items-center">
           <dt className={`${large ? "text-lg" : "text-base"} text-gray-900 font-medium`}>{primary_price_month}</dt>
           {!tier.price_primary_text_month && <dd className={`${large ? "text-sm" : "text-sm"} text-gray-600`}>{primary_price_month_unit}</dd>}
-          {tier.price_primary_text_month && model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>{`(monthly billing)`}</dd>}
-          {!tier.price_primary_text_month && model !== "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>paid monthly</dd>}
+          {tier.price_primary_text_month && model !== "revenue-fee" && model !== "one-time" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>{`(monthly billing)`}</dd>}
+          {!tier.price_primary_text_month && model !== "revenue-fee" && model !== "one-time" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>paid monthly</dd>}
           {model === "revenue-fee" && <dd className={`${large ? "text-xs" : "text-xs"} text-gray-400 mt-1`}>deducted from payment</dd>}
         </div>
         {secondary_price_month && (

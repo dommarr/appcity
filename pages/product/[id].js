@@ -216,7 +216,7 @@ export default function Product({ product }) {
             </div>
             <div className="flex flex-col items-center justify-center">
               {/* Price Toggle */}
-              {tier != null && (
+              {tier != null && product.price_model != "revenue-fee" && product.price_model != "one-time" && (
                 <div className="relative self-center bg-gray-100 p-0.5 flex">
                   <button
                     type="button"
@@ -316,22 +316,24 @@ export default function Product({ product }) {
           <div className="sm:flex sm:flex-col sm:align-center">
             {product.tiers.length === 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing</h1>}
             {product.tiers.length > 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Plans</h1>}
-            <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
-              <button
-                type="button"
-                onClick={() => setMonthly(true)}
-                className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}
-              >
-                Monthly billing
-              </button>
-              <button
-                type="button"
-                onClick={() => setMonthly(false)}
-                className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}
-              >
-                Yearly billing
-              </button>
-            </div>
+            {product.price_model != "revenue-fee" && product.price_model != "one-time" && (
+              <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
+                <button
+                  type="button"
+                  onClick={() => setMonthly(true)}
+                  className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}
+                >
+                  Monthly billing
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMonthly(false)}
+                  className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-sm font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto sm:px-8`}
+                >
+                  Yearly billing
+                </button>
+              </div>
+            )}
           </div>
           <div
             className={`safe mt-8 grid sm:gap-x-4 ${
