@@ -15,6 +15,7 @@ import ReviewGrid from "../../components/review/reviewGrid";
 import { ArrowNarrowDownIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import { StarIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
+import { capitalizeEveryWord, capitalizeFirstWord, formatParagraph } from "../../lib/format";
 
 const Lightbox = (props) => {
   return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
@@ -131,7 +132,7 @@ export default function Product({ product }) {
       <Banner />
       <Header style="dark" />
       {/* <Head title={product.name} description={product.description} url={`www.appcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} /> */}
-      <Head title={`${product.name} | AppCity`} description={product.description} url={`https://www.appcity.com/product/${product.id}`} />
+      <Head title={`${product.name} | AppCity`} description={formatParagraph(product.description)} url={`https://www.appcity.com/product/${product.id}`} />
       {/* Product Header for Mobile */}
       <div className="flex flex-col justify-center items-start m-5 md:hidden select-none space-y-1">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
@@ -157,7 +158,7 @@ export default function Product({ product }) {
             {!description && <ChevronUpIcon className="h-6 w-6" />}
           </div>
         </div>
-        <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600`}>{product.description}</p>
+        <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600`}>{formatParagraph(product.description)}</p>
       </div>
       <div className="block md:h-80vh md:flex md:flex-row max-w-screen-3xl mx-auto select-none">
         {/* Left */}
@@ -206,13 +207,17 @@ export default function Product({ product }) {
                 {!description && <ChevronUpIcon className="h-5 w-5 ml-1" />}
               </div>
             </div>
-            <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600 pb-1 border-b w-full`}>{product.description}</p>
+            <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600 pb-1 border-b w-full`}>{formatParagraph(product.description)}</p>
           </div>
           <div className="flex flex-col items-center justify-around h-full w-full">
             <div className="flex flex-col items-center justify-start w-full mt-3">
-              {product.tiers.length > 1 && <h2 className={`text-2xl font-medium ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>}
+              {product.tiers.length > 1 && (
+                <h2 className={`text-2xl font-medium ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : capitalizeEveryWord(tier.name)}</h2>
+              )}
               {product.tiers.length === 1 && <div className="text-2xl font-medium">{product.name}</div>}
-              <div className="flex flex-col space-y-2 items-center mt-1 xl:w-9/12">{tier?.description && <p className="text-gray-500 text-sm text-center w-full">{tier.description}</p>}</div>
+              <div className="flex flex-col space-y-2 items-center mt-1 xl:w-9/12">
+                {tier?.description && <p className="text-gray-500 text-sm text-center w-full">{formatParagraph(tier.description)}</p>}
+              </div>
             </div>
             <div className="flex flex-col items-center justify-center">
               {/* Price Toggle */}
@@ -237,7 +242,7 @@ export default function Product({ product }) {
               {/* Price Block */}
               {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} />}
               {/* Tier Limit */}
-              {tier?.limit && <p className="text-gray-500 text-sm text-center italic">{tier.limit}</p>}
+              {tier?.limit && <p className="text-gray-500 text-sm text-center italic">{capitalizeFirstWord(tier.limit)}</p>}
             </div>
             <div className="flex flex-col items-center justify-end">
               {/* Tier Selection */}
@@ -258,7 +263,7 @@ export default function Product({ product }) {
                               router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
                             }}
                           >
-                            {obj.name}
+                            {capitalizeEveryWord(obj.name)}
                           </button>
                         ))}
                     </div>
@@ -361,9 +366,9 @@ export default function Product({ product }) {
                       xlCols
                     )}`}
                   >
-                    {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{obj.name}</h3>}
+                    {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{capitalizeEveryWord(obj.name)}</h3>}
                     {product.tiers.length === 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{product.name}</h3>}
-                    {obj?.description && <p className="text-gray-500 text-sm text-center">{obj.description}</p>}
+                    {obj?.description && <p className="text-gray-500 text-sm text-center">{formatParagraph(obj.description)}</p>}
                   </div>
                 );
               })}
@@ -413,7 +418,7 @@ export default function Product({ product }) {
                       xlCols
                     )}`}
                   >
-                    {obj?.limit && <p className="text-gray-500 text-sm text-center italic">{obj.limit}</p>}
+                    {obj?.limit && <p className="text-gray-500 text-sm text-center italic">{capitalizeFirstWord(obj.limit)}</p>}
                   </div>
                 );
               })}
@@ -440,7 +445,7 @@ export default function Product({ product }) {
                   >
                     {product.tiers.length > 1 && (
                       <a target="_blank" href={priceLink} className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center">
-                        Buy {obj.name}
+                        Buy {capitalizeEveryWord(obj.name)}
                       </a>
                     )}
                     {product.tiers.length === 1 && (
@@ -487,7 +492,7 @@ export default function Product({ product }) {
                               <svg className="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
-                              <span className="text-sm text-gray-500">{feature}</span>
+                              <span className="text-sm text-gray-500">{capitalizeFirstWord(feature)}</span>
                             </li>
                           ))}
                       </ul>

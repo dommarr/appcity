@@ -16,8 +16,8 @@ export default function About() {
     }
   }, []);
 
-  const handleBuilderClick = () => {
-    router.push(`/about?customer=builder`, undefined, { shallow: true });
+  const handleShopperClick = () => {
+    router.push(`/about?customer=shopper`, undefined, { shallow: true });
     setVendor(false);
   };
 
@@ -60,17 +60,17 @@ export default function About() {
           <div className={`${vendor ? "border border-purple" : "border border-white"} p-0.5 shadow-lg`}>
             <button
               type="button"
-              onClick={() => handleBuilderClick()}
+              onClick={() => handleShopperClick()}
               className={`relative ${vendor ? "bg-transparent" : "bg-white"} text-purple py-2 text-sm font-medium whitespace-nowrap focus:outline-none w-auto px-4 sm:px-8`}
             >
-              For builders
+              For shoppers
             </button>
             <button
               type="button"
               onClick={() => handleVendorClick()}
               className={`ml-0.5 relative ${vendor ? "bg-purple" : "bg-transparent"} py-2 text-sm font-medium text-white whitespace-nowrap focus:outline-none w-auto px-4 sm:px-8`}
             >
-              For companies
+              For sellers
             </button>
           </div>
         </div>
