@@ -201,8 +201,15 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   };
 
   const handleVideoMediaChange = (e) => {
+    let string = e.target.value;
+    // if it is a youtube string, cut off the string that starts the video at a later time (?t=9s or &t=9s)
+    // youtube urls are either youtube.com or youtu.be
+    if (string.includes("youtu")) {
+      string = string.split("&")[0];
+      string = string.split("?")[0];
+    }
     const updatedMedia = [...media];
-    updatedMedia[e.target.dataset.idx] = e.target.value;
+    updatedMedia[e.target.dataset.idx] = string;
     setMedia(updatedMedia);
   };
 
