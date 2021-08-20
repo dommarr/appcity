@@ -16,7 +16,6 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   // drag and drop features
   const [dragIndex, setDragIndex] = useState();
-
   // price model from product fetch
   // const [priceModel, setPriceModel] = useState("");
   // form fields

@@ -268,6 +268,11 @@ input[type="search"]::-webkit-search-results-decoration {
   border-color: rgba(84, 10, 255, var(--tw-bg-opacity)) !important;
 }
 
+.react-colorful {
+  height: 8rem !important;
+  width: 8rem !important;
+}
+
 @layer utilities {
   .dotted {
     text-decoration: underline dotted;
