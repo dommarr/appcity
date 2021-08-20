@@ -92,6 +92,7 @@ module.exports = {
         "60vh": "60vh",
         "70vh": "70vh",
         "80vh": "80vh",
+        "936px": "936px",
       },
       minHeight: {
         block: "160px",
@@ -104,6 +105,10 @@ module.exports = {
         "75vh": "75vh",
         "80vh": "80vh",
         "300px": "300px",
+        "700px": "700px",
+      },
+      maxHeight: {
+        "936px": "936px",
       },
       minWidth: {
         "1/4": "25%",

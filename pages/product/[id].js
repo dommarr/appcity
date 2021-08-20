@@ -13,7 +13,7 @@ import { SRLWrapper, useLightbox } from "simple-react-lightbox-pro";
 import { Auth } from "@supabase/ui";
 import ReviewGrid from "../../components/review/reviewGrid";
 import { ArrowNarrowDownIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
-import { StarIcon } from "@heroicons/react/outline";
+import { StarIcon, HeartIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
 import { capitalizeEveryWord, capitalizeFirstWord, formatParagraph } from "../../lib/format";
 
@@ -30,6 +30,7 @@ export default function Product({ product }) {
   const [success, setSuccess] = useState(false);
   const [rating, setRating] = useState("");
   const [count, setCount] = useState("");
+  const [favorite, setFavorite] = useState(false);
   //const tierCount = useState(product.tiers.length);
   const tierCount = product.tiers.length;
 
@@ -41,6 +42,7 @@ export default function Product({ product }) {
       let tId = firstTier[0].id;
       router.push(`/product/${product.id}?tier=${tId}`, undefined, { shallow: true });
     }
+    fetchUserFavorites(user?.id);
   }, []);
 
   function compare(a, b) {
@@ -123,6 +125,34 @@ export default function Product({ product }) {
     }
   };
 
+  const fetchUserFavorites = async (id) => {
+    let { data: favorites, error } = await supabase.from("favorites").select("*").eq("user_id", id).eq("product_id", product.id);
+    if (error) {
+      throw error;
+    }
+    if (favorites?.length) {
+      setFavorite(true);
+    }
+  };
+
+  const handleFavorite = async (bool) => {
+    if (bool) {
+      const { data, error } = await supabase.from("favorites").insert([{ user_id: user.id, product_id: product.id }]);
+      if (error) {
+        throw error;
+      }
+      setFavorite(bool);
+      return;
+    } else {
+      const { data, error } = await supabase.from("favorites").delete().eq("user_id", user.id).eq("product_id", product.id);
+      if (error) {
+        throw error;
+      }
+      setFavorite(bool);
+      return;
+    }
+  };
+
   let vendorLink = product.vendors.ref_link ? product.vendors.ref_link : product.vendors.website;
   let priceLink = createPriceLink();
   let productLink = createProductLink();
@@ -184,7 +214,13 @@ export default function Product({ product }) {
         <div className="h-70vh sm:h-70vh md:h-full w-full md:w-2/5 flex flex-col justify-start items-center px-4 py-3">
           {/* Product Header - Desktop */}
           <div className="hidden md:flex flex-col justify-start items-start w-full space-y-1">
-            <h1 className="text-4xl font-bold">{product.name}</h1>
+            <div className="flex justify-between items-center w-full">
+              <h1 className="text-4xl font-bold">{product.name}</h1>
+              <HeartIcon
+                onClick={(e) => handleFavorite(!favorite)}
+                className={`h-8 w-8 hover:cursor-pointer text-pink-500 xl:mr-4 ${favorite ? "fill-current hover:fill-none" : "hover:fill-current"}`}
+              />
+            </div>
             <a target="_blank" className="flex" href={vendorLink}>
               <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
               <h4 className="ml-2 text-gray-500 hover:underline">{product.vendors.name}</h4>
