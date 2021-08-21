@@ -184,9 +184,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
 
   const handleImageMediaChange = async (e) => {
     setImageUpload(true);
-    let rand = Math.floor(Math.random() * 10000);
-    let path = `${productId}_${media.length + 1}_${rand}`;
-    let { data, error } = await supabase.storage.from("product_images").upload(path, e.target.files[0]);
+    //let rand = Math.floor(Math.random() * 10000);
+    //let path = `${productId}_${media.length + 1}_${rand}`;
+    let path = `${productId}/image_${media.length + 1}`;
+    let { data, error } = await supabase.storage.from("product_images").upload(path, e.target.files[0], {
+      upsert: true,
+    });
     if (error) {
       handleImageFailure();
       throw error;
@@ -205,8 +208,8 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     // if it is a youtube string, cut off the string that starts the video at a later time (?t=9s or &t=9s)
     // youtube urls are either youtube.com or youtu.be
     if (string.includes("youtu")) {
-      string = string.split("&")[0];
-      string = string.split("?")[0];
+      string = string.split("&t=")[0];
+      string = string.split("?t=")[0];
     }
     const updatedMedia = [...media];
     updatedMedia[e.target.dataset.idx] = string;
