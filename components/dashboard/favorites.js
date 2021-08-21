@@ -152,7 +152,7 @@ export default function Favorites({ user }) {
       setShareId(share.id);
       share.handle ? setHandle(share.handle) : "";
       share.handle ? setAcceptedHandle(share.handle) : "";
-      share.handle ? setUrl("https://www.appcity.com/s/" + share.handle) : "";
+      share.handle ? setUrl("https://www.appcity.com/u/" + share.handle) : "";
       share.display_name ? setDisplayName(share.display_name) : "";
       share.display_image ? setDisplayImage(share.display_image) : "";
       share.display_image ? setImageSet(true) : "";
@@ -407,7 +407,7 @@ export default function Favorites({ user }) {
         setHandleLoading(false);
         setHandleAccepted(true);
         setAcceptedHandle(handle);
-        let link = "https://www.appcity.com/s/" + handle;
+        let link = "https://www.appcity.com/u/" + handle;
         setUrl(link);
         setTimeout(function () {
           setHandleAccepted(false);
@@ -812,7 +812,7 @@ export default function Favorites({ user }) {
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-x-2">
                   <div className="shadow-sm flex w-full">
-                    <span className="bg-gray-50 border border-r-0 border-gray-300 px-3 inline-flex items-center text-gray-500 sm:text-sm">appcity.com/s/</span>
+                    <span className="bg-gray-50 border border-r-0 border-gray-300 px-3 inline-flex items-center text-gray-500 sm:text-sm">appcity.com/u/</span>
                     <input
                       type="text"
                       name="handle"
