@@ -3,6 +3,7 @@ import Image from "next/image";
 import Logo from "../../components/graphics/logo/Logo";
 import Link from "next/link";
 import Head from "../../components/global/head";
+import { UserCircleIcon } from "@heroicons/react/solid";
 
 export default function Share({ share, favorites }) {
   const background = (ang, one, two, three) => {
@@ -22,7 +23,7 @@ export default function Share({ share, favorites }) {
   };
 
   return (
-    <div className={`flex-none flex-col items-center justify-between py-10 px-4 min-h-screen w-screen`} style={background(share.angle, share.color_one, share.color_two, share.color_three)}>
+    <div className={`flex flex-col py-10 px-4 min-h-screen w-screen`} style={background(share.angle, share.color_one, share.color_two, share.color_three)}>
       <Head title={`${share.display_name}'s Favorite Business Apps | AppCity`} description={share.blurb} url={`https://www.appcity.com/u/${share.handle}`} />
       {favorites?.length > 0 && (
         <div className="flex flex-col items-center justify-between h-full space-y-8" style={{ color: share.text_color }}>
