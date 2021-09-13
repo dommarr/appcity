@@ -81,7 +81,7 @@ export default function HomeLayout({ apps, kits }) {
                       name="search"
                       id="search"
                       className="border border-white bg-transparent text-white placeholder-white focus:ring-0 focus:outline-none focus:ring-white focus:border-white w-full md:text-lg"
-                      placeholder="podcast, email, video, audio..."
+                      placeholder="website builder, ecommerce, newsletter..."
                       value={query}
                       onChange={(event) => setQuery(event.target.value)}
                     />

@@ -73,8 +73,8 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].product_logo ? setProductLogo(products[0].product_logo) : "";
     products[0].media ? setMedia(products[0].media) : "";
     products[0].vendors.website ? setCompanyWebsite(products[0].vendors.website) : "";
-    products[0].price_subdomain ? setPriceSubdomain(products[0].price_subdomain) : "";
-    products[0].product_subdomain ? setProductSubdomain(products[0].product_subdomain) : "";
+    products[0]?.price_subdomain ? setPriceSubdomain(products[0].price_subdomain) : "";
+    products[0]?.product_subdomain ? setProductSubdomain(products[0].product_subdomain) : "";
     products[0].industry_id ? setIndustry(products[0].industry_id) : "";
     products[0].internal_notes ? setInternalNotes(products[0].internal_notes) : "";
   };
@@ -224,10 +224,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
 
   const handlePriceLinkChange = (val) => {
     setPriceLink(val);
-    let domain = val.split("//")[1];
-    let subdomain = domain.split("/");
-    subdomain.shift();
-    setPriceSubdomain(subdomain.join("/"));
+    if (val) {
+      let domain = val.split("//")[1];
+      let subdomain = domain.split("/");
+      subdomain.shift();
+      setPriceSubdomain(subdomain.join("/"));
+    }
   };
 
   const handleProductLinkChange = (val) => {
@@ -350,9 +352,11 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                   </label>
                   <span className="italic text-sm text-gray-400">required</span>
                 </div>
-                <a target="_blank" href={priceLink} className="text-sm text-blue-600 underline pl-2">
-                  Go to price page
-                </a>
+                {priceLink && (
+                  <a target="_blank" href={priceLink} className="text-sm text-blue-600 underline pl-2">
+                    Go to price page
+                  </a>
+                )}
               </div>
               <input
                 type="url"

@@ -91,9 +91,9 @@ export default function Dashboard(props) {
     try {
       const profileData = await getProfile(props.user.id);
       if (profileData) {
-        profileData[0].vendor ? setVendor(profileData[0].vendor) : "";
-        profileData[0].admin ? setAdmin(profileData[0].admin) : "";
-        profileData[0].super_admin ? setSuperAdmin(profileData[0].super_admin) : "";
+        profileData[0]?.vendor ? setVendor(profileData[0].vendor) : "";
+        profileData[0]?.admin ? setAdmin(profileData[0].admin) : "";
+        profileData[0]?.super_admin ? setSuperAdmin(profileData[0].super_admin) : "";
       }
     } catch (error) {
       throw error;
