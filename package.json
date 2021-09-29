@@ -12,7 +12,7 @@
     "child_process": false
   },
   "dependencies": {
-    "@headlessui/react": "^0.3.1",
+    "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.1",
     "@supabase/supabase-js": "^1.22.0",
     "@supabase/ui": "^0.34.4",

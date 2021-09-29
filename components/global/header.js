@@ -5,6 +5,9 @@ import { supabase } from "../../utils/initSupabase";
 import { Auth } from "@supabase/ui";
 import Logo from "../graphics/logo/Logo";
 import LogoLight from "../graphics/logo/LogoLight";
+import BugPopover from "./bugPopover";
+import Bug from "../graphics/bug";
+import BugModal from "./bugModal";
 
 const appName = "AppCity";
 const links = [
@@ -24,10 +27,12 @@ const links = [
     icon: "M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222",
   },
 ];
+
 export default function Header(props) {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfileMenu, setProfileMenu] = useState(false);
   const { user, session } = Auth.useUser();
+  const [open, setOpen] = useState(false);
 
   return (
     <div className={`select-none ${props.style === "dark" ? "bg-purple-extradark" : ""} ${props.style === "light" ? "bg-white" : ""} ${props.style === "trans" ? "bg-transparent" : ""} relative z-10`}>
@@ -43,7 +48,13 @@ export default function Header(props) {
             </a>
           </Link>
         </div>
-        <div className="-mr-2 -my-2 md:hidden">
+
+        <div className="-mr-2 -my-2 md:hidden flex space-x-2 items-center">
+          <div onClick={() => setOpen(true)}>
+            <Bug size={30} color={`${props.style === "dark" || props.style === "trans" ? "text-white hover:text-gray-200 cursor-pointer" : "text-gray-500 hover:text-gray-900 cursor-pointer"}`} />
+          </div>
+
+          <BugModal open={open} setOpen={setOpen} />
           <button
             type="button"
             className={`${props.style === "dark" ? "bg-purple-extradark text-white hover:text-gray-200 hover:bg-purple-dark" : ""} ${
@@ -67,11 +78,12 @@ export default function Header(props) {
             ))}
           </nav>
           <div className="flex items-center md:ml-12">
+            <BugPopover caption="Report a bug." color={`${props.style === "dark" || props.style === "trans" ? "text-white hover:text-gray-200" : "text-gray-500 hover:text-gray-900"}`} />
             {/* if not signed in, show sign in and sign up */}
             {!user && (
               <>
                 <Link href={{ pathname: `/profile`, query: { view: "magic_link" } }}>
-                  <a className={`${props.style === "dark" || props.style === "trans" ? "text-white hover:text-gray-200" : "text-gray-500 hover:text-gray-900"} text-base font-medium`}>Sign in</a>
+                  <a className={`${props.style === "dark" || props.style === "trans" ? "text-white hover:text-gray-200" : "text-gray-500 hover:text-gray-900"} ml-8 text-base font-medium`}>Sign in</a>
                 </Link>
                 <Link href={{ pathname: `/profile`, query: { view: "sign_up" } }}>
                   <a
