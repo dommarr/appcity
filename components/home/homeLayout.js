@@ -175,15 +175,10 @@ export default function HomeLayout({ apps, kits }) {
                   <Link href={`/product/${id}`} key={idx}>
                     <a>
                       <div className="col-span-1 flex items-center py-8 px-8 bg-gray-50 space-x-4 h-full">
-                        <Image
-                          src={vendors.logo}
-                          alt={name}
-                          placeholder="blur"
-                          //blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8+uX7fwAJpwPh3jeWxAAAAABJRU5ErkJggg=="
-                          blurDataURL={`/_next/image?url=${vendors.logo}&w=16&q=1`}
-                          width={100}
-                          height={100}
-                        />
+                        <div className="relative h-24 w-24">
+                          <Image src={vendors.logo} alt={name} placeholder="blur" blurDataURL={`/_next/image?url=${vendors.logo}&w=16&q=1`} layout="fill" objectFit="contain" />
+                        </div>
+
                         <div className="flex flex-col space-y-1">
                           <h5 className="text-xl font-medium">{name}</h5>
                           <div className="flex flex-wrap overflow-hidden">

@@ -16,6 +16,7 @@ import { ArrowNarrowDownIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/
 import { StarIcon, HeartIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
 import { capitalizeEveryWord, capitalizeFirstWord, formatParagraph } from "../../lib/format";
+import HeartTooltip from "../../components/global/heartTooltip";
 
 const Lightbox = (props) => {
   return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
@@ -216,10 +217,13 @@ export default function Product({ product }) {
           <div className="hidden md:flex flex-col justify-start items-start w-full space-y-1">
             <div className="flex justify-between items-center w-full">
               <h1 className="text-4xl font-bold">{product.name}</h1>
-              <HeartIcon
-                onClick={(e) => handleFavorite(!favorite)}
-                className={`h-8 w-8 hover:cursor-pointer text-pink-500 xl:mr-4 ${favorite ? "fill-current hover:fill-none" : "hover:fill-current"}`}
-              />
+              {user && (
+                <HeartIcon
+                  onClick={(e) => handleFavorite(!favorite)}
+                  className={`h-8 w-8 hover:cursor-pointer text-pink-500 xl:mr-4 ${favorite ? "fill-current hover:fill-none" : "hover:fill-current"}`}
+                />
+              )}
+              {!user && <HeartTooltip caption={"Sign in to favorite this app."} />}
             </div>
             <a target="_blank" className="flex" href={vendorLink}>
               <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
