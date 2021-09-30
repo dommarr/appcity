@@ -5,6 +5,7 @@ import FormTip from "./formTip";
 import { MinusCircleIcon, UserAddIcon } from "@heroicons/react/solid";
 import Iframe from "../iFrame";
 import Select from "react-select";
+import { Switch } from "@headlessui/react";
 
 export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin, updateTierPriceUnits, fetchTierIds, user }) {
   // form loading
@@ -29,6 +30,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [productSubdomain, setProductSubdomain] = useState("");
   const [industry, setIndustry] = useState("");
   const [internalNotes, setInternalNotes] = useState("");
+  const [allPriorFeaturesOff, setAllPriorFeaturesOff] = useState(false);
   // edit internal notes show/hide
   const [editNotes, setEditNotes] = useState(false);
   // image upload states
@@ -77,6 +79,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0]?.product_subdomain ? setProductSubdomain(products[0].product_subdomain) : "";
     products[0].industry_id ? setIndustry(products[0].industry_id) : "";
     products[0].internal_notes ? setInternalNotes(products[0].internal_notes) : "";
+    products[0].turn_off_all_prior ? setAllPriorFeaturesOff(products[0].turn_off_all_prior) : "";
   };
 
   const updateDynamic = async (product_id, pricing_page_link) => {
@@ -123,6 +126,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         industry_id: industry,
         last_updated_by: user.email,
         internal_notes: internalNotes,
+        turn_off_all_prior: allPriorFeaturesOff,
       })
       .eq("id", productId);
     if (error) {
@@ -184,8 +188,6 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
 
   const handleImageMediaChange = async (e) => {
     setImageUpload(true);
-    //let rand = Math.floor(Math.random() * 10000);
-    //let path = `${productId}_${media.length + 1}_${rand}`;
     let path = `${productId}/image_${media.length + 1}`;
     let { data, error } = await supabase.storage.from("product_images").upload(path, e.target.files[0], {
       upsert: true,
@@ -598,6 +600,27 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                 </div>
               </>
             )}
+            <div className="col-span-4 lg:col-span-2">
+              <label htmlFor="allPriorFeaturesOff" className="block text-sm font-medium text-gray-700">
+                Turn off "All prior features, plus..."
+              </label>
+              <span className="text-sm text-gray-400">Flip this on when a tier doesn't include all the features of the prior plan. </span>
+              <div className="flex flex-col sm:flex-row items-center justify-around p-2">
+                <Switch
+                  checked={allPriorFeaturesOff}
+                  onChange={setAllPriorFeaturesOff}
+                  className={`${allPriorFeaturesOff ? "bg-blue-600" : "bg-gray-200"} relative inline-flex items-center h-6 rounded-full w-11`}
+                >
+                  <span className="sr-only">Turn off "All prior features, plus..."</span>
+                  <span className={`${allPriorFeaturesOff ? "translate-x-6" : "translate-x-1"} inline-block w-4 h-4 transform bg-white rounded-full`} />
+                </Switch>
+                <img
+                  height={200}
+                  width={300}
+                  src="https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/turn_off_all_prior_features_plus.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy90dXJuX29mZl9hbGxfcHJpb3JfZmVhdHVyZXNfcGx1cy5qcGciLCJpYXQiOjE2MzMwMzQyNDAsImV4cCI6MTk0ODM5NDI0MH0.l9l51zuTYKlIMjSnCCJUJQkGtGxIn7GhSdzc0h5URjU"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">

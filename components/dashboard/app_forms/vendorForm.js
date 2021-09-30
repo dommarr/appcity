@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../../utils/initSupabase";
 import Loading from "../cardLoading";
 import FormTip from "./formTip";
+import { Loader } from "react-feather";
 
 export default function VendorForm({ vendorId, superAdmin, user }) {
   const [loading, setLoading] = useState(true);
@@ -15,6 +16,10 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
   const [refLink, setRefLink] = useState("");
   // video tips
   const [logoTip, setLogoTip] = useState(false);
+  // logo upload
+  const [logoState, setLogoState] = useState("none");
+  // const [logoSuccess, setLogoSuccess] = useState(false);
+  // const [logoFailure, setLogoFailure] = useState(false);
 
   // Fetch on load
   useEffect(() => {
@@ -63,6 +68,45 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
     setTimeout(function () {
       setMessage("");
     }, 2000);
+  };
+
+  const signUrl = async (path) => {
+    let { data, error } = await supabase.storage.from("logos").createSignedUrl(path, 283824000);
+    if (error) {
+      throw error;
+    }
+    return data.signedURL;
+  };
+
+  const handleLogoChange = async (e) => {
+    setLogoState("uploading");
+    let path = `${vendorId}/${vendorName}_logo`;
+    let { data, error } = await supabase.storage.from("logos").upload(path, e.target.files[0], {
+      upsert: true,
+    });
+    if (error) {
+      handleLogoFailure();
+      throw error;
+    }
+    if (data) {
+      let url = await signUrl(path);
+      handleLogoSuccess(url);
+    }
+  };
+
+  const handleLogoSuccess = (url) => {
+    setLogoState("success");
+    setLogo(url);
+    setTimeout(function () {
+      setLogoState("none");
+    }, 3000);
+  };
+
+  const handleLogoFailure = () => {
+    setLogoState("failure");
+    setTimeout(function () {
+      setLogoState("none");
+    }, 3000);
   };
 
   if (loading) return <Loading />;
@@ -119,15 +163,26 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
                   Get logo
                 </a>
               </div>
-              <input
-                type="url"
-                name="logo"
-                id="logo"
-                placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
-                value={logo}
-                onChange={(e) => setLogo(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-              />
+              <div className="flex flex-col space-y-3">
+                <input
+                  type="url"
+                  name="logo"
+                  id="logo"
+                  placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
+                  value={logo}
+                  onChange={(e) => setLogo(e.target.value)}
+                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                />
+                {logoState === "none" && <input type="file" onChange={handleLogoChange} className="block w-full focus:outline-none focus:ring-gray-900 focus:border-gray-900 text-xs" />}
+                {logoState === "uploading" && (
+                  <div className="text-purple px-4">
+                    <Loader className="h-5 w-5 animate-spin" />
+                  </div>
+                )}
+                {logoState === "success" && <span className={`flex items-center text-green-600 text-sm`}>Image uploaded successfully.</span>}
+                {logoState === "failure" && <span className={`flex items-center text-red-600 text-sm`}>There was an error. Please try again.</span>}
+              </div>
+
               <FormTip video_id="413844e4d9274c9e9af740e53d45dc74" />
             </div>
             {superAdmin && (

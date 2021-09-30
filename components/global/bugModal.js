@@ -69,7 +69,7 @@ export default function Modal({ open, setOpen }) {
                       Report a bug
                     </label>
                     <span id="bug-description" className="text-sm text-gray-500">
-                      We appreciate your feedback. It helps!
+                      We appreciate your feedback.
                     </span>
                     <div className="mt-1">
                       <textarea

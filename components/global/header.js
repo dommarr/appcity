@@ -78,7 +78,7 @@ export default function Header(props) {
             ))}
           </nav>
           <div className="flex items-center md:ml-12">
-            <BugPopover caption="Report a bug." color={`${props.style === "dark" || props.style === "trans" ? "text-white hover:text-gray-200" : "text-gray-500 hover:text-gray-900"}`} />
+            <BugPopover caption="Report a bug" color={`${props.style === "dark" || props.style === "trans" ? "text-white hover:text-gray-200" : "text-gray-500 hover:text-gray-900"}`} />
             {/* if not signed in, show sign in and sign up */}
             {!user && (
               <>
