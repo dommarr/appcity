@@ -17,7 +17,7 @@ export default function Footer({ children, dark }) {
                 <ul className="mt-4 space-y-4">
                   <li>
                     <Link href="/about">
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For creators</a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For software buyers</a>
                     </Link>
                   </li>
                   <li>
@@ -27,7 +27,7 @@ export default function Footer({ children, dark }) {
                         query: { customer: "vendor" },
                       }}
                     >
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For app developers</a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For software developers</a>
                     </Link>
                   </li>
                 </ul>
@@ -218,7 +218,7 @@ export default function Footer({ children, dark }) {
               </svg>
             </a>
           </div> */}
-          <p className={`mt-8 text-base ${dark ? "text-gray-200" : "text-gray-400"} md:mt-0 md:order-1`}>&copy; 2021 AppCity, Inc. All rights reserved.</p>
+          <p className={`mt-8 text-base ${dark ? "text-gray-200" : "text-gray-400"} md:mt-0 md:order-1`}>&copy; 2021 AppCity, LLC. All rights reserved.</p>
         </div>
       </div>
       {children}

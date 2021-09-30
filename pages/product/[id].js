@@ -158,6 +158,8 @@ export default function Product({ product }) {
   let priceLink = createPriceLink();
   let productLink = createProductLink();
 
+  console.log(product);
+
   return (
     <>
       <Banner />
@@ -251,9 +253,7 @@ export default function Product({ product }) {
           </div>
           <div className="flex flex-col items-center justify-around h-full w-full">
             <div className="flex flex-col items-center justify-start w-full mt-3">
-              {product.tiers.length > 1 && (
-                <h2 className={`text-2xl font-medium ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : capitalizeEveryWord(tier.name)}</h2>
-              )}
+              {product.tiers.length > 1 && <h2 className={`text-2xl font-medium ${tier === null ? "animate-bounce md:mt-40" : ""}`}>{tier === null ? "Select a tier..." : tier.name}</h2>}
               {product.tiers.length === 1 && <div className="text-2xl font-medium">{product.name}</div>}
               <div className="flex flex-col space-y-2 items-center mt-1 xl:w-9/12">
                 {tier?.description && <p className="text-gray-500 text-sm text-center w-full">{formatParagraph(tier.description)}</p>}
@@ -303,7 +303,7 @@ export default function Product({ product }) {
                               router.push(`/product/${product.id}?tier=${obj.id}`, undefined, { shallow: true });
                             }}
                           >
-                            {capitalizeEveryWord(obj.name)}
+                            {obj.name}
                           </button>
                         ))}
                     </div>
@@ -406,7 +406,7 @@ export default function Product({ product }) {
                       xlCols
                     )}`}
                   >
-                    {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{capitalizeEveryWord(obj.name)}</h3>}
+                    {product.tiers.length > 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{obj.name}</h3>}
                     {product.tiers.length === 1 && <h3 className="text-lg leading-6 font-medium text-gray-900 text-center">{product.name}</h3>}
                     {obj?.description && <p className="text-gray-500 text-sm text-center">{formatParagraph(obj.description)}</p>}
                   </div>
@@ -518,7 +518,7 @@ export default function Product({ product }) {
                     <div className={`bg-white ${lgCols === 2 ? "xl:mx-10" : ""} ${lgCols === 1 ? "xl:mx-72 lg:mx-64 md:mx-36" : ""} mb-4 px-6 py-4 border-l border-r border-b border-gray-200 h-full`}>
                       <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">Features</h3>
                       <ul className="mt-6 space-y-4">
-                        {index > 0 && (
+                        {index > 0 && !product.turn_off_all_prior && (
                           <li className="flex space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 h-5 w-5 text-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
