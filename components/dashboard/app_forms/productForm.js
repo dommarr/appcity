@@ -7,7 +7,7 @@ import Iframe from "../iFrame";
 import Select from "react-select";
 import { Switch } from "@headlessui/react";
 
-export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin, updateTierPriceUnits, fetchTierIds, user }) {
+export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin, updateTierPriceUnits, user, customUnit, setCustomUnit }) {
   // form loading
   const [loading, setLoading] = useState(true);
   // form submission states
@@ -80,6 +80,13 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].industry_id ? setIndustry(products[0].industry_id) : "";
     products[0].internal_notes ? setInternalNotes(products[0].internal_notes) : "";
     products[0].turn_off_all_prior ? setAllPriorFeaturesOff(products[0].turn_off_all_prior) : "";
+    products[0].custom_unit ? setCustomUnit(products[0].custom_unit) : "";
+    if (products[0].price_model === "per-user" && !products[0].custom_unit) {
+      setCustomUnit("user");
+    }
+    if (products[0].price_model === "per-project" && !products[0].custom_unit) {
+      setCustomUnit("project");
+    }
   };
 
   const updateDynamic = async (product_id, pricing_page_link) => {
@@ -127,6 +134,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         last_updated_by: user.email,
         internal_notes: internalNotes,
         turn_off_all_prior: allPriorFeaturesOff,
+        custom_unit: customUnit,
       })
       .eq("id", productId);
     if (error) {
@@ -244,7 +252,12 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
 
   const handlePriceModelChange = (val) => {
     setPriceModel(val);
-    fetchTierIds();
+    if (val === "per-user") {
+      setCustomUnit("user");
+    }
+    if (val === "per-project") {
+      setCustomUnit("project");
+    }
   };
 
   const handleDrag = (e) => {
@@ -372,30 +385,60 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               <FormTip video_id="d5ef42a2ab1d413689ee584bf7370f79" />
             </div>
             <div className="col-span-4 lg:col-span-2">
-              <div className="flex space-x-2">
-                <label htmlFor="priceModel" className="block text-sm font-medium text-gray-700">
-                  Pricing model
-                </label>
-                <span className="italic text-sm text-gray-400">required</span>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2 lg:col-span-1">
+                  <div className="flex space-x-2">
+                    <label htmlFor="priceModel" className="block text-sm font-medium text-gray-700">
+                      Pricing model
+                    </label>
+                    <span className="italic text-sm text-gray-400">required</span>
+                  </div>
+                  <select
+                    type="text"
+                    name="priceModel"
+                    id="priceModel"
+                    placeholder="Flat-rate pricing"
+                    value={priceModel}
+                    onChange={(e) => handlePriceModelChange(e.target.value)}
+                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  >
+                    <option hidden disabled selected value>
+                      -- select an option --
+                    </option>
+                    <option value="custom">Custom pricing</option>
+                    <option value="flat-rate">Flat-rate pricing</option>
+                    <option value="one-time">One-time payment</option>
+                    <option value="per-user">Per-user pricing</option>
+                    <option value="per-project">Per-project pricing</option>
+                    <option value="quote">Quote pricing</option>
+                    <option value="revenue-fee">Revenue-fee pricing</option>
+                    <option value="usage-based">Usage-based pricing</option>
+                  </select>
+                </div>
+                <div className="col-span-2 lg:col-span-1">
+                  {(priceModel === "per-user" || priceModel === "per-project") && (
+                    <>
+                      <div className="flex space-x-2">
+                        <label htmlFor="customUnit" className="block text-sm font-medium text-gray-700">
+                          Custom unit
+                        </label>
+                        <span className="italic text-sm text-gray-400">optional</span>
+                      </div>
+                      <input
+                        type="text"
+                        name="customUnit"
+                        id="customUnit"
+                        placeholder="user"
+                        value={customUnit}
+                        onChange={(e) => setCustomUnit(e.target.value)}
+                        className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                      />
+                      <span className="italic text-sm text-gray-400">per {customUnit} per month</span>
+                    </>
+                  )}
+                </div>
               </div>
-              <select
-                type="text"
-                name="priceModel"
-                id="priceModel"
-                placeholder="Flat-rate pricing"
-                value={priceModel}
-                onChange={(e) => handlePriceModelChange(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-              >
-                <option hidden disabled selected value>
-                  -- select an option --
-                </option>
-                <option value="per-user">Per-user pricing</option>
-                <option value="usage-based">Usage-based pricing</option>
-                <option value="flat-rate">Flat-rate pricing</option>
-                <option value="revenue-fee">Revenue-fee pricing</option>
-                <option value="one-time">One-time payment</option>
-              </select>
+
               <FormTip video_id="c14acb3e5f1e41ddbbac81d0eb9b22d1" />
             </div>
             <div className="col-span-4 lg:col-span-2">

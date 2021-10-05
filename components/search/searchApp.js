@@ -317,7 +317,7 @@ export default class SearchApp extends React.Component {
                       )}
                     </RefinementBlock>
                     <RefinementBlock header="Category">
-                      {this.props.searchState.query && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} showMore />}
+                      {this.props.searchState.query && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore />}
                     </RefinementBlock>
                     <RefinementBlock header="Industry" tooltip="Many apps are general use, others are built for a specific industry.">
                       {this.props.searchState.query && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}

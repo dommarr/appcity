@@ -3,8 +3,9 @@ import { supabase } from "../../../utils/initSupabase";
 import Loading from "../cardLoading";
 import FormTip from "./formTip";
 import { MinusCircleIcon } from "@heroicons/react/solid";
+import { connectScrollTo } from "react-instantsearch-core";
 
-export default function TierForm({ tierNum, tierId, productId, updateFeatures, priceModel, fetchTierIds, user }) {
+export default function TierForm({ tierNum, tierId, productId, updateFeatures, priceModel, fetchTierIds, user, refreshTiers }) {
   // form loading
   const [loading, setLoading] = useState(true);
   // form submission states
@@ -16,8 +17,6 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   // drag and drop features
   const [dragIndex, setDragIndex] = useState();
-  // price model from product fetch
-  // const [priceModel, setPriceModel] = useState("");
   // form fields
   const [tierName, setTierName] = useState("");
   const [tierNumber, setTierNumber] = useState("");
@@ -42,19 +41,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
   // Fetch on load
   useEffect(() => {
     setLoading(true);
-    // fetchPriceModel(productId);
     fetchTierData(tierId);
     setLoading(false);
-  }, [tierId]);
-
-  // const fetchPriceModel = async (product_id) => {
-  //   let { data: products, error } = await supabase.from("products").select("*").eq("id", product_id);
-  //   if (error) {
-  //     throw error;
-  //   }
-  //   products[0].price_model ? setPriceModel(products[0].price_model) : "";
-  //   console.log(priceModel);
-  // };
+  }, [tierId, priceModel, refreshTiers]);
 
   const fetchTierData = async (tier_id) => {
     let { data: tiers, error } = await supabase.from("tiers").select("*").eq("id", tier_id);
@@ -69,9 +58,7 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     // primary price
     tiers[0].price_primary_number_month || tiers[0].price_primary_number_month === 0 ? setPricePrimaryNumberMonth(tiers[0].price_primary_number_month) : "";
     tiers[0].price_primary_number_year || tiers[0].price_primary_number_year === 0 ? setPricePrimaryNumberYear(tiers[0].price_primary_number_year) : "";
-
     tiers[0].price_primary_number_year || tiers[0].price_primary_number_year === 0 ? setTotalAnnualPrice(tiers[0].price_primary_number_year * 12) : "";
-
     tiers[0].price_primary_text_month ? setPricePrimaryTextMonth(tiers[0].price_primary_text_month) : "";
     tiers[0].price_primary_text_year ? setPricePrimaryTextYear(tiers[0].price_primary_text_year) : "";
     // tiers[0].price_primary_unit_month ? setPricePrimaryUnitMonth(tiers[0].price_primary_unit_month) : "";
@@ -454,7 +441,33 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
               </>
             )}
 
-            {priceModel !== "revenue-fee" && priceModel !== "one-time" && (
+            {(priceModel === "custom" || priceModel === "quote") && (
+              <>
+                <div className="col-span-4 lg:col-span-2 flex flex-col">
+                  <div className="flex space-x-2">
+                    <label htmlFor="pricePrimaryTextYear" className="block text-sm font-medium text-gray-700">
+                      {priceModel === "custom" ? "Custom pricing" : "Quote pricing"}
+                    </label>
+                    <span className="italic text-sm text-gray-400">required</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      name="pricePrimaryTextYear"
+                      id="pricePrimaryTextYear"
+                      placeholder="Upon request"
+                      value={pricePrimaryTextYear}
+                      disabled
+                      className="cursor-not-allowed mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                  </div>
+                  <FormTip video_id="9c67988816354e4895cffc0be2209d7c" />
+                </div>
+                <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
+              </>
+            )}
+
+            {["usage-based", "per-user", "per-project", "flat-rate"].includes(priceModel) && (
               <>
                 <div className="col-span-4 lg:col-span-2 flex flex-col">
                   <div className="flex space-x-2">
