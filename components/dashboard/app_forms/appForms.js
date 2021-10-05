@@ -15,8 +15,10 @@ export default function Task({ pId, user, task }) {
   const [vendorId, setVendorId] = useState();
   const [tierIds, setTierIds] = useState([]);
   const [priceModel, setPriceModel] = useState();
+  const [customUnit, setCustomUnit] = useState("");
   //const [complete, setComplete] = useState(false);
   const [superAdmin, setSuperAdmin] = useState(false);
+  const [refreshTiers, setRefreshTiers] = useState(0);
 
   // Fetch on load
   useEffect(() => {
@@ -96,11 +98,28 @@ export default function Task({ pId, user, task }) {
 
   const handleAddTier = async () => {
     let unit = "";
+    if (priceModel === "custom") {
+      unit = "see app website for details";
+    }
+    if (priceModel === "quote") {
+      unit = "contact developer for a quote";
+    }
+    if (priceModel === "per-project") {
+      if (customUnit === "") {
+        unit = "per project per month";
+      } else {
+        unit = `per ${customUnit} per month`;
+      }
+    }
     if (priceModel === "flat-rate") {
       unit = "per month";
     }
     if (priceModel === "per-user") {
-      unit = "per user per month";
+      if (customUnit === "") {
+        unit = "per user per month";
+      } else {
+        unit = `per ${customUnit} per month`;
+      }
     }
     if (priceModel === "usage-based") {
       unit = "per month (starting)";
@@ -125,11 +144,28 @@ export default function Task({ pId, user, task }) {
 
   const updateTierPriceUnits = async (model) => {
     let unit = "";
+    if (model === "custom") {
+      unit = "see app website for details";
+    }
+    if (model === "quote") {
+      unit = "contact developer for a quote";
+    }
+    if (model === "per-project") {
+      if (customUnit === "") {
+        unit = "per project per month";
+      } else {
+        unit = `per ${customUnit} per month`;
+      }
+    }
     if (model === "flat-rate") {
       unit = "per month";
     }
     if (model === "per-user") {
-      unit = "per user per month";
+      if (customUnit === "") {
+        unit = "per user per month";
+      } else {
+        unit = `per ${customUnit} per month`;
+      }
     }
     if (model === "usage-based") {
       unit = "per month (starting)";
@@ -137,7 +173,7 @@ export default function Task({ pId, user, task }) {
     if (model === "revenue-fee") {
       unit = "of revenue";
     }
-    if (priceModel === "one-time") {
+    if (model === "one-time") {
       unit = "one-time payment";
     }
     let updateObj = {
@@ -145,11 +181,27 @@ export default function Task({ pId, user, task }) {
       price_primary_unit_month: unit,
       last_updated_by: user.email,
     };
+    if (model === "custom") {
+      updateObj.price_primary_text_month = "Custom";
+      updateObj.price_primary_text_year = "Custom";
+      updateObj.price_primary_number_month = null;
+      updateObj.price_primary_number_year = null;
+    }
+    if (model === "quote") {
+      updateObj.price_primary_text_month = "Upon request";
+      updateObj.price_primary_text_year = "Upon request";
+      updateObj.price_primary_number_month = null;
+      updateObj.price_primary_number_year = null;
+    }
+
     const { data, error } = await supabase.from("tiers").update(updateObj).in("id", tierIds);
     if (error) {
       throw error;
     }
     if (data) {
+      setTimeout(function () {
+        setRefreshTiers(refreshTiers + 1);
+      }, 2000);
       return;
     }
   };
@@ -168,14 +220,27 @@ export default function Task({ pId, user, task }) {
           setPriceModel={setPriceModel}
           updateTierPriceUnits={updateTierPriceUnits}
           superAdmin={superAdmin}
-          fetchTierIds={fetchTierIds}
           user={user}
+          customUnit={customUnit}
+          setCustomUnit={setCustomUnit}
         />
       )}
       {productId && vendorId && superAdmin && <CategoryForm productId={productId} />}
       {tierIds &&
         tierIds.map((tierId, idx) => {
-          return <TierForm key={idx} tierNum={idx + 1} tierId={tierId} productId={productId} updateFeatures={updateFeatures} priceModel={priceModel} fetchTierIds={fetchTierIds} user={user} />;
+          return (
+            <TierForm
+              key={idx}
+              tierNum={idx + 1}
+              tierId={tierId}
+              productId={productId}
+              updateFeatures={updateFeatures}
+              priceModel={priceModel}
+              fetchTierIds={fetchTierIds}
+              user={user}
+              refreshTiers={refreshTiers}
+            />
+          );
         })}
       <div className="flex flex-col max-w-sm">
         <div>
