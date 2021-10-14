@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { supabase } from "../../utils/initSupabase";
 import { isMobile } from "react-device-detect";
 import ReviewRecorder from "./reviewRecorder";
+import Review from "./review";
 
 const fetcher = async (id) => {
   try {
@@ -115,30 +116,7 @@ export default function ReviewGrid(props) {
                 },
               ],
             };
-            return (
-              <li key={review.id} className="col-span-1 flex flex-col bg-white border shadow divide-y divide-gray-200">
-                <div className="flex-1 flex flex-col">
-                  <video controls className="object-fill bg-purple-extradark w-full" poster={review.poster}>
-                    <source src={review.file} type="video/mp4" />
-                  </video>
-                  <div className="flex flex-col justify-start items-center py-4 px-2 space-y-2 h-full">
-                    <div className="flex justify-center items-center">
-                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 0 ? "fill-current" : ""}`} />
-                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 1 ? "fill-current" : ""}`} />
-                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 2 ? "fill-current" : ""}`} />
-                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 3 ? "fill-current" : ""}`} />
-                      <StarIcon className={`h-7 w-7 text-purple ${review.rating > 4 ? "fill-current" : ""}`} />
-                    </div>
-                    <div className="flex flex-col justify-center items-center h-full space-y-2">
-                      <div className="text-lg font-medium text-center">{review.title}</div>
-                      <div className="text-center text-sm">
-                        - {review.first_name} {review.last_name}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            );
+            return <Review key={review.id} review={review} />;
           })}
       </ul>
     </>
