@@ -43,7 +43,9 @@ export default function Product({ product }) {
       let tId = firstTier[0].id;
       router.push(`/product/${product.id}?tier=${tId}`, undefined, { shallow: true });
     }
-    fetchUserFavorites(user?.id);
+    if (user) {
+      fetchUserFavorites(user?.id);
+    }
   }, []);
 
   function compare(a, b) {
@@ -157,8 +159,6 @@ export default function Product({ product }) {
   let vendorLink = product.vendors.ref_link ? product.vendors.ref_link : product.vendors.website;
   let priceLink = createPriceLink();
   let productLink = createProductLink();
-
-  console.log(product);
 
   return (
     <>

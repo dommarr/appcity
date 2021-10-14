@@ -4,6 +4,7 @@ import { VideoCameraIcon } from "@heroicons/react/solid";
 import { StarIcon, SupportIcon, XCircleIcon } from "@heroicons/react/outline";
 import Tooltip from "../global/tooltip";
 import Link from "next/link";
+import TagButton from "./tagButton";
 
 export default function MobileRecorder({ user, product, setReview, setSuccess, handleClose }) {
   const [video, setVideo] = useState("");
@@ -16,10 +17,15 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
   const [failure, setFailure] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [uploading, setUploading] = useState(false);
+  // tagging
+  const [tags, setTags] = useState([]);
+  const [tagArray, setTagArray] = useState([]);
 
   // Fetch on load
   useEffect(async () => {
     if (user) {
+      let tags = await fetchTags();
+      setTags(tags);
       let profile = await fetchProfile(user.id);
       if (profile[0].first_name) {
         setFirstName(profile[0].first_name);
@@ -29,6 +35,14 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
       }
     }
   }, []);
+
+  const fetchTags = async () => {
+    let { data: tags, error } = await supabase.from("tags").select("*");
+    if (error) {
+      throw error;
+    }
+    return tags;
+  };
 
   const fetchProfile = async (user_id) => {
     let { data: users, error } = await supabase.from("users").select("*").eq("id", user_id);
@@ -137,12 +151,44 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
       video_available: true,
     };
     let review = await createReview(reviewObj);
+    let tagInsertArray = createTagInsertArray(review[0].id);
+    let tagResponse = await handleTagInsert(tagInsertArray);
     setUploading(false);
     setReview(false);
     setSuccess(true);
     setTimeout(() => {
       setSuccess(false);
     }, 4000);
+  };
+
+  const addTag = (tagId) => {
+    let updatedTagArray = [...tagArray, tagId];
+    setTagArray(updatedTagArray);
+  };
+
+  const removeTag = (tagId) => {
+    let updatedTagArray = tagArray.filter((tag) => tag !== tagId);
+    setTagArray(updatedTagArray);
+  };
+
+  const createTagInsertArray = (reviewId) => {
+    let insertArray = [];
+    tagArray.forEach((element) => {
+      let obj = {
+        review_id: reviewId,
+        tag_id: element,
+      };
+      insertArray.push(obj);
+    });
+    return insertArray;
+  };
+
+  const handleTagInsert = async (arr) => {
+    const { data, error } = await supabase.from("reviews_tags").insert(arr);
+    if (error) {
+      throw error;
+    }
+    return data;
   };
 
   if (!user)
@@ -235,6 +281,41 @@ export default function MobileRecorder({ user, product, setReview, setSuccess, h
                   required
                   className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 />
+              </div>
+              <div className="col-span-4 space-y-2 max-w-md">
+                <div className="flex space-x-2 items-center">
+                  <label htmlFor="tags" className="block text-md font-medium text-gray-700">
+                    Tags
+                  </label>
+                  <span className="italic text-sm text-gray-400">optional</span>
+                </div>
+
+                <div className="flex flex-col space-y-2 items-center">
+                  <div className="-mt-1 -mx-1 flex flex-wrap items-center justify-center">
+                    {tags &&
+                      tags
+                        .filter((tag) => tag.type === "neutral")
+                        .map((tag) => {
+                          return <TagButton key={tag.id} tag={tag} add={addTag} remove={removeTag} />;
+                        })}
+                  </div>
+                  <div className="-mt-1 -mx-1 flex flex-wrap items-center justify-center">
+                    {tags &&
+                      tags
+                        .filter((tag) => tag.type === "positive")
+                        .map((tag) => {
+                          return <TagButton key={tag.id} tag={tag} add={addTag} remove={removeTag} />;
+                        })}
+                  </div>
+                  <div className="-mt-1 -mx-1 flex flex-wrap items-center justify-center">
+                    {tags &&
+                      tags
+                        .filter((tag) => tag.type === "negative")
+                        .map((tag) => {
+                          return <TagButton key={tag.id} tag={tag} add={addTag} remove={removeTag} />;
+                        })}
+                  </div>
+                </div>
               </div>
 
               {recorded && (
