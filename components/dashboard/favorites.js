@@ -6,13 +6,12 @@ import Link from "next/link";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon, MinusCircleIcon, XIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { ClipboardCheckIcon, ExternalLinkIcon, PlusIcon, HeartIcon } from "@heroicons/react/outline";
 import { ArrowUpLeft, ArrowUp, ArrowUpRight, ArrowRight, ArrowDownRight, ArrowDown, ArrowDownLeft, ArrowLeft, Circle, Loader, Maximize, Minimize, User } from "react-feather";
-import { capitalizeEveryWord, capitalizeFirstWord, formatParagraph } from "../../lib/format";
 import Select from "react-select";
 import { Switch } from "@headlessui/react";
 import { HexColorPicker } from "react-colorful";
 import QuestionMarkTooltip from "../global/questionMarkTooltip";
 
-export default function Favorites({ user }) {
+export default function Favorites({ user, saved, setSaved, saving, setSaving }) {
   const [profile, setProfile] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [products, setProducts] = useState([]);
@@ -52,8 +51,6 @@ export default function Favorites({ user }) {
   const [handleTime, setHandleTime] = useState("");
   const [favoriteTime, setFavoriteTime] = useState("");
   const [shareTime, setShareTime] = useState("");
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   // image
   const [imageUploading, setImageUploading] = useState(false);
   const [imageSuccess, setImageSuccess] = useState(false);
@@ -400,6 +397,7 @@ export default function Favorites({ user }) {
           setHandleRejected(true);
           setTimeout(function () {
             setHandleRejected(false);
+            setHandle(acceptedHandle);
           }, 3000);
           return;
         }
@@ -412,11 +410,17 @@ export default function Favorites({ user }) {
         setTimeout(function () {
           setHandleAccepted(false);
         }, 3000);
-        handleSaveShare();
+        handleSaveShare(handle);
         return;
       }
     }
   };
+
+  // Steps:
+  // handleHandleChange
+  // checkHandleAvailability
+  // handleSaveShare
+  // saveShare
 
   const handleHandleChange = async () => {
     setHandleAccepted(false);
@@ -459,9 +463,9 @@ export default function Favorites({ user }) {
     setFavoriteTime(time);
   };
 
-  const saveShare = async () => {
+  const saveShare = async (passed_handle) => {
     let obj = {
-      handle: acceptedHandle,
+      handle: passed_handle ? passed_handle : acceptedHandle,
       display_name: displayName,
       header_link: headerLink,
       blurb: blurb,
@@ -507,11 +511,11 @@ export default function Favorites({ user }) {
     }
   };
 
-  const handleSaveShare = () => {
+  const handleSaveShare = (passed_handle) => {
     setSaved(false);
     setSaving(true);
     clearTimeout(shareTime);
-    let time = setTimeout(() => saveShare(), 3000);
+    let time = setTimeout(() => saveShare(passed_handle), 3000);
     setShareTime(time);
   };
 
@@ -537,7 +541,7 @@ export default function Favorites({ user }) {
   if (!profile) return <div>Loading...</div>;
 
   return (
-    <section className="py-4 space-y-4">
+    <section className="relative py-4 space-y-4">
       <h1 className="text-2xl font-semibold text-gray-900">Your favorites</h1>
       <div className={`shadow flex min-h-700px bg-white flex-col xl:flex-row`}>
         {/* Left */}
@@ -545,7 +549,7 @@ export default function Favorites({ user }) {
           {/* {!maximize && <Maximize onClick={(e) => setMaximize(true)} className="absolute left-2 top-2 h-5 w-5" />}
           {maximize && <Minimize onClick={(e) => setMaximize(false)} className="absolute left-2 top-2 h-5 w-5" />} */}
           {/* Tab select */}
-          <div className="block">
+          <div className="block mb-4">
             <div className="border-b border-gray-200">
               <nav className="-mb-px flex " aria-label="Tabs">
                 {favorites?.length > 0 &&
@@ -575,20 +579,6 @@ export default function Favorites({ user }) {
                       </a>
                     ))}
               </nav>
-            </div>
-            <div className="text-sm p-2 flex justify-end h-8">
-              {saving && (
-                <div className="flex space-x-1 text-indigo-600 items-center">
-                  <Loader className="h-4 w-4 animate-spin" />
-                  <p className="text-sm animate-pulse">Saving</p>
-                </div>
-              )}
-              {saved && (
-                <div className="flex space-x-1 text-green-600 items-center">
-                  <CheckIcon className="h-4 w-4" />
-                  <p className="text-sm">Saved</p>
-                </div>
-              )}
             </div>
           </div>
 
@@ -668,7 +658,7 @@ export default function Favorites({ user }) {
                                 placeholder="Podcast Recording"
                                 value={used_for}
                                 onChange={handleUsedForChange}
-                                className="block w-full border border-gray-100 shadow-inner py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                className="placeholder-gray-500 placeholder-opacity-50 block w-full border border-gray-100 shadow-inner py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                               />
                             </div>
                             <div data-idy={idx} className="flex items-center space-x-2">
@@ -722,7 +712,7 @@ export default function Favorites({ user }) {
                                 placeholder="hubspot.com/?ref=dom"
                                 value={referral_link}
                                 onChange={handleReferralLinkChange}
-                                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                className="placeholder-gray-500 placeholder-opacity-50 mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                               />
                               <div onClick={(e) => handleRefChange(idx, false)} className="h-full justify-start">
                                 <ChevronUpIcon className="h-5 w-5 hover:cursor-pointer" />
@@ -780,11 +770,15 @@ export default function Favorites({ user }) {
                   </Switch>
                   {publish && (
                     <a target="_blank" href={url}>
-                      <ExternalLinkIcon className={`h-6 w-6 ${publish ? "text-indigo-500 hover:cursor-pointer" : "text-gray-300 hover:cursor-not-allowed"}`} />
+                      <ExternalLinkIcon className={`h-6 w-6 ${!handleLoading ? "text-indigo-500 hover:cursor-pointer" : "text-gray-300 hover:cursor-not-allowed"}`} />
                     </a>
                   )}
                 </div>
-                <div className="h-2">{acceptedHandle === "" && <p className="text-xs text-red-600">Reserve a handle to publish.</p>}</div>
+                {acceptedHandle === "" && (
+                  <div className="h-2">
+                    <p className="text-xs text-red-600">Reserve a handle to publish.</p>
+                  </div>
+                )}
               </div>
               <div className="space-y-1 col-span-4">
                 <div className="flex justify-between mr-20">
@@ -810,7 +804,7 @@ export default function Favorites({ user }) {
                   )}
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-x-2">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center">
                   <div className="shadow-sm flex w-full">
                     <span className="bg-gray-50 border border-r-0 border-gray-300 px-3 inline-flex items-center text-gray-500 sm:text-sm">appcity.com/u/</span>
                     <input
@@ -820,13 +814,15 @@ export default function Favorites({ user }) {
                       placeholder="dom"
                       value={handle}
                       onChange={(e) => setHandle(e.target.value)}
-                      className="focus:ring-sky-500 focus:border-sky-500 flex-grow block min-w-0 sm:text-sm border-gray-300"
+                      className="placeholder-gray-500 placeholder-opacity-50 focus:ring-sky-500 focus:border-sky-500 flex-grow block min-w-0 sm:text-sm border-gray-300"
                     />
                   </div>
-                  <div className="relative w-16 flex justify-center items-center">
-                    {copied && <p className="absolute text-xs inset-x-0 -top-6 py-0.5 px-1 bg-green-100 text-green-500 text-center rounded">Copied!</p>}
-                    <ClipboardCheckIcon onClick={(e) => handleCopyClick(url)} className={`hover:cursor-pointer h-8 w-8 ${copied ? "text-green-500 transform rotate-12" : "text-indigo-500"}`} />
-                  </div>
+                  {publish && (
+                    <div className="relative w-16 flex justify-center items-center m-2 sm:m-0">
+                      {copied && <p className="absolute text-xs inset-x-0 -top-6 py-0.5 px-1 bg-green-100 text-green-500 text-center rounded">Copied!</p>}
+                      <ClipboardCheckIcon onClick={(e) => handleCopyClick(url)} className={`hover:cursor-pointer h-8 w-8 ${copied ? "text-green-500 transform rotate-12" : "text-indigo-500"}`} />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="col-span-4 sm:col-span-2">
@@ -842,7 +838,7 @@ export default function Favorites({ user }) {
                   placeholder="Dom"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  className="placeholder-gray-500 placeholder-opacity-50 mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 />
               </div>
               <div className="col-span-4 sm:col-span-2 space-y-1">
@@ -860,7 +856,7 @@ export default function Favorites({ user }) {
                   placeholder="https://www.appcity.com"
                   value={headerLink}
                   onChange={(e) => setHeaderLink(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  className="placeholder-gray-500 placeholder-opacity-50 mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 />
                 <p className="italic text-xs text-gray-400">Entire URL, including https or http</p>
               </div>
@@ -937,7 +933,7 @@ export default function Favorites({ user }) {
                   maxLength="140"
                   value={blurb}
                   onChange={(e) => setBlurb(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  className="placeholder-gray-500 placeholder-opacity-50 mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 />
                 <span className="text-xs text-gray-500 italic">140 character maximum</span>
               </div>

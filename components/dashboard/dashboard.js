@@ -12,6 +12,8 @@ import TaskList from "./tasks/taskList";
 import AdminCreateApp from "./admin_create_app/createApp";
 import EditApps from "./editApps";
 import AuditTasks from "./auditTasks";
+import { Loader } from "react-feather";
+import { CheckIcon } from "@heroicons/react/solid";
 
 const navLinks = [
   {
@@ -81,6 +83,8 @@ export default function Dashboard(props) {
   const [vendor, setVendor] = useState();
   const [admin, setAdmin] = useState();
   const [superAdmin, setSuperAdmin] = useState();
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   // Fetch on load
   useEffect(() => {
@@ -440,11 +444,27 @@ export default function Dashboard(props) {
           </button>
         </div>
         <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex={0}>
+          {screen === "favorites" && (
+            <div className="sticky z-40 top-2 text-sm h-8 flex items-center justify-start -mb-8">
+              {saving && (
+                <div className="flex space-x-1 text-indigo-600 items-center bg-indigo-100 rounded py-2 px-4 m-1">
+                  <Loader className="h-4 w-4 animate-spin" />
+                  <p className="text-sm animate-pulse">Saving</p>
+                </div>
+              )}
+              {saved && (
+                <div className="flex space-x-1 text-green-600 items-center bg-green-100 rounded py-2 px-4 m-1">
+                  <CheckIcon className="h-4 w-4" />
+                  <p className="text-sm">Saved</p>
+                </div>
+              )}
+            </div>
+          )}
           <div className="py-6">
             <div className="flex flex-col justify-left max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* Replace with your content */}
               {screen === "account" && <Account user={props.user} vendor={vendor} handleVendor={handleVendor} authView={props.authView} />}
-              {screen === "favorites" && <Favorites user={props.user} />}
+              {screen === "favorites" && <Favorites user={props.user} saved={saved} setSaved={setSaved} saving={saving} setSaving={setSaving} />}
               {screen === "reviews" && <Reviews user={props.user} />}
               {/* {screen === "Vendor" && <Vendor user={props.user} />} */}
               {/* {screen === "Products" && <Products user={props.user} />} */}
