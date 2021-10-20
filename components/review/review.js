@@ -5,7 +5,7 @@ export default function Review({ review }) {
   return (
     <li key={review.id} className="col-span-1 flex flex-col bg-white border shadow divide-y divide-gray-200">
       <div className="flex-1 flex flex-col">
-        <video controls className="object-fill bg-purple-extradark w-full" poster={review.poster}>
+        <video controls className="object-contain bg-purple-extradark w-full max-h-72" poster={review.poster}>
           <source src={review.file} type="video/mp4" />
         </video>
         <div className="flex flex-col justify-start items-center py-4 px-2 space-y-1 h-full">
