@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Account from "./account";
 import Favorites from "./favorites";
 import Reviews from "./reviews";
+import Discounts from "./discounts/discountSearch";
 import SectionLoading from "./sectionLoading";
 import AddApp from "./addApp";
 import TaskList from "./tasks/taskList";
@@ -63,6 +64,11 @@ const adminLinks = [
 ];
 
 const superAdminLinks = [
+  {
+    label: "Discounts",
+    route: "discounts",
+    icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
   {
     label: "Add app",
     route: "admin_create_app",
@@ -471,6 +477,7 @@ export default function Dashboard(props) {
               {screen === "add_app" && <AddApp user={props.user} />}
               {screen === "tasks" && <TaskList user={props.user} router={router} />}
               {screen === "edit" && <EditApps user={props.user} router={router} />}
+              {screen === "discounts" && <Discounts user={props.user} router={router} />}
               {screen === "admin_create_app" && <AdminCreateApp user={props.user} router={router} />}
               {screen === "audit_tasks" && <AuditTasks user={props.user} router={router} />}
               {/* /End replace */}

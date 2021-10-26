@@ -80,7 +80,7 @@ export default function DesktopRecorder({ user, product, setReview, setSuccess, 
     let options = {};
     if (adapter.browserDetails.browser === "chrome") {
       options = {
-        mimeType: "video/webm;codecs=vp9",
+        mimeType: "video/webm;codecs=vp8",
       };
     }
     try {
@@ -133,7 +133,7 @@ export default function DesktopRecorder({ user, product, setReview, setSuccess, 
   };
 
   const saveVideo = async () => {
-    const blob = new Blob(chunks, { type: "video/mp4" });
+    const blob = new Blob(chunks, { type: "video/webm" });
     // clear old data
     dispatch({ type: "reset", payload: initialChunk });
     // generate video url from blob

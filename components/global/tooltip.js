@@ -3,10 +3,7 @@ import "tippy.js/dist/tippy.css";
 import React from "react";
 
 const Tooltip = ({ text, caption }) => {
-  //   const capitalize = (s) => {
-  //     if (typeof s !== "string") return "";
-  //     return s.charAt(0).toUpperCase() + s.slice(1);
-  //   };
+  const content = <div className="flex text-center py-1 text-xs">{caption}</div>;
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -14,8 +11,8 @@ const Tooltip = ({ text, caption }) => {
   };
 
   return (
-    <Tippy content={caption} touch="hold">
-      <div onClick={handleClick} className="flex justify-center items-center cursor-pointer select-none">
+    <Tippy content={content} touch="hold">
+      <div onClick={handleClick} className="flex justify-center items-center cursor-default select-none">
         <span className="dotted hover:no-underline text-sm text-gray-400 text-center">{text}</span>
       </div>
     </Tippy>
