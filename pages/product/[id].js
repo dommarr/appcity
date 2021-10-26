@@ -17,6 +17,8 @@ import { StarIcon, HeartIcon } from "@heroicons/react/outline";
 import Swiper from "../../components/productPage/swiper";
 import { capitalizeEveryWord, capitalizeFirstWord, formatParagraph } from "../../lib/format";
 import HeartTooltip from "../../components/global/heartTooltip";
+import { buildLinks } from "../../lib/linkBuilder";
+import DiscountTooltip from "../../components/search/discountTooltip";
 
 const Lightbox = (props) => {
   return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
@@ -34,10 +36,13 @@ export default function Product({ product }) {
   const [favorite, setFavorite] = useState(false);
   //const tierCount = useState(product.tiers.length);
   const tierCount = product.tiers.length;
+  // discount states
+  const [discountMessage, setDiscountMessage] = useState("");
+  const [locked, setLocked] = useState(true);
 
   const tier = product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
 
-  useEffect(() => {
+  useEffect(async () => {
     if (tier === null) {
       let firstTier = product.tiers.filter((tier) => tier.number === 1);
       let tId = firstTier[0].id;
@@ -45,6 +50,17 @@ export default function Product({ product }) {
     }
     if (user) {
       fetchUserFavorites(user?.id);
+      let reviewCount = await fetchReviewCount(user?.id);
+      if (reviewCount > 0) {
+        setLocked(false);
+      }
+    }
+    if (product.discount_message) {
+      setDiscountMessage(product.discount_message);
+    } else if (product.vendors.discount_message) {
+      setDiscountMessage(product.vendors.discount_message);
+    } else {
+      setDiscountMessage("");
     }
   }, []);
 
@@ -108,25 +124,25 @@ export default function Product({ product }) {
     setDescription(!description);
   };
 
-  const createPriceLink = () => {
-    if (product.vendors.ref_link && product.price_subdomain) {
-      return `${product.vendors.ref_link}${product.price_subdomain}`;
-    } else if (product.vendors.ref_link && !product.price_subdomain) {
-      return product.vendors.ref_link;
-    } else {
-      return product.price_link;
-    }
-  };
+  // const createPriceLink = () => {
+  //   if (product.vendors.ref_link && product.price_subdomain) {
+  //     return `${product.vendors.ref_link}?sub=${product.price_subdomain}`;
+  //   } else if (product.vendors.ref_link && !product.price_subdomain) {
+  //     return product.vendors.ref_link;
+  //   } else {
+  //     return product.price_link;
+  //   }
+  // };
 
-  const createProductLink = () => {
-    if (product.vendors.ref_link && product.product_subdomain) {
-      return `${product.vendors.ref_link}${product.product_subdomain}`;
-    } else if (product.vendors.ref_link && !product.product_subdomain) {
-      return product.vendors.ref_link;
-    } else {
-      return product.product_link;
-    }
-  };
+  // const createProductLink = () => {
+  //   if (product.vendors.ref_link && product.product_subdomain) {
+  //     return `${product.vendors.ref_link}?sub=${product.product_subdomain}`;
+  //   } else if (product.vendors.ref_link && !product.product_subdomain) {
+  //     return product.vendors.ref_link;
+  //   } else {
+  //     return product.product_link;
+  //   }
+  // };
 
   const fetchUserFavorites = async (id) => {
     let { data: favorites, error } = await supabase.from("favorites").select("*").eq("user_id", id).eq("product_id", product.id);
@@ -136,6 +152,14 @@ export default function Product({ product }) {
     if (favorites?.length) {
       setFavorite(true);
     }
+  };
+
+  const fetchReviewCount = async (uid) => {
+    let { data: reviews, error } = await supabase.from("reviews").select("rating").eq("user", uid);
+    if (error) {
+      throw error;
+    }
+    return reviews.length;
   };
 
   const handleFavorite = async (bool) => {
@@ -156,9 +180,15 @@ export default function Product({ product }) {
     }
   };
 
-  let vendorLink = product.vendors.ref_link ? product.vendors.ref_link : product.vendors.website;
-  let priceLink = createPriceLink();
-  let productLink = createProductLink();
+  let links = buildLinks(product);
+
+  // let vendorLink = product.vendors.ref_link ? product.vendors.ref_link : product.vendors.website;
+  // let priceLink = createPriceLink();
+  // let productLink = createProductLink();
+
+  let vendorLink = locked ? product.vendors.website : links.vendor_link;
+  let productLink = locked ? product.product_link : links.app_link;
+  let priceLink = locked ? product.price_link : links.price_link;
 
   return (
     <>
@@ -280,7 +310,7 @@ export default function Product({ product }) {
                 </div>
               )}
               {/* Price Block */}
-              {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} />}
+              {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} discount={true} discountMessage={discountMessage} locked={locked} />}
               {/* Tier Limit */}
               {tier?.limit && <p className="text-gray-500 text-sm text-center italic">{capitalizeFirstWord(tier.limit)}</p>}
             </div>
@@ -309,7 +339,7 @@ export default function Product({ product }) {
                     </div>
                   </div>
 
-                  <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
+                  <a href="#compare" className="flex underline text-xs text-blue-500 mt-1">
                     <span>Compare plans</span>
                     <ArrowNarrowDownIcon className="h-4 w-4" />
                   </a>
@@ -317,7 +347,7 @@ export default function Product({ product }) {
               )}
               {product.tiers.length === 1 && (
                 <div className="flex flex-col justify-center items-center">
-                  <a href="#compare" className="flex underline text-xs text-blue-500 mt-2">
+                  <a href="#compare" className="flex underline text-xs text-blue-500 mt-1">
                     <span>Learn more</span>
                     <ArrowNarrowDownIcon className="h-4 w-4" />
                   </a>
@@ -326,23 +356,26 @@ export default function Product({ product }) {
 
               {/* Buy Button */}
               {tier != null && (
-                <div className="flex space-x-2 my-4">
-                  <a target="_blank" href={priceLink}>
-                    <button
-                      type="button"
-                      className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
-                    >
-                      Buy now
-                    </button>
-                  </a>
-                  <a target="_blank" href={productLink}>
-                    <button
-                      type="button"
-                      className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0"
-                    >
-                      App details
-                    </button>
-                  </a>
+                <div className="flex flex-col items-center justify-center my-3">
+                  <div className="flex space-x-2 ">
+                    <a target="_blank" href={priceLink}>
+                      <button
+                        type="button"
+                        className="text-center block px-6 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-purple hover:bg-purple-dark focus:outline-none focus:ring-0"
+                      >
+                        Buy now
+                      </button>
+                    </a>
+                    <a target="_blank" href={productLink}>
+                      <button
+                        type="button"
+                        className="text-center block px-4 py-2 border border-purple text-base font-medium shadow-sm text-purple bg-transparent hover:bg-gray-200 focus:outline-none focus:ring-0"
+                      >
+                        App details
+                      </button>
+                    </a>
+                  </div>
+                  {discountMessage && <DiscountTooltip discountMessage={discountMessage} locked={locked} buybox={true} />}
                 </div>
               )}
             </div>
@@ -433,7 +466,7 @@ export default function Product({ product }) {
                       xlCols
                     )}`}
                   >
-                    <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} />
+                    <PriceBlock tier={obj} model={product.price_model} large={false} monthly={monthly} discount={false} discountMessage={discountMessage} locked={locked} />
                   </div>
                 );
               })}
@@ -484,14 +517,28 @@ export default function Product({ product }) {
                     )}`}
                   >
                     {product.tiers.length > 1 && (
-                      <a target="_blank" href={priceLink} className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center">
-                        Buy {capitalizeEveryWord(obj.name)}
-                      </a>
+                      <>
+                        <a
+                          target="_blank"
+                          href={priceLink}
+                          className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center"
+                        >
+                          Buy {capitalizeEveryWord(obj.name)}
+                        </a>
+                        {discountMessage && <DiscountTooltip discountMessage={discountMessage} locked={locked} />}
+                      </>
                     )}
                     {product.tiers.length === 1 && (
-                      <a target="_blank" href={priceLink} className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center">
-                        Buy {product.name}
-                      </a>
+                      <>
+                        <a
+                          target="_blank"
+                          href={priceLink}
+                          className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center"
+                        >
+                          Buy {product.name}
+                        </a>
+                        {discountMessage && <DiscountTooltip discountMessage={discountMessage} locked={locked} />}
+                      </>
                     )}
                   </div>
                 );

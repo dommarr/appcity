@@ -116,6 +116,8 @@ export default async function (req, res) {
     obj.vendor_website = elem.products.vendors.website;
     obj.logo = elem.products.product_logo ? elem.products.product_logo : elem.products.vendors.logo;
     obj.price_model = elem.products.price_model;
+    // If there is a discount at the product level, prioritize that. Otherwise, set discount to the vendor level.
+    obj.discount_message = elem.products.discount_message ? elem.products.discount_message : elem.products.vendors.discount_message;
     obj.industry = industries.filter((industry) => industry.id === elem.products.industry_id)[0].name;
 
     let tierCount = catalog.filter((tier) => tier.products.id === elem.products.id).length;

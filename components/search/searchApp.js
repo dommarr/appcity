@@ -25,8 +25,11 @@ React.useLayoutEffect = React.useEffect;
 import { useRouter } from "next/router";
 import { StarIcon } from "@heroicons/react/outline";
 import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
+import DiscountTooltip from "./discountTooltip";
+import { Auth } from "@supabase/ui";
+import { supabase } from "../../utils/initSupabase";
 
-function Hits({ hits, monthlyPrice }) {
+function Hits({ hits, monthlyPrice, locked }) {
   const router = useRouter();
   // const handleClick = (e) => {
   //   e.preventDefault()
@@ -34,7 +37,8 @@ function Hits({ hits, monthlyPrice }) {
   // }
 
   return (
-    <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+    // 2xl:grid-cols-5
+    <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {hits.map((hit) => (
         <li
           key={hit.objectID}
@@ -68,6 +72,7 @@ function Hits({ hits, monthlyPrice }) {
               </span>
             </div>
             <PriceBlock tier={hit} model={hit.price_model} large={false} monthly={monthlyPrice} search={true} />
+            {hit.discount_message && <DiscountTooltip discountMessage={hit.discount_message} locked={locked} search={true} />}
           </div>
         </li>
       ))}
@@ -206,13 +211,14 @@ const Pagination_Custom = ({ currentRefinement, nbPages, refine, createURL }) =>
 
 const CustomPagination = connectPagination(Pagination_Custom);
 
-export default class SearchApp extends React.Component {
+class SearchApp extends React.Component {
   constructor(props) {
     super(props);
     this.flipPrice = this.flipPrice.bind(this);
     this.state = {
       showSidebar: false,
       monthlyPrice: false,
+      locked: true,
     };
   }
 
@@ -220,7 +226,22 @@ export default class SearchApp extends React.Component {
     this.setState(!this.state.monthlyPrice);
   }
 
-  handleClick() {}
+  async fetchReviewCount(uid) {
+    let { data: reviews, error } = await supabase.from("reviews").select("rating").eq("user", uid);
+    if (error) {
+      throw error;
+    }
+    return reviews.length;
+  }
+
+  async componentDidMount() {
+    if (this.props.user) {
+      let reviewCount = await this.fetchReviewCount(this.props.user.id);
+      if (reviewCount > 0) {
+        this.setState({ locked: false });
+      }
+    }
+  }
 
   static propTypes = {
     searchState: PropTypes.object,
@@ -399,7 +420,7 @@ export default class SearchApp extends React.Component {
               <div className="py-4">
                 <div className="max-w-screen-2xl mx-auto px-4 sm:px-4">
                   <Results>
-                    <CustomHits monthlyPrice={this.state.monthlyPrice} />
+                    <CustomHits monthlyPrice={this.state.monthlyPrice} locked={this.state.locked} />
                   </Results>
                   <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
                     {/* Hide pagination if there is no query */}
@@ -414,3 +435,12 @@ export default class SearchApp extends React.Component {
     );
   }
 }
+
+function withAuthHook(Component) {
+  return function WrappedComponent(props) {
+    const { user } = Auth.useUser();
+    return <Component {...props} user={user} />;
+  };
+}
+
+export default withAuthHook(SearchApp);

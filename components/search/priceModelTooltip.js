@@ -32,6 +32,7 @@ const PriceModelTooltip = ({ model }) => {
 
   const price_model = capitalize(model);
   const caption = setCaption(model);
+  const content = <div className="flex text-center py-1 text-xs">{caption}</div>;
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -39,8 +40,8 @@ const PriceModelTooltip = ({ model }) => {
   };
 
   return (
-    <Tippy className="select-none" content={caption} touch="hold">
-      <div onClick={handleClick} className="flex justify-center items-center cursor-pointer pb-2 select-none">
+    <Tippy className="select-none" content={content} touch="hold">
+      <div onClick={handleClick} className="flex justify-center items-center text-center cursor-default pb-2 select-none">
         <span className="dotted hover:no-underline text-sm text-gray-400 text-center">{price_model} Pricing</span>
       </div>
     </Tippy>

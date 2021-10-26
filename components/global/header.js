@@ -8,8 +8,8 @@ import LogoLight from "../graphics/logo/LogoLight";
 import BugPopover from "./bugPopover";
 import Bug from "../graphics/bug";
 import BugModal from "./bugModal";
-
 const appName = "AppCity";
+
 const links = [
   {
     href: "/about",
@@ -98,54 +98,56 @@ export default function Header(props) {
             )}
             {/* if logged in, show profile and menu */}
             {user && (
-              <div className="ml-3 relative">
-                <div>
-                  <button
-                    onClick={() => setProfileMenu(!showProfileMenu)}
-                    className={`max-w-xs bg-transparent flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-white lg:p-2 ${
-                      props.style === "dark" || props.style === "trans" ? "lg:hover:bg-purple-dark text-white" : "lg:hover:bg-gray-200 text-gray-500 lg:hover:text-gray-900"
-                    }`}
-                    id="user-menu"
-                    aria-haspopup="true"
-                  >
-                    <span className={`block ml-3 text-sm font-medium`}>
-                      <span className="sr-only">Open user menu for </span>
-                      {user.email}
-                    </span>
-                    {/* Heroicon name: solid/chevron-down */}
-                    <svg className={`block flex-shrink-0 ml-1 h-5 w-5`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
-                <Transition
-                  show={showProfileMenu}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <div
-                    className="origin-top-right absolute right-0 mt-2 w-48 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu"
-                  >
-                    <Link href={{ pathname: `/profile`, query: { screen: "account" } }}>
-                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Your Profile
-                      </a>
-                    </Link>
-                    <button className="w-full" onClick={() => supabase.auth.signOut()}>
-                      <a className="block px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Sign out
-                      </a>
+              <>
+                <div className="ml-3 relative">
+                  <div>
+                    <button
+                      onClick={() => setProfileMenu(!showProfileMenu)}
+                      className={`max-w-xs bg-transparent flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-white lg:p-2 ${
+                        props.style === "dark" || props.style === "trans" ? "lg:hover:bg-purple-dark text-white" : "lg:hover:bg-gray-200 text-gray-500 lg:hover:text-gray-900"
+                      }`}
+                      id="user-menu"
+                      aria-haspopup="true"
+                    >
+                      <span className={`block ml-3 text-sm font-medium`}>
+                        <span className="sr-only">Open user menu for </span>
+                        {user.email}
+                      </span>
+                      {/* Heroicon name: solid/chevron-down */}
+                      <svg className={`block flex-shrink-0 ml-1 h-5 w-5`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
                     </button>
                   </div>
-                </Transition>
-              </div>
+                  <Transition
+                    show={showProfileMenu}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <div
+                      className="origin-top-right absolute right-0 mt-2 w-48 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
+                      role="menu"
+                      aria-orientation="vertical"
+                      aria-labelledby="user-menu"
+                    >
+                      <Link href={{ pathname: `/profile`, query: { screen: "account" } }}>
+                        <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                          Your Profile
+                        </a>
+                      </Link>
+                      <button className="w-full" onClick={() => supabase.auth.signOut()}>
+                        <a className="block px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100" role="menuitem">
+                          Sign out
+                        </a>
+                      </button>
+                    </div>
+                  </Transition>
+                </div>
+              </>
             )}
           </div>
         </div>

@@ -39,13 +39,11 @@ class Search extends React.Component {
   };
 
   static async getInitialProps({ asPath }) {
-    //console.log(asPath)
     const searchState = pathToSearchState(asPath);
     const resultsState = await findResultsState(SearchApp, {
       ...DEFAULT_PROPS,
       searchState,
     });
-    //console.log(searchState)
 
     return {
       resultsState,
