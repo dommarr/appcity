@@ -8,11 +8,11 @@ module.exports = {
   //mode: "jit",
   purge: {
     content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx,txt}"],
-    // options: {
-    //   safelist: {
-    //     greedy: ["/safe$/"],
-    //   },
-    // },
+    options: {
+      safelist: {
+        greedy: ["/safe$/"],
+      },
+    },
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
