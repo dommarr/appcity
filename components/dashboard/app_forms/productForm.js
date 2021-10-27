@@ -283,10 +283,13 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         }}
       >
         <div className="bg-white py-6 px-4 sm:p-6">
-          <div>
+          <div className="flex space-x-2 items-center justify-start">
             <h2 id="app-details-heading" className="text-lg leading-6 font-medium text-gray-900">
               App details
             </h2>
+            <a target="_blank" href={`https://www.appcity.com/product/${productId}`} className="text-sm text-blue-600 underline hover-cursor">
+              Preview app
+            </a>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
             <div className="col-span-4 space-y-2">
@@ -407,9 +410,11 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                     </option>
                     <option value="custom">Custom pricing</option>
                     <option value="flat-rate">Flat-rate pricing</option>
+                    <option value="minimum deposit">Minimum deposit</option>
                     <option value="one-time">One-time payment</option>
-                    <option value="per-user">Per-user pricing</option>
                     <option value="per-project">Per-project pricing</option>
+                    <option value="per-transaction">Per-transaction fee</option>
+                    <option value="per-user">Per-user pricing</option>
                     <option value="quote">Quote pricing</option>
                     <option value="revenue-fee">Revenue-fee pricing</option>
                     <option value="usage-based">Usage-based pricing</option>

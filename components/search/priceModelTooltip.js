@@ -25,12 +25,20 @@ const PriceModelTooltip = ({ model }) => {
       return `A custom price, typically when there are many options with differing costs.`;
     } else if (model === "quote") {
       return `Contact the app developer for a price quote.`;
+    } else if (model === "minimum deposit") {
+      return `Free, but requires a minimum deposit.`;
+    } else if (model === "per-transaction") {
+      return `A rate paid for each transaction processed.`;
     } else {
       return;
     }
   };
 
-  const price_model = capitalize(model);
+  let price_model = capitalize(model);
+  if (model !== "minimum deposit") {
+    price_model = price_model + " Pricing";
+  }
+
   const caption = setCaption(model);
   const content = <div className="flex text-center py-1 text-xs">{caption}</div>;
 
@@ -42,7 +50,7 @@ const PriceModelTooltip = ({ model }) => {
   return (
     <Tippy className="select-none" content={content} touch="hold">
       <div onClick={handleClick} className="flex justify-center items-center text-center cursor-default pb-2 select-none">
-        <span className="dotted hover:no-underline text-sm text-gray-400 text-center">{price_model} Pricing</span>
+        <span className="dotted hover:no-underline text-sm text-gray-400 text-center">{price_model}</span>
       </div>
     </Tippy>
   );

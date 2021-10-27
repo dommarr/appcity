@@ -291,7 +291,7 @@ export default function Product({ product }) {
             </div>
             <div className="flex flex-col items-center justify-center">
               {/* Price Toggle */}
-              {tier != null && product.price_model != "revenue-fee" && product.price_model != "one-time" && (
+              {tier != null && product.price_model != "revenue-fee" && product.price_model != "one-time" && product.price_model !== "per-transaction" && product.price_model !== "minimum deposit" && (
                 <div className="relative self-center bg-gray-100 p-0.5 flex">
                   <button
                     type="button"
@@ -394,7 +394,7 @@ export default function Product({ product }) {
           <div className="sm:flex sm:flex-col sm:align-center">
             {product.tiers.length === 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing</h1>}
             {product.tiers.length > 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Plans</h1>}
-            {product.price_model != "revenue-fee" && product.price_model != "one-time" && (
+            {product.price_model !== "revenue-fee" && product.price_model !== "one-time" && product.price_model !== "per-transaction" && product.price_model !== "minimum deposit" && (
               <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
                 <button
                   type="button"
