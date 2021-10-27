@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
 import Head from "../../components/global/head";
-import Banner from "../../components/global/banner";
 import PriceBlock from "../../components/search/priceBlock";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
@@ -192,7 +191,6 @@ export default function Product({ product }) {
 
   return (
     <>
-      <Banner />
       <Header style="dark" />
       {/* <Head title={product.name} description={product.description} url={`www.appcity.com/product/${product.id}?tier=${sortedTiers[0].id}`} /> */}
       <Head title={`${product.name} | AppCity`} description={formatParagraph(product.description)} url={`https://www.appcity.com/product/${product.id}`} />

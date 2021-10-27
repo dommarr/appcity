@@ -2,14 +2,16 @@ import "../styles/globals.css";
 import SimpleReactLightbox from "simple-react-lightbox-pro";
 import { Auth } from "@supabase/ui";
 import { supabase } from "../utils/initSupabase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import * as ga from "../lib/ga";
+import Banner from "../components/global/banner";
 
 // Google Analytics setup source: https://mariestarck.com/add-google-analytics-to-your-next-js-application-in-5-easy-steps/
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  //const [hideBanner, setHideBanner] = useState(false)
 
   useEffect(() => {
     const handleRouteChange = (url) => {
@@ -29,6 +31,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Auth.UserContextProvider supabaseClient={supabase}>
       <SimpleReactLightbox>
+        <Banner />
         <Component {...pageProps} />
       </SimpleReactLightbox>
     </Auth.UserContextProvider>

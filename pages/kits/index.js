@@ -1,6 +1,5 @@
 import Footer from "../../components/global/footer";
 import Header from "../../components/global/header";
-import Banner from "../../components/global/banner";
 import Container from "../../components/global/mobilePaddingContainer";
 import Link from "next/link";
 import Head from "../../components/global/head";
@@ -90,7 +89,6 @@ export default function KitHome() {
 
   return (
     <>
-      <Banner />
       <Header style="dark" />
       <Head
         title="Starter Kits | AppCity"
