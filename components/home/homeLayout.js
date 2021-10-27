@@ -10,7 +10,6 @@ import LgSkyline from "../graphics/skyline/LgSkyline";
 import XlSkyline from "../graphics/skyline/XlSkyline";
 import XxlSkyline from "../graphics/skyline/XxlSkyline";
 import Link from "next/link";
-import Banner from "../global/banner";
 import StarterKitFeature from "./startkitFeature";
 import Image from "next/image";
 
@@ -38,7 +37,6 @@ export default function HomeLayout({ apps, kits }) {
   return (
     <>
       <section id="search" className="relative z-10 bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
-        <Banner />
         <Header style="trans" />
         {/* Page Content */}
         <div className="relative pt-16 pb-32 min-h-60vh sm:min-h-70vh flex flex-col justify-center items-center">

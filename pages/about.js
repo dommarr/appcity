@@ -1,7 +1,6 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Head from "../components/global/head";
-import Banner from "../components/global/banner";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -29,7 +28,6 @@ export default function About() {
   return (
     <>
       <div className={`h-screen flex flex-col relative ${vendor ? "bg-white" : "bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple"}`}>
-        <Banner />
         <Header style={`${vendor ? "light" : "trans"}`} />
         <Head
           title="About Us | AppCity"

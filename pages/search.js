@@ -1,7 +1,6 @@
 import Footer from "../components/global/footer";
 import Header from "../components/global/header";
 import Head from "../components/global/head";
-import Banner from "../components/global/banner";
 import SearchApp from "../components/search/searchApp";
 import { isEqual } from "lodash";
 import React from "react";
@@ -78,7 +77,6 @@ class Search extends React.Component {
   render() {
     return (
       <>
-        <Banner />
         <Header style="dark" />
         <Head title="Search | AppCity" description="Search for apps to take your business to the next level." url="https://www.appcity.com/search" />
         <SearchApp {...DEFAULT_PROPS} searchState={this.state.searchState} resultsState={this.props.resultsState} onSearchStateChange={this.onSearchStateChange} createURL={createURL} />
