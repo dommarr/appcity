@@ -130,6 +130,12 @@ export default function Task({ pId, user, task }) {
     if (priceModel === "one-time") {
       unit = "one-time payment";
     }
+    if (priceModel === "per-transaction") {
+      unit = "per transaction";
+    }
+    if (priceModel === "minimum deposit") {
+      unit = "minimum deposit";
+    }
 
     const { data, error } = await supabase
       .from("tiers")
@@ -175,6 +181,12 @@ export default function Task({ pId, user, task }) {
     }
     if (model === "one-time") {
       unit = "one-time payment";
+    }
+    if (model === "minimum deposit") {
+      unit = "minimum deposit";
+    }
+    if (model === "per-transaction") {
+      unit = "per transaction";
     }
     let updateObj = {
       price_primary_unit_year: unit,

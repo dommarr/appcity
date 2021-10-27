@@ -271,6 +271,11 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     setPricePrimaryTextYear("");
   };
 
+  const handleSecondaryPrice = (val) => {
+    setPriceSecondaryNumberMonth(val);
+    setPriceSecondaryNumberYear(val);
+  };
+
   const deleteTier = async (id) => {
     const { data, error } = await supabase.from("tiers").delete().eq("id", id);
     if (error) {
@@ -415,6 +420,52 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
               </>
             )}
 
+            {priceModel === "per-transaction" && (
+              <>
+                <div className="col-span-2 lg:col-span-1 flex flex-col">
+                  <div className="flex space-x-2 items-center mb-1">
+                    <h4 className="text-sm font-medium text-gray-700">Per transaction fee</h4>
+                    <span className="italic text-sm text-gray-400">required</span>
+                  </div>
+                  <label htmlFor="pricePrimaryNumberYear" className="block text-sm text-gray-700">
+                    Percentage
+                  </label>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="number"
+                      name="pricePrimaryNumberYear"
+                      id="pricePrimaryNumberYear"
+                      placeholder="2.9"
+                      value={pricePrimaryNumberYear}
+                      onChange={(e) => handleFeePrice(e.target.value)}
+                      className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                    <span className="text-lg">%</span>
+                  </div>
+                  <FormTip video_id="9c67988816354e4895cffc0be2209d7c" />
+                </div>
+                <div className="col-span-2 lg:col-span-1 flex flex-col justify-end">
+                  <label htmlFor="pricePrimaryNumberYear" className="ml-5 block text-sm text-gray-700">
+                    Fixed cost
+                  </label>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg">$</span>
+                    <input
+                      type="number"
+                      name="pricePrimaryNumberYear"
+                      id="pricePrimaryNumberYear"
+                      placeholder="0.30"
+                      value={priceSecondaryNumberYear}
+                      onChange={(e) => handleSecondaryPrice(e.target.value)}
+                      className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                  </div>
+                  <FormTip video_id="9c67988816354e4895cffc0be2209d7c" />
+                </div>
+                <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
+              </>
+            )}
+
             {priceModel === "one-time" && (
               <>
                 <div className="col-span-4 lg:col-span-2 flex flex-col">
@@ -430,6 +481,32 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                       name="pricePrimaryNumberYear"
                       id="pricePrimaryNumberYear"
                       placeholder="300"
+                      value={pricePrimaryNumberYear}
+                      onChange={(e) => handleFeePrice(e.target.value)}
+                      className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                  </div>
+                  <FormTip video_id="9c67988816354e4895cffc0be2209d7c" />
+                </div>
+                <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
+              </>
+            )}
+
+            {priceModel === "minimum deposit" && (
+              <>
+                <div className="col-span-4 lg:col-span-2 flex flex-col">
+                  <div className="flex space-x-2">
+                    <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
+                      Minimum deposit
+                    </label>
+                    <span className="italic text-sm text-gray-400">required</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="number"
+                      name="pricePrimaryNumberYear"
+                      id="pricePrimaryNumberYear"
+                      placeholder="250,000"
                       value={pricePrimaryNumberYear}
                       onChange={(e) => handleFeePrice(e.target.value)}
                       className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
