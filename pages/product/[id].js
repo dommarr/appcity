@@ -25,6 +25,7 @@ const Lightbox = (props) => {
 
 export default function Product({ product }) {
   const router = useRouter();
+  //const [user, setUser] = useState(null);
   const { user } = Auth.useUser();
   const [monthly, setMonthly] = useState(true);
   const [description, setDescription] = useState(false);
@@ -42,18 +43,26 @@ export default function Product({ product }) {
   const tier = product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
 
   useEffect(async () => {
+    // console.log("called");
+    // let userRes = await supabase.auth.user();
+    // console.log(userRes);
+    // setUser(userRes);
     if (tier === null) {
       let firstTier = product.tiers.filter((tier) => tier.number === 1);
       let tId = firstTier[0].id;
       router.push(`/product/${product.id}?tier=${tId}`, undefined, { shallow: true });
     }
-    if (user) {
-      fetchUserFavorites(user?.id);
-      let reviewCount = await fetchReviewCount(user?.id);
-      if (reviewCount > 0) {
-        setLocked(false);
-      }
-    }
+    // if (user) {
+    //   fetchUserFavorites(user?.id);
+    //   let reviewCount = await fetchUserReviewCount(user?.id);
+    //   console.log(reviewCount);
+    //   if (reviewCount > 0) {
+    //     setLocked(false);
+    //   }
+    // }
+    // if (!user) {
+    //   setLocked(true);
+    // }
     if (product.discount_message) {
       setDiscountMessage(product.discount_message);
     } else if (product.vendors.discount_message) {
@@ -62,6 +71,19 @@ export default function Product({ product }) {
       setDiscountMessage("");
     }
   }, []);
+
+  useEffect(async () => {
+    if (user) {
+      fetchUserFavorites(user?.id);
+      let reviewCount = await fetchUserReviewCount(user?.id);
+      if (reviewCount > 0) {
+        setLocked(false);
+      }
+    }
+    if (!user) {
+      setLocked(true);
+    }
+  }, [user]);
 
   function compare(a, b) {
     const tierNumA = a.number;
@@ -153,7 +175,7 @@ export default function Product({ product }) {
     }
   };
 
-  const fetchReviewCount = async (uid) => {
+  const fetchUserReviewCount = async (uid) => {
     let { data: reviews, error } = await supabase.from("reviews").select("rating").eq("user", uid);
     if (error) {
       throw error;

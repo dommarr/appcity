@@ -7,7 +7,7 @@ import Favorites from "./favorites";
 import Reviews from "./reviews";
 import Discounts from "./discounts/discountSearch";
 import SectionLoading from "./sectionLoading";
-import AddApp from "./addApp";
+import ListApp from "./listApp";
 import TaskList from "./tasks/taskList";
 //import AddProduct from "./createNew";
 import AdminCreateApp from "./admin_create_app/createApp";
@@ -44,8 +44,8 @@ const vendorLinks = [
   //   icon: "M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z",
   // },
   {
-    label: "Add your app",
-    route: "add_app",
+    label: "List your app",
+    route: "list_app",
     icon: "M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z",
   },
 ];
@@ -474,7 +474,7 @@ export default function Dashboard(props) {
               {screen === "reviews" && <Reviews user={props.user} />}
               {/* {screen === "Vendor" && <Vendor user={props.user} />} */}
               {/* {screen === "Products" && <Products user={props.user} />} */}
-              {screen === "add_app" && <AddApp user={props.user} />}
+              {screen === "list_app" && <ListApp user={props.user} />}
               {screen === "tasks" && <TaskList user={props.user} router={router} />}
               {screen === "edit" && <EditApps user={props.user} router={router} />}
               {screen === "discounts" && <Discounts user={props.user} router={router} />}
