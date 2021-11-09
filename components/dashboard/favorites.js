@@ -3,13 +3,29 @@ import { supabase } from "../../utils/initSupabase";
 import Image from "next/image";
 import Logo from "../graphics/logo/Logo";
 import Link from "next/link";
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon, MinusCircleIcon, XIcon, UserCircleIcon } from "@heroicons/react/solid";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, MinusCircleIcon, XIcon, UserCircleIcon, ExclamationIcon } from "@heroicons/react/solid";
 import { ClipboardCheckIcon, ExternalLinkIcon, PlusIcon, HeartIcon } from "@heroicons/react/outline";
 import { ArrowUpLeft, ArrowUp, ArrowUpRight, ArrowRight, ArrowDownRight, ArrowDown, ArrowDownLeft, ArrowLeft, Circle, Loader, Maximize, Minimize, User } from "react-feather";
 import Select from "react-select";
 import { Switch } from "@headlessui/react";
 import { HexColorPicker } from "react-colorful";
 import QuestionMarkTooltip from "../global/questionMarkTooltip";
+import Loading from "./sectionLoading";
+
+const ScreenWidthAlert = () => {
+  return (
+    <div className="bg-amber-50 border-l-4 border-amber-400 p-4 my-4 sm:hidden">
+      <div className="flex items-center">
+        <div className="flex-shrink-0">
+          <ExclamationIcon className="h-5 w-5 text-amber-400" aria-hidden="true" />
+        </div>
+        <div className="ml-3">
+          <p className="text-sm text-amber-700">We recommend a wider screen for the best experience with this page.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function Favorites({ user, saved, setSaved, saving, setSaving }) {
   const [profile, setProfile] = useState(null);
@@ -538,7 +554,7 @@ export default function Favorites({ user, saved, setSaved, saving, setSaving }) 
     { name: "Style & Share", ref: "style", default: false },
   ];
 
-  if (!profile) return <div>Loading...</div>;
+  if (!profile) return <Loading />;
 
   return (
     <section className="relative py-4 space-y-4">
@@ -546,6 +562,7 @@ export default function Favorites({ user, saved, setSaved, saving, setSaving }) 
       <div className={`shadow flex min-h-700px bg-white flex-col xl:flex-row`}>
         {/* Left */}
         <div className="relative bg-white pt-2 pb-10 px-4 w-full xl:w-1/2">
+          <ScreenWidthAlert />
           {/* {!maximize && <Maximize onClick={(e) => setMaximize(true)} className="absolute left-2 top-2 h-5 w-5" />}
           {maximize && <Minimize onClick={(e) => setMaximize(false)} className="absolute left-2 top-2 h-5 w-5" />} */}
           {/* Tab select */}
