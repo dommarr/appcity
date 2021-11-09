@@ -7,7 +7,7 @@ export default function DiscountStatus({ reviewCount }) {
   if (reviewCount > 0)
     return (
       <div className="bg-green-50 border-l-4 border-green-400 p-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-start flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 lg:items-center">
           <div className="flex">
             <div className="flex-shrink-0">
               <LockOpenIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
@@ -17,12 +17,12 @@ export default function DiscountStatus({ reviewCount }) {
               <div className="mt-2 text-sm text-green-700">
                 <ul role="list" className="list-disc pl-5 space-y-1">
                   <li>Thanks for leaving a review!</li>
-                  <li>Your contribution is helping others find the best apps for their business</li>
+                  <li>Your contribution is helping others find the best apps for their business 💪</li>
                 </ul>
               </div>
             </div>
           </div>
-          {/* <p className="ml-8 mt-3 text-sm md:mt-0 md:ml-6">
+          {/* <p className="text-sm">
             <Link href={`/search`}>
               <a className="whitespace-nowrap font-medium text-green-800 hover:text-green-600">
                 Search apps <span aria-hidden="true">&rarr;</span>
@@ -35,7 +35,7 @@ export default function DiscountStatus({ reviewCount }) {
 
   return (
     <div className="bg-red-50 border-l-4 border-red-400 p-4">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 lg:items-center">
         <div className="flex">
           <div className="flex-shrink-0">
             <LockClosedIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
@@ -50,13 +50,13 @@ export default function DiscountStatus({ reviewCount }) {
             </div>
           </div>
         </div>
-        <p className="ml-8 mt-3 text-sm md:mt-0 md:ml-6">
+        <div className="text-sm">
           <Link href={`/search`}>
             <a className="whitespace-nowrap font-medium text-red-800 hover:text-red-600">
               Search apps <span aria-hidden="true">&rarr;</span>
             </a>
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

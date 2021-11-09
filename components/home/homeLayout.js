@@ -172,12 +172,21 @@ export default function HomeLayout({ apps, kits }) {
                 return (
                   <Link href={`/product/${id}`} key={idx}>
                     <a>
-                      <div className="col-span-1 flex items-center py-8 px-8 bg-gray-50 space-x-4 h-full">
-                        <div className="relative h-24 w-24">
-                          <Image src={vendors.logo} alt={name} placeholder="blur" blurDataURL={`/_next/image?url=${vendors.logo}&w=16&q=1`} layout="fill" objectFit="contain" />
+                      <div className="col-span-1 p-2 md:p-8 bg-gray-50 grid grid-cols-3 gap-4 h-full">
+                        <div className="relative col-span-1 flex items-center justify-center">
+                          <Image
+                            src={vendors.logo}
+                            alt={name}
+                            placeholder="blur"
+                            blurDataURL={`/_next/image?url=${vendors.logo}&w=16&q=1`}
+                            layout="fixed"
+                            height={100}
+                            width={100}
+                            objectFit="contain"
+                          />
                         </div>
 
-                        <div className="flex flex-col space-y-1">
+                        <div className="col-span-2 flex flex-col space-y-1">
                           <h5 className="text-xl font-medium">{name}</h5>
                           <div className="flex flex-wrap overflow-hidden">
                             {categories.map((category, idy) => {

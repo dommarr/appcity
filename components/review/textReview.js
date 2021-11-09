@@ -29,30 +29,34 @@ export default function Review({ review, dashboardView }) {
         <img src={review.avatarSrc} alt="" className="w-10 h-10 bg-gray-100 rounded-full" />
       </div> */}
       <div className={`border-t border-gray-200 flex-1 p-6 space-y-6 ${dashboardView ? "" : "shadow"}`}>
-        <div id="review-top" className="flex space-x-6 justify-between">
-          <div className="flex flex-col items-start justify-center">
-            <h3 className="font-medium text-gray-900">
-              {user.first_name} {user.last_name}
-            </h3>
-            <div className="flex">
-              <p>{user.title}</p>
-              {user.company && <p>, {user.company}</p>}
-            </div>
-            {tags && (
-              <div className="flex flex-wrap items-center justify-start -m-0.5 pt-2">
-                {tags
-                  .filter((tag) => tag.tags.group === "context")
-                  .map((tag) => (
-                    <Tag key={tag.id} tag={tag.tags} />
-                  ))}
+        <div id="review-top" className="flex flex-col">
+          <div className="flex space-x-6 justify-between">
+            <div className="flex flex-col items-start justify-center">
+              <h3 className="font-medium text-gray-900">
+                {user.first_name} {user.last_name}
+              </h3>
+              <div className="flex">
+                <p>
+                  {user.title}
+                  {user.company ? `, ${user.company}` : ""}
+                </p>
               </div>
-            )}
+            </div>
+            <div className="flex flex-col items-end justify-start">
+              <p>
+                <time dateTime={review.created_at}>{date}</time>
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col items-end justify-start">
-            <p>
-              <time dateTime={review.created_at}>{date}</time>
-            </p>
-          </div>
+          {tags && (
+            <div className="flex flex-wrap items-center justify-start -m-0.5 pt-2">
+              {tags
+                .filter((tag) => tag.tags.group === "context")
+                .map((tag) => (
+                  <Tag key={tag.id} tag={tag.tags} />
+                ))}
+            </div>
+          )}
         </div>
 
         <div id="review-mid">
