@@ -39,10 +39,10 @@ export default function Footer({ children, dark }) {
                     <Link
                       href={{
                         pathname: `/search`,
-                        query: { query: "crm" },
+                        query: { query: "website builder" },
                       }}
                     >
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>CRM</a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Website builder</a>
                     </Link>
                   </li>
 
@@ -50,34 +50,30 @@ export default function Footer({ children, dark }) {
                     <Link
                       href={{
                         pathname: `/search`,
-                        query: { query: "email" },
+                        query: { query: "ecommerce store" },
                       }}
                     >
-                      <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                        Email
-                      </a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Ecommerce store</a>
                     </Link>
                   </li>
                   <li>
                     <Link
                       href={{
                         pathname: `/search`,
-                        query: { query: "podcast recording" },
+                        query: { query: "email marketing" },
                       }}
                     >
-                      <a href="/" className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>
-                        Podcast recording
-                      </a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Email marketing</a>
                     </Link>
                   </li>
                   <li>
                     <Link
                       href={{
                         pathname: `/search`,
-                        query: { query: "audio editing" },
+                        query: { query: "podcasting" },
                       }}
                     >
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Audio editing</a>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Podcasting</a>
                     </Link>
                   </li>
                 </ul>

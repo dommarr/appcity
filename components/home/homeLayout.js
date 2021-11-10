@@ -98,31 +98,11 @@ export default function HomeLayout({ apps, kits }) {
                   <Link
                     href={{
                       pathname: "/search",
-                      query: { query: "podcast recorder" },
+                      query: { query: "website builder" },
                     }}
                   >
                     <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
-                      Podcast recorder
-                    </a>
-                  </Link>
-                  <Link
-                    href={{
-                      pathname: "/search",
-                      query: { query: "email newsletter" },
-                    }}
-                  >
-                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
-                      Email newsletter
-                    </a>
-                  </Link>
-                  <Link
-                    href={{
-                      pathname: "/search",
-                      query: { query: "community" },
-                    }}
-                  >
-                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
-                      Community
+                      Website builder
                     </a>
                   </Link>
                   <Link
@@ -138,11 +118,31 @@ export default function HomeLayout({ apps, kits }) {
                   <Link
                     href={{
                       pathname: "/search",
-                      query: { query: "website builder" },
+                      query: { query: "email marketing" },
+                    }}
+                  >
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
+                      Email marketing
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: { query: "podcasting" },
+                    }}
+                  >
+                    <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
+                      Podcasting
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/search",
+                      query: { query: "community" },
                     }}
                   >
                     <a className="hidden sm:inline-flex text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
-                      Website builder
+                      Community
                     </a>
                   </Link>
                 </div>
@@ -191,7 +191,7 @@ export default function HomeLayout({ apps, kits }) {
                           <div className="flex flex-wrap overflow-hidden">
                             {categories.map((category, idy) => {
                               return (
-                                <span key={idy} className="py-0.5 px-2 bg-indigo-100 text-sm sm:text-xs text-indigo-500 whitespace-nowrap mt-1 mr-1">
+                                <span key={idy} className="py-0.5 px-2 bg-indigo-100 text-xs text-indigo-500 whitespace-nowrap mt-1 mr-1">
                                   {category.name}
                                 </span>
                               );
