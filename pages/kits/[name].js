@@ -41,8 +41,8 @@ const ProductCard = ({ product }) => {
     <Link href={`/product/${product.id}`}>
       <a>
         <li className="col-span-1 bg-white border shadow-md divide-x divide-gray-200 flex p-4">
-          <img className="w-20 h-20 sm:w-28 sm:h-28 mr-4" src={product.vendors.logo} alt={`${name} Logo`} />
-          <div className="flex items-center justify-center text-xl sm:text-2xl font-medium pl-4">{name}</div>
+          <img className="w-20 h-20 mr-4" src={product.vendors.logo} alt={`${name} Logo`} />
+          <div className="flex items-center justify-center text-xl font-medium pl-4">{name}</div>
         </li>
       </a>
     </Link>
@@ -57,13 +57,13 @@ const KitSection = ({ section }) => {
   }, []);
 
   return (
-    <section className="py-10">
+    <section className="pb-20">
       <div className="relative mb-4">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full border-t border-gray-300"></div>
         </div>
         <div className="relative flex justify-start">
-          <span className="pr-3 bg-white text-2xl sm:text-3xl font-medium text-gray-900">{name}</span>
+          <span className="pr-3 bg-white text-2xl sm:text-2xl font-medium text-gray-900">{name}</span>
         </div>
       </div>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -89,22 +89,22 @@ export default function Kit({ kit, sections }) {
     <>
       <Header style="dark" />
       <Head title={`${name} Starter Kit | AppCity`} description={description} url={`https://www.appcity.com/kits/${kit.name}`} />
-      <Container>
-        <div className="mb-20">
-          <div className="bg-white">
-            <div className="max-w-7xl mx-auto py-10 px-4 sm:py-12 sm:px-6 lg:px-8">
-              <div className="text-center">
-                <h1 className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">{name} Starter Kit</h1>
-                <p className="max-w-xl mt-5 mx-auto text-xl text-gray-500">{description}</p>
+      <div className="bg-gray-50 pb-20">
+        <Container>
+          <div className="">
+            <div className="max-w-7xl mx-auto py-16 sm:px-6 lg:px-8">
+              <div className="text-center space-y-4">
+                <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">{name} Starter Kit</h1>
+                <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
               </div>
             </div>
+            {sections &&
+              sections.map((section, idx) => {
+                return <KitSection key={idx} section={section} />;
+              })}
           </div>
-          {sections &&
-            sections.map((section, idx) => {
-              return <KitSection key={idx} section={section} />;
-            })}
-        </div>
-      </Container>
+        </Container>
+      </div>
       <Footer dark={true} />
     </>
   );

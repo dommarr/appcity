@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Auth.UserContextProvider supabaseClient={supabase}>
       <SimpleReactLightbox>
-        <Banner />
+        {router.route !== "/u/[handle]" && <Banner />}
         <Component {...pageProps} />
       </SimpleReactLightbox>
     </Auth.UserContextProvider>

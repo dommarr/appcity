@@ -57,6 +57,7 @@ export default async function (req, res) {
     keywords = keywords.join(" ");
     keywords = keywords + " " + elem.keywords;
     keywords = removeDuplicateWords(keywords);
+    keywords = keywords + " " + "tools" + " " + "software" + " " + "app";
     elem.keywords = keywords;
   });
 

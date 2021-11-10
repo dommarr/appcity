@@ -14,7 +14,7 @@ export default function Home({ apps, kits }) {
   );
 }
 
-const appIds = [1032, 1044, 1005, 1029, 1012, 1035];
+const appIds = [1100, 1032, 1012, 1106, 1121, 1014];
 
 const fetchApps = async (ids) => {
   let { data: products, error } = await supabase
@@ -23,7 +23,8 @@ const fetchApps = async (ids) => {
       `*,
     vendors(*)`
     )
-    .in("id", ids);
+    .in("id", ids)
+    .order("name");
   if (error) {
     throw error;
   }
