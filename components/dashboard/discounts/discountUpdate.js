@@ -37,8 +37,8 @@ export default function DiscountUpdate({ productId, user }) {
   return (
     <div className="flex flex-col space-y-4">
       {product && <TestLinks fetchApp={fetchApp} productId={productId} testLinksRender={testLinksRender} />}
-      {vendor && <VendorDiscountForm vendor={vendor} forceRender={forceRender} />}
       {product && <ProductDiscountForm product={product} forceRender={forceRender} />}
+      {vendor && <VendorDiscountForm vendor={vendor} forceRender={forceRender} />}
     </div>
   );
 }

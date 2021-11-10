@@ -10,6 +10,7 @@ export default function Discounts(props) {
   const [loading, setLoading] = useState(true);
   // app array
   const [appList, setAppList] = useState([]);
+  const [searchList, setSearchList] = useState([]);
   // selected app
   const [selectedApp, setSelectedApp] = useState(1);
 
@@ -20,24 +21,35 @@ export default function Discounts(props) {
   }, []);
 
   const fetchApps = async () => {
-    let { data: products, error } = await supabase.from("products").select("id,name");
+    let { data: products, error } = await supabase.from("products").select("*, vendors(*)").order("name");
     if (error) {
       throw error;
     }
-    let list = [];
+    let search = [];
     products.forEach(function (element) {
-      list.push({ label: element.name, value: element.id });
-    });
-    list.sort(function (a, b) {
-      if (a.label < b.label) {
-        return -1;
+      search.push({ label: element.name, value: element.id });
+      if (element.ref_link || element.vendors.ref_link) {
+        element.referral = true;
+      } else {
+        element.referral = false;
       }
-      if (a.label > b.label) {
-        return 1;
+      if (element.discount_message || element.vendors.discount_message) {
+        element.discount = true;
+      } else {
+        element.discount = false;
       }
-      return 0;
+      if (element.no_ref_program || element.vendors.no_ref_program) {
+        element.discount_status = "no-program";
+      } else if (element.discount && element.referral) {
+        element.discount_status = "discount";
+      } else if (element.referral && !element.discount) {
+        element.discount_status = "referral-only";
+      } else {
+        element.discount_status = "none";
+      }
     });
-    setAppList(list);
+    setAppList(products);
+    setSearchList(search);
     setLoading(false);
     return;
   };
@@ -50,7 +62,7 @@ export default function Discounts(props) {
 
   return (
     <section className="py-4 space-y-4">
-      <h1 className="text-2xl font-semibold text-gray-900">App Discounts & Affiliate Links</h1>
+      <h1 className="text-2xl font-semibold text-gray-900">App Discounts & Referral Links</h1>
       {selectedApp === 1 && (
         <>
           <div className="shadow">
@@ -60,16 +72,16 @@ export default function Discounts(props) {
               </div>
               <div className="mt-6 grid grid-cols-2 gap-2">
                 <Select
-                  options={appList}
+                  options={searchList}
                   isSearchable={true}
-                  className="mt-1 z-10"
-                  value={appList.filter((option) => option.value === selectedApp)}
+                  className="mt-1 z-20 bg-white col-span-2 md:col-span-1"
+                  value={searchList.filter((option) => option.value === selectedApp)}
                   onChange={(option) => setSelectedApp(option.value)}
                 />
               </div>
             </div>
           </div>
-          <DiscountList />
+          <DiscountList appList={appList} setAppList={setAppList} setSelectedApp={setSelectedApp} />
         </>
       )}
       {selectedApp !== 1 && (

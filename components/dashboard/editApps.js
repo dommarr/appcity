@@ -4,6 +4,7 @@ import Loading from "./sectionLoading";
 import AppForms from "./app_forms/appForms";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
 import Autocomplete from "../global/autoComplete";
+import Select from "react-select";
 
 export default function EditApps(props) {
   const [apps, setApps] = useState([]);
@@ -17,16 +18,20 @@ export default function EditApps(props) {
   }, []);
 
   const fetchApps = async () => {
-    let { data: products, error } = await supabase.from("products").select("id,name");
+    let { data: products, error } = await supabase.from("products").select("id,name").order("name");
     if (error) {
       setLoading(false);
       throw error;
     }
     if (products) {
-      setLoading(false);
-      setApps(products);
+      let list = [];
+      products.forEach(function (element) {
+        list.push({ label: element.name, value: element.id });
+      });
+      setApps(list);
       let arr = products.map((app) => app.name);
       setOptions(arr);
+      setLoading(false);
     }
   };
 
@@ -45,13 +50,19 @@ export default function EditApps(props) {
     <section className="py-4 space-y-4">
       <h1 className="text-2xl font-semibold text-gray-900">Edit apps</h1>
       {!selected && (
-        <div className="shadow sm:overflow-hidden">
+        <div className="shadow">
           <div className="bg-white py-6 px-4 sm:p-6">
             <div>
               <h2 className="text-lg leading-6 font-medium text-gray-900">Search for an app to edit</h2>
             </div>
             <div className="mt-6 grid grid-cols-2 gap-2">
-              <Autocomplete options={options} buttonClick={buttonClick} />
+              <Select
+                options={apps}
+                isSearchable={true}
+                className="mt-1 z-20 bg-white col-span-2 md:col-span-1"
+                value={apps.filter((option) => option.value === selected)}
+                onChange={(option) => setSelected(option.value)}
+              />
             </div>
           </div>
         </div>

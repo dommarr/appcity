@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
 import { Auth } from "@supabase/ui";
 import Loading from "./sectionLoading";
-import Link from "next/link";
 import DiscountStatus from "./discountStatus";
 
 export default function Account(props) {
