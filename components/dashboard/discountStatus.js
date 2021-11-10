@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { supabase } from "../../utils/initSupabase";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/solid";
 
 export default function DiscountStatus({ reviewCount }) {

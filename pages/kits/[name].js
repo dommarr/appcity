@@ -63,7 +63,7 @@ const KitSection = ({ section }) => {
           <div className="w-full border-t border-gray-300"></div>
         </div>
         <div className="relative flex justify-start">
-          <span className="pr-3 bg-white text-2xl sm:text-2xl font-medium text-gray-900">{name}</span>
+          <span className="pr-3 bg-gray-50 text-2xl sm:text-2xl font-medium text-gray-900">{name}</span>
         </div>
       </div>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

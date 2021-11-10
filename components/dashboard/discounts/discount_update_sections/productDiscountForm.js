@@ -3,6 +3,7 @@ import { supabase } from "../../../../utils/initSupabase";
 import Loading from "../../cardLoading";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
 import { Loader, Check, AlertCircle } from "react-feather";
+import { Switch } from "@headlessui/react";
 
 export default function ProductDiscountForm({ product, forceRender }) {
   const [loading, setLoading] = useState(true);
@@ -15,6 +16,7 @@ export default function ProductDiscountForm({ product, forceRender }) {
   const [refType, setRefType] = useState(null);
   const [refLink, setRefLink] = useState("");
   const [discountMessage, setDiscountMessage] = useState("");
+  const [noRef, setNoRef] = useState(false);
 
   // Fetch on load
   useEffect(async () => {
@@ -29,6 +31,7 @@ export default function ProductDiscountForm({ product, forceRender }) {
     app.ref_type ? setRefType(app.ref_type) : "";
     app.ref_link ? setRefLink(app.ref_link) : "";
     app.discount_message ? setDiscountMessage(app.discount_message) : "";
+    app.no_ref_program ? setNoRef(app.no_ref_program) : "";
   };
 
   const updateApp = async (obj) => {
@@ -49,6 +52,7 @@ export default function ProductDiscountForm({ product, forceRender }) {
       ref_type: refType,
       ref_link: refLink,
       discount_message: discountMessage,
+      no_ref_program: noRef,
     };
     await updateApp(updateObj);
     return;
@@ -88,6 +92,15 @@ export default function ProductDiscountForm({ product, forceRender }) {
             </a>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-6">
+            <div className="col-span-4 flex space-x-2 items-center">
+              <Switch checked={noRef} onChange={setNoRef} className={`${noRef ? "bg-blue-600" : "bg-gray-200"} relative inline-flex items-center h-6 rounded-full w-11`}>
+                <span className="sr-only">No referral or discount program</span>
+                <span className={`${noRef ? "translate-x-6" : "translate-x-1"} inline-block w-4 h-4 transform bg-white rounded-full`} />
+              </Switch>
+              <label htmlFor="allPriorFeaturesOff" className="block text-sm font-medium text-gray-700">
+                No referral or discount program
+              </label>
+            </div>
             <div className="col-span-4 sm:col-span-2">
               <div className="flex space-x-2 items-center justify-start">
                 <label htmlFor="refProgramLink" className="block text-sm font-medium text-gray-700">
@@ -106,6 +119,7 @@ export default function ProductDiscountForm({ product, forceRender }) {
                 placeholder="https://dash.partnerstack.com/webflow"
                 value={refProgramLink}
                 onChange={(e) => setRefProgramLink(e.target.value)}
+                disabled={noRef}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
@@ -127,6 +141,7 @@ export default function ProductDiscountForm({ product, forceRender }) {
                 placeholder="https://webflow.grsm.io/appcity or ?ref=appcity"
                 value={refLink}
                 onChange={(e) => setRefLink(e.target.value)}
+                disabled={noRef}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
@@ -141,6 +156,7 @@ export default function ProductDiscountForm({ product, forceRender }) {
                 placeholder="Direct Link"
                 value={refType}
                 onChange={(e) => setRefType(e.target.value)}
+                disabled={noRef}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               >
                 <option hidden disabled selected value>
@@ -164,6 +180,7 @@ export default function ProductDiscountForm({ product, forceRender }) {
                 placeholder="Try it free for 30 days"
                 value={discountMessage}
                 onChange={(e) => setDiscountMessage(e.target.value)}
+                disabled={noRef}
                 className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
               />
             </div>
