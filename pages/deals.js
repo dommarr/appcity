@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/initSupabase";
-import Footer from "../components/global/footer";
-import Header from "../components/global/header";
 import Container from "../components/global/mobilePaddingContainer";
 import Link from "next/link";
 import Head from "../components/global/head";
@@ -27,7 +25,6 @@ const AppCard = ({ app }) => {
 export default function Deals({ apps }) {
   return (
     <>
-      <Header style="dark" />
       <Head title={`Discounts and Offers | AppCity`} description={description} url={`https://www.appcity.com/deals`} />
       <div className="bg-gray-50 pb-20">
         <Container>
@@ -51,7 +48,6 @@ export default function Deals({ apps }) {
           </div>
         </Container>
       </div>
-      <Footer dark={true} />
     </>
   );
 }

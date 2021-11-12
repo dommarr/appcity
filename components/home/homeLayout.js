@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
-import Header from "../global/header";
-import Footer from "../global/footer";
+import Navbar from "../global/navbar";
 const RotatingText = require("react-rotating-text");
 import SmSkyline from "../graphics/skyline/SmSkyline";
 import MdSkyline from "../graphics/skyline/MdSkyline";
@@ -37,7 +36,7 @@ export default function HomeLayout({ apps, kits }) {
   return (
     <>
       <section id="search" className="relative z-10 bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple overflow-hidden">
-        <Header style="trans" />
+        <Navbar trans={true} search={false} />
         {/* Page Content */}
         <div className="relative pt-16 pb-32 min-h-60vh sm:min-h-70vh flex flex-col justify-center items-center">
           <main className="mx-auto max-w-7xl px-4">
@@ -186,7 +185,7 @@ export default function HomeLayout({ apps, kits }) {
                           />
                         </div>
 
-                        <div className="col-span-2 flex flex-col space-y-1">
+                        <div className="col-span-2 flex flex-col space-y-1 justify-center">
                           <h5 className="text-xl font-medium">{name}</h5>
                           <div className="flex flex-wrap overflow-hidden">
                             {categories.map((category, idy) => {
@@ -392,8 +391,6 @@ export default function HomeLayout({ apps, kits }) {
           </div>
         </div>
       </div>
-
-      <Footer dark={true} />
     </>
   );
 }

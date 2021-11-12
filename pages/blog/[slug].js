@@ -1,6 +1,4 @@
 import { getSinglePost, getPosts, getSixPosts } from "../../lib/posts";
-import Footer from "../../components/global/footer";
-import Header from "../../components/global/header";
 import Head from "../../components/global/head";
 import Link from "next/link";
 
@@ -17,7 +15,6 @@ export default function PostPage({ post, morePosts }) {
   return (
     <>
       <Head title={`${post.title} | AppCity`} description={post.excerpt} ogImage={post.feature_image} url={`https://www.appcity.com/blog/${post.slug}`} />
-      <Header style="dark" />
       <div className="relative py-16 bg-white overflow-hidden">
         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
           <div className="relative h-full text-lg max-w-prose mx-auto" aria-hidden="true">
@@ -135,7 +132,6 @@ export default function PostPage({ post, morePosts }) {
           </div>
         </div>
       </div>
-      <Footer dark={true} />
     </>
   );
 }

@@ -23,7 +23,7 @@ import Link from "next/link";
 import React from "react";
 React.useLayoutEffect = React.useEffect;
 import { useRouter } from "next/router";
-import { StarIcon } from "@heroicons/react/outline";
+import { StarIcon, XIcon } from "@heroicons/react/outline";
 import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import DiscountTooltip from "./discountTooltip";
 import { Auth } from "@supabase/ui";
@@ -269,92 +269,92 @@ class SearchApp extends React.Component {
         >
           {/* Sidebar - static on md screen widths and popover menu on < md */}
           {/* level 1 */}
-          <div className={`${this.state.showSidebar ? `flex` : `hidden`} fixed inset-0 z-40 md:flex md:static md:inset-auto md:z-auto md:flex-shrink-0`}>
-            <div
-              className={`${this.state.showSidebar ? `block` : `hidden`} fixed inset-0 md:hidden`}
-              aria-hidden="true"
-              enter="transition-opacity ease-linear duration-300"
-              enterfrom="opacity-0"
-              enterto="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
-              leavefrom="opacity-100"
-              leaveto="opacity-0"
-            >
-              <div className="absolute inset-0 bg-gray-600 opacity-75"></div>
-            </div>
-            {/* level 2 */}
-            <div
-              className={`${this.state.showSidebar ? `flex` : `hidden`} md:flex relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white md:static md:flex-auto md:max-w-none md:w-64 md:p-0`}
-              enter="transition ease-in-out duration-300 transform"
-              enterfrom="-translate-x-full"
-              enterto="translate-x-0"
-              leave="transition ease-in-out duration-300 transform"
-              leavefrom="translate-x-0"
-              leaveto="-translate-x-full"
-            >
-              <div className="md:hidden absolute top-0 right-0 -mr-12 pt-2">
-                <button
-                  className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                  onClick={() => this.setState({ showSidebar: false })}
-                >
-                  <span className="sr-only">Close sidebar</span>
-                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+          <div id="sidebar-1" className={`${this.state.showSidebar ? `flex` : `hidden`} fixed inset-0 z-40 md:flex md:static md:inset-auto md:z-auto md:flex-shrink-0`}>
+            <div className="flex items-end w-full h-full justify-center md:justify-start md:items-start">
+              <div
+                className={`${this.state.showSidebar ? `block` : `hidden`} fixed inset-0 md:hidden`}
+                aria-hidden="true"
+                enter="transition-opacity ease-linear duration-300"
+                enterfrom="opacity-0"
+                enterto="opacity-100"
+                leave="transition-opacity ease-linear duration-300"
+                leavefrom="opacity-100"
+                leaveto="opacity-0"
+              >
+                <div onClick={() => this.setState({ showSidebar: false })} className="absolute inset-0 bg-gray-600 opacity-75"></div>
               </div>
-              <div className="mt-5 flex-1 h-0 overflow-y-auto md:m-0 md:flex-auto md:h-auto md:flex md:flex-col md:flex-grow md:border-r md:border-gray-200 md:py-2 md:bg-white">
-                <div className="md:flex-grow md:flex md:flex-col">
-                  <nav className="px-2 space-y-1 md:flex-1 md:bg-white">
-                    <ClearRefinements />
-                    <Configure hitsPerPage={24} filters="NOT _tags:hidden" />
-                    <RefinementBlock header="Price">
-                      {/* Hide on empty */}
-                      {this.props.searchState.query && (
-                        <>
-                          <RangeInput attribute="sort_price_monthly" className={`${this.state.monthlyPrice ? "block" : "hidden"}`} />
-                          <RangeInput attribute="sort_price_yearly" className={`${this.state.monthlyPrice ? "hidden" : "block"}`} />
-                          <div className="relative self-center bg-gray-100 p-0.5 flex items-center mt-4">
-                            <button
-                              type="button"
-                              onClick={() => this.setState({ monthlyPrice: true })}
-                              className={`relative w-1/2 ${
-                                this.state.monthlyPrice ? "bg-white shadow-sm" : "bg-transparent"
-                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-3.5`}
-                            >
-                              Monthly billing
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => this.setState({ monthlyPrice: false })}
-                              className={`ml-0.5 relative w-1/2 ${
-                                this.state.monthlyPrice ? "bg-transparent" : "bg-white shadow-sm"
-                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-3.5`}
-                            >
-                              Yearly billing
-                            </button>
-                          </div>
-                        </>
-                      )}
-                    </RefinementBlock>
-                    <RefinementBlock header="Category">
-                      {this.props.searchState.query && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore />}
-                    </RefinementBlock>
-                    <RefinementBlock header="Industry" tooltip="Many apps are general use, others are built for a specific industry.">
-                      {this.props.searchState.query && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}
-                    </RefinementBlock>
-                    <RefinementBlock header="Rating">{this.props.searchState.query && <RatingMenu attribute="rating" />}</RefinementBlock>
-                    <RefinementBlock header="Developer">{this.props.searchState.query && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}</RefinementBlock>
-                    <RefinementBlock header="Features">{this.props.searchState.query && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}</RefinementBlock>
-                  </nav>
+              {/* level 2 */}
+              <div
+                className={`${
+                  this.state.showSidebar ? `flex` : `hidden`
+                } rounded-t-2xl md:flex relative flex-1 flex-col h-4/6 w-full pb-4 bg-white md:h-full md:static md:flex-auto md:max-w-none md:w-64 md:p-0`}
+                enter="transition ease-in-out duration-300 transform"
+                enterfrom="-translate-x-full"
+                enterto="translate-x-0"
+                leave="transition ease-in-out duration-300 transform"
+                leavefrom="translate-x-0"
+                leaveto="-translate-x-full"
+              >
+                <div
+                  onClick={() => this.setState({ showSidebar: false })}
+                  className={`${this.state.showSidebar ? "absolute" : "hidden"} md:hidden top-0 right-0 p-3 bg-white cursor-pointer rounded-tr-2xl`}
+                >
+                  <XIcon className="h-6 w-6 text-black" aria-hidden="true" />
+                </div>
+
+                <div className="mt-5 flex-1 h-0 overflow-y-auto md:m-0 md:flex-auto md:h-auto md:flex md:flex-col md:flex-grow md:border-r md:border-gray-200 md:py-2 md:bg-white">
+                  <div className="md:flex-grow md:flex md:flex-col">
+                    <nav className="max-w-sm mx-auto px-2 space-y-1 md:flex-1 md:bg-white">
+                      <ClearRefinements />
+                      <Configure hitsPerPage={24} filters="NOT _tags:hidden" />
+                      <RefinementBlock header="Price">
+                        {/* Hide on empty */}
+                        {this.props.searchState.query && (
+                          <>
+                            <RangeInput attribute="sort_price_monthly" className={`${this.state.monthlyPrice ? "block" : "hidden"}`} />
+                            <RangeInput attribute="sort_price_yearly" className={`${this.state.monthlyPrice ? "hidden" : "block"}`} />
+                            <div className="relative self-center bg-gray-100 p-0.5 flex items-center mt-4">
+                              <button
+                                type="button"
+                                onClick={() => this.setState({ monthlyPrice: true })}
+                                className={`relative w-1/2 ${
+                                  this.state.monthlyPrice ? "bg-white shadow-sm" : "bg-transparent"
+                                } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
+                              >
+                                Monthly billing
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => this.setState({ monthlyPrice: false })}
+                                className={`ml-0.5 relative w-1/2 ${
+                                  this.state.monthlyPrice ? "bg-transparent" : "bg-white shadow-sm"
+                                } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
+                              >
+                                Yearly billing
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </RefinementBlock>
+                      <RefinementBlock header="Category">
+                        {this.props.searchState.query && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore />}
+                      </RefinementBlock>
+                      <RefinementBlock header="Industry" tooltip="Many apps are general use, others are built for a specific industry.">
+                        {this.props.searchState.query && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}
+                      </RefinementBlock>
+                      <RefinementBlock header="Rating">{this.props.searchState.query && <RatingMenu attribute="rating" />}</RefinementBlock>
+                      <RefinementBlock header="Developer">{this.props.searchState.query && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}</RefinementBlock>
+                      <RefinementBlock header="Features">{this.props.searchState.query && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}</RefinementBlock>
+                    </nav>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col w-0 flex-1 overflow-hidden">
+          <div className="relative flex flex-col w-0 flex-1 overflow-hidden">
             <ScrollTo>
-              <div className="relative flex-shrink-0 flex h-12 bg-white shadow">
+              <div className="hidden relative flex-shrink-0 flex h-12 bg-white shadow">
                 <button
                   className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight md:hidden"
                   onClick={() => this.setState({ showSidebar: true })}
@@ -426,6 +426,14 @@ class SearchApp extends React.Component {
                     {/* Hide pagination if there is no query */}
                     {this.props.searchState.query && <CustomPagination />}
                   </nav>
+                </div>
+                <div className="md:hidden fixed bottom-10 inset-x-0 mx-auto flex items-center justify-center pointer-events-none">
+                  <button
+                    onClick={() => this.setState({ showSidebar: true })}
+                    className="pointer-events-auto bg-yellow text-purple px-10 py-2 uppercase font-medium tracking-widest rounded-lg filter drop-shadow-lg"
+                  >
+                    Filters
+                  </button>
                 </div>
               </div>
             </main>

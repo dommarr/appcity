@@ -1,5 +1,3 @@
-import Footer from "../../components/global/footer";
-import Header from "../../components/global/header";
 import Container from "../../components/global/mobilePaddingContainer";
 import Link from "next/link";
 import Head from "../../components/global/head";
@@ -87,7 +85,6 @@ export default function Kit({ kit, sections }) {
 
   return (
     <>
-      <Header style="dark" />
       <Head title={`${name} Starter Kit | AppCity`} description={description} url={`https://www.appcity.com/kits/${kit.name}`} />
       <div className="bg-gray-50 pb-20">
         <Container>
@@ -105,7 +102,6 @@ export default function Kit({ kit, sections }) {
           </div>
         </Container>
       </div>
-      <Footer dark={true} />
     </>
   );
 }
