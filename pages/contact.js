@@ -1,5 +1,3 @@
-import Footer from "../components/global/footer";
-import Header from "../components/global/header";
 import Head from "../components/global/head";
 import { useState } from "react";
 
@@ -61,7 +59,6 @@ export default function Contact() {
 
   return (
     <>
-      <Header style="dark" />
       <Head title="Contact Us | AppCity" description="Drop us a line and we'll get back to you." url="https://www.appcity.com/contact" />
       <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
         <div className="relative max-w-xl mx-auto">
@@ -181,7 +178,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-      <Footer dark={true} />
     </>
   );
 }

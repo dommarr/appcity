@@ -1,5 +1,4 @@
-import Footer from "../components/global/footer";
-import Header from "../components/global/header";
+import Navbar from "../components/global/navbar";
 import Head from "../components/global/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -28,7 +27,8 @@ export default function About() {
   return (
     <>
       <div className={`h-screen flex flex-col relative ${vendor ? "bg-white" : "bg-gradient-to-br from-purple-extradark to-purple-extralight via-purple"}`}>
-        <Header style={`${vendor ? "light" : "trans"}`} />
+        {/* <Header style={`${vendor ? "light" : "trans"}`} /> */}
+        <Navbar trans={true} light={vendor} search={true} />
         <Head
           title="About Us | AppCity"
           description="Our mission is to make it easy for small business owners to find and buy the best business software to take their business to the next level. Whether you are a founder, content creator, or small business owner, we have business apps that will help you run your business."
@@ -265,8 +265,6 @@ export default function About() {
           </div>
         </div>
       </div>
-
-      <Footer dark={true} />
     </>
   );
 }

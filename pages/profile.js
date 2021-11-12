@@ -3,9 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Auth, Card, Typography, Space, Button, Icon } from "@supabase/ui";
 import { supabase } from "../utils/initSupabase";
-import { useEffect, useState } from "react";
-import Footer from "../components/global/footer";
-import Header from "../components/global/header";
+import { useEffect } from "react";
 import Head from "../components/global/head";
 import Dashboard from "../components/dashboard/dashboard";
 import Loading from "../components/global/loading";
@@ -26,7 +24,6 @@ const SupabaseLogin = () => {
   const { user, session } = Auth.useUser();
   const { data, error } = useSWR(session ? ["/api/getUser", session.access_token] : null, fetcher);
   const router = useRouter();
-  const [authView, setAuthView] = useState(router.query.view);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -53,39 +50,43 @@ const SupabaseLogin = () => {
         <div className="min-h-screen min-w-screen bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight flex flex-col sm:justify-center pt-16 sm:py-12 sm:px-6 lg:px-8">
           <Head title="Sign Up or Sign In | AppCity" description="Sign into your AppCity profile." url="https://www.appcity.com/profile" />
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
-            <div className="flex justify-center">
+            <div className="flex flex-col justify-center items-center space-y-4">
               <Link href="/">
                 <a>
-                  <LogoWhite size={100} />
+                  <LogoWhite size={60} />
                 </a>
               </Link>
+              {router.query.view !== "sign_up" && (
+                <div className="text-white flex space-x-1">
+                  <h3>Sign in or</h3>
+                  <button onClick={() => router.push("/profile?view=sign_up")} className="underline hover:no-underline">
+                    create an account
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <Card className="sm:mx-auto sm:w-full sm:max-w-md">
             <Space direction="vertical" size={8}>
               {/* <Auth supabaseClient={supabase} view={authView} providers={["google", "facebook"]} socialLayout="horizontal" socialColors socialButtonSize="tiny" /> */}
-              <Auth supabaseClient={supabase} view={authView} providers={["google", "facebook"]} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
+              <Auth supabaseClient={supabase} view={router.query.view} providers={["google", "facebook"]} socialLayout="horizontal" socialColors socialButtonSize="tiny" />
             </Space>
           </Card>
         </div>
       );
 
     return (
-      <>
-        <div className="h-screen flex flex-col">
-          <Header style="dark" />
-          <Head title="Your Profile | AppCity" description="Manage your AppCity profile." url="https://www.appcity.com/profile" />
-          <div className="flex flex-1 overflow-hidden bg-gray-100">
-            {user && (
-              <>
-                {error && <Typography.Text danger>Failed to fetch user!</Typography.Text>}
-                {data && !error ? <Dashboard user={user} authView={authView} /> : <ProfileLoading />}
-              </>
-            )}
-          </div>
+      <div className="h-screen flex flex-col">
+        <Head title="Your Profile | AppCity" description="Manage your AppCity profile." url="https://www.appcity.com/profile" />
+        <div className="flex flex-1 overflow-hidden bg-gray-100">
+          {user && (
+            <>
+              {error && <Typography.Text danger>Failed to fetch user!</Typography.Text>}
+              {data && !error ? <Dashboard user={user} authView={router.query.view} /> : <ProfileLoading />}
+            </>
+          )}
         </div>
-        <Footer dark={true} />
-      </>
+      </div>
     );
   };
 

@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import * as ga from "../lib/ga";
 import Banner from "../components/global/banner";
+import Navbar from "../components/global/navbar";
+import Footer from "../components/global/footer";
 
 // Google Analytics setup source: https://mariestarck.com/add-google-analytics-to-your-next-js-application-in-5-easy-steps/
 
@@ -28,11 +30,16 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router.events]);
 
+  const hideBanner = ["/u/[handle]", "/404", "/login"];
+  const hideNav = ["/", "/about", "/u/[handle]", "/404", "/login"];
+
   return (
     <Auth.UserContextProvider supabaseClient={supabase}>
       <SimpleReactLightbox>
-        {router.route !== "/u/[handle]" && <Banner />}
+        {!hideBanner.includes(router.route) && <Banner />}
+        {!hideNav.includes(router.route) && <Navbar search={true} />}
         <Component {...pageProps} />
+        {!hideBanner.includes(router.route) && <Footer dark={true} />}
       </SimpleReactLightbox>
     </Auth.UserContextProvider>
   );
