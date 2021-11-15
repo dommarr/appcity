@@ -88,11 +88,13 @@ export default function Navbar({ trans, light, search }) {
     if (user) {
       let defaultUrl = "https://source.boringavatars.com/pixel/120/?colors=540AFF,0F0059,8D5CFF,FFFF00,FCD34D";
       if (user.user_metadata.avatar_url) {
+        console.log(user.user_metadata.avatar_url);
         setAvatar(user.user_metadata.avatar_url);
       } else {
         setAvatar(defaultUrl);
       }
     }
+    console.log(user);
   }, [user]);
 
   const handleSubmit = (e) => {
