@@ -36,10 +36,15 @@ function classNames(...classes) {
 }
 
 const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
+  const [focused, setFocused] = useState(false);
+
   const handleReset = () => {
     document.getElementById("search").focus();
     setQuery("");
   };
+
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
 
   return (
     <div className={`sm:max-w-sm lg:max-w-lg w-full`}>
@@ -48,6 +53,8 @@ const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
           type="text"
           name="search"
           id="search"
+          onFocus={onFocus}
+          onBlur={onBlur}
           className={`${
             light ? "border-purple text-purple placeholder-purple focus:ring-purple focus:border-purple" : "border-white text-white placeholder-white focus:ring-white focus:border-white"
           } border-l border-t border-b border-r-0 bg-transparent focus:ring-0 focus:outline-none  w-full md:text-sm"`}
@@ -56,7 +63,7 @@ const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
           onChange={(event) => setQuery(event.target.value)}
         />
         <div className="border-t border-b border-white flex items-center justify-center w-12 pr-2">
-          {!query && !isMobile && (
+          {!query && !isMobile && !focused && (
             <div className="flex items-center justify-center bg-purple space-x-0.5 px-3 pb-0.5 rounded">
               <span className="text-white font-light">/</span>
             </div>
