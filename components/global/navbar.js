@@ -29,15 +29,14 @@ import LogoLight from "../graphics/logo/LogoLight";
 import BugModal from "./bugModal";
 import Bug from "../graphics/bug";
 import BugPopover from "./bugPopover";
-import e from "cors";
+import { isMobile } from "react-device-detect";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
-  const handleReset = (e) => {
-    e.preventDefault;
+  const handleReset = () => {
     document.getElementById("search").focus();
     setQuery("");
   };
@@ -57,14 +56,14 @@ const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
           onChange={(event) => setQuery(event.target.value)}
         />
         <div className="border-t border-b border-white flex items-center justify-center w-12 pr-2">
-          {/* {!query && (
-            <div className="flex items-center justify-center bg-purple space-x-0.5 px-3 pb-0.5 rounded"> */}
+          {!query && !isMobile && (
+            <div className="flex items-center justify-center bg-purple space-x-0.5 px-3 pb-0.5 rounded">
+              <span className="text-white font-light">/</span>
+            </div>
+          )}
           {/* <Command size={15} className="text-white" />
             <span className="text-white font-light text-sm">CTRL-</span> */}
-          {/* <span className="text-white font-light">/</span>
-            </div>
-          )} */}
-          {query && <XIcon onClick={() => handleReset(e)} className="text-white h-5 w-5 cursor-pointer" />}
+          {query && <XIcon onClick={() => handleReset()} className="text-white h-5 w-5 cursor-pointer" />}
         </div>
         <button
           type="submit"
@@ -107,6 +106,16 @@ export default function Navbar({ trans, light, search }) {
       setQuery("website builder");
       router.replace(`/search?query=website+builder`);
     }
+
+    document.addEventListener(
+      "keyup",
+      (event) => {
+        if (event.key === "/") {
+          document.getElementById("search").focus();
+        }
+      },
+      false
+    );
   }, [user]);
 
   const handleSubmit = (e) => {
