@@ -100,7 +100,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
       })
       .catch((error) => {
         console.error("Error:", error);

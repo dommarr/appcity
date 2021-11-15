@@ -13,6 +13,8 @@ import Footer from "../components/global/footer";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const { user, session } = Auth.useUser();
+  const [profile, setProfile] = useState(null);
   //const [hideBanner, setHideBanner] = useState(false)
 
   useEffect(() => {
@@ -30,6 +32,21 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router.events]);
 
+  // useEffect(async () => {
+  //   if (user) {
+  //     let userProfile = await fetchProfile(user.id);
+  //     setProfile(userProfile);
+  //   }
+  // }, [user]);
+
+  // const fetchProfile = async (uid) => {
+  //   let { data: users, error } = await supabase.from("users").select("*").eq("id", uid);
+  //   if (error) {
+  //     throw error;
+  //   }
+  //   return users[0];
+  // };
+
   const hideBanner = ["/u/[handle]", "/404", "/login"];
   const hideNav = ["/", "/about", "/u/[handle]", "/404", "/login"];
 
@@ -37,8 +54,8 @@ function MyApp({ Component, pageProps }) {
     <Auth.UserContextProvider supabaseClient={supabase}>
       <SimpleReactLightbox>
         {!hideBanner.includes(router.route) && <Banner />}
-        {!hideNav.includes(router.route) && <Navbar search={true} />}
-        <Component {...pageProps} />
+        {!hideNav.includes(router.route) && <Navbar search={true} profile={profile} />}
+        <Component {...pageProps} user={supabase.auth.currentUser} profile={profile} />
         {!hideBanner.includes(router.route) && <Footer dark={true} />}
       </SimpleReactLightbox>
     </Auth.UserContextProvider>

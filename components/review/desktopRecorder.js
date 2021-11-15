@@ -308,10 +308,10 @@ export default function DesktopRecorder({ user, product, setReview, setSuccess, 
           <h1 className="text-xl font-medium text-gray-900 text-center">Sign in to leave a review</h1>
         </div>
         <div className="flex items-center justify-center space-x-4 mb-4">
-          <Link href={{ pathname: `/profile`, query: { view: "magic_link" } }}>
+          <Link href={{ pathname: `/login`, query: { view: "magic_link" } }}>
             <a className={`text-purple hover:bg-gray-200 text-base font-medium border border-purple px-4 py-2`}>Sign in</a>
           </Link>
-          <Link href={{ pathname: `/profile`, query: { view: "sign_up" } }}>
+          <Link href={{ pathname: `/login`, query: { view: "sign_up" } }}>
             <a className={`text-white bg-purple hover:bg-purple-dark inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-base font-medium`}>Sign up</a>
           </Link>
         </div>

@@ -46,7 +46,7 @@ export default function TaskList(props) {
     setListview(false);
     setTaskInProgress(task, true);
     setCurrenttask(task);
-    // props.router.push(`/profile?screen=tasks&task=${task.id}`, undefined, { shallow: true });
+    // props.router.push(`/dashboard?screen=tasks&task=${task.id}`, undefined, { shallow: true });
   }
 
   const NoTasks = () => {

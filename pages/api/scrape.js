@@ -53,7 +53,7 @@ export default async function (req, res) {
   };
 
   for (let i = 0; i < products.length; i++) {
-    console.log(products[i].price_link);
+    //console.log(products[i].price_link);
     // check if price page is dynamic and update if yes
     let dynamic = await checkDynamic(products[i].price_link, products[i].id);
     // if hash, check changes. else, get hash
