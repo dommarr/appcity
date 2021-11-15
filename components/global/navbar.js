@@ -9,13 +9,7 @@ import { Command, ArrowLeft } from "react-feather";
 import {
   MenuIcon,
   XIcon,
-  BellIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
   HomeIcon,
-  InboxIcon,
-  MenuAlt2Icon,
   UserIcon,
   HeartIcon,
   StarIcon,
@@ -87,14 +81,13 @@ export default function Navbar({ trans, light, search }) {
   useEffect(() => {
     if (user) {
       let defaultUrl = "https://source.boringavatars.com/pixel/120/?colors=540AFF,0F0059,8D5CFF,FFFF00,FCD34D";
-      if (user.user_metadata.avatar_url) {
-        console.log(user.user_metadata.avatar_url);
-        setAvatar(user.user_metadata.avatar_url);
+      if (user.app_metadata.provider === "google") {
+        let url = user.user_metadata.avatar_url ? user.user_metadata.avatar_url : defaultUrl;
+        setAvatar(url);
       } else {
         setAvatar(defaultUrl);
       }
     }
-    console.log(user);
   }, [user]);
 
   const handleSubmit = (e) => {
