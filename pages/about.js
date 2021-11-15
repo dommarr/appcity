@@ -128,7 +128,7 @@ export default function About() {
                       Let your sales team focus on what they do best: land those big accounts. Let us help you acquire smaller accounts, diversify your revenue, and bolster your business.
                     </p>
                     <div className="mt-6">
-                      <Link href="/profile">
+                      <Link href="/login?view=sign_up">
                         <a className="inline-flex px-4 py-2 border border-transparent text-base font-medium shadow-sm text-white bg-gradient-to-r from-purple to-indigo-600 hover:from-purple-extradark hover:to-indigo-700">
                           List your product
                         </a>

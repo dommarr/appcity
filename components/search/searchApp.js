@@ -288,12 +288,6 @@ class SearchApp extends React.Component {
                 className={`${
                   this.state.showSidebar ? `flex` : `hidden`
                 } rounded-t-2xl md:flex relative flex-1 flex-col h-4/6 w-full pb-4 bg-white md:h-full md:static md:flex-auto md:max-w-none md:w-64 md:p-0`}
-                enter="transition ease-in-out duration-300 transform"
-                enterfrom="-translate-x-full"
-                enterto="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
-                leavefrom="translate-x-0"
-                leaveto="-translate-x-full"
               >
                 <div
                   onClick={() => this.setState({ showSidebar: false })}

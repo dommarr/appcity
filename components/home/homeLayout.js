@@ -371,7 +371,7 @@ export default function HomeLayout({ apps, kits }) {
                     <a className="text-lg leading-6 text-white underline hover:no-underline">Learn more</a>
                   </Link>
                 </div>
-                <Link href="/profile">
+                <Link href="/login?view=sign_up">
                   <a className="mt-8 bg-white border border-transparent shadow px-5 py-3 inline-flex items-center text-base font-medium text-purple hover:bg-gray-200">Sign up for free</a>
                 </Link>
               </div>

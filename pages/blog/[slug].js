@@ -11,7 +11,6 @@ export default function PostPage({ post, morePosts }) {
   };
   let date = new Intl.DateTimeFormat("en-US", options).format(new Date(post.published_at));
 
-  console.log(post);
   return (
     <>
       <Head title={`${post.title} | AppCity`} description={post.excerpt} ogImage={post.feature_image} url={`https://www.appcity.com/blog/${post.slug}`} />
