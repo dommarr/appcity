@@ -29,12 +29,19 @@ import LogoLight from "../graphics/logo/LogoLight";
 import BugModal from "./bugModal";
 import Bug from "../graphics/bug";
 import BugPopover from "./bugPopover";
+import e from "cors";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
+  const handleReset = (e) => {
+    e.preventDefault;
+    document.getElementById("search").focus();
+    setQuery("");
+  };
+
   return (
     <div className={`sm:max-w-sm lg:max-w-lg w-full`}>
       <form onSubmit={handleSubmit} className="flex">
@@ -49,13 +56,16 @@ const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        {/* <div className="border-t border-b border-white flex items-center justify-center pr-2">
-          <div className="flex items-center justify-center bg-purple space-x-0.5 px-3 pb-0.5 rounded">
-            <Command size={15} className="text-white" />
-            <span className="text-white font-light text-sm">CTRL-</span>
-            <span className="text-white font-light">/</span>
-          </div>
-        </div> */}
+        <div className="border-t border-b border-white flex items-center justify-center w-12 pr-2">
+          {/* {!query && (
+            <div className="flex items-center justify-center bg-purple space-x-0.5 px-3 pb-0.5 rounded"> */}
+          {/* <Command size={15} className="text-white" />
+            <span className="text-white font-light text-sm">CTRL-</span> */}
+          {/* <span className="text-white font-light">/</span>
+            </div>
+          )} */}
+          {query && <XIcon onClick={() => handleReset(e)} className="text-white h-5 w-5 cursor-pointer" />}
+        </div>
         <button
           type="submit"
           className={`${
@@ -73,7 +83,7 @@ export default function Navbar({ trans, light, search }) {
   const router = useRouter();
   const { user } = Auth.useUser();
   const [query, setQuery] = useState(router.query.query);
-  const [showSearch, setShowSearch] = useState(router.pathname === "/search" ? true : false);
+  const [showSearch, setShowSearch] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [avatar, setAvatar] = useState(null);
@@ -88,12 +98,28 @@ export default function Navbar({ trans, light, search }) {
         setAvatar(defaultUrl);
       }
     }
+    // for small screen widths, automatically show search bar on the search page
+    if (router.pathname === "/search" && document?.body.clientWidth < 640) {
+      setShowSearch(true);
+    }
+    // if there is no search query, set a default query
+    if (router.pathname === "/search" && !router.query.query) {
+      setQuery("website builder");
+      router.replace(`/search?query=website+builder`);
+    }
   }, [user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // if the user didn't enter a query, set a default query
+    if (!query) {
+      setQuery("website builder");
+      router.push(`/search?query=website+builder`);
+    } else {
+      router.push(`/search?query=${query}`);
+    }
+    // cancel focus on the search bar - mainly so the keyboard collapses on mobile
     document.activeElement.blur();
-    router.push(`/search?query=${query}`);
   };
 
   const handleSignOut = () => {
