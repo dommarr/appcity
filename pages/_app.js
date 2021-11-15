@@ -14,7 +14,7 @@ import Footer from "../components/global/footer";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const { user, session } = Auth.useUser();
-  const [profile, setProfile] = useState(null);
+  //const [profile, setProfile] = useState(null);
   //const [hideBanner, setHideBanner] = useState(false)
 
   useEffect(() => {
@@ -54,8 +54,8 @@ function MyApp({ Component, pageProps }) {
     <Auth.UserContextProvider supabaseClient={supabase}>
       <SimpleReactLightbox>
         {!hideBanner.includes(router.route) && <Banner />}
-        {!hideNav.includes(router.route) && <Navbar search={true} profile={profile} />}
-        <Component {...pageProps} user={supabase.auth.currentUser} profile={profile} />
+        {!hideNav.includes(router.route) && <Navbar search={true} />}
+        <Component {...pageProps} user={supabase.auth.currentUser} />
         {!hideBanner.includes(router.route) && <Footer dark={true} />}
       </SimpleReactLightbox>
     </Auth.UserContextProvider>
