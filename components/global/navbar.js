@@ -79,7 +79,7 @@ export default function Navbar({ trans, light, search }) {
   const router = useRouter();
   const { user } = Auth.useUser();
   const [query, setQuery] = useState(router.query.query);
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(router.pathname === "/search" ? true : false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [avatar, setAvatar] = useState(null);
@@ -87,10 +87,8 @@ export default function Navbar({ trans, light, search }) {
   useEffect(() => {
     if (user) {
       let defaultUrl = "https://source.boringavatars.com/pixel/120/?colors=540AFF,0F0059,8D5CFF,FFFF00,FCD34D";
-      console.log(user);
-      if (user.app_metadata.provider === "google") {
-        let url = user.user_metadata.avatar_url ? user.user_metadata.avatar_url : defaultUrl;
-        setAvatar(url);
+      if (user.user_metadata.avatar_url) {
+        setAvatar(user.user_metadata.avatar_url);
       } else {
         setAvatar(defaultUrl);
       }
@@ -118,15 +116,15 @@ export default function Navbar({ trans, light, search }) {
   ];
 
   const dashboardNavigation = [
-    { name: "Your account", href: "/", icon: UserIcon, current: router.query.screen === "account" ? true : false, default: true },
-    { name: "Favorites", href: "/about", icon: HeartIcon, current: router.query.screen === "favorites" ? true : false, default: true },
-    { name: "Reviews", href: "/contact", icon: StarIcon, current: router.query.screen === "reviews" ? true : false, default: true },
-    { name: "List your app", href: "/blog", icon: ViewGridAddIcon, current: router.query.screen === "list_app" ? true : false, vendor: true },
-    { name: "Tasks", href: "/blog", icon: ClipboardCheckIcon, current: router.query.screen === "tasks" ? true : false, admin: true },
-    { name: "Edit apps", href: "/blog", icon: PencilAltIcon, current: router.query.screen === "edit" ? true : false, admin: true },
-    { name: "Discounts", href: "/blog", icon: CurrencyDollarIcon, current: router.query.screen === "discounts" ? true : false, superadmin: true },
-    { name: "Add app", href: "/blog", icon: PlusCircleIcon, current: router.query.screen === "admin_create_app" ? true : false, superadmin: true },
-    { name: "Audit tasks", href: "/blog", icon: DocumentSearchIcon, current: router.query.screen === "audit_tasks" ? true : false, superadmin: true },
+    { name: "Your account", screen: "account", icon: UserIcon, current: router.query.screen === "account" ? true : false, default: true },
+    { name: "Favorites", screen: "favorites", icon: HeartIcon, current: router.query.screen === "favorites" ? true : false, default: true },
+    { name: "Reviews", screen: "reviews", icon: StarIcon, current: router.query.screen === "reviews" ? true : false, default: true },
+    { name: "List your app", screen: "list_app", icon: ViewGridAddIcon, current: router.query.screen === "list_app" ? true : false, vendor: true },
+    { name: "Tasks", screen: "tasks", icon: ClipboardCheckIcon, current: router.query.screen === "tasks" ? true : false, admin: true },
+    { name: "Edit apps", screen: "edit", icon: PencilAltIcon, current: router.query.screen === "edit" ? true : false, admin: true },
+    { name: "Discounts", screen: "discounts", icon: CurrencyDollarIcon, current: router.query.screen === "discounts" ? true : false, superadmin: true },
+    { name: "Add app", screen: "admin_create_app", icon: PlusCircleIcon, current: router.query.screen === "admin_create_app" ? true : false, superadmin: true },
+    { name: "Audit tasks", screen: "audit_tasks", icon: DocumentSearchIcon, current: router.query.screen === "audit_tasks" ? true : false, superadmin: true },
   ];
 
   const HeaderLinks = () => {
@@ -233,15 +231,15 @@ export default function Navbar({ trans, light, search }) {
                           <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-48 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <Menu.Item>
                               {({ active }) => (
-                                <a href="/dashboard?screen=account" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
-                                  Your Profile
+                                <a href="/dashboard?screen=account" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-lg sm:text-sm text-gray-700")}>
+                                  Your profile
                                 </a>
                               )}
                             </Menu.Item>
                             <Menu.Item>
                               {({ active }) => (
                                 <button className="w-full" onClick={() => handleSignOut()}>
-                                  <a href="#" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700 text-left")}>
+                                  <a href="#" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-lg sm:text-sm text-gray-700 text-left")}>
                                     Sign out
                                   </a>
                                 </button>
@@ -294,7 +292,7 @@ export default function Navbar({ trans, light, search }) {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-purple-extradark">
+            <div onClick={() => setSidebarOpen(false)} className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-purple-extradark">
               <Transition.Child as={Fragment} enter="ease-in-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in-out duration-300" leaveFrom="opacity-100" leaveTo="opacity-0">
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                   <button
@@ -327,16 +325,19 @@ export default function Navbar({ trans, light, search }) {
                         {dashboardNavigation
                           .filter((item) => item.default)
                           .map((item) => (
-                            <a
+                            <Link
                               key={item.name}
-                              href={item.href}
-                              className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}
+                              href={{
+                                pathname: router.pathname,
+                                query: { screen: item.screen },
+                              }}
                             >
-                              <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
-                              {item.name}
-                            </a>
+                              <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
+                                <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                                {item.name}
+                              </a>
+                            </Link>
                           ))}
-
                         {/* <div className="relative">
                           <div className="absolute inset-0 flex items-center" aria-hidden="true">
                             <div className="w-full border-t border-white"></div>
@@ -348,14 +349,18 @@ export default function Navbar({ trans, light, search }) {
                         {dashboardNavigation
                           .filter((item) => item.none)
                           .map((item) => (
-                            <a
+                            <Link
                               key={item.name}
-                              href={item.href}
-                              className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}
+                              href={{
+                                pathname: router.pathname,
+                                query: { screen: item.screen },
+                              }}
                             >
-                              <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
-                              {item.name}
-                            </a>
+                              <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
+                                <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                                {item.name}
+                              </a>
+                            </Link>
                           ))}
                         {/* <div className="relative">
                           <div className="absolute inset-0 flex items-center" aria-hidden="true">
@@ -368,26 +373,34 @@ export default function Navbar({ trans, light, search }) {
                         {dashboardNavigation
                           .filter((item) => item.none)
                           .map((item) => (
-                            <a
+                            <Link
                               key={item.name}
-                              href={item.href}
-                              className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}
+                              href={{
+                                pathname: router.pathname,
+                                query: { screen: item.screen },
+                              }}
                             >
-                              <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
-                              {item.name}
-                            </a>
+                              <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
+                                <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                                {item.name}
+                              </a>
+                            </Link>
                           ))}
                         {dashboardNavigation
                           .filter((item) => item.none)
                           .map((item) => (
-                            <a
+                            <Link
                               key={item.name}
-                              href={item.href}
-                              className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}
+                              href={{
+                                pathname: router.pathname,
+                                query: { screen: item.screen },
+                              }}
                             >
-                              <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
-                              {item.name}
-                            </a>
+                              <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
+                                <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                                {item.name}
+                              </a>
+                            </Link>
                           ))}
                         <div className="relative">
                           <div className="absolute inset-0 flex items-center" aria-hidden="true">
@@ -400,14 +413,12 @@ export default function Navbar({ trans, light, search }) {
                       </div>
                     )}
                     {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}
-                      >
-                        <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
-                        {item.name}
-                      </a>
+                      <Link key={item.name} href={item.href}>
+                        <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
+                          <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                          {item.name}
+                        </a>
+                      </Link>
                     ))}
                   </div>
                   {router.pathname === "/dashboard" && (

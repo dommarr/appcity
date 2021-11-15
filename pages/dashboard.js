@@ -106,7 +106,7 @@ export default function Dashboard({ user }) {
       profile?.admin ? setAdmin(profile.admin) : "";
       profile?.super_admin ? setSuperAdmin(profile.super_admin) : "";
     } else {
-      router.replace("login");
+      router.replace("/login?view=magic_link");
     }
     if (!screen) {
       router.replace({
