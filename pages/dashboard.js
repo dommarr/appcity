@@ -1,5 +1,6 @@
 import Loading from "../components/global/loading";
 import Head from "../components/global/head";
+import Navbar from "../components/global/navbar";
 import { Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -166,6 +167,7 @@ export default function Dashboard({ user }) {
 
   return (
     <div className="h-screen flex flex-col">
+      <Navbar search={true} />
       <Head title="Dashboard | AppCity" description="Manage your AppCity profile." url="https://www.appcity.com/dashboard" />
       <div className="flex flex-1 overflow-hidden bg-gray-100">
         {/* Static sidebar for desktop */}
