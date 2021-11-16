@@ -22,7 +22,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import React from "react";
 React.useLayoutEffect = React.useEffect;
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { StarIcon, XIcon } from "@heroicons/react/outline";
 import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import DiscountTooltip from "./discountTooltip";
@@ -103,8 +103,8 @@ const Results = connectStateResults(({ searchState, searchResults, children }) =
               <ExclamationIcon className="h-5 w-5 text-amber-400" aria-hidden="true" />
             </div>
             <div className="ml-3 space-x-1">
-              <span className="text-sm text-amber-700">Oops! Looks like we don't have any results for "{searchState.query}".</span>
-              <CustomClearRefinements clearsQuery />
+              <span className="text-sm text-amber-700">Oops! Looks like we don't have any results for "{searchState.query}". Please try again.</span>
+              {/* <CustomClearRefinements clearsQuery /> */}
             </div>
           </div>
         </div>
