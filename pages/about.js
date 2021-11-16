@@ -84,8 +84,8 @@ export default function About() {
               {!vendor && (
                 <div>
                   <div>
-                    <span className="h-12 w-12 flex items-center justify-center bg-gradient-to-r from-purple to-indigo-600">
-                      <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <span className="h-12 w-12 flex items-center justify-center border-2 border-purple">
+                      <svg className="h-6 w-6 text-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -116,8 +116,8 @@ export default function About() {
               {vendor && (
                 <div>
                   <div>
-                    <span className="h-12 w-12 flex items-center justify-center bg-gradient-to-r from-purple to-indigo-600">
-                      <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <span className="h-12 w-12 flex items-center justify-center border-2 border-purple">
+                      <svg className="h-6 w-6 text-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </span>
@@ -186,8 +186,8 @@ export default function About() {
               {!vendor && (
                 <div>
                   <div>
-                    <span className="h-12 w-12 flex items-center justify-center bg-gradient-to-r from-purple to-indigo-600">
-                      <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <span className="h-12 w-12 flex items-center justify-center border-2 border-purple">
+                      <svg className="h-6 w-6 text-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -218,8 +218,8 @@ export default function About() {
               {vendor && (
                 <div>
                   <div>
-                    <span className="h-12 w-12 flex items-center justify-center bg-gradient-to-r from-purple to-indigo-600">
-                      <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <span className="h-12 w-12 flex items-center justify-center border-2 border-purple">
+                      <svg className="h-6 w-6 text-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                       </svg>
                     </span>

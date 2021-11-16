@@ -47,8 +47,8 @@ function MyApp({ Component, pageProps }) {
   //   return users[0];
   // };
 
-  const hideBanner = ["/u/[handle]", "/404", "/login"];
-  const hideNav = ["/", "/about", "/u/[handle]", "/404", "/login"];
+  const hideBanner = ["/u/[handle]", "/404", "/login", "/dashboard"];
+  const hideNav = ["/", "/about", "/u/[handle]", "/404", "/login", "/dashboard"];
 
   return (
     <Auth.UserContextProvider supabaseClient={supabase}>
