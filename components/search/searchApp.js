@@ -22,7 +22,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import React from "react";
 React.useLayoutEffect = React.useEffect;
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { StarIcon, XIcon } from "@heroicons/react/outline";
 import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import DiscountTooltip from "./discountTooltip";
