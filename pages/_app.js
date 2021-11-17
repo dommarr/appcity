@@ -53,13 +53,24 @@ function MyApp({ Component, pageProps }) {
   return (
     <Auth.UserContextProvider supabaseClient={supabase}>
       <SimpleReactLightbox>
-        {!hideBanner.includes(router.route) && <Banner />}
-        {!hideNav.includes(router.route) && <Navbar search={true} />}
-        <Component {...pageProps} user={supabase.auth.currentUser} />
-        {!hideBanner.includes(router.route) && <Footer dark={true} />}
+        <div id="app-container" className="min-h-screen flex flex-col max-w-7xl min-w-full justify-between">
+          <div>
+            {!hideBanner.includes(router.route) && <Banner />}
+            {!hideNav.includes(router.route) && <Navbar search={true} />}
+          </div>
+          <Component {...pageProps} user={supabase.auth.currentUser} />
+          {!hideBanner.includes(router.route) && <Footer dark={true} />}
+        </div>
       </SimpleReactLightbox>
     </Auth.UserContextProvider>
   );
 }
 
 export default MyApp;
+
+{
+  /* <div className="min-h-screen flex flex-col justify-between">
+          <div></div>
+          </div>
+                  </div> */
+}

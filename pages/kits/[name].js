@@ -55,7 +55,7 @@ const KitSection = ({ section }) => {
   }, []);
 
   return (
-    <section className="pb-20">
+    <section className="pb-12">
       <div className="relative mb-4">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full border-t border-gray-300"></div>
@@ -88,18 +88,14 @@ export default function Kit({ kit, sections }) {
       <Head title={`${name} Starter Kit | AppCity`} description={description} url={`https://www.appcity.com/kits/${kit.name}`} />
       <div className="bg-gray-50 pb-20">
         <Container>
-          <div className="">
-            <div className="max-w-7xl mx-auto py-16 sm:px-6 lg:px-8">
-              <div className="text-center space-y-4">
-                <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">{name} Starter Kit</h1>
-                <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
-              </div>
-            </div>
-            {sections &&
-              sections.map((section, idx) => {
-                return <KitSection key={idx} section={section} />;
-              })}
+          <div className="text-center space-y-4">
+            <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">{name} Starter Kit</h1>
+            <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
           </div>
+          {sections &&
+            sections.map((section, idx) => {
+              return <KitSection key={idx} section={section} />;
+            })}
         </Container>
       </div>
     </>

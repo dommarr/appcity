@@ -4,7 +4,7 @@ import Container from "../components/global/mobilePaddingContainer";
 import Link from "next/link";
 import Head from "../components/global/head";
 
-let description = "Offers";
+let description = "Exclusive discounts and offers for AppCity shoppers.";
 
 const AppCard = ({ app }) => {
   return (
@@ -28,24 +28,20 @@ export default function Deals({ apps }) {
       <Head title={`Discounts and Offers | AppCity`} description={description} url={`https://www.appcity.com/deals`} />
       <div className="bg-gray-50 pb-20">
         <Container>
-          <div className="">
-            <div className="max-w-7xl mx-auto py-16 sm:px-6 lg:px-8">
-              <div className="text-center space-y-4">
-                <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">Discounts and Offers</h1>
-                <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
-              </div>
-            </div>
-            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {apps &&
-                apps.map((app, idx) => {
-                  return <AppCard key={idx} app={app} />;
-                })}
-            </ul>
-            {/* {sections &&
+          <div className="text-center space-y-4">
+            <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">Discounts and Offers</h1>
+            <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
+          </div>
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {apps &&
+              apps.map((app, idx) => {
+                return <AppCard key={idx} app={app} />;
+              })}
+          </ul>
+          {/* {sections &&
               sections.map((section, idx) => {
                 return <KitSection key={idx} section={section} />;
               })} */}
-          </div>
         </Container>
       </div>
     </>

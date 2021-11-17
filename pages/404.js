@@ -94,7 +94,7 @@ export default function Custom404() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight">
+    <div className="bg-gradient-to-b from-purple-extradark via-purple to-purple-extralight min-h-screen flex flex-col justify-between">
       <Head title="Page Not Found | AppCity" description="Sorry, we couldn't find that page." url="https://www.appcity.com/404" />
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex-shrink-0 pt-16">
@@ -150,7 +150,7 @@ export default function Custom404() {
       </main>
       <footer className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-t border-gray-200 py-12 text-center md:flex md:justify-between">
-          <p className="text-base text-gray-300">&copy; AppCity, Inc. All rights reserved.</p>
+          <p className="text-base text-gray-300">&copy; AppCity, LLC. All rights reserved.</p>
           <div className="mt-6 flex justify-center space-x-8 md:mt-0">
             {/* {social.map((item, itemIdx) => (
               <a key={itemIdx} href={item.href} className="inline-flex text-gray-400 hover:text-gray-500">

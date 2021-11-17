@@ -62,10 +62,10 @@ const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <div className="border-t border-b border-white flex items-center justify-center w-12 pr-2">
+        <div className={`${light ? "border-purple" : "border-white"} border-t border-b flex items-center justify-center w-12 pr-2`}>
           {!query && !isMobile && !focused && (
-            <div className="flex items-center justify-center bg-purple space-x-0.5 px-3 pb-0.5 rounded">
-              <span className="text-white font-light">/</span>
+            <div className={`${light ? "bg-gray-200 text-purple border border-purple" : "bg-purple text-white"} flex items-center justify-center space-x-0.5 px-3 pb-0.5 rounded`}>
+              <span className="font-light">/</span>
             </div>
           )}
           {/* <Command size={15} className="text-white" />

@@ -18,8 +18,8 @@ export default function StarterKitFeature({ kits }) {
   };
 
   return (
-    <section className="max-w-7xl mx-auto pb-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+    <section id="starter-kits" className="bg-white">
+      <div className="max-w-3xl mx-auto pb-32 px-4 sm:px-6 lg:px-8">
         <h2 className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-purple-extralight via-purple to-purple-extradark">Starter Kits</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-rows-5 md:grid-rows-3 grid-flow-row gap-2">
           <div className="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
