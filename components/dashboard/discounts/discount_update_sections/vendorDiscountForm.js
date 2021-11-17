@@ -6,6 +6,32 @@ import { ExclamationIcon } from "@heroicons/react/solid";
 import { Loader, Check, AlertCircle } from "react-feather";
 import { Switch } from "@headlessui/react";
 
+const VendorWarning = () => {
+  return (
+    <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 mt-4">
+      <div className="flex justify-between items-start flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 lg:items-center">
+        <div className="flex">
+          <div className="flex-shrink-0">
+            <ExclamationIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+          </div>
+          <div className="ml-3">
+            <h3 className="text-sm font-medium text-red-800">Only update vendor if the discount or referral applies to all apps for this vendor.</h3>
+            <div className="mt-2 text-sm text-red-700">
+              <ul role="list" className="list-disc pl-5 space-y-1">
+                <li>
+                  For example, a discount for Intuit that applies to all their apps (QuickBooks, TurboTax, Mint, etc.) would be updated at the vendor-level here. If the discount is only for
+                  QuickBooks, then it should be updated at the app-level above.
+                </li>
+                <li>If you are unsure, update the app above.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function VendorDiscountForm({ vendor, forceRender }) {
   const [loading, setLoading] = useState(true);
   // form submission status
@@ -86,32 +112,12 @@ export default function VendorDiscountForm({ vendor, forceRender }) {
         }}
       >
         <div className="bg-white py-6 px-4 sm:p-6">
-          <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
-            <div className="flex justify-between items-start flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 lg:items-center">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <ExclamationIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
-                </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-800">Only update vendor if the discount or referral applies to all apps for this vendor.</h3>
-                  <div className="mt-2 text-sm text-red-700">
-                    <ul role="list" className="list-disc pl-5 space-y-1">
-                      <li>
-                        For example, a discount for Intuit that applies to all their apps (QuickBooks, TurboTax, Mint, etc.) would be updated at the vendor-level here. If the discount is only for
-                        QuickBooks, then it should be updated at the app-level above.
-                      </li>
-                      <li>If you are unsure, update the app above.</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="flex space-x-2 items-center justify-start">
             <h2 id="vendor-name" className="text-lg leading-6 font-medium text-gray-900">
               Update vendor: {vendorName}
             </h2>
           </div>
+          <VendorWarning />
           <div className="mt-6 grid grid-cols-4 gap-6">
             <div className="col-span-4 flex space-x-2 items-center">
               <Switch checked={noRef} onChange={setNoRef} className={`${noRef ? "bg-blue-600" : "bg-gray-200"} relative inline-flex items-center h-6 rounded-full w-11`}>

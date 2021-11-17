@@ -23,58 +23,60 @@ export default function Share({ share, favorites }) {
   };
 
   return (
-    <div className={`flex flex-col py-10 px-4 min-h-screen w-screen`} style={background(share.angle, share.color_one, share.color_two, share.color_three)}>
+    <div id="share-page" className={`flex flex-col min-h-screen w-screen`} style={background(share.angle, share.color_one, share.color_two, share.color_three)}>
       <Head title={`${share.display_name}'s Favorite Business Apps | AppCity`} description={share.blurb} url={`https://www.appcity.com/u/${share.handle}`} />
       {favorites?.length > 0 && (
-        <div className="flex flex-col items-center justify-between h-full space-y-8" style={{ color: share.text_color }}>
-          {share.header_link !== "" && (
-            <a target="_blank" href={share.header_link} className="flex flex-col items-center justify-center space-y-1 px-14 filter drop-shadow">
-              {share.display_image && (
-                <div className="w-24 h-24 aspect-w-1">
-                  <Image
-                    src={share.display_image}
-                    alt={share.display_name}
-                    placeholder="blur"
-                    blurDataURL={`/_next/image?url=${share.display_image}&w=16&q=1`}
-                    layout="fill"
-                    objectFit="contain"
-                    className="rounded-full"
-                  />
-                </div>
-              )}
-              {!share.display_image && (
-                <div className="w-24 h-24 aspect-w-1">
-                  <UserCircleIcon />
-                </div>
-              )}
-              <h3 className="font-medium">{share.display_name}</h3>
-              <p className="text-sm font-light text-center">{share.blurb}</p>
-            </a>
-          )}
-          {share.header_link === "" && (
-            <div className="flex flex-col items-center justify-center space-y-1 px-14 filter drop-shadow">
-              {share.display_image && (
-                <div className="w-24 h-24 aspect-w-1">
-                  <Image
-                    src={share.display_image}
-                    alt={share.display_name}
-                    placeholder="blur"
-                    blurDataURL={`/_next/image?url=${share.display_image}&w=16&q=1`}
-                    layout="fill"
-                    objectFit="contain"
-                    className="rounded-full"
-                  />
-                </div>
-              )}
-              {!share.display_image && (
-                <div className="w-24 h-24 aspect-w-1">
-                  <UserCircleIcon />
-                </div>
-              )}
-              <h3 className="font-medium">{share.display_name}</h3>
-              <p className="text-sm font-light">{share.blurb}</p>
-            </div>
-          )}
+        <div id="content" className="flex flex-col items-center justify-around min-h-screen py-10 px-4 space-y-8" style={{ color: share.text_color }}>
+          <div>
+            {share.header_link !== "" && (
+              <a target="_blank" href={share.header_link} className="flex flex-col items-center justify-center space-y-1 px-14 filter drop-shadow">
+                {share.display_image && (
+                  <div className="w-24 h-24 aspect-w-1">
+                    <Image
+                      src={share.display_image}
+                      alt={share.display_name}
+                      placeholder="blur"
+                      blurDataURL={`/_next/image?url=${share.display_image}&w=16&q=1`}
+                      layout="fill"
+                      objectFit="contain"
+                      className="rounded-full"
+                    />
+                  </div>
+                )}
+                {!share.display_image && (
+                  <div className="w-24 h-24 aspect-w-1">
+                    <UserCircleIcon />
+                  </div>
+                )}
+                <h3 className="font-medium">{share.display_name}</h3>
+                <p className="text-sm font-light text-center">{share.blurb}</p>
+              </a>
+            )}
+            {share.header_link === "" && (
+              <div className="flex flex-col items-center justify-center space-y-1 px-14 filter drop-shadow">
+                {share.display_image && (
+                  <div className="w-24 h-24 aspect-w-1">
+                    <Image
+                      src={share.display_image}
+                      alt={share.display_name}
+                      placeholder="blur"
+                      blurDataURL={`/_next/image?url=${share.display_image}&w=16&q=1`}
+                      layout="fill"
+                      objectFit="contain"
+                      className="rounded-full"
+                    />
+                  </div>
+                )}
+                {!share.display_image && (
+                  <div className="w-24 h-24 aspect-w-1">
+                    <UserCircleIcon />
+                  </div>
+                )}
+                <h3 className="font-medium">{share.display_name}</h3>
+                <p className="text-sm font-light">{share.blurb}</p>
+              </div>
+            )}
+          </div>
           <div className="grid grid-cols-2 gap-x-8 gap-y-6 max-w-sm">
             {favorites &&
               favorites.map((favorite, idx) => {

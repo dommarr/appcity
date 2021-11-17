@@ -98,6 +98,10 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
+#__next {
+  @apply min-h-screen;
+}
+
 .ais-SearchBox {
   @apply flex-1 flex;
 }

@@ -210,10 +210,10 @@ export default function Product({ product }) {
   let priceLink = locked ? product.price_link : links.price_link;
 
   return (
-    <>
+    <div id="product-page" className="max-w-7xl min-w-full">
       <Head title={`${product.name} | AppCity`} description={formatParagraph(product.description)} url={`https://www.appcity.com/product/${product.id}`} />
       {/* Product Header for Mobile */}
-      <div className="flex flex-col justify-center items-start m-5 lg:hidden select-none space-y-1">
+      <div id="mobile-header" className="flex flex-col justify-center items-start m-5 lg:hidden select-none space-y-1 w-full">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a target="_blank" className="flex" href={vendorLink}>
           <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
@@ -239,9 +239,8 @@ export default function Product({ product }) {
         </div>
         <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600`}>{formatParagraph(product.description)}</p>
       </div>
-      <div className="block lg:h-80vh lg:flex lg:flex-row max-w-screen-3xl mx-auto select-none">
-        {/* Left */}
-        <div className="relative h-50vh sm:h-60vh lg:h-full w-full lg:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black border border-black">
+      <div id="atf" className="flex flex-col lg:h-80vh lg:flex-row select-none">
+        <div id="atf-left" className="relative h-50vh sm:h-60vh lg:h-full w-full lg:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black border border-black">
           {/* if media is not null, then display slider */}
           {product.media && product.media.length > 0 && <Swiper media={product.media} />}
           {(!product.media || product.media.length === 0) && (
@@ -259,10 +258,8 @@ export default function Product({ product }) {
             </>
           )}
         </div>
-        {/* Right */}
-        <div className="h-70vh sm:h-70vh lg:h-full w-full lg:w-2/5 flex flex-col justify-start items-center px-4 py-3">
-          {/* Product Header - Desktop */}
-          <div className="hidden lg:flex flex-col justify-start items-start w-full space-y-1">
+        <div id="atf-right" className="h-70vh sm:h-70vh lg:h-full w-full lg:w-2/5 flex flex-col justify-start items-center px-4 py-3">
+          <div id="desktop-header" className="hidden lg:flex flex-col justify-start items-start w-full space-y-1">
             <div className="flex justify-between items-center w-full">
               <h1 className="text-4xl font-bold">{product.name}</h1>
               {user && (
@@ -615,7 +612,7 @@ export default function Product({ product }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

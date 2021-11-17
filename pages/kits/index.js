@@ -36,7 +36,7 @@ const KitCard = ({ kit, index }) => {
   }, []);
 
   return (
-    <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
+    <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden md:w-80 lg:w-96">
       <Link href={`/kits/${kit.name}`}>
         <a>
           <img className="absolute inset-0 h-full w-full object-cover" src={kit.image} alt={`${kit.name} starter kit`} />
@@ -90,23 +90,15 @@ export default function KitHome() {
         url="https://www.appcity.com/kits"
       />
       <Container>
-        <div className="mb-20">
-          <div className="bg-white">
-            <div className="max-w-7xl mx-auto py-10 px-4 sm:py-12 sm:px-6 lg:px-8">
-              <div className="flex flex-col space-y-2 mb-8 text-center">
-                <h1 className="text-5xl font-extrabold sm:tracking-tight sm:text-6xl text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">
-                  Starter Kits
-                </h1>
-                <p className="max-w-xl mx-auto text-xl text-gray-500">The best apps to get your project up and running.</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {kits &&
-                  kits.map((kit, idx) => {
-                    return <KitCard key={idx} kit={kit} index={idx} />;
-                  })}
-              </div>
-            </div>
-          </div>
+        <div className="flex flex-col space-y-2 mb-8 text-center">
+          <h1 className="text-5xl font-extrabold sm:tracking-tight sm:text-6xl text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">Starter Kits</h1>
+          <p className="max-w-xl mx-auto text-xl text-gray-500">The best apps to get your project up and running.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {kits &&
+            kits.map((kit, idx) => {
+              return <KitCard key={idx} kit={kit} index={idx} />;
+            })}
         </div>
       </Container>
     </>
