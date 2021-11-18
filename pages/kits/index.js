@@ -35,6 +35,19 @@ const KitCard = ({ kit, index }) => {
     setGradient(`absolute inset-0 bg-gradient-to-t from-${kit.color}-600 via-${kit.color}-600 opacity-90`);
   }, []);
 
+  if (!kit.complete) {
+    return (
+      <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden md:w-80 lg:w-96">
+        <img className="absolute inset-0 h-full w-full object-cover" src={kit.image} alt={`${kit.name} starter kit`} />
+        <div className={background}></div>
+        <div className={gradient}></div>
+        <div className="absolute bottom-10 left-4">
+          <div className="text-white font-semibold text-xl">Coming soon: {capitalizeEveryWord(kit.name)}</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden md:w-80 lg:w-96">
       <Link href={`/kits/${kit.name}`}>
@@ -66,7 +79,7 @@ export default function KitHome() {
   };
 
   const fetchKits = async () => {
-    let { data: kits, error } = await supabase.from("kits").select("*").eq("hide", false);
+    let { data: kits, error } = await supabase.from("kits").select("*").eq("hide", false).order("complete", { ascending: false });
     if (error) {
       throw error;
     }
