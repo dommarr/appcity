@@ -45,6 +45,7 @@ export default function VendorDiscountForm({ vendor, forceRender }) {
   const [refLink, setRefLink] = useState("");
   const [discountMessage, setDiscountMessage] = useState("");
   const [noRef, setNoRef] = useState(false);
+  const [discountStatus, setDiscountStatus] = useState("");
 
   // Fetch on load
   useEffect(async () => {
@@ -61,6 +62,7 @@ export default function VendorDiscountForm({ vendor, forceRender }) {
     vendor.ref_link ? setRefLink(vendor.ref_link) : "";
     vendor.discount_message ? setDiscountMessage(vendor.discount_message) : "";
     vendor.no_ref_program ? setNoRef(vendor.no_ref_program) : "";
+    vendor.discount_status ? setDiscountStatus(vendor.discount_status) : "";
   };
 
   const updateVendor = async (obj) => {
@@ -82,6 +84,7 @@ export default function VendorDiscountForm({ vendor, forceRender }) {
       ref_link: refLink,
       discount_message: discountMessage,
       no_ref_program: noRef,
+      discount_status: discountStatus,
     };
     await updateVendor(updateObj);
     return;
@@ -119,7 +122,7 @@ export default function VendorDiscountForm({ vendor, forceRender }) {
           </div>
           <VendorWarning />
           <div className="mt-6 grid grid-cols-4 gap-6">
-            <div className="col-span-4 flex space-x-2 items-center">
+            {/* <div className="col-span-4 flex space-x-2 items-center">
               <Switch checked={noRef} onChange={setNoRef} className={`${noRef ? "bg-blue-600" : "bg-gray-200"} relative inline-flex items-center h-6 rounded-full w-11`}>
                 <span className="sr-only">No referral or discount program</span>
                 <span className={`${noRef ? "translate-x-6" : "translate-x-1"} inline-block w-4 h-4 transform bg-white rounded-full`} />
@@ -127,6 +130,27 @@ export default function VendorDiscountForm({ vendor, forceRender }) {
               <label htmlFor="allPriorFeaturesOff" className="block text-sm font-medium text-gray-700">
                 No referral or discount program
               </label>
+            </div> */}
+            <div className="col-span-4 sm:col-span-2">
+              <label htmlFor="discountStatus" className="block text-sm font-medium text-gray-700">
+                Discount status
+              </label>
+              <select
+                type="text"
+                name="discountStatus"
+                id="discountStatus"
+                placeholder=""
+                value={discountStatus}
+                onChange={(e) => setDiscountStatus(e.target.value)}
+                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              >
+                <option value="not-started">Not started</option>
+                <option value="no-program">No program</option>
+                <option value="in-progress">In progress</option>
+                <option value="rejected">Rejected</option>
+                <option value="referral">Referral only</option>
+                <option value="discount">Discount added</option>
+              </select>
             </div>
             <div className="col-span-4 sm:col-span-2">
               <div className="flex space-x-2 items-center justify-start">

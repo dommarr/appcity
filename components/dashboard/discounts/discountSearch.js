@@ -55,6 +55,8 @@ export default function Discounts(props) {
   };
 
   const handleBack = async () => {
+    setLoading(true);
+    fetchApps();
     setSelectedApp(1);
   };
 

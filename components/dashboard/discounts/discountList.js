@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { RadioGroup } from "@headlessui/react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const discountOptions = [
   { value: "all", label: "All apps" },
@@ -7,6 +7,14 @@ const discountOptions = [
   { value: "discount", label: "Has discount" },
   { value: "referral-only", label: "Referral only" },
   { value: "no-program", label: "No program" },
+];
+
+const tabs = [
+  { value: "all", name: "All apps", current: true },
+  { value: "none", name: "Not started", current: false },
+  { value: "discount", name: "Has discount", current: false },
+  { value: "referral-only", name: "Referral only", current: false },
+  { value: "no-program", name: "No program", current: false },
 ];
 
 function classNames(...classes) {
@@ -29,8 +37,18 @@ const AppCard = ({ app, setSelectedApp }) => {
 };
 
 export default function DiscountList({ appList, setAppList, setSelectedApp }) {
-  const [discountStatus, setDiscountStatus] = useState(discountOptions[0].value);
+  let router = useRouter();
+  const [discountStatus, setDiscountStatus] = useState(router.query.status ? router.query.status : "all");
   const [filteredAppList, setFilteredAppList] = useState(appList);
+
+  useEffect(() => {
+    if (discountStatus === "all") {
+      setFilteredAppList(appList);
+    } else {
+      let updatedAppList = appList.filter((app) => app.discount_status === discountStatus);
+      setFilteredAppList(updatedAppList);
+    }
+  }, []);
 
   const handleSelect = (val) => {
     if (val === "all") {
@@ -39,35 +57,60 @@ export default function DiscountList({ appList, setAppList, setSelectedApp }) {
       let updatedAppList = appList.filter((app) => app.discount_status === val);
       setFilteredAppList(updatedAppList);
     }
-    //setAppList(appList.filter((app) => app.discount_status === val));
+    router.push({
+      query: {
+        screen: "discounts",
+        status: val,
+      },
+    });
     setDiscountStatus(val);
   };
 
   return (
     <div className="bg-white shadow">
       <div className="max-w-3xl mx-auto px-4 text-center sm:px-6 lg:max-w-7xl lg:px-8">
-        <section aria-labelledby="filter-heading" className="py-6 border-b border-gray-200 flex justify-between items-center">
-          <RadioGroup value={discountStatus} onChange={handleSelect} className="mt-2">
-            <RadioGroup.Label className="sr-only">Choose a discount option</RadioGroup.Label>
-            <div className="flex space-x-2">
-              {discountOptions.map((option) => (
-                <RadioGroup.Option
-                  key={option.label}
-                  value={option.value}
-                  className={({ active, checked }) =>
-                    classNames(
-                      active ? "ring-2 ring-offset-2 ring-indigo-500" : "",
-                      checked ? "bg-indigo-600 border-transparent text-white hover:bg-indigo-700" : "bg-white border-gray-200 text-gray-900 hover:bg-gray-50",
-                      "flex justify-center items-center border rounded-md py-3 px-3 text-xs font-medium uppercase hover:cursor-pointer "
-                    )
-                  }
-                >
-                  <RadioGroup.Label as="p">{option.label}</RadioGroup.Label>
-                </RadioGroup.Option>
-              ))}
+        <section aria-labelledby="filter-heading" className="py-6 border-b border-gray-200 flex justify-between items-center space-x-6">
+          <div className="w-full">
+            {/* <div className="sm:hidden">
+              <label htmlFor="tabs" className="sr-only">
+                Select a tab
+              </label>
+              <select
+                id="tabs"
+                name="tabs"
+                onChange={() => {
+                  router.replace({ query: { status: tabs.find((tab) => tab.current).value } });
+                }}
+                className="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                defaultValue={tabs.find((tab) => tab.current).name}
+              >
+                {tabs.map((tab) => (
+                  <option key={tab.name}>{tab.name}</option>
+                ))}
+              </select>
+            </div> */}
+            <div className="block">
+              <nav className="relative z-0 rounded-lg shadow flex divide-x divide-gray-200" aria-label="Tabs">
+                {tabs.map((tab, tabIdx) => (
+                  <div
+                    key={tab.name}
+                    onClick={() => handleSelect(tab.value)}
+                    className={classNames(
+                      discountStatus === tab.value ? "text-gray-900" : "text-gray-500 hover:text-gray-700",
+                      tabIdx === 0 ? "rounded-l-lg" : "",
+                      tabIdx === tabs.length - 1 ? "rounded-r-lg" : "",
+                      "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 cursor-pointer"
+                    )}
+                    aria-current={tab.current ? "page" : undefined}
+                  >
+                    <span>{tab.name}</span>
+                    <span aria-hidden="true" className={`${discountStatus === tab.value ? "bg-indigo-500" : "bg-transparent"} absolute inset-x-0 bottom-0 h-0.5`} />
+                  </div>
+                ))}
+              </nav>
             </div>
-          </RadioGroup>
-          <div id="app-count" className="flex items-center justify-center text-sm text-gray-700 pr-4">
+          </div>
+          <div id="app-count" className="flex items-center justify-center text-sm text-gray-700 pr-4 whitespace-nowrap w-32">
             {filteredAppList.length} {filteredAppList.length === 1 ? "app" : "apps"}
           </div>
         </section>

@@ -269,9 +269,10 @@ class SearchApp extends React.Component {
         >
           {/* Sidebar - static on md screen widths and popover menu on < md */}
           {/* level 1 */}
-          <div id="sidebar-1" className={`${this.state.showSidebar ? `flex` : `hidden`} fixed inset-0 z-40 md:flex md:static md:inset-auto md:z-auto md:flex-shrink-0`}>
+          <div id="sidebar-container" className={`${this.state.showSidebar ? `flex` : `hidden`} fixed inset-0 z-40 md:flex md:static md:inset-auto md:z-auto md:flex-shrink-0`}>
             <div className="flex items-end w-full h-full justify-center md:justify-start md:items-start">
               <div
+                id="sidebar-background"
                 className={`${this.state.showSidebar ? `block` : `hidden`} fixed inset-0 md:hidden`}
                 aria-hidden="true"
                 enter="transition-opacity ease-linear duration-300"
@@ -285,6 +286,7 @@ class SearchApp extends React.Component {
               </div>
               {/* level 2 */}
               <div
+                id="sidebar-content"
                 className={`${
                   this.state.showSidebar ? `flex` : `hidden`
                 } rounded-t-2xl md:flex relative flex-1 flex-col h-4/6 w-full pb-4 bg-white md:h-full md:static md:flex-auto md:max-w-none md:w-64 md:p-0`}
