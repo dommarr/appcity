@@ -39,7 +39,10 @@ const ProductCard = ({ product }) => {
     <Link href={`/product/${product.id}`}>
       <a>
         <li className="col-span-1 bg-white border shadow-md divide-x divide-gray-200 flex p-4">
-          <img className="w-20 h-20 mr-4" src={product.vendors.logo} alt={`${name} Logo`} />
+          <div className="w-20 h-20 mr-4 flex flex-col items-center justify-center">
+            <img className="w-full" src={product.product_logo ? product.product_logo : product.vendors.logo} alt={`${name} Logo`} />
+          </div>
+
           <div className="flex items-center justify-center text-xl font-medium pl-4">{name}</div>
         </li>
       </a>
@@ -117,7 +120,7 @@ const fetchSections = async (kit_id) => {
       `
     *,
     sections_products (*),
-    products (id, name, 
+    products (id, name, product_logo,
       vendors (logo))
   `
     )

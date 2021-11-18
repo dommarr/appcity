@@ -66,7 +66,7 @@ export default function KitHome() {
   };
 
   const fetchKits = async () => {
-    let { data: kits, error } = await supabase.from("kits").select("*");
+    let { data: kits, error } = await supabase.from("kits").select("*").eq("hide", false);
     if (error) {
       throw error;
     }
