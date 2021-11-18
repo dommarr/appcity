@@ -58,7 +58,7 @@ const KitSection = ({ section }) => {
   }, []);
 
   return (
-    <section className="pb-12">
+    <section className="pb-4">
       <div className="relative mb-4">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full border-t border-gray-300"></div>
@@ -124,7 +124,8 @@ const fetchSections = async (kit_id) => {
       vendors (logo))
   `
     )
-    .eq("kit_id", kit_id);
+    .eq("kit_id", kit_id)
+    .order("order");
   if (error) {
     throw error;
   }
