@@ -28,24 +28,13 @@ export default function Discounts(props) {
     let search = [];
     products.forEach(function (element) {
       search.push({ label: element.name, value: element.id });
-      if (element.ref_link || element.vendors.ref_link) {
-        element.referral = true;
+      // if available, product-level discount takes priority. otherwise, select vendor-level discount
+      if (element.discount_status !== "not-started") {
+        element.discount = element.discount_status;
+      } else if (element.vendors.discount_status !== "not-started") {
+        element.discount = element.vendors.discount_status;
       } else {
-        element.referral = false;
-      }
-      if (element.discount_message || element.vendors.discount_message) {
-        element.discount = true;
-      } else {
-        element.discount = false;
-      }
-      if (element.no_ref_program || element.vendors.no_ref_program) {
-        element.discount_status = "no-program";
-      } else if (element.discount && element.referral) {
-        element.discount_status = "discount";
-      } else if (element.referral && !element.discount) {
-        element.discount_status = "referral-only";
-      } else {
-        element.discount_status = "none";
+        element.discount = "not-started";
       }
     });
     setAppList(products);

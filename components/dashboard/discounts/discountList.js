@@ -1,19 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-const discountOptions = [
-  { value: "all", label: "All apps" },
-  { value: "none", label: "Not started" },
-  { value: "discount", label: "Has discount" },
-  { value: "referral-only", label: "Referral only" },
-  { value: "no-program", label: "No program" },
-];
-
 const tabs = [
   { value: "all", name: "All apps", current: true },
-  { value: "none", name: "Not started", current: false },
+  { value: "not-started", name: "Not started", current: false },
   { value: "discount", name: "Has discount", current: false },
-  { value: "referral-only", name: "Referral only", current: false },
+  { value: "referral", name: "Referral only", current: false },
   { value: "no-program", name: "No program", current: false },
 ];
 
@@ -29,7 +21,7 @@ const AppCard = ({ app, setSelectedApp }) => {
       className="col-span-1 grid grid-cols-3 bg-white border shadow-md divide-x divide-gray-200 flex items-center justify-center p-4 gap-4 hover:cursor-pointer"
     >
       <div className="col-span-1 flex items-center justify-center w-full h-20">
-        <img className="w-20" src={app.vendors.logo} alt={`${app.name} Logo`} />
+        <img className="w-20" src={app.product_logo ? app.product_logo : app.vendors.logo} alt={`${app.name} Logo`} />
       </div>
       <div className="col-span-2 flex items-center justify-start text-xl font-medium text-left pl-4 h-full">{app.name}</div>
     </li>
@@ -45,7 +37,7 @@ export default function DiscountList({ appList, setAppList, setSelectedApp }) {
     if (discountStatus === "all") {
       setFilteredAppList(appList);
     } else {
-      let updatedAppList = appList.filter((app) => app.discount_status === discountStatus);
+      let updatedAppList = appList.filter((app) => app.discount === discountStatus);
       setFilteredAppList(updatedAppList);
     }
   }, []);
@@ -54,7 +46,7 @@ export default function DiscountList({ appList, setAppList, setSelectedApp }) {
     if (val === "all") {
       setFilteredAppList(appList);
     } else {
-      let updatedAppList = appList.filter((app) => app.discount_status === val);
+      let updatedAppList = appList.filter((app) => app.discount === val);
       setFilteredAppList(updatedAppList);
     }
     router.push({
