@@ -68,9 +68,7 @@ export default function TaskCard({ task, user }) {
           </button>
         )}
       </div>
-      <div className="row-start-3 col-span-4 lg:col-span-2">
-        <FormTip video_id={tipVid[0].tip} />
-      </div>
+      <div className="row-start-3 col-span-4 lg:col-span-2">{tipVid[0]?.tip && <FormTip video_id={tipVid[0].tip} />}</div>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import { supabase } from "../../../utils/initSupabase";
 import Loading from "../cardLoading";
 import FormTip from "./formTip";
 import { MinusCircleIcon } from "@heroicons/react/solid";
-import { connectScrollTo } from "react-instantsearch-core";
 
 export default function TierForm({ tierNum, tierId, productId, updateFeatures, priceModel, fetchTierIds, user, refreshTiers }) {
   // form loading
@@ -37,6 +36,10 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
   const [priceSecondaryTextYear, setPriceSecondaryTextYear] = useState("");
   const [priceSecondaryUnitMonth, setPriceSecondaryUnitMonth] = useState("");
   const [priceSecondaryUnitYear, setPriceSecondaryUnitYear] = useState("");
+  // no price checkboxes
+  const [onlyPaidYearly, setOnlyPaidYearly] = useState(false);
+  const [onlyPaidMonthly, setOnlyPaidMonthly] = useState(false);
+  const [noPrice, setNoPrice] = useState(false);
 
   // Fetch on load
   useEffect(() => {
@@ -70,6 +73,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     tiers[0].price_secondary_text_year ? setPriceSecondaryTextYear(tiers[0].price_secondary_text_year) : "";
     tiers[0].price_secondary_unit_month ? setPriceSecondaryUnitMonth(tiers[0].price_secondary_unit_month) : "";
     tiers[0].price_secondary_unit_year ? setPriceSecondaryUnitYear(tiers[0].price_secondary_unit_year) : "";
+    tiers[0].only_paid_yearly ? setOnlyPaidYearly(tiers[0].only_paid_yearly) : "";
+    tiers[0].only_paid_monthly ? setOnlyPaidMonthly(tiers[0].only_paid_monthly) : "";
+    tiers[0].no_price ? setNoPrice(tiers[0].no_price) : "";
   };
 
   const handleSubmit = async (e) => {
@@ -86,6 +92,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
     pricePrimaryNumberYear === "" ? (updateObject.price_primary_number_year = null) : (updateObject.price_primary_number_year = pricePrimaryNumberYear);
     updateObject.price_primary_text_month = pricePrimaryTextMonth;
     updateObject.price_primary_text_year = pricePrimaryTextYear;
+    updateObject.only_paid_yearly = onlyPaidYearly;
+    updateObject.only_paid_monthly = onlyPaidMonthly;
+    updateObject.no_price = noPrice;
     updateObject.last_updated_by = user.email;
     // if (tierName) {
     //   updateObject.name = tierName;
@@ -261,6 +270,46 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
       setPricePrimaryTextYear(val);
       setPricePrimaryNumberYear("");
       setTotalAnnualPrice("");
+    }
+  };
+
+  const handleNoPrice = (e) => {
+    if (e.target.checked) {
+      setNoPrice(true);
+      setOnlyPaidMonthly(false);
+      setOnlyPaidYearly(false);
+      setPricePrimaryNumberYear("");
+      setPricePrimaryTextYear("");
+      setTotalAnnualPrice("");
+      setPricePrimaryNumberMonth("");
+      setPricePrimaryTextMonth("");
+    } else {
+      setNoPrice(false);
+    }
+  };
+
+  const handleOnlyPaidMonthly = (e) => {
+    if (e.target.checked) {
+      setOnlyPaidMonthly(true);
+      setNoPrice(false);
+      setOnlyPaidYearly(false);
+      setPricePrimaryNumberYear("");
+      setPricePrimaryTextYear("");
+      setTotalAnnualPrice("");
+    } else {
+      setOnlyPaidMonthly(false);
+    }
+  };
+
+  const handleOnlyPaidYearly = (e) => {
+    if (e.target.checked) {
+      setOnlyPaidYearly(true);
+      setNoPrice(false);
+      setOnlyPaidMonthly(false);
+      setPricePrimaryNumberMonth("");
+      setPricePrimaryTextMonth("");
+    } else {
+      setOnlyPaidYearly(false);
     }
   };
 
@@ -546,8 +595,32 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
 
             {["usage-based", "per-user", "per-project", "flat-rate"].includes(priceModel) && (
               <>
-                <div className="col-span-4 lg:col-span-2 flex flex-col">
-                  <div className="flex space-x-2">
+                <div className="col-span-4 flex flex-col">
+                  <div className="relative flex items-start px-4 py-2">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="noPrice"
+                        name="noPrice"
+                        type="checkbox"
+                        className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                        checked={noPrice}
+                        onClick={(e) => handleNoPrice(e)}
+                      />
+                    </div>
+                    <div className="ml-3 text-sm">
+                      <label htmlFor="comments" className="font-medium text-gray-700">
+                        No price shown
+                      </label>
+                      <p id="comments-description" className="text-gray-500">
+                        "Contact us", "Not offered", "Upon request", etc.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative col-span-4 lg:col-span-2 flex flex-col">
+                  {noPrice && <div className="absolute inset-0 bg-gray-100 opacity-50"></div>}
+                  <div className="flex space-x-2 mb-2">
                     <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
                       Price, paid yearly
                     </label>
@@ -555,8 +628,8 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                   </div>
                   <div className="grid grid-cols-5">
                     <div className="col-span-2">
-                      <span className="text-xs pl-2">If number:</span>
-                      <div className="flex space-x-2">
+                      <div className="relative flex space-x-2">
+                        {onlyPaidMonthly && <div className="absolute inset-0 bg-gray-100 opacity-50"></div>}
                         <div className="flex flex-col">
                           <input
                             type="number"
@@ -585,9 +658,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                         </div>
                       </div>
                     </div>
-                    <div className="col-span-1 flex flex-col items-center justify-center mt-4">or</div>
-                    <div className="col-span-2">
-                      <span className="text-xs pl-2">If text:</span>
+                    <div className="col-span-1 flex flex-col items-center justify-start mt-2">or</div>
+                    <div className="col-span-2 mt-2">
+                      {/* <span className="text-xs pl-2">If text:</span> */}
                       <input
                         type="text"
                         name="pricePrimaryTextYear"
@@ -595,8 +668,23 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                         placeholder="Upon request"
                         value={pricePrimaryTextYear}
                         onChange={(e) => handlePriceChange(e.target.value, false, false)}
-                        className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        className="mb-2 mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                       />
+                      <div className="flex items-start">
+                        <div className="flex items-center h-5">
+                          <input
+                            id="onlyPaidMonthly"
+                            name="onlyPaidMonthly"
+                            type="checkbox"
+                            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                            checked={onlyPaidMonthly}
+                            onClick={(e) => handleOnlyPaidMonthly(e)}
+                          />
+                        </div>
+                        <label htmlFor="comments" className="ml-2 text-sm font-medium text-gray-700">
+                          Only paid-monthly
+                        </label>
+                      </div>
                     </div>
                   </div>
                   {/* <div className="flex flex-col space-y-1">
@@ -606,17 +694,19 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                   <FormTip video_id="b49d350447364191a8e3aa4cf63c3a25" />
                 </div>
 
-                <div className="col-span-4 lg:col-span-2 flex flex-col">
-                  <div className="flex space-x-2">
-                    <label htmlFor="pricePrimaryNumberMonth" className="block text-sm font-medium text-gray-700">
-                      Price per month, paid monthly
+                <div className="relative col-span-4 lg:col-span-2 flex flex-col">
+                  {noPrice && <div className="absolute inset-0 bg-gray-100 opacity-50"></div>}
+                  <div className="flex space-x-2 mb-2">
+                    <label htmlFor="pricePrimaryNumberYear" className="block text-sm font-medium text-gray-700">
+                      Price, paid monthly
                     </label>
                     <span className="italic text-sm text-gray-400">required</span>
                   </div>
+
                   <div className="grid grid-cols-5">
                     <div className="col-span-2">
-                      <span className="text-xs pl-2">If number:</span>
-                      <div className="flex flex-col">
+                      <div className="relative flex flex-col">
+                        {onlyPaidYearly && <div className="absolute inset-0 bg-gray-100 opacity-50"></div>}
                         <input
                           type="number"
                           name="pricePrimaryNumberMonth"
@@ -630,9 +720,9 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                         <span className="mt-1 ml-2 text-xs text-gray-500 italic">per month</span>
                       </div>
                     </div>
-                    <div className="col-span-1 flex flex-col items-center justify-center mt-4">or</div>
-                    <div className="col-span-2">
-                      <span className="text-xs pl-2">If text:</span>
+                    <div className="col-span-1 flex flex-col items-center justify-start mt-2">or</div>
+                    <div className="col-span-2 mt-2">
+                      {/* <span className="text-xs pl-2">If text:</span> */}
                       <input
                         type="text"
                         name="pricePrimaryTextMonth"
@@ -640,8 +730,23 @@ export default function TierForm({ tierNum, tierId, productId, updateFeatures, p
                         placeholder="Upon request"
                         value={pricePrimaryTextMonth}
                         onChange={(e) => handlePriceChange(e.target.value, false, true)}
-                        className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        className="mb-2 mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                       />
+                      <div className="flex items-start">
+                        <div className="flex items-center h-5">
+                          <input
+                            id="onlyPaidYearly"
+                            name="onlyPaidYearly"
+                            type="checkbox"
+                            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                            checked={onlyPaidYearly}
+                            onClick={(e) => handleOnlyPaidYearly(e)}
+                          />
+                        </div>
+                        <label htmlFor="comments" className="ml-2 text-sm font-medium text-gray-700">
+                          Only paid-yearly
+                        </label>
+                      </div>
                     </div>
                   </div>
                   {/* <div className="flex flex-col space-y-1">
