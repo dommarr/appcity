@@ -159,6 +159,11 @@ export default async function (req, res) {
     obj.sort_price_yearly = elem.price_primary_number_year;
     obj.sort_price_monthly = elem.price_primary_number_month;
 
+    // no price fields
+    obj.no_price = elem.no_price;
+    obj.only_paid_monthly = elem.only_paid_monthly;
+    obj.only_paid_yearly = elem.only_paid_yearly;
+
     // tier features
     obj.features = elem.features;
     // calc and set review rating and count

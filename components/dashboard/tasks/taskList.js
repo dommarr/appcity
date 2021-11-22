@@ -55,7 +55,7 @@ export default function TaskList(props) {
 
   const handleCompleteTask = async (task) => {
     let datetime = moment();
-    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: user.email, in_progress: false }).eq("id", task.id);
+    const { data, error } = await supabase.from("tasks").update({ complete: true, date_complete: datetime, completed_by: props.user.email, in_progress: false }).eq("id", task.id);
     if (error) {
       throw error;
     }
