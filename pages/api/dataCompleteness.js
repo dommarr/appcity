@@ -20,7 +20,7 @@ const fetchTiers = async () => {
   let { data: tiers, error } = await supabase
     .from("tiers")
     .select(
-      "product_id,name,number,features,display_features,price_primary_number_month,price_primary_text_month,price_primary_number_year,price_primary_text_year,price_primary_unit_month,price_primary_unit_year"
+      "product_id,name,number,features,display_features,price_primary_number_month,price_primary_text_month,price_primary_number_year,price_primary_text_year,price_primary_unit_month,price_primary_unit_year,only_paid_yearly,only_paid_monthly,no_price"
     );
   if (error) {
     throw error;
@@ -62,13 +62,14 @@ const emptyTiers = (obj) => {
   }
 
   // month - both number and text are empty
-  if (empty.includes("price_primary_number_month") && empty.includes("price_primary_text_month")) {
+  if (empty.includes("price_primary_number_month") && empty.includes("price_primary_text_month") && !obj.only_paid_yearly && !obj.no_price) {
     empty.push("price_month needs number or text");
     // month - both number and text are populated
   } else if (!empty.includes("price_primary_number_month") && !empty.includes("price_primary_text_month")) {
     empty.push("price_month contains both number and text");
-  } // year - both number and text are empty
-  if (empty.includes("price_primary_number_year") && empty.includes("price_primary_text_year")) {
+  }
+  // year - both number and text are empty
+  if (empty.includes("price_primary_number_year") && empty.includes("price_primary_text_year") && !obj.only_paid_monthly && !obj.no_price) {
     empty.push("price_year needs number or text");
     // year - both number and text are empty
   } else if (!empty.includes("price_primary_number_year") && !empty.includes("price_primary_text_year")) {
@@ -85,6 +86,8 @@ const emptyTiers = (obj) => {
   }
 
   empty = empty.filter((elem) => !elem.startsWith("price_primary"));
+  empty = empty.filter((elem) => !elem.startsWith("only_paid"));
+  empty = empty.filter((elem) => !elem.startsWith("no_price"));
   empty = empty.map((e) => `tier_${obj.number}_${e}`);
 
   return empty;

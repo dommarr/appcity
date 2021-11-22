@@ -16,6 +16,7 @@ import { capitalizeEveryWord, capitalizeFirstWord, formatParagraph } from "../..
 import HeartTooltip from "../../components/global/heartTooltip";
 import { buildLinks } from "../../lib/linkBuilder";
 import DiscountTooltip from "../../components/search/discountTooltip";
+import RestrictedBillingTooltip from "../../components/productPage/restrictedBillingTooltip";
 
 const Lightbox = (props) => {
   return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
@@ -37,6 +38,8 @@ export default function Product({ product }) {
   // discount states
   const [discountMessage, setDiscountMessage] = useState("");
   const [locked, setLocked] = useState(true);
+  // hide or show priceToggle
+  const [hidePriceToggle, setHidePriceToggle] = useState(false);
 
   const tier = product.tiers.filter((tier) => tier.id == router.query.tier)[0] || null;
 
@@ -50,6 +53,19 @@ export default function Product({ product }) {
       let tId = firstTier[0].id;
       router.replace(`/product/${product.id}?tier=${tId}`, undefined, { shallow: true });
     }
+
+    // Check if all non-free tiers are only paid monthly or yearly. If yes, hide the price toggle.
+    let nonZeroTiers = product.tiers.filter((tier) => tier.price_primary_number_year !== 0 && tier.price_primary_number_month !== 0);
+    let onlyPaidMonthly = nonZeroTiers.map((tier) => tier.only_paid_monthly).every((v) => v === true);
+    let onlyPaidYearly = nonZeroTiers.map((tier) => tier.only_paid_yearly).every((v) => v === true);
+    if (onlyPaidMonthly) {
+      setMonthly(true);
+      setHidePriceToggle(true);
+    } else if (onlyPaidYearly) {
+      setMonthly(false);
+      setHidePriceToggle(true);
+    }
+
     // if (user) {
     //   fetchUserFavorites(user?.id);
     //   let reviewCount = await fetchUserReviewCount(user?.id);
@@ -201,10 +217,6 @@ export default function Product({ product }) {
 
   let links = buildLinks(product);
 
-  // let vendorLink = product.vendors.ref_link ? product.vendors.ref_link : product.vendors.website;
-  // let priceLink = createPriceLink();
-  // let productLink = createProductLink();
-
   let vendorLink = locked ? product.vendors.website : links.vendor_link;
   let productLink = locked ? product.product_link : links.app_link;
   let priceLink = locked ? product.price_link : links.price_link;
@@ -304,24 +316,32 @@ export default function Product({ product }) {
             </div>
             <div className="flex flex-col items-center justify-center">
               {/* Price Toggle */}
-              {tier != null && product.price_model != "revenue-fee" && product.price_model != "one-time" && product.price_model !== "per-transaction" && product.price_model !== "minimum deposit" && (
-                <div className="relative self-center bg-gray-100 p-0.5 flex">
-                  <button
-                    type="button"
-                    onClick={() => setMonthly(true)}
-                    className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
-                  >
-                    Monthly billing
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMonthly(false)}
-                    className={`ml-0.5 relative w-1/2 ${monthly ? "bg-transparent" : "bg-white shadow-sm"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
-                  >
-                    Yearly billing
-                  </button>
-                </div>
-              )}
+              {tier != null &&
+                product.price_model != "revenue-fee" &&
+                product.price_model != "one-time" &&
+                product.price_model !== "per-transaction" &&
+                product.price_model !== "minimum deposit" &&
+                !hidePriceToggle && (
+                  <div className="relative self-center bg-gray-100 p-0.5 flex">
+                    <button
+                      type="button"
+                      onClick={() => setMonthly(true)}
+                      className={`relative w-1/2 ${monthly ? "bg-white shadow-sm" : "bg-transparent"} py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
+                    >
+                      Monthly billing
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMonthly(false)}
+                      className={`ml-0.5 relative w-1/2 ${
+                        monthly ? "bg-transparent" : "bg-white shadow-sm"
+                      } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none sm:w-auto px-4`}
+                    >
+                      Yearly billing
+                    </button>
+                  </div>
+                )}
+              {hidePriceToggle && <RestrictedBillingTooltip monthly={monthly} />}
               {/* Price Block */}
               {tier != null && <PriceBlock tier={tier} model={product.price_model} large={true} monthly={monthly} discount={true} discountMessage={discountMessage} locked={locked} />}
               {/* Tier Limit */}
@@ -407,7 +427,7 @@ export default function Product({ product }) {
           <div className="sm:flex sm:flex-col sm:align-center">
             {product.tiers.length === 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing</h1>}
             {product.tiers.length > 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Plans</h1>}
-            {product.price_model !== "revenue-fee" && product.price_model !== "one-time" && product.price_model !== "per-transaction" && product.price_model !== "minimum deposit" && (
+            {product.price_model !== "revenue-fee" && product.price_model !== "one-time" && product.price_model !== "per-transaction" && product.price_model !== "minimum deposit" && !hidePriceToggle && (
               <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
                 <button
                   type="button"
@@ -425,6 +445,7 @@ export default function Product({ product }) {
                 </button>
               </div>
             )}
+            {hidePriceToggle && <RestrictedBillingTooltip monthly={monthly} large={true} />}
           </div>
           <div
             className={`safe mt-8 grid sm:gap-x-4 ${
