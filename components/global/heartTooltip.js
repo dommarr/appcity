@@ -10,7 +10,7 @@ const HeartTooltip = ({ caption }) => {
   };
 
   return (
-    <Tippy content={caption} touch="hold" placement="bottom">
+    <Tippy content={caption} touch="hold">
       <div onClick={handleClick} className="flex justify-center items-center cursor-default select-none xl:mr-4">
         <HeartIcon className={`h-8 w-8 hover:cursor-not-allowed text-gray-300 `} />
       </div>

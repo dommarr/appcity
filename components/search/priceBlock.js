@@ -86,7 +86,7 @@ const PriceBlock = ({ tier, model, large, monthly, search, discount, discountMes
   }
 
   return (
-    <div className="grid grid-cols-7 gap-3 w-full items-center justify-center">
+    <div className="grid grid-cols-7 gap-1 sm:gap-3 w-full items-center justify-center">
       {discount && discountMessage && <div className="col-span-2"></div>}
       <div className={`price-block-2-2 ${discount && discountMessage ? "col-span-3" : "col-span-7"} ${large ? "py-4" : "py-2"} flex flex-col justify-start items-center ${search ? "" : "h-full"}`}>
         <PriceModelTooltip model={model} />
@@ -144,7 +144,7 @@ const PriceBlock = ({ tier, model, large, monthly, search, discount, discountMes
 
       {discount && discountMessage && (
         <div className={`col-span-2 text-xs h-full flex flex-col justify-center items-center space-y-1 w-24 ${locked ? "text-gray-300 cursor-not-allowed" : "text-purple"}`}>
-          <Tippy className="select-none" content={content} touch="hold" placement="bottom">
+          <Tippy className="select-none" content={content} touch="hold">
             <div className="relative flex flex-col justify-center items-center text-center py-4">
               {locked && <Slash className="absolute inset-0 text-red-300 h-full w-full opacity-20" />}
               {/* <span className="font-bold text-purple">AppCity Offer</span> */}

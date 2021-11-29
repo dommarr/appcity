@@ -159,7 +159,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .ais-HierarchicalMenu-item {
-  @apply mt-0.5;
+  @apply mt-0.5 font-normal;
 }
 
 .ais-HierarchicalMenu-item--selected {
