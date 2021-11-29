@@ -20,7 +20,7 @@ const searchStateToURL = (searchState) => (searchState ? `${window.location.path
 
 const DEFAULT_PROPS = {
   searchClient,
-  indexName: "catalog",
+  indexName: "app_catalog",
 };
 
 class Search extends React.Component {

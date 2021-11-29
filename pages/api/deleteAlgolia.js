@@ -8,6 +8,8 @@ const index = algolia.initIndex("catalog");
 
 // https://www.algolia.com/doc/api-reference/api-methods/browse/
 
+// This function deletes objects in the Algolia index that no longer exist in the Supabase database (i.e. a Tier that was deleted).
+
 export default async function (req, res) {
   const fetchTiers = async () => {
     let { data: tiers, error } = await supabase.from("tiers").select("id");

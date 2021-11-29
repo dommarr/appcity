@@ -225,7 +225,7 @@ export default function Product({ product }) {
     <div id="product-page" className="max-w-7xl min-w-full">
       <Head title={`${product.name} | AppCity`} description={formatParagraph(product.description)} url={`https://www.appcity.com/product/${product.id}`} />
       {/* Product Header for Mobile */}
-      <div id="mobile-header" className="flex flex-col justify-center items-start m-5 lg:hidden select-none space-y-1 w-full">
+      <div id="mobile-header" className="flex flex-col justify-center items-start m-5 lg:hidden select-none space-y-1">
         <h1 className="text-4xl font-extrabold">{product.name}</h1>
         <a target="_blank" className="flex" href={vendorLink}>
           <img className="object-contain object-center w-6 h-6 flex-shrink-0 mx-auto" src={product.vendors.logo} alt={`${product.vendors.name} logo`} />
@@ -249,7 +249,7 @@ export default function Product({ product }) {
             {!description && <ChevronUpIcon className="h-6 w-6" />}
           </div>
         </div>
-        <p className={`${description ? `hidden` : `block`} text-sm mt-1 text-gray-600`}>{formatParagraph(product.description)}</p>
+        <p className={`${description ? `hidden` : `flex`} text-sm mt-1 text-gray-600 `}>{formatParagraph(product.description)}</p>
       </div>
       <div id="atf" className="flex flex-col lg:h-80vh lg:flex-row select-none">
         <div id="atf-left" className="relative h-50vh sm:h-60vh lg:h-full w-full lg:w-3/5 flex flex-col justify-center items-center mb-4 sm:mb-0 bg-black border border-black">

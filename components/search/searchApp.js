@@ -16,65 +16,21 @@ import {
   connectStateResults,
   connectCurrentRefinements,
 } from "react-instantsearch-dom";
-import RefinementBlock from "./refinementBlock";
-import PriceBlock from "./priceBlock";
-import PropTypes from "prop-types";
-import Link from "next/link";
 import React from "react";
 React.useLayoutEffect = React.useEffect;
-import { useRouter } from "next/router";
-import { StarIcon, XIcon } from "@heroicons/react/outline";
-import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
-import DiscountTooltip from "./discountTooltip";
 import { Auth } from "@supabase/ui";
 import { supabase } from "../../utils/initSupabase";
+import { XIcon } from "@heroicons/react/outline";
+import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
+import RefinementBlock from "./refinementBlock";
+import PropTypes from "prop-types";
+import HitCard from "./hitCard";
 
 function Hits({ hits, monthlyPrice, locked }) {
-  const router = useRouter();
-  // const handleClick = (e) => {
-  //   e.preventDefault()
-  //   router.push(href)
-  // }
-
   return (
-    // 2xl:grid-cols-5
-    <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {hits.map((hit) => (
-        <li
-          key={hit.objectID}
-          onClick={() => router.push({ pathname: `/product/${hit.product_id}`, query: { tier: hit.objectID } })}
-          className="col-span-1 flex flex-col text-center bg-white shadow divide-y divide-gray-200 cursor-pointer"
-        >
-          <div className="flex-1 flex flex-col p-4 md:px-2 lg:p-4">
-            <Link
-              href={{
-                pathname: `/product/${hit.product_id}`,
-                query: { tier: hit.objectID },
-              }}
-            >
-              <a>
-                <img className="object-contain object-center w-28 h-28 flex-shrink-0 mx-auto" src={hit.logo} alt={`${hit.vendor} logo`} />
-                {/* Header Block */}
-                <div className="flex flex-col justify-center items-center h-20">
-                  <h2 className="text-gray-900 text-base font-medium">{hit.product}</h2>
-                  {!hit.single_tier && <h3 className="mt-1 text-gray-500 text-sm font-normal">{hit.tier}</h3>}
-                </div>
-              </a>
-            </Link>
-            <div className="flex justify-center items-center p-2">
-              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 0 ? "fill-current" : ""}`} />
-              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 1 ? "fill-current" : ""}`} />
-              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 2 ? "fill-current" : ""}`} />
-              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 3 ? "fill-current" : ""}`} />
-              <StarIcon className={`h-5 w-5 text-purple ${hit.rating > 4 ? "fill-current" : ""}`} />
-              <span className="ml-2 text-sm">
-                {hit.count} {hit.count === 1 ? "review" : "reviews"}
-              </span>
-            </div>
-            <PriceBlock tier={hit} model={hit.price_model} large={false} monthly={monthlyPrice} search={true} />
-            {hit.discount_message && <DiscountTooltip discountMessage={hit.discount_message} locked={locked} search={true} />}
-          </div>
-        </li>
+        <HitCard key={hit.objectID} hit={hit} monthlyPrice={monthlyPrice} locked={locked} />
       ))}
     </ol>
   );
@@ -302,7 +258,7 @@ class SearchApp extends React.Component {
                   <div className="md:flex-grow md:flex md:flex-col">
                     <nav className="max-w-sm mx-auto px-2 space-y-1 md:flex-1 md:bg-white">
                       <ClearRefinements />
-                      <Configure hitsPerPage={24} filters="NOT _tags:hidden" />
+                      <Configure hitsPerPage={16} filters="NOT _tags:hidden" />
                       <RefinementBlock header="Price">
                         {/* Hide on empty */}
                         {this.props.searchState.query && (
@@ -389,24 +345,16 @@ class SearchApp extends React.Component {
                 {/* <CurrentRefinements /> */}
                 <Stats className="hidden sm:block" />
                 <SortBy
-                  defaultRefinement="catalog"
+                  defaultRefinement="app_catalog"
                   items={[
-                    { label: "Relevance", value: "catalog" },
+                    { label: "Relevance", value: "app_catalog" },
                     {
-                      label: "Price Low to High (pay yearly)",
-                      value: "catalog_price_low_to_high_yearly",
+                      label: "Less expensive to more expensive",
+                      value: "price_low_to_high",
                     },
                     {
-                      label: "Price Low to High (pay monthly)",
-                      value: "catalog_price_low_to_high_monthly",
-                    },
-                    {
-                      label: "Price High to Low (pay yearly)",
-                      value: "catalog_price_high_to_low_yearly",
-                    },
-                    {
-                      label: "Price High to Low (pay monthly)",
-                      value: "catalog_price_high_to_low_monthly",
+                      label: "More expensive to less expensive",
+                      value: "price_high_to_low",
                     },
                   ]}
                 />
