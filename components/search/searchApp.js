@@ -349,11 +349,11 @@ class SearchApp extends React.Component {
                   items={[
                     { label: "Relevance", value: "app_catalog" },
                     {
-                      label: "Less expensive to more expensive",
+                      label: "Less expensive",
                       value: "price_low_to_high",
                     },
                     {
-                      label: "More expensive to less expensive",
+                      label: "More expensive",
                       value: "price_high_to_low",
                     },
                   ]}
