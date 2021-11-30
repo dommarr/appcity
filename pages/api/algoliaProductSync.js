@@ -173,7 +173,8 @@ export default async function (req, res) {
       obj.single_tier = false;
     }
     // features are added cumulatively at the tier-level. for product-level features, we only need the last tier's features
-    let last_tier = tierData.filter((tier) => tier.product_id === elem.id)[tierCount - 1];
+    let last_tier = tierData.filter((tier) => tier.id === tierArray[tierArray.length - 1].tier_id)[0];
+
     obj.features = tierData.filter((tier) => tier.id === last_tier.id)[0].features;
 
     // for calculating a price to sort by...
@@ -247,6 +248,9 @@ export default async function (req, res) {
 
     algoliaArray.push(obj);
   });
+
+  // res.statusCode = 200;
+  // res.json(algoliaArray);
 
   //save to Algolia
   return new Promise((resolve, reject) => {
