@@ -6,6 +6,7 @@ import { MinusCircleIcon, UserAddIcon } from "@heroicons/react/solid";
 import Iframe from "../iFrame";
 import Select from "react-select";
 import { Switch } from "@headlessui/react";
+import { Loader } from "react-feather";
 
 export default function ProductForm({ productId, vendorId, priceModel, setPriceModel, superAdmin, updateTierPriceUnits, user, customUnit, setCustomUnit }) {
   // form loading
@@ -23,6 +24,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [productLink, setProductLink] = useState("");
   const [priceLink, setPriceLink] = useState("");
   const [description, setDescription] = useState("");
+  const [longDescription, setLongDescription] = useState("");
   const [keywords, setKeywords] = useState("");
   const [media, setMedia] = useState([]);
   const [productLogo, setProductLogo] = useState("");
@@ -39,6 +41,10 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
   const [imageMessage, setImageMessage] = useState();
   // for use in image search
   const [companyWebsite, setCompanyWebsite] = useState("");
+  // logo upload
+  const [logoState, setLogoState] = useState("none");
+  // character count for long description
+  const [characters, setCharacters] = useState(0);
 
   // Fetch on load
   useEffect(() => {
@@ -71,6 +77,8 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     products[0].price_link ? setPriceLink(products[0].price_link) : "";
     products[0].price_model ? setPriceModel(products[0].price_model) : "";
     products[0].description ? setDescription(products[0].description) : "";
+    products[0].long_description ? setLongDescription(products[0].long_description) : "";
+    products[0].long_description ? setCharacters(products[0].long_description.length) : "";
     products[0].keywords ? setKeywords(products[0].keywords) : "";
     products[0].product_logo ? setProductLogo(products[0].product_logo) : "";
     products[0].media ? setMedia(products[0].media) : "";
@@ -125,6 +133,7 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
         price_link: priceLink,
         price_model: priceModel,
         description: description,
+        long_description: longDescription,
         keywords: keywords,
         media: media,
         product_logo: productLogo,
@@ -272,6 +281,52 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
     updatedMedia.splice(dropIndex, 0, moveMedia);
     setMedia(updatedMedia);
   };
+
+  const signLogoUrl = async (path) => {
+    let { data, error } = await supabase.storage.from("logos").createSignedUrl(path, 283824000);
+    if (error) {
+      throw error;
+    }
+    return data.signedURL;
+  };
+
+  const handleLogoChange = async (e) => {
+    setLogoState("uploading");
+    let path = `product_logos/${productId}/${productName}_logo`;
+    let { data, error } = await supabase.storage.from("logos").upload(path, e.target.files[0], {
+      upsert: true,
+    });
+    if (error) {
+      handleLogoFailure();
+      throw error;
+    }
+    if (data) {
+      let url = await signLogoUrl(path);
+      handleLogoSuccess(url);
+    }
+  };
+
+  const handleLogoSuccess = (url) => {
+    setLogoState("success");
+    setProductLogo(url);
+    setTimeout(function () {
+      setLogoState("none");
+    }, 3000);
+  };
+
+  const handleLogoFailure = () => {
+    setLogoState("failure");
+    setTimeout(function () {
+      setLogoState("none");
+    }, 3000);
+  };
+
+  const handleLongDescriptionTextChange = (e) => {
+    setLongDescription(e.target.value);
+    setCharacters(e.target.value.length);
+  };
+
+  let logoSearchLink = companyWebsite.split("//")[1];
 
   if (loading) return <Loading />;
 
@@ -466,6 +521,32 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               <span className="text-xs text-gray-500 italic">280 character maximum</span>
               <FormTip video_id="76d32cc65dbf4a9399d435b6a9d24a0a" />
             </div>
+            <div className="col-span-4 lg:col-span-2">
+              <div className="flex justify-between">
+                <div className="flex space-x-2">
+                  <label htmlFor="longDescription" className="block text-sm font-medium text-gray-700">
+                    Long description
+                  </label>
+                  <span className="italic text-sm text-gray-400">required</span>
+                </div>
+
+                <a target="_blank" href={`https://www.saasworthy.com/search?s=${productName}`} className="text-sm text-blue-600 underline pl-2">
+                  Get long desc
+                </a>
+              </div>
+              <textarea
+                type="text"
+                name="longDescription"
+                id="longDescription"
+                placeholder=""
+                rows={4}
+                value={longDescription}
+                onChange={(e) => handleLongDescriptionTextChange(e)}
+                className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+              />
+              <span className="text-xs text-gray-500 italic">{characters} characters</span>
+              <FormTip video_id="87183398fa9d467bbcc2928d0fbe4b75" />
+            </div>
             <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
             <div className="col-span-4 lg:col-span-2">
               <div className="flex space-x-2 items-center">
@@ -604,20 +685,33 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
                     <label htmlFor="productLogo" className="text-sm font-medium text-gray-700">
                       Product logo
                     </label>
-                    <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${productLink}`} className="text-sm text-blue-600 underline pl-2">
+                    <a target="_blank" href={`https://brandfetch.com/developers/demo?alias=${logoSearchLink}`} className="text-sm text-blue-600 underline pl-2">
                       Get logo
                     </a>
                   </div>
-                  <input
-                    type="url"
-                    name="productLogo"
-                    id="productLogo"
-                    placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
-                    value={productLogo}
-                    onChange={(e) => setProductLogo(e.target.value)}
-                    className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                  />
+                  <div className="flex flex-col space-y-3">
+                    <input
+                      type="url"
+                      name="productLogo"
+                      id="productLogo"
+                      placeholder="https://assets.brandfetch.io/298f948a6d77483.png"
+                      value={productLogo}
+                      onChange={(e) => setProductLogo(e.target.value)}
+                      className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                    />
+                    {logoState === "none" && <input type="file" onChange={handleLogoChange} className="block w-full focus:outline-none focus:ring-gray-900 focus:border-gray-900 text-xs" />}
+                    {logoState === "uploading" && (
+                      <div className="text-purple px-4">
+                        <Loader className="h-5 w-5 animate-spin" />
+                      </div>
+                    )}
+                    {logoState === "success" && <span className={`flex items-center text-green-600 text-sm`}>Image uploaded successfully.</span>}
+                    {logoState === "failure" && <span className={`flex items-center text-red-600 text-sm`}>There was an error. Please try again.</span>}
+                  </div>
+
+                  <FormTip video_id="413844e4d9274c9e9af740e53d45dc74" />
                 </div>
+
                 <div className="col-span-4 lg:col-span-2">
                   <div className="flex justify-between items-center">
                     <label htmlFor="industry" className="block text-sm font-medium text-gray-700">

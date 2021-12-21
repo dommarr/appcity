@@ -425,8 +425,8 @@ export default function Product({ product }) {
       <div id="compare" className="bg-gray-50 select-none">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 ${xlCols >= 5 ? "xl:px-1" : ""}`}>
           <div className="sm:flex sm:flex-col sm:align-center">
-            {product.tiers.length === 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing</h1>}
-            {product.tiers.length > 1 && <h1 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Plans</h1>}
+            {product.tiers.length === 1 && <h3 className="text-5xl font-extrabold text-gray-900 text-center">Pricing</h3>}
+            {product.tiers.length > 1 && <h3 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Plans</h3>}
             {product.price_model !== "revenue-fee" && product.price_model !== "one-time" && product.price_model !== "per-transaction" && product.price_model !== "minimum deposit" && !hidePriceToggle && (
               <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
                 <button
@@ -627,12 +627,22 @@ export default function Product({ product }) {
       <div id="reviews" className="bg-white select-none">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
           <div className="flex flex-col align-center">
-            <h1 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h1>
+            <h3 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h3>
             {/* <ReviewRecorder user={user} product={product} /> */}
             <ReviewGrid user={user} product={product} count={count} rating={rating} setCount={setCount} setRating={setRating} />
           </div>
         </div>
       </div>
+      {product.long_description && (
+        <div id="app-description" className="bg-gray-50 select-none">
+          <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
+            <div className="flex flex-col align-start space-y-2">
+              <h3 className="">App description</h3>
+              <p className="text-sm">{product.long_description}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

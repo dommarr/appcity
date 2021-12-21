@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import { supabase } from "../utils/initSupabase";
 import Container from "../components/global/mobilePaddingContainer";
 import Link from "next/link";
 import Head from "../components/global/head";
 
-const description = "Discounts and offers from the best business apps around. More to come soon!";
+let description = "All business apps and software on AppCity.com";
 
 const AppCard = ({ app }) => {
   return (
@@ -15,7 +16,6 @@ const AppCard = ({ app }) => {
           </div>
           <div className="flex flex-col items-start justify-around">
             <div className="flex items-center justify-center text-xl font-medium pl-4">{app.name}</div>
-            <div className="flex items-center justify-center text-sm pl-4">{app.discount}</div>
           </div>
         </li>
       </a>
@@ -23,14 +23,14 @@ const AppCard = ({ app }) => {
   );
 };
 
-export default function Deals({ apps }) {
+export default function AllApps({ apps }) {
   return (
     <>
-      <Head title={`Discounts and Offers | AppCity`} description={description} url={`https://www.appcity.com/deals`} />
+      <Head title={`All Business Apps | AppCity`} description={description} url={`https://www.appcity.com/all-apps`} />
       <div className="bg-gray-50 pb-20">
         <Container>
           <div className="text-center space-y-4">
-            <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">Discounts and Offers</h1>
+            <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">All Business Apps</h1>
             <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -58,17 +58,8 @@ const fetchApps = async () => {
   return products;
 };
 
-const setDiscount = (arr) => {
-  arr.forEach((app) => {
-    app.discount = app.discount_message ? app.discount_message : app.vendors.discount_message;
-  });
-  return arr;
-};
-
 export async function getStaticProps(context) {
-  const appData = await fetchApps();
-  let appDiscounts = setDiscount(appData);
-  let apps = appDiscounts.filter((app) => app.discount);
+  const apps = await fetchApps();
 
   if (!apps) {
     return {

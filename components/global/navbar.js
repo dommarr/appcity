@@ -64,7 +64,7 @@ const SearchBar = ({ query, setQuery, handleSubmit, light }) => {
         />
         <div className={`${light ? "border-purple" : "border-white"} border-t border-b flex items-center justify-center w-12 pr-2`}>
           {!query && !isMobile && !focused && (
-            <div className={`${light ? "bg-gray-200 text-purple border border-purple" : "bg-purple text-white"} flex items-center justify-center space-x-0.5 px-3 pb-0.5 rounded`}>
+            <div className={`${light ? "bg-gray-200 text-purple" : "bg-purple text-white"} flex items-center justify-center space-x-0.5 px-3 pb-0.5 rounded`}>
               <span className="font-light">/</span>
             </div>
           )}
@@ -114,10 +114,12 @@ export default function Navbar({ trans, light, search }) {
       router.replace(`/search?query=website+builder`);
     }
 
+    let inputTags = ["INPUT", "TEXTAREA"];
+
     document.addEventListener(
       "keyup",
       (event) => {
-        if (event.key === "/") {
+        if (event.key === "/" && !inputTags.includes(document.activeElement.tagName)) {
           document.getElementById("search").focus();
         }
       },

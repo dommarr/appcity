@@ -30,6 +30,15 @@ export default function Footer({ children, dark }) {
                       <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>For software developers</a>
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      href={{
+                        pathname: `/all-apps`,
+                      }}
+                    >
+                      <a className={`text-base cursor-default ${dark ? "text-purple-extradark" : "text-white"}`}>All apps</a>
+                    </Link>
+                  </li>
                 </ul>
               </div>
               <div className="mt-12 md:mt-0">

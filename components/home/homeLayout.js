@@ -47,13 +47,13 @@ export default function HomeLayout({ apps, kits }) {
                 <span className="block text-black">shop for everything else</span>
                 </h1> */}
               <h1 className="hidden">AppCity, the business app store for business software and small business.</h1>
-              <h1 className="text-3xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
+              <h2 className="text-3xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
                 <span className="block text-white sm:mb-1">The business app store</span>
                 <div className="flex text-center items-center justify-center space-x-2 sm:space-x-3 mx-0">
                   <span className="block text-white">for</span>
                   <RotatingText items={["creators", "founders", "indie hackers", "builders. "]} color="yellow" pause={2500} />
                 </div>
-              </h1>
+              </h2>
 
               {/* Search */}
               <div className="block mt-8 max-w-sm md:max-w-md lg:max-w-lg mx-auto">

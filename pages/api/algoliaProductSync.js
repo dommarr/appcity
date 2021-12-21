@@ -121,13 +121,23 @@ export default async function (req, res) {
     obj.tier_name = elem.name;
     obj.tier_number = elem.number;
     // price
-    obj.price_primary_number_year = elem.price_primary_number_year;
+    if (elem.only_paid_monthly) {
+      obj.price_primary_number_year = elem.price_primary_number_month;
+      obj.price_primary_number_month = elem.price_primary_number_month;
+    } else if (elem.only_paid_yearly) {
+      obj.price_primary_number_year = elem.price_primary_number_year;
+      obj.price_primary_number_month = elem.price_primary_number_year;
+    } else {
+      obj.price_primary_number_year = elem.price_primary_number_year;
+      obj.price_primary_number_month = elem.price_primary_number_month;
+    }
+    //obj.price_primary_number_year = elem.price_primary_number_year;
     obj.price_primary_text_year = elem.price_primary_text_year;
     obj.price_primary_unit_year = elem.price_primary_unit_year;
     obj.price_secondary_number_year = elem.price_secondary_number_year;
     obj.price_secondary_text_year = elem.price_secondary_text_year;
     obj.price_secondary_unit_year = elem.price_secondary_unit_year;
-    obj.price_primary_number_month = elem.price_primary_number_month;
+    //obj.price_primary_number_month = elem.price_primary_number_month;
     obj.price_primary_text_month = elem.price_primary_text_month;
     obj.price_primary_unit_month = elem.price_primary_unit_month;
     obj.price_secondary_number_month = elem.price_secondary_number_month;
@@ -173,10 +183,10 @@ export default async function (req, res) {
       obj.single_tier = false;
     }
     // features are added cumulatively at the tier-level. for product-level features, we only need the last tier's features
-    let last_tier = tierData.filter((tier) => tier.id === tierArray[tierArray.length - 1].tier_id)[0];
-
-    obj.features = tierData.filter((tier) => tier.id === last_tier.id)[0].features;
-
+    if (tierCount > 0) {
+      let last_tier = tierData.filter((tier) => tier.id === tierArray[tierArray.length - 1].tier_id)[0];
+      obj.features = tierData.filter((tier) => tier.id === last_tier.id)[0].features;
+    }
     // for calculating a price to sort by...
     // first set price if there is a billing restriction
     let tierPrices = tierArray.map((tier) => {
@@ -197,7 +207,13 @@ export default async function (req, res) {
     let yearlyPrices = tierPrices.filter((tier) => tier.price_yearly || tier.price_yearly === 0).map((tier) => tier.price_yearly);
     let monthlyPrices = tierPrices.filter((tier) => tier.price_monthly || tier.price_monthly === 0).map((tier) => tier.price_monthly);
 
-    // sum and get average
+    // prices used in filtering
+    obj.min_price_year = Math.min(...yearlyPrices);
+    obj.max_price_year = Math.max(...yearlyPrices);
+    obj.min_price_month = Math.min(...monthlyPrices);
+    obj.max_price_month = Math.max(...monthlyPrices);
+
+    // sum and get average (for sorting)
     // yearly
     if (yearlyPrices.length > 0) {
       let sum = yearlyPrices.reduce(add, 0);
@@ -240,11 +256,11 @@ export default async function (req, res) {
     });
 
     // if product is not complete, add tag hidden, else add empty tags
-    if (!elem.complete) {
-      obj._tags = ["hidden"];
-    } else {
-      obj._tags = [""];
-    }
+    // if (!elem.complete) {
+    //   obj._tags = ["hidden"];
+    // } else {
+    //   obj._tags = [""];
+    // }
 
     algoliaArray.push(obj);
   });
