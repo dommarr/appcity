@@ -109,6 +109,8 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
     }, 3000);
   };
 
+  let logoSearchLink = website.split("//")[1];
+
   if (loading) return <Loading />;
 
   return (
@@ -159,7 +161,7 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
                 <label htmlFor="logo" className="text-sm font-medium text-gray-700">
                   Company logo
                 </label>
-                <a target="_blank" href={`https://brandfetch.com/brand-api/demo?url=${website}`} className="text-sm text-blue-600 underline pl-2">
+                <a target="_blank" href={`https://brandfetch.com/developers/demo?alias=${logoSearchLink}`} className="text-sm text-blue-600 underline pl-2">
                   Get logo
                 </a>
               </div>

@@ -25,14 +25,69 @@ import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import RefinementBlock from "./refinementBlock";
 import PropTypes from "prop-types";
 import HitCard from "./hitCard";
+import Tooltip from "../global/questionMarkTooltip";
+import { useEffect, useState } from "react";
+import Banner from "../global/banner";
+import Navbar from "../global/navbar";
 
-function Hits({ hits, monthlyPrice, locked }) {
+function Hits({ hits, monthlyPrice, locked, searchState, excludeHandler, exclude, renderState }) {
+  useEffect(() => {}, []);
+
+  let updatedHits = hits.map((hit) => {
+    let tiers = hit.tiers;
+    if (searchState.range) {
+      // for max, exclude Upon request and include zeros
+      if (searchState.range.min_price_month?.max) {
+        //(tier.price_primary_number_month || tier.price_primary_number_month == 0) &&
+        tiers = tiers.filter((tier) => Number(tier.price_primary_number_month) <= Number(searchState.range.min_price_month?.max));
+      }
+      // for min, include "Upon request" (text, with non-zero)
+      if (searchState.range.max_price_month?.min) {
+        // (!tier.price_primary_number_month && tier.price_primary_number_month !== 0) ||
+        tiers = tiers.filter((tier) => Number(tier.price_primary_number_month) >= Number(searchState.range.max_price_month?.min));
+      }
+      // for max, exclude Upon request and include zeros
+      if (searchState.range.min_price_year?.max) {
+        //(tier.price_primary_number_year || tier.price_primary_number_year == 0) &&
+        tiers = tiers.filter(
+          (tier) => Number(tier.price_primary_number_year) <= Number(searchState.range.min_price_year?.max) && (tier.price_primary_number_year || tier.price_primary_number_year == 0)
+        );
+      }
+      // for min, include "Upon request" (text, with non-zero)
+      if (searchState.range.max_price_year?.min) {
+        // (!tier.price_primary_number_year && tier.price_primary_number_year !== 0) ||
+        tiers = tiers.filter((tier) => Number(tier.price_primary_number_year) >= Number(searchState.range.max_price_year?.min));
+      }
+      hit.tiers = tiers;
+    }
+    return hit;
+  });
+
+  let renderHits = updatedHits.filter((hit) => hit.tiers.length > 0);
+  let excludeHits = updatedHits.filter((hit) => hit.tiers.length == 0);
+  let excludeStr = "";
+
+  if (excludeHits.length > 0) {
+    excludeHits.forEach((hit, idx) => {
+      if (idx == 0) {
+        excludeStr = `NOT objectID:${hit.objectID}`;
+      } else {
+        excludeStr = `${excludeStr} AND NOT objectID:${hit.objectID}`;
+      }
+    });
+    if (excludeStr != exclude) {
+      excludeHandler(excludeStr);
+    }
+  }
+
+  // need to reset excludeStr when searchState changes
+
   return (
-    <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {hits.map((hit) => (
-        <HitCard key={hit.objectID} hit={hit} monthlyPrice={monthlyPrice} locked={locked} />
+    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {renderHits.map((hit) => (
+        <HitCard key={hit.objectID} hit={hit} monthlyPrice={monthlyPrice} locked={locked} searchState={searchState} />
       ))}
-    </ol>
+    </ul>
   );
 }
 
@@ -92,7 +147,6 @@ const Results = connectStateResults(({ searchState, searchResults, children }) =
       </div>
     );
   }
-  // return hits
   return children;
 });
 
@@ -167,10 +221,24 @@ const Pagination_Custom = ({ currentRefinement, nbPages, refine, createURL }) =>
 
 const CustomPagination = connectPagination(Pagination_Custom);
 
+const pricePlanOptions = [
+  { id: "free", title: "Free only" },
+  { id: "paid", title: "First paid plan" },
+  { id: "one", title: "First plan" },
+  { id: "two", title: "Second plan" },
+  { id: "three", title: "Third plan" },
+  { id: "four", title: "Fourth plan" },
+  { id: "five", title: "Fifth plan" },
+  { id: "enterprise", title: "Enterprise plan" },
+];
+
 class SearchApp extends React.Component {
   constructor(props) {
     super(props);
-    this.flipPrice = this.flipPrice.bind(this);
+    //this.flipPrice = this.flipPrice.bind(this);
+    // this.handlePriceFilterMonth = this.handlePriceFilterMonth.bind(this);
+    // this.handlePriceFilterYear = this.handlePriceFilterYear.bind(this);
+
     this.state = {
       showSidebar: false,
       monthlyPrice: false,
@@ -178,9 +246,9 @@ class SearchApp extends React.Component {
     };
   }
 
-  flipPrice() {
-    this.setState(!this.state.monthlyPrice);
-  }
+  // flipPrice() {
+  //   this.setState(!this.state.monthlyPrice);
+  // }
 
   async fetchReviewCount(uid) {
     let { data: reviews, error } = await supabase.from("reviews").select("rating").eq("user", uid);
@@ -208,11 +276,24 @@ class SearchApp extends React.Component {
     searchClient: PropTypes.object,
   };
 
+  handlePricePlanSelect(e) {
+    e.preventDefault;
+    //console.log(e.target.id);
+    //console.log(this.searchState);
+    // if (e.target.id === "free") {
+    //   this.setState({ tierOption: "free" });
+    // }
+  }
+
+  //filters={`${this.state.exclude}`}
+
   render() {
     return (
-      <div id="top" className="flex bg-gray-100 select-none">
+      <div className="h-screen flex flex-col">
         {/* prevent auto-zoom when selecting the sort-by dropdown menu on mobile */}
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+        <Banner />
+        <Navbar search={true} />
         <InstantSearch
           searchClient={this.props.searchClient}
           resultsState={this.props.resultsState}
@@ -223,49 +304,39 @@ class SearchApp extends React.Component {
           onSearchParameters={this.props.onSearchParameters}
           {...this.props}
         >
-          {/* Sidebar - static on md screen widths and popover menu on < md */}
-          {/* level 1 */}
-          <div id="sidebar-container" className={`${this.state.showSidebar ? `flex` : `hidden`} fixed inset-0 z-40 md:flex md:static md:inset-auto md:z-auto md:flex-shrink-0`}>
-            <div className="flex items-end w-full h-full justify-center md:justify-start md:items-start">
-              <div
-                id="sidebar-background"
-                className={`${this.state.showSidebar ? `block` : `hidden`} fixed inset-0 md:hidden`}
-                aria-hidden="true"
-                enter="transition-opacity ease-linear duration-300"
-                enterfrom="opacity-0"
-                enterto="opacity-100"
-                leave="transition-opacity ease-linear duration-300"
-                leavefrom="opacity-100"
-                leaveto="opacity-0"
-              >
-                <div onClick={() => this.setState({ showSidebar: false })} className="absolute inset-0 bg-gray-600 opacity-75"></div>
-              </div>
-              {/* level 2 */}
-              <div
-                id="sidebar-content"
-                className={`${
-                  this.state.showSidebar ? `flex` : `hidden`
-                } rounded-t-2xl md:flex relative flex-1 flex-col h-4/6 w-full pb-4 bg-white md:h-full md:static md:flex-auto md:max-w-none md:w-64 md:p-0`}
-              >
-                <div
-                  onClick={() => this.setState({ showSidebar: false })}
-                  className={`${this.state.showSidebar ? "absolute" : "hidden"} md:hidden top-0 right-0 p-3 bg-white cursor-pointer rounded-tr-2xl`}
-                >
-                  <XIcon className="h-6 w-6 text-black" aria-hidden="true" />
+          <div className="flex flex-1 overflow-hidden bg-gray-100">
+            {/* Static sidebar for desktop */}
+            <div className={`${this.state.showSidebar ? `flex` : `hidden`} md:flex md:flex-shrink-0 fixed inset-0 z-40 md:static md:inset-auto md:z-auto`}>
+              <div className="flex flex-col w-full md:w-64 justify-end">
+                <div id="sidebar-background" className={`${this.state.showSidebar ? `block` : `hidden`} fixed inset-0 md:hidden`} aria-hidden="true">
+                  <div onClick={() => this.setState({ showSidebar: false })} className="absolute inset-0 bg-gray-600 opacity-75"></div>
                 </div>
-
-                <div className="mt-5 flex-1 h-0 overflow-y-auto md:m-0 md:flex-auto md:h-auto md:flex md:flex-col md:flex-grow md:border-r md:border-gray-200 md:py-2 md:bg-white">
-                  <div className="md:flex-grow md:flex md:flex-col">
-                    <nav className="max-w-sm mx-auto px-2 space-y-1 md:flex-1 md:bg-white">
+                {/* Sidebar component, swap this element with another sidebar if you like */}
+                <div className={`relative flex flex-col h-4/6 md:h-0 md:flex-1 border-r border-gray-200 bg-white rounded-t-2xl md:rounded-none overflow-hidden`}>
+                  <div
+                    onClick={() => this.setState({ showSidebar: false })}
+                    className={`${this.state.showSidebar ? "absolute" : "hidden"} md:hidden top-0 right-0 p-3 bg-white cursor-pointer rounded-tr-2xl z-20`}
+                  >
+                    <XIcon className="h-6 w-6 text-black" aria-hidden="true" />
+                  </div>
+                  <div className="md:flex-grow md:flex md:flex-col pb-4 overflow-y-auto items-center">
+                    <nav className="mt-5 md:flex-1 px-2 bg-white space-y-1 relative max-w-sm mx-auto">
                       <ClearRefinements />
-                      <Configure hitsPerPage={16} filters="NOT _tags:hidden" />
-                      <RefinementBlock header="Price">
+                      <Configure hitsPerPage={16} filters="NOT _tags:hidden" filters={`${this.props.exclude}`} />
+                      <RefinementBlock header="Price" subheader="(per month)">
                         {/* Hide on empty */}
                         {this.props.searchState.query && (
                           <>
-                            <RangeInput attribute="sort_price_monthly" className={`${this.state.monthlyPrice ? "block" : "hidden"}`} />
-                            <RangeInput attribute="sort_price_yearly" className={`${this.state.monthlyPrice ? "hidden" : "block"}`} />
-                            <div className="relative self-center bg-gray-100 p-0.5 flex items-center mt-4">
+                            <div className="flex w-full items-center justify-center">
+                              <RangeInput attribute="max_price_month" className={`${this.state.monthlyPrice ? "block" : "hidden"} min-monthly`} />
+                              <RangeInput attribute="min_price_month" className={`${this.state.monthlyPrice ? "block" : "hidden"} max-monthly`} />
+                              <RangeInput attribute="max_price_year" className={`${this.state.monthlyPrice ? "hidden" : "block"} min-yearly`} />
+                              <RangeInput attribute="min_price_year" className={`${this.state.monthlyPrice ? "hidden" : "block"} max-yearly`} />
+                              <button onClick={this.handlePriceFilter} className="ml-2 bg-purple text-white text-sm p-2 uppercase hover:bg-purple-dark">
+                                ok
+                              </button>
+                            </div>
+                            <div className="relative self-center bg-gray-100 p-0.5 flex items-center my-4">
                               <button
                                 type="button"
                                 onClick={() => this.setState({ monthlyPrice: true })}
@@ -285,6 +356,31 @@ class SearchApp extends React.Component {
                                 Yearly billing
                               </button>
                             </div>
+                            <div>
+                              <div className="flex space-x-1 items-center ml-1 mb-2">
+                                <label className="uppercase font-semibold text-sm">Pricing plans</label>
+                                <Tooltip caption="Show this pricing plan option on all search results" />
+                              </div>
+                              <fieldset className="mt-2">
+                                <legend className="sr-only">Notification method</legend>
+                                <div className="space-y-1">
+                                  {pricePlanOptions.map((option) => (
+                                    <div key={option.id} className="flex items-center">
+                                      <input
+                                        id={option.id}
+                                        onChange={this.handlePricePlanSelect}
+                                        name="notification-method"
+                                        type="radio"
+                                        className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                      />
+                                      <label htmlFor={option.id} className="ml-3 block font-normal text-gray-700 text-sm ">
+                                        {option.title}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+                              </fieldset>
+                            </div>
                           </>
                         )}
                       </RefinementBlock>
@@ -302,85 +398,59 @@ class SearchApp extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="relative flex flex-col w-0 flex-1 overflow-hidden">
-            <ScrollTo>
-              <div className="hidden relative flex-shrink-0 flex h-12 bg-white shadow">
-                <button
-                  className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-extralight md:hidden"
-                  onClick={() => this.setState({ showSidebar: true })}
-                >
-                  <span className="sr-only">Open sidebar</span>
-                  {/* Heroicon name: menu-alt-2 */}
-                  <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
-                  </svg>
-                </button>
+            <div className="flex flex-col w-0 flex-1 overflow-hidden">
+              <div className="hidden relative flex-shrink-0 flex h-12 bg-white">
                 <div className="flex-1 px-4 flex justify-between">
-                  <SearchBox
-                    searchAsYouType={false}
-                    // onSubmit={(event) => {
-                    //   event.preventDefault();
-                    //   let elements = document.getElementsByClassName("ais-ClearRefinements-button");
-                    //   elements[0].click();
-                    // }}
-                    submit={
-                      <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                      </svg>
-                    }
-                    reset={
-                      <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" aria-hidden="true">
-                        <path fillRule="evenodd" clipRule="evenodd" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    }
+                  <SearchBox searchAsYouType={false} />
+                </div>
+              </div>
+              {/* Hide stats and sorts if there is no query */}
+              {this.props.searchState.query && (
+                <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white px-5 py-0.5 border border-gray-200">
+                  {/* <CurrentRefinements /> */}
+                  <Stats className="hidden sm:block" />
+                  <SortBy
+                    defaultRefinement="app_catalog"
+                    items={[
+                      { label: "Relevance", value: "app_catalog" },
+                      {
+                        label: "Less expensive",
+                        value: "price_low_to_high",
+                      },
+                      {
+                        label: "More expensive",
+                        value: "price_high_to_low",
+                      },
+                    ]}
                   />
                 </div>
-              </div>
-            </ScrollTo>
-            {/* Hide stats and sorts if there is no query */}
-            {this.props.searchState.query && (
-              <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white shadow px-5 py-0.5">
-                {/* <CurrentRefinements /> */}
-                <Stats className="hidden sm:block" />
-                <SortBy
-                  defaultRefinement="app_catalog"
-                  items={[
-                    { label: "Relevance", value: "app_catalog" },
-                    {
-                      label: "Less expensive",
-                      value: "price_low_to_high",
-                    },
-                    {
-                      label: "More expensive",
-                      value: "price_high_to_low",
-                    },
-                  ]}
-                />
-              </div>
-            )}
-            <main className="flex-1 relative overflow-y-auto focus:outline-none" tabIndex={0}>
-              <div className="py-4">
-                <div className="max-w-screen-2xl mx-auto px-4 sm:px-4">
-                  <Results>
-                    <CustomHits monthlyPrice={this.state.monthlyPrice} locked={this.state.locked} />
-                  </Results>
-                  <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">
-                    {/* Hide pagination if there is no query */}
-                    {this.props.searchState.query && <CustomPagination />}
-                  </nav>
+              )}
+              <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex={0}>
+                <div className="py-6">
+                  <div className="flex flex-col justify-left max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <Results>
+                      <CustomHits
+                        monthlyPrice={this.state.monthlyPrice}
+                        locked={this.state.locked}
+                        searchState={this.props.searchState}
+                        exclude={this.props.exclude}
+                        excludeHandler={this.props.excludeHandler}
+                        renderState={this.props.renderState}
+                      />
+                    </Results>
+                    <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">{this.props.searchState.query && <CustomPagination />}</nav>
+                    <div className="md:hidden fixed bottom-10 inset-x-0 mx-auto flex items-center justify-center pointer-events-none">
+                      <button
+                        onClick={() => this.setState({ showSidebar: true })}
+                        className="pointer-events-auto bg-gradient-to-r from-yellow to-amber-400 text-purple px-10 py-2 uppercase font-medium tracking-widest rounded-lg filter drop-shadow-lg"
+                      >
+                        Filter
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="md:hidden fixed bottom-10 inset-x-0 mx-auto flex items-center justify-center pointer-events-none">
-                  <button
-                    onClick={() => this.setState({ showSidebar: true })}
-                    className="pointer-events-auto bg-yellow text-purple px-10 py-2 uppercase font-medium tracking-widest rounded-lg filter drop-shadow-lg"
-                  >
-                    Filters
-                  </button>
-                </div>
-              </div>
-            </main>
+              </main>
+            </div>
           </div>
         </InstantSearch>
       </div>

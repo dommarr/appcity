@@ -4,14 +4,12 @@ import { useRouter } from "next/router";
 const tabs = [
   { value: "all", name: "All apps", current: true },
   { value: "not-started", name: "Not started", current: false },
-  { value: "discount", name: "Has discount", current: false },
-  { value: "referral", name: "Referral only", current: false },
+  { value: "in-progress", name: "In progress", current: false },
   { value: "no-program", name: "No program", current: false },
+  { value: "rejected", name: "Rejected", current: false },
+  { value: "referral", name: "Referral only", current: false },
+  { value: "discount", name: "Discount added", current: false },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 const AppCard = ({ app, setSelectedApp }) => {
   return (
@@ -32,6 +30,10 @@ export default function DiscountList({ appList, setAppList, setSelectedApp }) {
   let router = useRouter();
   const [discountStatus, setDiscountStatus] = useState(router.query.status ? router.query.status : "all");
   const [filteredAppList, setFilteredAppList] = useState(appList);
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   useEffect(() => {
     if (discountStatus === "all") {
@@ -82,7 +84,7 @@ export default function DiscountList({ appList, setAppList, setSelectedApp }) {
               </select>
             </div> */}
             <div className="block">
-              <nav className="relative z-0 rounded-lg shadow flex divide-x divide-gray-200" aria-label="Tabs">
+              <nav className="relative z-0 rounded-lg border border-gray-200 shadow flex divide-x divide-gray-200" aria-label="Tabs">
                 {tabs.map((tab, tabIdx) => (
                   <div
                     key={tab.name}
@@ -91,18 +93,19 @@ export default function DiscountList({ appList, setAppList, setSelectedApp }) {
                       discountStatus === tab.value ? "text-gray-900" : "text-gray-500 hover:text-gray-700",
                       tabIdx === 0 ? "rounded-l-lg" : "",
                       tabIdx === tabs.length - 1 ? "rounded-r-lg" : "",
-                      "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 cursor-pointer"
+                      "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-2 text-xs font-medium text-center hover:bg-gray-50 focus:z-10 cursor-pointer"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                   >
-                    <span>{tab.name}</span>
+                    <span className="flex items-center justify-center h-full">{tab.name}</span>
+
                     <span aria-hidden="true" className={`${discountStatus === tab.value ? "bg-indigo-500" : "bg-transparent"} absolute inset-x-0 bottom-0 h-0.5`} />
                   </div>
                 ))}
               </nav>
             </div>
           </div>
-          <div id="app-count" className="flex items-center justify-center text-sm text-gray-700 pr-4 whitespace-nowrap w-32">
+          <div id="app-count" className="flex items-center justify-center text-sm text-gray-700 pr-4 whitespace-nowrap w-24">
             {filteredAppList.length} {filteredAppList.length === 1 ? "app" : "apps"}
           </div>
         </section>

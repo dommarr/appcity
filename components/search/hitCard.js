@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import React from "react";
 React.useLayoutEffect = React.useEffect;
@@ -7,13 +7,13 @@ import { ChevronLeft, ChevronRight } from "react-feather";
 import PriceBlock from "./priceBlock";
 import DiscountTooltip from "./discountTooltip";
 
-export default function HitCard({ hit, monthlyPrice, locked }) {
-  const tiers = hit.tiers;
+export default function HitCard({ hit, monthlyPrice, locked, searchState }) {
+  let tiers = hit.tiers;
+
   const [tierIndex, setTierIndex] = useState(0);
 
   const handleLeftClick = (e) => {
     e.preventDefault();
-
     if (tierIndex === 0) {
       e.stopPropagation();
     } else {
@@ -24,7 +24,6 @@ export default function HitCard({ hit, monthlyPrice, locked }) {
 
   const handleRightClick = (e) => {
     e.preventDefault();
-
     if (tierIndex === tiers.length - 1) {
       e.stopPropagation();
     } else {
@@ -44,9 +43,24 @@ export default function HitCard({ hit, monthlyPrice, locked }) {
     e.stopPropagation();
   };
 
+  if (!tiers[tierIndex]?.tier_id)
+    return (
+      // <div className="h-full bg-white flex flex-col items-center justify-start space-y-4 p-4 shadow">
+      //   <div className="">{hit.product}</div>
+      //   <div className="h-28 w-28 bg-gray-200 animate-pulse"></div>
+      //   <div className="bg-gray-200 h-6 w-3/4 animate-pulse"></div>
+      //   <div className="bg-gray-200 h-6 w-1/2 animate-pulse"></div>
+      //   <div className="bg-gray-200 h-6 w-1/4 animate-pulse"></div>
+      //   <div className="bg-gray-200 h-4 w-1/2 animate-pulse"></div>
+      //   <div className="bg-gray-200 h-6 w-1/6 animate-pulse"></div>
+      //   <div className="bg-gray-200 h-4 w-1/4 animate-pulse"></div>
+      // </div>
+      <></>
+    );
+
   return (
     <Link href={`/product/${hit.objectID}?tier=${tiers[tierIndex].tier_id}`}>
-      <li key={hit.objectID} className="col-span-1 flex flex-col text-center bg-white shadow cursor-pointer space-y-4 p-4 md:px-2 lg:p-4">
+      <li key={hit.objectID} className="col-span-1 flex flex-col text-center bg-white h-full shadow cursor-pointer space-y-4 p-4 md:px-2 lg:p-4">
         <div id="elem-1" className="space-y-4">
           <img className="object-contain object-center w-28 h-28 flex-shrink-0 mx-auto" src={hit.logo} alt={`${hit.vendor} logo`} />
           <h2 className="text-gray-900 text-lg font-medium">{hit.product}</h2>

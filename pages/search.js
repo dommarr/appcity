@@ -7,6 +7,7 @@ import { withRouter } from "next/router";
 import qs from "qs";
 import algoliasearch from "algoliasearch/lite";
 import { findResultsState } from "react-instantsearch-dom/server";
+import AppContainer from "../components/global/appContainer";
 
 const searchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
@@ -33,6 +34,8 @@ class Search extends React.Component {
   state = {
     searchState: this.props.searchState,
     lastRouter: this.props.router,
+    exclude: "",
+    renderState: this.props.searchState,
   };
 
   static async getInitialProps({ asPath }) {
@@ -69,14 +72,34 @@ class Search extends React.Component {
       });
     }, updateAfter);
 
+    let renderState = searchState;
+    delete renderState.configure;
+
+    // this.setState({
+    //   renderState: renderState,
+    // });
+
     this.setState({ searchState });
+  };
+
+  excludeHandler = (str) => {
+    this.setState({ exclude: str });
   };
 
   render() {
     return (
       <>
         <Head title="Search | AppCity" description="Search for apps to take your business to the next level." url="https://www.appcity.com/search" />
-        <SearchApp {...DEFAULT_PROPS} searchState={this.state.searchState} resultsState={this.props.resultsState} onSearchStateChange={this.onSearchStateChange} createURL={createURL} />
+        <SearchApp
+          {...DEFAULT_PROPS}
+          searchState={this.state.searchState}
+          resultsState={this.props.resultsState}
+          onSearchStateChange={this.onSearchStateChange}
+          createURL={createURL}
+          exclude={this.state.exclude}
+          excludeHandler={this.excludeHandler}
+          renderState={this.state.renderState}
+        />
       </>
     );
   }
