@@ -21,7 +21,7 @@ export default function Banner() {
         <div className="text-center sm:px-16 flex items-center justify-center">
           <p className=" text-white space-x-1 md:hidden">
             <span className="">🚨 Leave 1 review to unlock</span>
-            <Link href="/deals" className="">
+            <Link href="/discounts" className="">
               <a className="underline hover:no-underline">discounts</a>
             </Link>
             <span className="">💰💰</span>
@@ -29,7 +29,7 @@ export default function Banner() {
           </p>
           <p className="hidden md:inline text-white space-x-1">
             <span className="hidden md:inline">🚨 Leave 1 review to unlock thousands in</span>
-            <Link href="/deals" className="">
+            <Link href="/discounts" className="">
               <a className="underline hover:no-underline">discounts and offers</a>
             </Link>
             <span className="">💰💰</span>

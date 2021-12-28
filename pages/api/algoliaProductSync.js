@@ -175,6 +175,8 @@ export default async function (req, res) {
     // filter tiers to only tiers for this product
     let tierArray = tiers.filter((tier) => tier.product_id === elem.id).sort(compare);
     obj.tiers = tierArray;
+    obj.monthly_prices = tierArray.map((tier) => tier.price_primary_number_month);
+    obj.yearly_prices = tierArray.map((tier) => tier.price_primary_number_year);
     let tierCount = tierArray.length;
     // set sinlge tier y/n - used for ui purposes
     if (tierCount === 1) {

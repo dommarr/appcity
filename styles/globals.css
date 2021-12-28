@@ -142,31 +142,6 @@ input[type="search"]::-webkit-search-results-decoration {
   @apply font-normal text-gray-700 text-sm;
 }
 
-/* show/hide input fields to be able to filter price by min and max for a given product (there isn't a single price to filter on)  */
-.ais-RangeInput.min-yearly .ais-RangeInput-input--max {
-  @apply hidden;
-}
-
-.ais-RangeInput.max-yearly .ais-RangeInput-separator {
-  @apply hidden;
-}
-
-.ais-RangeInput.max-yearly .ais-RangeInput-input--min {
-  @apply hidden;
-}
-
-.ais-RangeInput.min-monthly .ais-RangeInput-input--max {
-  @apply hidden;
-}
-
-.ais-RangeInput.max-monthly .ais-RangeInput-separator {
-  @apply hidden;
-}
-
-.ais-RangeInput.max-monthly .ais-RangeInput-input--min {
-  @apply hidden;
-}
-
 .ais-RangeInput-separator {
   @apply text-base;
 }
