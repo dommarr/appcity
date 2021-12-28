@@ -552,11 +552,7 @@ export default function Product({ product }) {
                   >
                     {product.tiers.length > 1 && (
                       <>
-                        <a
-                          target="_blank"
-                          href={priceLink}
-                          className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark border border-gray-800 py-2 px-2 text-sm font-semibold text-white text-center"
-                        >
+                        <a target="_blank" href={priceLink} className="mt-1 block min-w-5/6 bg-purple hover:bg-purple-dark py-2 px-2 text-sm font-semibold text-white text-center">
                           Buy {capitalizeEveryWord(obj.name)}
                         </a>
                         {discountMessage && <DiscountTooltip discountMessage={discountMessage} locked={locked} />}

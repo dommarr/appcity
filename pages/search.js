@@ -7,7 +7,8 @@ import { withRouter } from "next/router";
 import qs from "qs";
 import algoliasearch from "algoliasearch/lite";
 import { findResultsState } from "react-instantsearch-dom/server";
-import AppContainer from "../components/global/appContainer";
+import Banner from "../components/global/banner";
+import Navbar from "../components/global/navbar";
 
 const searchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
@@ -34,8 +35,7 @@ class Search extends React.Component {
   state = {
     searchState: this.props.searchState,
     lastRouter: this.props.router,
-    exclude: "",
-    renderState: this.props.searchState,
+    filter: "NOT _tags:hidden",
   };
 
   static async getInitialProps({ asPath }) {
@@ -72,35 +72,31 @@ class Search extends React.Component {
       });
     }, updateAfter);
 
-    let renderState = searchState;
-    delete renderState.configure;
-
-    // this.setState({
-    //   renderState: renderState,
-    // });
-
     this.setState({ searchState });
   };
 
-  excludeHandler = (str) => {
-    this.setState({ exclude: str });
+  filterHandler = (str) => {
+    this.setState({ filter: str });
   };
 
   render() {
     return (
-      <>
+      <div className="h-screen flex flex-col">
+        {/* prevent auto-zoom when selecting the sort-by dropdown menu on mobile */}
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
         <Head title="Search | AppCity" description="Search for apps to take your business to the next level." url="https://www.appcity.com/search" />
+        <Banner />
+        <Navbar search={true} />
         <SearchApp
           {...DEFAULT_PROPS}
           searchState={this.state.searchState}
           resultsState={this.props.resultsState}
           onSearchStateChange={this.onSearchStateChange}
           createURL={createURL}
-          exclude={this.state.exclude}
-          excludeHandler={this.excludeHandler}
-          renderState={this.state.renderState}
+          filter={this.state.filter}
+          filterHandler={this.filterHandler}
         />
-      </>
+      </div>
     );
   }
 }
