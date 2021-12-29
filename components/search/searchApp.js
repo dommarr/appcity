@@ -3,7 +3,7 @@ import React from "react";
 React.useLayoutEffect = React.useEffect;
 import { Auth } from "@supabase/ui";
 import { supabase } from "../../utils/initSupabase";
-import { XIcon, SearchIcon, PlusIcon } from "@heroicons/react/outline";
+import { XIcon, SearchIcon, PlusIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import RefinementBlock from "./refinementBlock";
 import PropTypes from "prop-types";
 import ClearRefinements from "./clearRefinements";
@@ -182,18 +182,18 @@ class SearchApp extends React.Component {
               <div className={`relative flex flex-col h-4/6 md:h-0 md:flex-1 border-r border-gray-200 bg-white rounded-t-2xl md:rounded-none overflow-hidden`}>
                 <div
                   onClick={() => this.setState({ showSidebar: false })}
-                  className={`${this.state.showSidebar ? "absolute" : "hidden"} md:hidden top-0 right-0 p-3 bg-white cursor-pointer rounded-tr-2xl z-20`}
+                  className={`${this.state.showSidebar ? "absolute" : "hidden"} md:hidden top-0 right-0 pt-3 pr-3 pb-1 pl-1 bg-white cursor-pointer rounded-tr-2xl rounded-bl-lg z-20`}
                 >
                   <XIcon className="h-6 w-6 text-black" aria-hidden="true" />
                 </div>
                 <div className="md:flex-grow md:flex md:flex-col pb-4 overflow-y-auto items-center">
                   {/* Category Page Header */}
-                  {this.state.category && !this.props.showHeader && (
-                    <div className="relative flex flex-col items-center justify-center pt-6 pb-1 w-full">
-                      <PlusIcon onClick={this.props.headerHandler} className="absolute top-1 right-1 h-6 w-6 text-gray-400 hover:text-gray-700 cursor-pointer" />
-                      <h1 className="text-xl font-extrabold text-center">{this.state.category}</h1>
-                    </div>
-                  )}
+                  {this.state.category && !this.props.showHeader && <h1 className="text-xl font-extrabold text-center pt-5 px-1">{this.state.category}</h1>}
+                  {/* <div className="relative flex flex-col items-center justify-center pt-6 pb-1 w-full">
+                      <ChevronDownIcon onClick={this.props.headerHandler} className="absolute top-1 right-1 h-6 w-6 text-gray-400 hover:text-gray-700 cursor-pointer" />
+                      
+                      <ChevronDownIcon onClick={this.props.headerHandler} className="absolute top-1 left-1 h-6 w-6 text-gray-400 hover:text-gray-700 cursor-pointer" />
+                    </div> */}
                   <nav className="mt-5 md:flex-1 px-2 bg-white space-y-1 relative max-w-sm mx-auto w-full">
                     <Configure hitsPerPage={16} filters={`${this.props.filter}`} />
                     {!this.state.category && <ClearRefinements filter={this.props.filter} filterHandler={this.props.filterHandler} handleClear={this.handleClear} />}

@@ -175,7 +175,7 @@ export default function HomeLayout({ apps, kits }) {
                   <Link href={`/product/${id}`} key={idx}>
                     <a>
                       <div className="col-span-1 p-2 md:p-8 bg-gray-50 grid grid-cols-3 gap-4 h-full">
-                        <div className="relative col-span-1 flex items-center justify-center">
+                        <div className="relative col-span-1 flex items-center justify-center hidden sm:block">
                           <Image
                             src={vendors.logo}
                             alt={name}
@@ -186,6 +186,9 @@ export default function HomeLayout({ apps, kits }) {
                             width={100}
                             objectFit="contain"
                           />
+                        </div>
+                        <div className="relative col-span-1 flex items-center justify-center sm:hidden">
+                          <Image src={vendors.logo} alt={name} placeholder="blur" blurDataURL={`/_next/image?url=${vendors.logo}&w=16&q=1`} layout="fixed" height={80} width={80} objectFit="contain" />
                         </div>
 
                         <div className="col-span-2 flex flex-col space-y-1 justify-center">
