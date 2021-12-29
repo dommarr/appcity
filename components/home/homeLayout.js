@@ -11,6 +11,7 @@ import XxlSkyline from "../graphics/skyline/XxlSkyline";
 import Link from "next/link";
 import StarterKitFeature from "./startkitFeature";
 import Image from "next/image";
+import ShopByCategory from "./shopByCategory";
 
 export default function HomeLayout({ apps, kits }) {
   const router = useRouter();
@@ -163,8 +164,10 @@ export default function HomeLayout({ apps, kits }) {
         </div>
       </section> */}
       <section id="featured-apps" className="bg-white">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-          <h2 className="text-5xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">Featured Apps</h2>
+        <div className="max-w-7xl mx-auto py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-center mb-8 sm:mb-12 text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">
+            Featured Apps
+          </h2>
           <div className="mt-6 grid grid-cols-1 gap-0.5 md:grid-cols-2 lg:grid-cols-3 lg:mt-8">
             {apps &&
               apps.map(({ id, name, vendors, categories }, idx) => {
@@ -205,6 +208,7 @@ export default function HomeLayout({ apps, kits }) {
           </div>
         </div>
       </section>
+      <ShopByCategory />
       <StarterKitFeature kits={kits} />
       {/* <div className="max-w-7xl mx-auto pt-24 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">

@@ -45,44 +45,29 @@ export default function Footer({ children, dark }) {
                 <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Top categories</h3>
                 <ul className="mt-4 space-y-4">
                   <li>
-                    <Link
-                      href={{
-                        pathname: `/search`,
-                        query: { query: "website builder" },
-                      }}
-                    >
+                    <Link href={`/categories/Website & App Builders?parent=${encodeURIComponent("Website & App Builders")}`}>
                       <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Website builder</a>
                     </Link>
                   </li>
 
                   <li>
-                    <Link
-                      href={{
-                        pathname: `/search`,
-                        query: { query: "ecommerce store" },
-                      }}
-                    >
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Ecommerce store</a>
+                    <Link href={`/categories/Marketing?parent=${encodeURIComponent("Marketing")}`}>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Marketing</a>
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href={{
-                        pathname: `/search`,
-                        query: { query: "email marketing" },
-                      }}
-                    >
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Email marketing</a>
+                    <Link href={`/categories/Productivity & Admin?parent=${encodeURIComponent("Productivity & Admin")}`}>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Productivity</a>
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href={{
-                        pathname: `/search`,
-                        query: { query: "podcasting" },
-                      }}
-                    >
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Podcasting</a>
+                    <Link href={`/categories/Customer Service?parent=${encodeURIComponent("Customer Service")}`}>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Customer service</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={`/categories`}>
+                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Browse all</a>
                     </Link>
                   </li>
                 </ul>

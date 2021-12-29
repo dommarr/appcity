@@ -29,9 +29,9 @@ function AppContainer(props) {
   //   return users[0];
   // };
 
-  const hideBanner = ["/u/[handle]", "/404", "/login", "/dashboard", "/search"];
-  const hideNav = ["/", "/about", "/u/[handle]", "/404", "/login", "/dashboard", "/search"];
-  const hideFooter = ["/u/[handle]", "/404", "/login", "/dashboard", "/search"];
+  const hideBanner = ["/u/[handle]", "/404", "/login", "/dashboard", "/search", "/categories/[name]"];
+  const hideNav = ["/", "/about", "/u/[handle]", "/404", "/login", "/dashboard", "/search", "/categories/[name]"];
+  const hideFooter = ["/u/[handle]", "/404", "/login", "/dashboard", "/search", "/categories/[name]"];
 
   return (
     <div id="app-container" className={`flex flex-col max-w-7xl min-h-screen min-w-full select-none ${router.route === "/search" ? "" : "justify-between"}`}>
