@@ -9,7 +9,7 @@ import algoliasearch from "algoliasearch/lite";
 import { findResultsState } from "react-instantsearch-dom/server";
 import Banner from "../../components/global/banner";
 import Navbar from "../../components/global/navbar";
-import { MinusIcon } from "@heroicons/react/outline";
+import { ChevronUpIcon, MinusIcon } from "@heroicons/react/outline";
 
 const searchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
@@ -99,10 +99,16 @@ class Search extends React.Component {
         />
         <Navbar search={false} />
         {this.state.showHeader && (
-          <div className="flex items-center justify-between space-x-4 text-center py-6 px-4 sm:px-6 lg:px-8 border-b bg-gray-100">
-            <MinusIcon onClick={(e) => this.setState({ showHeader: false })} className="h-8 w-8 cursor-pointer text-gray-400 hover:text-gray-700 hover:border hover:border-gray-700" />
-            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">{this.state.category.name}</h1>
-            <MinusIcon onClick={(e) => this.setState({ showHeader: false })} className="h-8 w-8 cursor-pointer text-gray-400 hover:text-gray-700 hover:border hover:border-gray-700" />
+          <div className="flex items-end justify-between space-x-4 text-center pb-2 px-4 sm:px-6 lg:px-8 border-b bg-gray-100">
+            <ChevronUpIcon
+              onClick={(e) => this.setState({ showHeader: false })}
+              className="h-6 w-6 sm:h-8 sm:w-8 cursor-pointer text-gray-400 hover:text-gray-700 hover:border hover:border-gray-700"
+            />
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-gray-900 pt-6 pb-4">{this.state.category.name}</h1>
+            <ChevronUpIcon
+              onClick={(e) => this.setState({ showHeader: false })}
+              className="h-6 w-6 sm:h-8 sm:w-8 cursor-pointer text-gray-400 hover:text-gray-700 hover:border hover:border-gray-700"
+            />
             {/* <p className="mt-4 max-w-xl mx-auto text-base text-gray-500">description</p> */}
           </div>
         )}

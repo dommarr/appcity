@@ -40,7 +40,7 @@ export default function ShopByCategory() {
         <div className="px-4 sm:px-6 sm:flex sm:items-end sm:justify-between lg:px-8 xl:px-0">
           <h2 className="text-4xl sm:text-3xl mb-8 sm:mb-0 font-extrabold text-center text-purple">Shop by Category</h2>
           <Link href="/categories">
-            <a className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+            <a className="hidden font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
               Browse all categories<span aria-hidden="true"> &rarr;</span>
             </a>
           </Link>
@@ -67,7 +67,7 @@ export default function ShopByCategory() {
         </div>
 
         <div className="mt-6 px-4 sm:hidden">
-          <a href="#" className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500 text-center">
+          <a href="/categories" className="block font-semibold text-indigo-600 hover:text-indigo-500 text-center">
             Browse all categories<span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
