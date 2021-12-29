@@ -1,7 +1,9 @@
 import { connectStateResults } from "react-instantsearch-dom";
 import { ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
+import { useRouter } from "next/router";
 
 const Results = connectStateResults(({ searchState, searchResults, children }) => {
+  const router = useRouter();
   // empty state for no search results
   if (searchResults && searchResults.nbHits === 0) {
     return (
@@ -31,7 +33,7 @@ const Results = connectStateResults(({ searchState, searchResults, children }) =
     );
   }
   // empty state for no search query
-  if (searchState && !searchState.query) {
+  if (searchState && !searchState.query && router?.pathname !== "/categories/[name]") {
     return (
       <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
         <div className="flex">

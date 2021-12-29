@@ -256,6 +256,13 @@ export default async function (req, res) {
       let level = "lvl" + match[0].lvl;
       obj.categories[level] = match[0].name;
     });
+    obj.virtual_categories = [];
+    elem.products_categories.forEach(function (item) {
+      let match = catArray.filter(function (entry) {
+        return entry.id === item.category_id;
+      });
+      obj.virtual_categories.push(match[0].name);
+    });
 
     // if product is not complete, add tag hidden, else add empty tags
     // if (!elem.complete) {

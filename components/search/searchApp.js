@@ -1,9 +1,9 @@
-import { InstantSearch, SearchBox, ScrollTo, HierarchicalMenu, RatingMenu, Stats, SortBy, RefinementList, Configure } from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, ScrollTo, HierarchicalMenu, RatingMenu, Stats, SortBy, RefinementList, Configure, connectRefinementList } from "react-instantsearch-dom";
 import React from "react";
 React.useLayoutEffect = React.useEffect;
 import { Auth } from "@supabase/ui";
 import { supabase } from "../../utils/initSupabase";
-import { XIcon } from "@heroicons/react/outline";
+import { XIcon, SearchIcon, PlusIcon } from "@heroicons/react/outline";
 import RefinementBlock from "./refinementBlock";
 import PropTypes from "prop-types";
 import ClearRefinements from "./clearRefinements";
@@ -24,6 +24,8 @@ const pricePlanOptions = [
   { id: "enterprise", title: "Enterprise plan" },
 ];
 
+const VirtualRefinementList = connectRefinementList(() => null);
+
 class SearchApp extends React.Component {
   constructor(props) {
     super(props);
@@ -36,6 +38,8 @@ class SearchApp extends React.Component {
       maxYearly: "",
       minMonthly: "",
       maxMonthly: "",
+      category: false,
+      parent: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -58,6 +62,9 @@ class SearchApp extends React.Component {
       if (reviewCount > 0) {
         this.setState({ locked: false });
       }
+    }
+    if (this.props.category) {
+      this.setState({ category: this.props.category.name, parent: this.props.category.parent });
     }
   }
 
@@ -163,6 +170,7 @@ class SearchApp extends React.Component {
         onSearchParameters={this.props.onSearchParameters}
         {...this.props}
       >
+        {this.state.category && <VirtualRefinementList attribute="virtual_categories" defaultRefinement={this.state.category} />}
         <div className="flex flex-1 overflow-hidden bg-gray-100">
           {/* Static sidebar for desktop */}
           <div className={`${this.state.showSidebar ? `flex` : `hidden`} md:flex md:flex-shrink-0 fixed inset-0 z-40 md:static md:inset-auto md:z-auto`}>
@@ -179,41 +187,50 @@ class SearchApp extends React.Component {
                   <XIcon className="h-6 w-6 text-black" aria-hidden="true" />
                 </div>
                 <div className="md:flex-grow md:flex md:flex-col pb-4 overflow-y-auto items-center">
-                  <nav className="mt-5 md:flex-1 px-2 bg-white space-y-1 relative max-w-sm mx-auto">
-                    <ClearRefinements filter={this.props.filter} filterHandler={this.props.filterHandler} handleClear={this.handleClear} />
+                  {/* Category Page Header */}
+                  {this.state.category && !this.props.showHeader && (
+                    <div className="relative flex flex-col items-center justify-center pt-6 pb-1 w-full">
+                      <PlusIcon onClick={this.props.headerHandler} className="absolute top-1 right-1 h-6 w-6 text-gray-400 hover:text-gray-700 cursor-pointer" />
+                      <h1 className="text-xl font-extrabold text-center">{this.state.category}</h1>
+                    </div>
+                  )}
+                  <nav className="mt-5 md:flex-1 px-2 bg-white space-y-1 relative max-w-sm mx-auto w-full">
                     <Configure hitsPerPage={16} filters={`${this.props.filter}`} />
+                    {!this.state.category && <ClearRefinements filter={this.props.filter} filterHandler={this.props.filterHandler} handleClear={this.handleClear} />}
                     <RefinementBlock header="Price" subheader="(per month)">
-                      <PriceFilter
-                        monthly={this.state.monthlyPrice}
-                        minYearly={this.state.minYearly}
-                        maxYearly={this.state.maxYearly}
-                        minMonthly={this.state.minMonthly}
-                        maxMonthly={this.state.maxMonthly}
-                        handleChange={this.handleChange}
-                        handleYearlySubmit={this.handleYearlySubmit}
-                        handleMonthlySubmit={this.handleMonthlySubmit}
-                      />
-                      <div className="relative self-center bg-gray-100 p-0.5 flex items-center mt-3">
-                        <button
-                          type="button"
-                          onClick={() => this.setState({ monthlyPrice: true })}
-                          className={`relative w-1/2 ${
-                            this.state.monthlyPrice ? "bg-white shadow-sm" : "bg-transparent"
-                          } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
-                        >
-                          Monthly billing
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => this.setState({ monthlyPrice: false })}
-                          className={`ml-0.5 relative w-1/2 ${
-                            this.state.monthlyPrice ? "bg-transparent" : "bg-white shadow-sm"
-                          } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
-                        >
-                          Yearly billing
-                        </button>
-                      </div>
-                      {/* <div>
+                      {(this.props.searchState.query || this.state.category) && (
+                        <>
+                          <PriceFilter
+                            monthly={this.state.monthlyPrice}
+                            minYearly={this.state.minYearly}
+                            maxYearly={this.state.maxYearly}
+                            minMonthly={this.state.minMonthly}
+                            maxMonthly={this.state.maxMonthly}
+                            handleChange={this.handleChange}
+                            handleYearlySubmit={this.handleYearlySubmit}
+                            handleMonthlySubmit={this.handleMonthlySubmit}
+                          />
+                          <div className="relative self-center bg-gray-100 p-0.5 flex items-center mt-3">
+                            <button
+                              type="button"
+                              onClick={() => this.setState({ monthlyPrice: true })}
+                              className={`relative w-1/2 ${
+                                this.state.monthlyPrice ? "bg-white shadow-sm" : "bg-transparent"
+                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
+                            >
+                              Monthly billing
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => this.setState({ monthlyPrice: false })}
+                              className={`ml-0.5 relative w-1/2 ${
+                                this.state.monthlyPrice ? "bg-transparent" : "bg-white shadow-sm"
+                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
+                            >
+                              Yearly billing
+                            </button>
+                          </div>
+                          {/* <div>
                         <div className="flex space-x-1 items-center ml-1 mb-2">
                           <label className="uppercase font-semibold text-sm">Pricing plans</label>
                           <Tooltip caption="Show this pricing plan option on all search results" />
@@ -238,30 +255,38 @@ class SearchApp extends React.Component {
                           </div>
                         </fieldset>
                       </div> */}
+                        </>
+                      )}
                     </RefinementBlock>
                     <RefinementBlock header="Category">
-                      {this.props.searchState.query && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore />}
+                      {(this.props.searchState.query || this.state.category) && (
+                        <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore defaultRefinement={this.state.parent} />
+                      )}
                     </RefinementBlock>
                     <RefinementBlock header="Industry" tooltip="Many apps are general use, others are built for a specific industry.">
-                      {this.props.searchState.query && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}
+                      {(this.props.searchState.query || this.state.category) && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}
                     </RefinementBlock>
-                    <RefinementBlock header="Rating">{this.props.searchState.query && <RatingMenu attribute="rating" />}</RefinementBlock>
-                    <RefinementBlock header="Developer">{this.props.searchState.query && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}</RefinementBlock>
-                    <RefinementBlock header="Features">{this.props.searchState.query && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}</RefinementBlock>
+                    <RefinementBlock header="Rating">{(this.props.searchState.query || this.state.category) && <RatingMenu attribute="rating" />}</RefinementBlock>
+                    <RefinementBlock header="Developer">
+                      {(this.props.searchState.query || this.state.category) && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}
+                    </RefinementBlock>
+                    <RefinementBlock header="Features">
+                      {(this.props.searchState.query || this.state.category) && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}
+                    </RefinementBlock>
                   </nav>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex flex-col w-0 flex-1 overflow-hidden">
-            <div className="hidden relative flex-shrink-0 flex h-12 bg-white">
+            <div className={`${this.state.category ? "flex" : "hidden"} relative flex-shrink-0 flex h-12 bg-white`}>
               <div className="flex-1 px-4 flex justify-between">
-                <SearchBox searchAsYouType={false} />
+                <SearchBox searchAsYouType={false} submit={<SearchIcon className="h-5 w-5" />} />
               </div>
             </div>
             {/* Hide stats and sorts if there is no query */}
-            {this.props.searchState.query && (
-              <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white px-5 py-0.5 border border-gray-200">
+            {(this.props.searchState.query || this.state.category) && (
+              <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white px-5 py-0.5 border-b border-t border-gray-200">
                 {/* <CurrentRefinements /> */}
                 <Stats className="hidden sm:block" />
                 <SortBy
@@ -295,7 +320,7 @@ class SearchApp extends React.Component {
                         maxMonthly={this.state.maxMonthly}
                       />
                     </Results>
-                    <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">{this.props.searchState.query && <Pagination />}</nav>
+                    <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">{(this.props.searchState.query || this.state.category) && <Pagination />}</nav>
                     <div className="md:hidden fixed bottom-10 inset-x-0 mx-auto flex items-center justify-center pointer-events-none">
                       <button
                         onClick={() => this.setState({ showSidebar: true })}
