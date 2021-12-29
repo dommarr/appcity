@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Disclosure, Menu, Transition, Dialog } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
-import { Command, ArrowLeft } from "react-feather";
+import { ArrowLeft } from "react-feather";
 import {
   MenuIcon,
   XIcon,
@@ -30,6 +30,7 @@ import BugModal from "./bugModal";
 import Bug from "../graphics/bug";
 import BugPopover from "./bugPopover";
 import { isMobile } from "react-device-detect";
+import NavLinks from "./navLinks";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -147,6 +148,20 @@ export default function Navbar({ trans, light, search }) {
     supabase.auth.signOut();
   };
 
+  // const HeaderLinks = () => {
+  //   return (
+  //     <div className="hidden sm:flex items-center justify-center space-x-8 lg:space-x-16">
+  //       {navigation
+  //         .filter((item) => item.name !== "Home")
+  //         .map((item, index) => (
+  //           <Link href={item.href} key={index}>
+  //             <a className="text-white hover:text-gray-200">{item.name}</a>
+  //           </Link>
+  //         ))}
+  //     </div>
+  //   );
+  // };
+
   const navigation = [
     { name: "Home", href: "/", icon: HomeIcon, current: router.pathname === "/" ? true : false },
     { name: "About", href: "/about", icon: InformationCircleIcon, current: router.pathname === "/about" ? true : false },
@@ -166,23 +181,9 @@ export default function Navbar({ trans, light, search }) {
     { name: "Audit tasks", screen: "audit_tasks", icon: DocumentSearchIcon, current: router.query.screen === "audit_tasks" ? true : false, superadmin: true },
   ];
 
-  const HeaderLinks = () => {
-    return (
-      <div className="hidden sm:flex items-center justify-center space-x-8 lg:space-x-16">
-        {navigation
-          .filter((item) => item.name !== "Home")
-          .map((item, index) => (
-            <Link href={item.href} key={index}>
-              <a className="text-white hover:text-gray-200">{item.name}</a>
-            </Link>
-          ))}
-      </div>
-    );
-  };
-
   return (
     <>
-      <Disclosure as="nav" className={`${trans ? "bg-transparent" : "bg-purple-extradark"} z-40`}>
+      <Disclosure as="nav" className={`${trans ? "bg-transparent" : "bg-purple-extradark"} z-40 relative`}>
         {({ open }) => (
           <>
             <div className="max-w-screen-3xl mx-auto px-4 lg:px-8">
@@ -221,7 +222,7 @@ export default function Navbar({ trans, light, search }) {
                         <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} light={light} />
                       </div>
                     )}
-                    {!search && <HeaderLinks />}
+                    {!search && <NavLinks navigation={navigation} />}
                   </div>
 
                   <div className={`${search ? "col-span-3" : "col-span-2"} sm:col-span-1 flex items-center justify-end space-x-4`}>

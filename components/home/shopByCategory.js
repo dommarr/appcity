@@ -52,7 +52,7 @@ export default function ShopByCategory() {
               <div className="absolute min-w-screen-xl px-4 flex space-x-8 sm:px-6 lg:px-8 xl:relative xl:px-0 xl:space-x-0 xl:grid xl:grid-cols-5 xl:gap-x-8">
                 {categories.map((category) => (
                   <Link key={category.name} href={category.href}>
-                    <a className="relative w-56 h-80 p-6 flex flex-col overflow-hidden hover:opacity-75 xl:w-auto">
+                    <a className="relative w-56 h-80 py-6 px-2 flex flex-col overflow-hidden hover:opacity-75 xl:w-auto">
                       <span aria-hidden="true" className="absolute inset-0">
                         <img src={category.imageSrc} alt="" className="w-full h-full object-center object-cover" />
                       </span>
@@ -67,9 +67,11 @@ export default function ShopByCategory() {
         </div>
 
         <div className="mt-6 px-4 sm:hidden">
-          <a href="/categories" className="block font-semibold text-indigo-600 hover:text-indigo-500 text-center">
-            Browse all categories<span aria-hidden="true"> &rarr;</span>
-          </a>
+          <Link href="/categories">
+            <a className="block font-semibold text-indigo-600 hover:text-indigo-500 text-center">
+              Browse all categories<span aria-hidden="true"> &rarr;</span>
+            </a>
+          </Link>
         </div>
       </div>
     </section>
