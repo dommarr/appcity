@@ -2,31 +2,31 @@ import Link from "next/link";
 const categories = [
   {
     name: "Website Builders",
-    href: `/categories/Website & App Builders?parent=${encodeURIComponent("Website & App Builders")}`,
+    href: `/categories/website-app-builders`,
     imageSrc:
       "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/shop_by_category/computer.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wX2J5X2NhdGVnb3J5L2NvbXB1dGVyLnBuZyIsImlhdCI6MTY0MDczNzY3MSwiZXhwIjoxOTU2MDk3NjcxfQ.bo0BiwGJA-xyUExOaqpJ9Vhne2Pzz3tXdr6E4xTuqYQ",
   },
   {
     name: "Marketing",
-    href: `/categories/Marketing?parent=${encodeURIComponent("Marketing")}`,
+    href: `/categories/marketing`,
     imageSrc:
       "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/shop_by_category/hashtag.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wX2J5X2NhdGVnb3J5L2hhc2h0YWcucG5nIiwiaWF0IjoxNjQwNzM3NjkwLCJleHAiOjE5NTYwOTc2OTB9.WN7dPSxuj6ZRhelvLzrup3NTsUKYs7M1uVu7qadAlxA",
   },
   {
     name: "Productivity",
-    href: `/categories/Productivity & Admin?parent=${encodeURIComponent("Productivity & Admin")}`,
+    href: `/categories/productivity-admin`,
     imageSrc:
       "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/shop_by_category/coffee.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wX2J5X2NhdGVnb3J5L2NvZmZlZS5wbmciLCJpYXQiOjE2NDA3Mzc2NTgsImV4cCI6MTk1NjA5NzY1OH0.lAaucaGuI69n2gcTZ1HXIDwmA8MBIVGukVvMt0oLtQg",
   },
   {
     name: "Customer Service",
-    href: `/categories/Customer Service?parent=${encodeURIComponent("Customer Service")}`,
+    href: `/categories/customer-service`,
     imageSrc:
       "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/shop_by_category/handshake.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wX2J5X2NhdGVnb3J5L2hhbmRzaGFrZS5wbmciLCJpYXQiOjE2NDA3Mzg0NTQsImV4cCI6MTk1NjA5ODQ1NH0.x8xCF8-SNe93zZv0dKhDB-1ZwbI4mfZru3oKZoYRBeo",
   },
   {
     name: "Project Management",
-    href: `/categories/Project Management?parent=${encodeURIComponent("Project Management")}`,
+    href: `/categories/project-management`,
     imageSrc:
       //  "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/shop_by_category/phone.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wX2J5X2NhdGVnb3J5L3Bob25lLnBuZyIsImlhdCI6MTY0MDczODQyMCwiZXhwIjoxOTU2MDk4NDIwfQ.jLfmOVa0EtHkHOI3GlyNHnzC4Hldu3ZEYP8gtisNKeY",
       "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/shop_by_category/calendar.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9zaG9wX2J5X2NhdGVnb3J5L2NhbGVuZGFyLmpwZyIsImlhdCI6MTY0MDc0NjY1MCwiZXhwIjoxOTU2MTA2NjUwfQ.5jhd4dQOrDQACTynPT4Rfeg2mfqu_dh_tEimK93mT1o",
