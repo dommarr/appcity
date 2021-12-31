@@ -33,7 +33,7 @@ const Results = connectStateResults(({ searchState, searchResults, children }) =
     );
   }
   // empty state for no search query
-  if (searchState && !searchState.query && router?.pathname !== "/categories/[name]") {
+  if (searchState && !searchState.query && router?.pathname !== "/categories/[slug]") {
     return (
       <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
         <div className="flex">

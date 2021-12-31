@@ -4,7 +4,7 @@ name: Algolia-Delete-Everyday
 
 on:
   schedule:
-    - cron: "30   18  *   *   *"
+    - cron: "0   19  *   *   *"
 jobs:
   cron:
     runs-on: ubuntu-latest

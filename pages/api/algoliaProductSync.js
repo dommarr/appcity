@@ -25,8 +25,7 @@ const getIndustries = async () => {
 const getProducts = async () => {
   let { data: products, error } = await supabase.from("products").select(`
         *,
-        vendors (*),
-        products_categories (*)
+        vendors (*)
 `);
   if (error) {
     throw error;
@@ -98,10 +97,10 @@ function add(accumulator, a) {
 
 export default async function (req, res) {
   // get category data and build out hierarchy (categories and sub-categories)
-  const catArray = await getCategories();
-  const catNames = {};
-  catArray.forEach((elem) => (catNames[elem.id] = elem.name));
-  const categories = createCatTable(catNames, catArray);
+  // const catArray = await getCategories();
+  // const catNames = {};
+  // catArray.forEach((elem) => (catNames[elem.id] = elem.name));
+  // const categories = createCatTable(catNames, catArray);
 
   // get industries
   const industries = await getIndustries();
@@ -247,22 +246,22 @@ export default async function (req, res) {
       obj.rating = Math.round((sum / filteredReviews.length) * 10) / 10;
       obj.count = filteredReviews.length;
     }
-    obj.categories = {};
-    // for each category, match and get the hierarchy level and name
-    elem.products_categories.forEach(function (item) {
-      let match = categories.filter(function (entry) {
-        return entry.id === item.category_id;
-      });
-      let level = "lvl" + match[0].lvl;
-      obj.categories[level] = match[0].name;
-    });
-    obj.virtual_categories = [];
-    elem.products_categories.forEach(function (item) {
-      let match = catArray.filter(function (entry) {
-        return entry.id === item.category_id;
-      });
-      obj.virtual_categories.push(match[0].name);
-    });
+    // obj.categories = {};
+    // // for each category, match and get the hierarchy level and name
+    // elem.products_categories.forEach(function (item) {
+    //   let match = categories.filter(function (entry) {
+    //     return entry.id === item.category_id;
+    //   });
+    //   let level = "lvl" + match[0].lvl;
+    //   obj.categories[level] = match[0].name;
+    // });
+    // obj.virtual_categories = [];
+    // elem.products_categories.forEach(function (item) {
+    //   let match = catArray.filter(function (entry) {
+    //     return entry.id === item.category_id;
+    //   });
+    //   obj.virtual_categories.push(match[0].name);
+    // });
 
     // if product is not complete, add tag hidden, else add empty tags
     // if (!elem.complete) {
@@ -284,7 +283,7 @@ export default async function (req, res) {
       .then(({ objectIDs }) => {
         res.statusCode = 200;
         res.json(objectIDs);
-        resolve();
+        return resolve();
       })
       .catch((error) => {
         res.statusCode = 500;

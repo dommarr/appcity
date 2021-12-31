@@ -268,6 +268,7 @@ module.exports = {
     extend: {
       fill: ["hover"],
       cursor: ["hover"],
+      fontWeight: ["hover"],
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("@tailwindcss/aspect-ratio")],
