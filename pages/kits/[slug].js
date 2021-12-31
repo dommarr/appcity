@@ -78,21 +78,19 @@ const KitSection = ({ section }) => {
 };
 
 export default function Kit({ kit, sections }) {
-  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    setName(capitalizeEveryWord(kit.name));
     setDescription(formatSentence(kit.description));
   }, []);
 
   return (
     <>
-      <Head title={`${name} Starter Kit | AppCity`} description={description} url={`https://www.appcity.com/kits/${kit.name}`} />
+      <Head title={`${kit.name} Starter Kit | AppCity`} description={description} url={`https://www.appcity.com/kits/${kit.slug}`} />
       <div className="bg-gray-50 pb-20">
         <Container>
           <div className="text-center space-y-4">
-            <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">{name} Starter Kit</h1>
+            <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">{kit.name} Starter Kit</h1>
             <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
           </div>
           {sections &&
@@ -105,12 +103,20 @@ export default function Kit({ kit, sections }) {
   );
 }
 
-const fetchKit = async (name) => {
-  let { data: kits, error } = await supabase.from("kits").select(`*`).eq("name", name);
+const fetchKits = async () => {
+  let { data: kits, error } = await supabase.from("kits").select(`slug`);
   if (error) {
     throw error;
   }
   return kits;
+};
+
+const fetchSingleKit = async (slug) => {
+  let { data: kits, error } = await supabase.from("kits").select(`*`).eq("slug", slug);
+  if (error) {
+    throw error;
+  }
+  return kits[0];
 };
 
 const fetchSections = async (kit_id) => {
@@ -133,29 +139,26 @@ const fetchSections = async (kit_id) => {
 };
 
 export async function getStaticPaths() {
-  let { data: kits, error } = await supabase.from("kits").select("name");
-  if (error) {
-    throw error;
-  }
+  const kits = await fetchKits();
 
   const paths = kits.map((kit) => ({
-    params: { name: kit.name },
+    params: { slug: kit.slug },
   }));
 
   return { paths, fallback: "blocking" };
 }
 
 export async function getStaticProps({ params }) {
+  const kit = await fetchSingleKit(params.slug);
   let sections = "";
-  let kit = await fetchKit(params.name);
-  if (kit.length === 0) {
+
+  if (!kit) {
     return {
       notFound: true,
     };
   } else {
-    sections = await fetchSections(kit[0].id);
+    sections = await fetchSections(kit.id);
   }
-  kit = kit[0];
 
   return {
     props: { kit, sections },

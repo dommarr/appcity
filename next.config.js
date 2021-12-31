@@ -6,7 +6,7 @@ module.exports = {
     return [
       {
         source: "/firstbase",
-        destination: "/kits/Firstbase",
+        destination: "/kits/firstbase",
         permanent: true,
       },
     ];

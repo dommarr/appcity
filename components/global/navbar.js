@@ -23,6 +23,7 @@ import {
   InformationCircleIcon,
   LightningBoltIcon,
   LogoutIcon,
+  ArrowSmRightIcon,
 } from "@heroicons/react/outline";
 import Logo from "../graphics/logo/Logo";
 import LogoLight from "../graphics/logo/LogoLight";
@@ -94,6 +95,17 @@ export default function Navbar({ trans, light, search }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(async () => {
+    let parents = await fetchCategories();
+    let children = await fetchChildCategories(parents);
+    let cats = parents.map((parent) => {
+      parent.children = children.filter((child) => child.parent_id === parent.id).slice(0, 8);
+      return parent;
+    });
+    setCategories(cats);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -148,19 +160,30 @@ export default function Navbar({ trans, light, search }) {
     supabase.auth.signOut();
   };
 
-  // const HeaderLinks = () => {
-  //   return (
-  //     <div className="hidden sm:flex items-center justify-center space-x-8 lg:space-x-16">
-  //       {navigation
-  //         .filter((item) => item.name !== "Home")
-  //         .map((item, index) => (
-  //           <Link href={item.href} key={index}>
-  //             <a className="text-white hover:text-gray-200">{item.name}</a>
-  //           </Link>
-  //         ))}
-  //     </div>
-  //   );
-  // };
+  const fetchCategories = async () => {
+    let { data: categories, error } = await supabase.from("categories").select(`*`).is("parent_id", null).order(`product_count`, { ascending: false }).limit(3);
+    if (error) {
+      throw error;
+    }
+    categories = categories.map((category) => {
+      category.current = router.asPath === `/categories/${category.slug}` ? true : false;
+      return category;
+    });
+    return categories;
+  };
+
+  const fetchChildCategories = async (arr) => {
+    let catIds = arr.map((cat) => cat.id);
+    let { data: categories, error } = await supabase.from("categories").select(`*`).in("parent_id", catIds).gt("product_count", 0).order(`product_count`, { ascending: false });
+    if (error) {
+      throw error;
+    }
+    categories = categories.map((category) => {
+      category.current = router.asPath === `/categories/${category.slug}` ? true : false;
+      return category;
+    });
+    return categories;
+  };
 
   const navigation = [
     { name: "Home", href: "/", icon: HomeIcon, current: router.pathname === "/" ? true : false },
@@ -181,6 +204,21 @@ export default function Navbar({ trans, light, search }) {
     { name: "Audit tasks", screen: "audit_tasks", icon: DocumentSearchIcon, current: router.query.screen === "audit_tasks" ? true : false, superadmin: true },
   ];
 
+  let featured = [
+    {
+      name: "All Categories",
+      href: "/categories",
+      imageSrc: "https://images.unsplash.com/photo-1544523830-2bef1d330b7d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+      imageAlt: "All of the categories on AppCity to find the best business software.",
+    },
+    {
+      name: "Starter Kits",
+      href: "/kits",
+      imageSrc: "https://images.unsplash.com/photo-1558906050-d6d6aa390fd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1726&q=80",
+      imageAlt: "Business app starter kits to help you hit the ground running.",
+    },
+  ];
+
   return (
     <>
       <Disclosure as="nav" className={`${trans ? "bg-transparent" : "bg-purple-extradark"} z-40 relative`}>
@@ -188,12 +226,13 @@ export default function Navbar({ trans, light, search }) {
           <>
             <div className="max-w-screen-3xl mx-auto px-4 lg:px-8">
               {!showSearch && (
-                <div className="grid grid-cols-5 flex items-center justify-between h-16">
-                  <div className={`${search ? "col-span-2" : "col-span-3 sm:space-x-0"}  sm:col-span-1 flex items-center justify-start space-x-4`}>
+                <div className="grid grid-cols-7 flex items-center justify-between h-16">
+                  {/* left section - menu icon, logo */}
+                  <div className={`${search ? "col-span-3" : "col-span-5"} sm:col-span-2 flex items-center justify-start space-x-4`}>
                     {search && (
                       <MenuIcon onClick={() => setSidebarOpen(true)} className={`h-6 w-6 cursor-pointer ${light ? "text-purple hover:text-purple-dark" : "text-white hover:text-gray-200"}`} />
                     )}
-                    {!search && <MenuIcon onClick={() => setSidebarOpen(true)} className="sm:hidden h-6 w-6 text-white cursor-pointer" />}
+                    {!search && <MenuIcon onClick={() => setSidebarOpen(true)} className="lg:hidden h-6 w-6 text-white cursor-pointer" />}
                     <Link href="/">
                       <a className="relative flex items-center justify-center">
                         {!light && <Logo size={36} alt="AppCity" />}
@@ -215,17 +254,17 @@ export default function Navbar({ trans, light, search }) {
                       </a>
                     </Link>
                   </div>
-
-                  <div className={`hidden sm:flex sm:col-span-3 w-full flex-1 items-center justify-center`}>
+                  {/* middle section - search or nav links */}
+                  <div className={`hidden sm:flex sm:col-span-3 w-full h-full flex-1 items-center justify-center`}>
                     {search && (
                       <div className="hidden sm:flex w-full items-center justify-center">
                         <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} light={light} />
                       </div>
                     )}
-                    {!search && <NavLinks navigation={navigation} />}
+                    {!search && <NavLinks navigation={navigation} categories={categories} featured={featured} />}
                   </div>
-
-                  <div className={`${search ? "col-span-3" : "col-span-2"} sm:col-span-1 flex items-center justify-end space-x-4`}>
+                  {/* right section */}
+                  <div className={`${search ? "col-span-4" : "col-span-2"} sm:col-span-2 flex items-center justify-end space-x-4`}>
                     {search && !showSearch && (
                       <SearchIcon
                         onClick={() => setShowSearch(true)}
@@ -360,6 +399,62 @@ export default function Navbar({ trans, light, search }) {
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-2 space-y-1 h-full flex flex-col justify-between">
                   <div id="nav-top">
+                    {navigation
+                      .filter((item) => item.name === "Home")
+                      .map((item) => (
+                        <Link key={item.name} href={item.href}>
+                          <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
+                            <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                            {item.name}
+                          </a>
+                        </Link>
+                      ))}
+                    {router.pathname !== "/dashboard" && (
+                      <div className="pt-8 px-2 space-y-10">
+                        <div className="grid grid-cols-2 gap-x-4">
+                          {featured.map((item) => (
+                            <div key={item.name} className="group relative text-sm">
+                              <div className="aspect-w-1 aspect-h-1 bg-gray-100 overflow-hidden group-hover:opacity-75">
+                                <img src={item.imageSrc} alt={item.imageAlt} className="object-center object-cover" />
+                              </div>
+                              <Link href={item.href}>
+                                <a className="mt-6 block font-medium text-white uppercase">
+                                  <span className="absolute z-10 inset-0" aria-hidden="true" />
+                                  {item.name}
+                                </a>
+                              </Link>
+                              <p aria-hidden="true" className="mt-1 text-gray-200 group-hover:text-white">
+                                Shop now
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                        {categories.map((parent) => (
+                          <div key={parent.id}>
+                            <p id={`${parent.id}-heading-mobile`} className="font-medium text-white uppercase">
+                              {parent.name}
+                            </p>
+                            <ul role="list" aria-labelledby={`${parent.id}-heading-mobile`} className="mt-6 flex flex-col space-y-4">
+                              {parent.children.map((child) => (
+                                <li key={child.name} className="flow-root">
+                                  <Link href={`/categories/${child.slug}`}>
+                                    <a className={`${child.current ? "bg-purple-dark" : "hover:bg-purple-dark"} -m-2 py-2 pl-6 pr-2 block text-white`}>{child.name}</a>
+                                  </Link>
+                                </li>
+                              ))}
+                              <li key={parent.name}>
+                                <Link href={`/categories/${parent.slug}`}>
+                                  <a className={`${parent.current ? "bg-purple-dark" : "hover:bg-purple-dark"} -m-2 p-2 block text-white font-medium flex space-x-4`}>
+                                    <span className="">Browse all</span>
+                                    <ArrowSmRightIcon className="block h-6 w-6" aria-hidden="true" />
+                                  </a>
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     {router.pathname === "/dashboard" && (
                       <div className="md:hidden">
                         {dashboardNavigation
@@ -442,24 +537,36 @@ export default function Navbar({ trans, light, search }) {
                               </a>
                             </Link>
                           ))}
-                        <div className="relative">
+                        {/* <div className="relative">
                           <div className="absolute inset-0 flex items-center" aria-hidden="true">
                             <div className="w-full border-t border-white"></div>
                           </div>
                           <div className="relative flex justify-center">
-                            <span className="px-2 text-sm text-white bg-purple-extradark">Navigate</span>
+                            <span className="px-2 text-sm text-white bg-purple-extradark">Company</span>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     )}
-                    {navigation.map((item) => (
-                      <Link key={item.name} href={item.href}>
-                        <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
-                          <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
-                          {item.name}
-                        </a>
-                      </Link>
-                    ))}
+                    <div className="relative mt-8">
+                      <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-white"></div>
+                      </div>
+                      <div className="relative flex justify-center">
+                        <span className="px-2 text-sm text-white bg-purple-extradark">Company</span>
+                      </div>
+                    </div>
+                    <div className="pb-8">
+                      {navigation
+                        .filter((item) => item.name !== "Home")
+                        .map((item) => (
+                          <Link key={item.name} href={item.href}>
+                            <a className={classNames(item.current ? "bg-purple-dark text-white" : "text-white hover:bg-purple-dark", "group flex items-center px-2 py-2 text-base font-medium")}>
+                              <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                              {item.name}
+                            </a>
+                          </Link>
+                        ))}
+                    </div>
                   </div>
                   {router.pathname === "/dashboard" && (
                     <button onClick={() => handleSignOut()} className={"md:hidden text-white hover:bg-purple-dark group flex items-center px-2 py-2 text-base font-medium w-full"}>

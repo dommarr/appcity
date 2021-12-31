@@ -10,6 +10,7 @@ import { findResultsState } from "react-instantsearch-dom/server";
 import Banner from "../../components/global/banner";
 import Navbar from "../../components/global/navbar";
 import { ChevronUpIcon, MinusIcon } from "@heroicons/react/outline";
+import { supabase } from "../../utils/initSupabase";
 
 const searchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
@@ -26,6 +27,14 @@ const DEFAULT_PROPS = {
   indexName: "app_catalog",
 };
 
+const fetchCategory = async (slug) => {
+  let { data: categories, error } = await supabase.from("categories").select("*").eq("slug", slug);
+  if (error) {
+    throw error;
+  }
+  return categories[0];
+};
+
 class Search extends React.Component {
   static propTypes = {
     router: PropTypes.object.isRequired,
@@ -36,9 +45,8 @@ class Search extends React.Component {
   state = {
     searchState: this.props.searchState,
     lastRouter: this.props.router,
+    category: this.props.category,
     filter: "NOT _tags:hidden",
-    category: this.props.router.query,
-    parent: this.props.router.query.parent,
     showHeader: true,
   };
 
@@ -48,10 +56,11 @@ class Search extends React.Component {
       ...DEFAULT_PROPS,
       searchState,
     });
-
+    const category = await fetchCategory(asPath.split("/")[2]);
     return {
       resultsState,
       searchState,
+      category,
     };
   }
 
@@ -60,6 +69,7 @@ class Search extends React.Component {
       return {
         searchState: pathToSearchState(props.router.asPath),
         lastRouter: props.router,
+        category: props.category,
       };
     }
     return null;
@@ -109,7 +119,7 @@ class Search extends React.Component {
               onClick={(e) => this.setState({ showHeader: false })}
               className="h-6 w-6 sm:h-8 sm:w-8 cursor-pointer text-gray-400 hover:text-gray-700 hover:border hover:border-gray-700"
             />
-            {/* <p className="mt-4 max-w-xl mx-auto text-base text-gray-500">description</p> */}
+            {/* <p className="mt-4 max-w-xl mx-auto text-base text-gray-500">{this.state.category.description}</p> */}
           </div>
         )}
         {this.state.category && (
@@ -132,31 +142,3 @@ class Search extends React.Component {
 }
 
 export default withRouter(Search);
-
-// export async function getStaticPaths() {
-//   let { data: categories, error } = await supabase.from("categories").select("name");
-//   if (error) {
-//     throw error;
-//   }
-
-//   const paths = categories.map((category) => ({
-//     params: { name: category.name },
-//   }));
-
-//   return { paths, fallback: "blocking" };
-// }
-
-// export async function getStaticProps({ params }) {
-//   let { data: categories, error } = await supabase.from("categories").select(`*`).eq("name", params.name);
-//   if (error || categories.length === 0) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-//   const category = categories[0];
-
-//   return {
-//     props: { category },
-//     revalidate: 60,
-//   };
-// }

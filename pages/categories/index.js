@@ -4,7 +4,7 @@ import { Disclosure } from "@headlessui/react";
 import { MinusSmIcon, PlusSmIcon, ArrowSmRightIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
-const description = "Browse all categories and find the right app for your business.";
+const description = "Browse all categories to find the right app for your business.";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -27,10 +27,12 @@ export default function Categories({ categories }) {
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 px-4 pb-4">
             {parentCategories.map((parentCategory) => {
               let childCategories = categories.filter((category) => category.parent_id === parentCategory.id);
+              {
+                /* if no children, render a non-expandable box that links to the category page */
+              }
               if (childCategories.length < 1) {
-                let parent = encodeURIComponent(parentCategory.name);
                 return (
-                  <Link href={`/categories/${parentCategory.name}?parent=${parent}`}>
+                  <Link key={parentCategory.name} href={`/categories/${parentCategory.slug}`}>
                     <a className="col-span-1 group">
                       <div className="pl-8 sm:pl-0 bg-gray-50 shadow">
                         <h3 className="text-gray-900 font-medium p-4">
@@ -45,6 +47,9 @@ export default function Categories({ categories }) {
                     </a>
                   </Link>
                 );
+              }
+              {
+                /* if children, render an expandable box with links inside */
               }
               return (
                 <Disclosure as="div" key={parentCategory.name}>
@@ -66,22 +71,20 @@ export default function Categories({ categories }) {
                         <Disclosure.Panel as="div" className="flex flex-col space-y-6 text-sm text-gray-500 pt-2 pb-4 px-4">
                           <ul role="list" className="space-y-2 list-disc pl-6">
                             {childCategories.map((childCategory) => {
-                              let parent = encodeURIComponent(`${parentCategory.name} > ${childCategory.name}`);
                               return (
-                                <li key={childCategory} className="hover:text-indigo-500">
-                                  <Link href={`/categories/${childCategory.name}?parent=${parent}`}>
+                                <li key={childCategory.id} className="hover:text-indigo-500">
+                                  <Link href={`/categories/${childCategory.slug}`}>
                                     <a>{childCategory.name}</a>
                                   </Link>
                                 </li>
                               );
                             })}
                           </ul>
-                          <Link key={parentCategory} href={`/categories/${parentCategory.name}?parent=${encodeURIComponent(parentCategory.name)}`}>
-                            <a>
-                              <div className="group flex space-x-4 font-medium text-gray-500 hover:text-indigo-500">
-                                <span className="">See all</span>
-                                <ArrowSmRightIcon className="block h-5 w-5" aria-hidden="true" />
-                              </div>
+                          {/* "Browse all" link to the parent category page */}
+                          <Link key={parentCategory.id} href={`/categories/${parentCategory.slug}`}>
+                            <a className="group flex space-x-4 font-medium text-gray-500 hover:text-indigo-500">
+                              <span className="">Browse all</span>
+                              <ArrowSmRightIcon className="block h-5 w-5" aria-hidden="true" />
                             </a>
                           </Link>
                         </Disclosure.Panel>

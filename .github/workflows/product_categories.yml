@@ -1,0 +1,13 @@
+name: Product-Categories-Everyday
+
+on:
+  schedule:
+    - cron: "30   14  *   *   *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call productCategories api route
+        run: |
+          curl --request POST \
+          --url 'https://www.appcity.com/api/productCategories' \

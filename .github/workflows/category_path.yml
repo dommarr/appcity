@@ -1,15 +1,15 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Algolia-Sync-Everyday
+name: Category-Path-Everyday
 
 on:
   schedule:
-    - cron: "0   18  *   *   *"
+    - cron: "30   15  *   *   *"
 jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Call algoliaProductSync api route
+      - name: Call categoryPath api route
         run: |
           curl --request POST \
-          --url 'https://www.appcity.com/api/algoliaProductSync' \
+          --url 'https://www.appcity.com/api/categoryPath' \

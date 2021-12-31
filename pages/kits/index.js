@@ -3,7 +3,6 @@ import Link from "next/link";
 import Head from "../../components/global/head";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
-import Loading from "../../components/global/loading";
 
 const capitalizeEveryWord = (words) => {
   let wordArray = words.split(" ");
@@ -37,26 +36,26 @@ const KitCard = ({ kit, index }) => {
 
   if (!kit.complete) {
     return (
-      <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden md:w-80 lg:w-96">
+      <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
         <img className="absolute inset-0 h-full w-full object-cover" src={kit.image} alt={`${kit.name} starter kit`} />
         <div className={background}></div>
         <div className={gradient}></div>
         <div className="absolute bottom-10 left-4">
-          <div className="text-white font-semibold text-xl">Coming soon: {capitalizeEveryWord(kit.name)}</div>
+          <div className="text-white font-semibold text-xl">Coming soon: {kit.name}</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden md:w-80 lg:w-96">
-      <Link href={`/kits/${kit.name}`}>
+    <div className="row-span-1 col-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
+      <Link href={`/kits/${kit.slug}`}>
         <a>
           <img className="absolute inset-0 h-full w-full object-cover" src={kit.image} alt={`${kit.name} starter kit`} />
           <div className={background}></div>
           <div className={gradient}></div>
           <div className="absolute bottom-10 left-4">
-            <div className="text-white font-semibold text-xl">{capitalizeEveryWord(kit.name)}</div>
+            <div className="text-white font-semibold text-xl">{kit.name}</div>
           </div>
         </a>
       </Link>
@@ -64,37 +63,7 @@ const KitCard = ({ kit, index }) => {
   );
 };
 
-export default function KitHome() {
-  const [loading, setLoading] = useState(true);
-  const [kits, setKits] = useState([""]);
-
-  const capitalizeEveryWord = (words) => {
-    let wordArray = words.split(" ");
-    wordArray = wordArray
-      .map((word) => {
-        return word[0].toUpperCase() + word.substring(1);
-      })
-      .join(" ");
-    return wordArray;
-  };
-
-  const fetchKits = async () => {
-    let { data: kits, error } = await supabase.from("kits").select("*").eq("hide", false).order("complete", { ascending: false });
-    if (error) {
-      throw error;
-    }
-    return kits;
-  };
-
-  // Fetch on load
-  useEffect(async () => {
-    let kits = await fetchKits();
-    setKits(kits);
-    setLoading(false);
-  }, []);
-
-  if (loading) return <Loading />;
-
+export default function KitHome({ kits }) {
   return (
     <>
       <Head
@@ -116,4 +85,27 @@ export default function KitHome() {
       </Container>
     </>
   );
+}
+
+const fetchKits = async () => {
+  let { data: kits, error } = await supabase.from("kits").select("*").eq("hide", false).order("complete", { ascending: false }).order("order");
+  if (error) {
+    throw error;
+  }
+  return kits;
+};
+
+export async function getStaticProps(context) {
+  const kits = await fetchKits();
+
+  if (!kits) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { kits },
+    revalidate: 60,
+  };
 }

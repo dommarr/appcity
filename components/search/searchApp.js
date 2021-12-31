@@ -38,8 +38,6 @@ class SearchApp extends React.Component {
       maxYearly: "",
       minMonthly: "",
       maxMonthly: "",
-      category: false,
-      parent: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -62,9 +60,6 @@ class SearchApp extends React.Component {
       if (reviewCount > 0) {
         this.setState({ locked: false });
       }
-    }
-    if (this.props.category) {
-      this.setState({ category: this.props.category.name, parent: this.props.category.parent });
     }
   }
 
@@ -170,7 +165,7 @@ class SearchApp extends React.Component {
         onSearchParameters={this.props.onSearchParameters}
         {...this.props}
       >
-        {this.state.category && <VirtualRefinementList attribute="virtual_categories" defaultRefinement={this.state.category} />}
+        {this.props.category && <VirtualRefinementList attribute="virtual_categories" defaultRefinement={this.props.category.name} />}
         <div className="flex flex-1 overflow-hidden bg-gray-100">
           {/* Static sidebar for desktop */}
           <div className={`${this.state.showSidebar ? `flex` : `hidden`} md:flex md:flex-shrink-0 fixed inset-0 z-40 md:static md:inset-auto md:z-auto`}>
@@ -188,7 +183,7 @@ class SearchApp extends React.Component {
                 </div>
                 <div className="md:flex-grow md:flex md:flex-col pb-4 overflow-y-auto items-center">
                   {/* Category Page Header */}
-                  {this.state.category && !this.props.showHeader && <h1 className="text-xl font-extrabold text-center pt-5 px-1">{this.state.category}</h1>}
+                  {this.props.category && !this.props.showHeader && <h1 className="text-xl font-extrabold text-center pt-5 px-1">{this.props.category.name}</h1>}
                   {/* <div className="relative flex flex-col items-center justify-center pt-6 pb-1 w-full">
                       <ChevronDownIcon onClick={this.props.headerHandler} className="absolute top-1 right-1 h-6 w-6 text-gray-400 hover:text-gray-700 cursor-pointer" />
                       
@@ -196,9 +191,9 @@ class SearchApp extends React.Component {
                     </div> */}
                   <nav className="mt-5 md:flex-1 px-2 bg-white space-y-1 relative max-w-sm mx-auto w-full">
                     <Configure hitsPerPage={16} filters={`${this.props.filter}`} />
-                    {!this.state.category && <ClearRefinements filter={this.props.filter} filterHandler={this.props.filterHandler} handleClear={this.handleClear} />}
+                    {!this.props.category && <ClearRefinements filter={this.props.filter} filterHandler={this.props.filterHandler} handleClear={this.handleClear} />}
                     <RefinementBlock header="Price" subheader="(per month)">
-                      {(this.props.searchState.query || this.state.category) && (
+                      {(this.props.searchState.query || this.props.category) && (
                         <>
                           <PriceFilter
                             monthly={this.state.monthlyPrice}
@@ -259,19 +254,24 @@ class SearchApp extends React.Component {
                       )}
                     </RefinementBlock>
                     <RefinementBlock header="Category">
-                      {(this.props.searchState.query || this.state.category) && (
-                        <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore defaultRefinement={this.state.parent} />
+                      {(this.props.searchState.query || this.props.category) && (
+                        <>
+                          {!this.props.category && <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore />}
+                          {this.props.category && (
+                            <HierarchicalMenu attributes={["categories.lvl0", "categories.lvl1", "categories.lvl2"]} limit={10} facetOrdering showMore defaultRefinement={this.props.category.path} />
+                          )}
+                        </>
                       )}
                     </RefinementBlock>
                     <RefinementBlock header="Industry" tooltip="Many apps are general use, others are built for a specific industry.">
-                      {(this.props.searchState.query || this.state.category) && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}
+                      {(this.props.searchState.query || this.props.category) && <RefinementList attribute="industry" limit={10} showMoreLimit={100} showMore />}
                     </RefinementBlock>
-                    <RefinementBlock header="Rating">{(this.props.searchState.query || this.state.category) && <RatingMenu attribute="rating" />}</RefinementBlock>
+                    <RefinementBlock header="Rating">{(this.props.searchState.query || this.props.category) && <RatingMenu attribute="rating" />}</RefinementBlock>
                     <RefinementBlock header="Developer">
-                      {(this.props.searchState.query || this.state.category) && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}
+                      {(this.props.searchState.query || this.props.category) && <RefinementList attribute="vendor" limit={10} showMoreLimit={100} showMore />}
                     </RefinementBlock>
                     <RefinementBlock header="Features">
-                      {(this.props.searchState.query || this.state.category) && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}
+                      {(this.props.searchState.query || this.props.category) && <RefinementList attribute="features" limit={15} showMoreLimit={100} showMore />}
                     </RefinementBlock>
                   </nav>
                 </div>
@@ -279,13 +279,13 @@ class SearchApp extends React.Component {
             </div>
           </div>
           <div className="flex flex-col w-0 flex-1 overflow-hidden">
-            <div className={`${this.state.category ? "flex" : "hidden"} relative flex-shrink-0 flex h-12 bg-white`}>
+            <div className={`${this.props.category ? "flex" : "hidden"} relative flex-shrink-0 flex h-12 bg-white`}>
               <div className="flex-1 px-4 flex justify-between">
                 <SearchBox searchAsYouType={false} submit={<SearchIcon className="h-5 w-5" />} />
               </div>
             </div>
             {/* Hide stats and sorts if there is no query */}
-            {(this.props.searchState.query || this.state.category) && (
+            {(this.props.searchState.query || this.props.category) && (
               <div className="flex-shrink-0 flex justify-end sm:justify-between items-center bg-white px-5 py-0.5 border-b border-t border-gray-200">
                 {/* <CurrentRefinements /> */}
                 <Stats className="hidden sm:block" />
@@ -320,7 +320,7 @@ class SearchApp extends React.Component {
                         maxMonthly={this.state.maxMonthly}
                       />
                     </Results>
-                    <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">{(this.props.searchState.query || this.state.category) && <Pagination />}</nav>
+                    <nav className="border-t border-gray-200 px-4 mt-6 flex items-center justify-between sm:px-0">{(this.props.searchState.query || this.props.category) && <Pagination />}</nav>
                     <div className="md:hidden fixed bottom-10 inset-x-0 mx-auto flex items-center justify-center pointer-events-none">
                       <button
                         onClick={() => this.setState({ showSidebar: true })}
