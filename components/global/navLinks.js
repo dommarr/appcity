@@ -10,7 +10,7 @@ function classNames(...classes) {
 export default function NavLinks({ navigation, categories, featured }) {
   return (
     <div className="hidden lg:flex items-center justify-center space-x-8 lg:space-x-16 h-full">
-      <Popover.Group className="ml-8 block self-stretch">
+      <Popover.Group className="block self-stretch">
         <div className="h-full flex space-x-8">
           <Popover key="categories" className="flex">
             {({ open }) => (
