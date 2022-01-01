@@ -72,7 +72,6 @@ export default function HitCard({ hit, monthlyPrice, locked, filter, minYearly, 
       {/* loading state */}
       {tiers.length < 1 && (
         <div className="h-full bg-white flex flex-col items-center justify-start space-y-4 p-4 shadow">
-          <div className="">{hit.product}</div>
           <div className="h-28 w-28 bg-gray-200 animate-pulse"></div>
           <div className="bg-gray-200 h-6 w-3/4 animate-pulse"></div>
           <div className="bg-gray-200 h-6 w-1/2 animate-pulse"></div>
