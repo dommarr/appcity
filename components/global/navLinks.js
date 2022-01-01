@@ -52,9 +52,9 @@ export default function NavLinks({ navigation, categories, featured }) {
                                 <ul role="list" aria-labelledby={`${parent.name}-heading`} className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
                                   {parent.children.map((child) => (
                                     <li key={child.id} className="flex">
-                                      <Popover.Button onClick={() => (open = false)}>
+                                      <Popover.Button onClick={() => (open = false)} className="w-full h-full flex items-start justify-start">
                                         <Link href={`/categories/${child.slug}`}>
-                                          <a className="hover:underline cursor-pointer">{child.name}</a>
+                                          <a className="hover:underline cursor-pointer text-left">{child.name}</a>
                                         </Link>
                                       </Popover.Button>
                                     </li>

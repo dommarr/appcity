@@ -1,7 +1,23 @@
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { supabase } from "../../utils/initSupabase";
+
+const fetchCategories = async () => {
+  let { data: categories, error } = await supabase.from("categories").select(`name, slug`).order(`product_count`, { ascending: false }).limit(4);
+  if (error) {
+    throw error;
+  }
+  return categories;
+};
 
 export default function Footer({ children, dark }) {
+  const [categories, setCategories] = useState([]);
   const handleSubmit = () => {};
+
+  useEffect(async () => {
+    let categories = await fetchCategories();
+    setCategories(categories);
+  }, []);
 
   return (
     <footer className={`select-none ${dark ? "bg-purple-extradark" : "bg-white"}`} aria-labelledby="footerHeading">
@@ -44,28 +60,14 @@ export default function Footer({ children, dark }) {
               <div className="mt-12 md:mt-0">
                 <h3 className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-400"} tracking-wider uppercase`}>Top categories</h3>
                 <ul className="mt-4 space-y-4">
-                  <li>
-                    <Link href={`/categories/Website & App Builders?parent=${encodeURIComponent("Website & App Builders")}`}>
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Website builder</a>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link href={`/categories/Marketing?parent=${encodeURIComponent("Marketing")}`}>
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Marketing</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href={`/categories/Productivity & Admin?parent=${encodeURIComponent("Productivity & Admin")}`}>
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Productivity</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href={`/categories/Customer Service?parent=${encodeURIComponent("Customer Service")}`}>
-                      <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Customer service</a>
-                    </Link>
-                  </li>
-                  <li>
+                  {categories.map((category, index) => (
+                    <li key={index}>
+                      <Link href={`/categories/${category.slug}`}>
+                        <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>{category.name}</a>
+                      </Link>
+                    </li>
+                  ))}
+                  <li key={4}>
                     <Link href={`/categories`}>
                       <a className={`text-base ${dark ? "text-white hover:text-gray-300" : "text-gray-500 hover:text-gray-900"}`}>Browse all</a>
                     </Link>

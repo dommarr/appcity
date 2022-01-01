@@ -63,8 +63,8 @@ export default function HomeLayout({ apps, kits }) {
                       type="text"
                       name="search"
                       id="search"
-                      className="border border-white bg-transparent text-white placeholder-white focus:ring-0 focus:outline-none focus:ring-white focus:border-white w-full md:text-lg"
-                      placeholder="website builder, ecommerce, newsletter..."
+                      className="border border-white bg-transparent text-white placeholder-gray-300 focus:ring-0 focus:outline-none focus:ring-white focus:border-white w-full md:text-lg"
+                      placeholder="automation, ecommerce, newsletter..."
                       value={query}
                       onChange={(event) => setQuery(event.target.value)}
                     />
@@ -93,6 +93,16 @@ export default function HomeLayout({ apps, kits }) {
                   <Link
                     href={{
                       pathname: "/search",
+                      query: { query: "accounting" },
+                    }}
+                  >
+                    <a className="hidden sm:inline-flex text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
+                      Accounting
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/search",
                       query: { query: "ecommerce store" },
                     }}
                   >
@@ -100,6 +110,7 @@ export default function HomeLayout({ apps, kits }) {
                       Ecommerce store
                     </a>
                   </Link>
+
                   <Link
                     href={{
                       pathname: "/search",
@@ -113,21 +124,11 @@ export default function HomeLayout({ apps, kits }) {
                   <Link
                     href={{
                       pathname: "/search",
-                      query: { query: "podcasting" },
+                      query: { query: "internal tools" },
                     }}
                   >
                     <a className="text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
-                      Podcasting
-                    </a>
-                  </Link>
-                  <Link
-                    href={{
-                      pathname: "/search",
-                      query: { query: "community" },
-                    }}
-                  >
-                    <a className="hidden sm:inline-flex text-white bg-transparent hover:bg-white hover:text-purple m-1 inline-flex items-center justify-center px-4 py-2 sm:py-1 border border-white shadow-sm text-sm font-light">
-                      Community
+                      Internal tools
                     </a>
                   </Link>
                 </div>

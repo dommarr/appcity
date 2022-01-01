@@ -6,7 +6,7 @@ const algoliaKey = process.env.ALGOLIA_ADMIN_KEY;
 const algolia = algoliasearch(algoliaApp, algoliaKey);
 const index = algolia.initIndex("app_catalog");
 
-const getCategories = async () => {
+const fetchCategories = async () => {
   let { data: categories, error } = await supabase.from("categories").select("*");
   if (error) {
     throw error;
@@ -25,7 +25,8 @@ const getIndustries = async () => {
 const getProducts = async () => {
   let { data: products, error } = await supabase.from("products").select(`
         *,
-        vendors (*)
+        vendors (*),
+        products_categories (*)
 `);
   if (error) {
     throw error;
@@ -49,35 +50,6 @@ const getReviews = async () => {
   return reviews;
 };
 
-// categories
-const createCatTable = (cats, arr) => {
-  const categories = [];
-  let i;
-  // for each category, create a new object
-  for (i = 0; i < arr.length; i++) {
-    const obj = {};
-    // set default values (assumes top-level category, defined as parent_id === null)
-    obj.id = arr[i].id;
-    obj.lvl = 0;
-    obj.name = arr[i].name;
-    let current_parent = arr[i].parent_id;
-    // if parent_id is not null, it is not a top-level category, so update lvl and name
-    // continue until we have gone up the chain to the top-level (parent_id === null)
-    while (current_parent !== null) {
-      obj.lvl++;
-      obj.name = cats[current_parent] + " > " + obj.name;
-      let j;
-      for (j = 0; j < arr.length; j++) {
-        if (arr[j].id === current_parent) {
-          current_parent = arr[j].parent_id;
-        }
-      }
-    }
-    categories.push(obj);
-  }
-  return categories;
-};
-
 const compare = (a, b) => {
   const tierNumA = a.tier_number;
   const tierNumB = b.tier_number;
@@ -96,11 +68,7 @@ function add(accumulator, a) {
 }
 
 export default async function (req, res) {
-  // get category data and build out hierarchy (categories and sub-categories)
-  // const catArray = await getCategories();
-  // const catNames = {};
-  // catArray.forEach((elem) => (catNames[elem.id] = elem.name));
-  // const categories = createCatTable(catNames, catArray);
+  let allCategories = await fetchCategories();
 
   // get industries
   const industries = await getIndustries();
@@ -246,35 +214,25 @@ export default async function (req, res) {
       obj.rating = Math.round((sum / filteredReviews.length) * 10) / 10;
       obj.count = filteredReviews.length;
     }
-    // obj.categories = {};
-    // // for each category, match and get the hierarchy level and name
-    // elem.products_categories.forEach(function (item) {
-    //   let match = categories.filter(function (entry) {
-    //     return entry.id === item.category_id;
-    //   });
-    //   let level = "lvl" + match[0].lvl;
-    //   obj.categories[level] = match[0].name;
-    // });
-    // obj.virtual_categories = [];
-    // elem.products_categories.forEach(function (item) {
-    //   let match = catArray.filter(function (entry) {
-    //     return entry.id === item.category_id;
-    //   });
-    //   obj.virtual_categories.push(match[0].name);
-    // });
 
-    // if product is not complete, add tag hidden, else add empty tags
-    // if (!elem.complete) {
-    //   obj._tags = ["hidden"];
-    // } else {
-    //   obj._tags = [""];
-    // }
+    // setup categories
+    let catIds = elem.products_categories.map((item) => item.category_id);
+    let productCategories = allCategories.filter((category) => catIds.includes(category.id));
+    // virtual categories used for default filtering on category pages with the virtual refinement component from algolia
+    obj.virtual_categories = productCategories.map((item) => item.name);
+    let parents = productCategories.filter((item) => !item.parent_id);
+    let children = productCategories.filter((item) => item.parent_id);
+    // categories used in the hierarchical facet and menu
+    obj.categories = {};
+    if (parents.length) {
+      obj.categories.lvl0 = parents.map((item) => item.path);
+    }
+    if (children.length) {
+      obj.categories.lvl1 = children.map((item) => item.path);
+    }
 
     algoliaArray.push(obj);
   });
-
-  // res.statusCode = 200;
-  // res.json(algoliaArray);
 
   //save to Algolia
   return new Promise((resolve, reject) => {
