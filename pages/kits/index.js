@@ -63,18 +63,17 @@ const KitCard = ({ kit, index }) => {
   );
 };
 
+let description =
+  "AppCity Starter Kits are curated bundles of business apps for specific use cases. Spend less time searching for software and more time building. Whether you are a startup founder, a content creator, or just tinkering, we have the perfect kit for you.";
+
 export default function KitHome({ kits }) {
   return (
     <>
-      <Head
-        title="Starter Kits | AppCity"
-        description="Business software starter kits, so you can hit the ground runnning. Start a podcast, launch an online store, or found a startup with our business app starter kits."
-        url="https://www.appcity.com/kits"
-      />
+      <Head title="Starter Kits | AppCity" description={description} url="https://www.appcity.com/kits" />
       <Container>
         <div className="flex flex-col space-y-2 mb-8 text-center">
           <h1 className="text-5xl font-extrabold sm:tracking-tight sm:text-6xl text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">Starter Kits</h1>
-          <p className="max-w-xl mx-auto text-xl text-gray-500">The best apps to get your project up and running.</p>
+          <p className="max-w-3xl mx-auto text-xl text-gray-500">{description}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {kits &&

@@ -29,21 +29,15 @@ const formatSentence = (sentence) => {
 };
 
 const ProductCard = ({ product }) => {
-  const [name, setName] = useState("");
-
-  useEffect(() => {
-    setName(capitalizeEveryWord(product.name));
-  }, []);
-
   return (
     <Link href={`/product/${product.id}`}>
       <a>
         <li className="col-span-1 bg-white border shadow-md divide-x divide-gray-200 flex p-4">
           <div className="w-20 h-20 mr-4 flex flex-col items-center justify-center">
-            <img className="w-full" src={product.product_logo ? product.product_logo : product.vendors.logo} alt={`${name} Logo`} />
+            <img className="w-full" src={product.product_logo ? product.product_logo : product.vendors.logo} alt={`${product.name} Logo`} />
           </div>
 
-          <div className="flex items-center justify-center text-xl font-medium pl-4">{name}</div>
+          <div className="flex items-center justify-center text-xl font-medium pl-4">{product.name}</div>
         </li>
       </a>
     </Link>
@@ -51,12 +45,6 @@ const ProductCard = ({ product }) => {
 };
 
 const KitSection = ({ section }) => {
-  const [name, setName] = useState("");
-
-  useEffect(() => {
-    setName(capitalizeEveryWord(section.name));
-  }, []);
-
   return (
     <section className="pb-4">
       <div className="relative mb-4">
@@ -64,7 +52,7 @@ const KitSection = ({ section }) => {
           <div className="w-full border-t border-gray-300"></div>
         </div>
         <div className="relative flex justify-start">
-          <span className="pr-3 bg-gray-50 text-2xl sm:text-2xl font-medium text-gray-900">{name}</span>
+          <span className="pr-3 bg-gray-50 text-2xl sm:text-2xl font-medium text-gray-900">{section.name}</span>
         </div>
       </div>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -78,20 +66,14 @@ const KitSection = ({ section }) => {
 };
 
 export default function Kit({ kit, sections }) {
-  const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    setDescription(formatSentence(kit.description));
-  }, []);
-
   return (
     <>
-      <Head title={`${kit.name} Starter Kit | AppCity`} description={description} url={`https://www.appcity.com/kits/${kit.slug}`} />
+      <Head title={`${kit.name} Starter Kit | AppCity`} description={kit.description} url={`https://www.appcity.com/kits/${kit.slug}`} />
       <div className="bg-gray-50 pb-20">
         <Container>
           <div className="text-center space-y-4">
             <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">{kit.name} Starter Kit</h1>
-            <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
+            <p className="max-w-3xl mx-auto text-base text-gray-500">{kit.description}</p>
           </div>
           {sections &&
             sections.map((section, idx) => {
