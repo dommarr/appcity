@@ -208,13 +208,15 @@ export default function Navbar({ trans, light, search }) {
     {
       name: "All Categories",
       href: "/categories",
-      imageSrc: "https://images.unsplash.com/photo-1544523830-2bef1d330b7d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+      imageSrc:
+        "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/categories_dropdown/files.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9jYXRlZ29yaWVzX2Ryb3Bkb3duL2ZpbGVzLmpwZyIsImlhdCI6MTY0MTE1MjQ2NCwiZXhwIjoxOTU2NTEyNDY0fQ.g2u5x1vNgk4mzJuAT9DBxgZc_MXWjPepJ-80AOR5tck",
       imageAlt: "All of the categories on AppCity to find the best business software.",
     },
     {
       name: "Starter Kits",
       href: "/kits",
-      imageSrc: "https://images.unsplash.com/photo-1558906050-d6d6aa390fd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1726&q=80",
+      imageSrc:
+        "https://dnlvkovcawtkzuvpmmgr.supabase.in/storage/v1/object/sign/website_images/categories_dropdown/toolboxes.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ3ZWJzaXRlX2ltYWdlcy9jYXRlZ29yaWVzX2Ryb3Bkb3duL3Rvb2xib3hlcy5qcGciLCJpYXQiOjE2NDExNTI0ODAsImV4cCI6MTk1NjUxMjQ4MH0.117tlBBApSxFZxnCKYO01noXcuV0gnD-WEcZBQsCiTM",
       imageAlt: "Business app starter kits to help you hit the ground running.",
     },
   ];
@@ -224,15 +226,15 @@ export default function Navbar({ trans, light, search }) {
       <Disclosure as="nav" className={`${trans ? "bg-transparent" : "bg-purple-extradark"} z-40 relative`}>
         {({ open }) => (
           <>
-            <div className="max-w-screen-3xl mx-auto px-4 lg:px-8">
+            <div className="max-w-screen-3xl mx-auto px-4 md:px-6 lg:px-8">
               {!showSearch && (
                 <div className="grid grid-cols-7 flex items-center justify-between h-16">
                   {/* left section - menu icon, logo */}
-                  <div className={`${search ? "col-span-3" : "col-span-5"} sm:col-span-2 flex items-center justify-start space-x-4`}>
+                  <div className={`${search ? "col-span-3" : "col-span-5"} sm:col-span-2 flex items-center justify-start`}>
                     {search && (
-                      <MenuIcon onClick={() => setSidebarOpen(true)} className={`h-6 w-6 cursor-pointer ${light ? "text-purple hover:text-purple-dark" : "text-white hover:text-gray-200"}`} />
+                      <MenuIcon onClick={() => setSidebarOpen(true)} className={`h-6 w-6 cursor-pointer mr-4 ${light ? "text-purple hover:text-purple-dark" : "text-white hover:text-gray-200"}`} />
                     )}
-                    {!search && <MenuIcon onClick={() => setSidebarOpen(true)} className="lg:hidden h-6 w-6 text-white cursor-pointer" />}
+                    {!search && <MenuIcon onClick={() => setSidebarOpen(true)} className="lg:hidden h-6 w-6 text-white cursor-pointer mr-4" />}
                     <Link href="/">
                       <a className="relative flex items-center justify-center">
                         {!light && <Logo size={36} alt="AppCity" />}

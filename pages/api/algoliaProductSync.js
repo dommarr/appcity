@@ -120,6 +120,20 @@ export default async function (req, res) {
     return obj;
   });
 
+  const getMedian = (values) => {
+    if (values.length === 0) throw new Error("No inputs");
+
+    values.sort(function (a, b) {
+      return a - b;
+    });
+
+    var half = Math.floor(values.length / 2);
+
+    if (values.length % 2) return Math.round((values[half] + Number.EPSILON) * 100) / 100;
+
+    return Math.round(((values[half - 1] + values[half]) / 2.0 + Number.EPSILON) * 100) / 100;
+  };
+
   // array for algolia index
   let algoliaArray = [];
 
@@ -185,17 +199,13 @@ export default async function (req, res) {
     // sum and get average (for sorting)
     // yearly
     if (yearlyPrices.length > 0) {
-      let sum = yearlyPrices.reduce(add, 0);
-      let avg = sum / yearlyPrices.length;
-      obj.sort_price_yearly = avg;
+      obj.sort_price_yearly = getMedian(yearlyPrices);
     } else {
       obj.sort_price_yearly = "";
     }
     // monthly
     if (monthlyPrices.length > 0) {
-      let sum = monthlyPrices.reduce(add, 0);
-      let avg = sum / monthlyPrices.length;
-      obj.sort_price_monthly = avg;
+      obj.sort_price_monthly = getMedian(monthlyPrices);
     } else {
       obj.sort_price_monthly = "";
     }

@@ -4,7 +4,8 @@ import { Disclosure } from "@headlessui/react";
 import { MinusSmIcon, PlusSmIcon, ArrowSmRightIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
-const description = "Browse all categories to find the right app for your business.";
+const description =
+  "Browse all the categories on AppCity to find the best software for your business. Whether you're looking for productivity apps or accounting tools, we make it easy to browse and sort our catalog by category.";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -18,7 +19,7 @@ export default function Categories({ categories }) {
       <main className="pb-24">
         <div className="text-center py-16 px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">All Categories</h1>
-          <p className="mt-4 max-w-xl mx-auto text-base text-gray-500">{description}</p>
+          <p className="mt-4 max-w-3xl mx-auto text-base text-gray-500">{description}</p>
         </div>
         <section aria-labelledby="products-heading" className="max-w-7xl mx-auto overflow-hidden sm:px-6 lg:px-8">
           <h2 id="products-heading" className="sr-only">
