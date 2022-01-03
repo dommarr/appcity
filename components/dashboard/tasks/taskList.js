@@ -18,7 +18,7 @@ export default function TaskList(props) {
   }, []);
 
   const fetchTasks = async () => {
-    let { data: tasks, error } = await supabase.from("tasks").select("*").eq("complete", false);
+    let { data: tasks, error } = await supabase.from("tasks").select("*").eq("complete", false).order("id");
     if (error) {
       setLoading(false);
       throw error;
@@ -127,7 +127,10 @@ export default function TaskList(props) {
       </div>
       {listview && (
         <div className="grid grid-cols-4 gap-x-2 bg-white shadow p-4">
-          <div className="col-span-1 font-bold text-lg underline">Task</div>
+          <div className="col-span-1 flex space-x-2 items-center">
+            <span className="font-bold text-lg underline">Task</span>
+            <span className="text-sm">({tasks.length} tasks)</span>
+          </div>
           <div className="col-span-1 font-bold text-lg underline">Product</div>
           <div className="col-span-1 font-bold text-lg underline">Notes</div>
           <div className="col-span-1 font-bold text-lg underline">Complete?</div>

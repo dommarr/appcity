@@ -79,6 +79,15 @@ class Search extends React.Component {
     this.setState({ filter: str });
   };
 
+  pageHandler = () => {
+    this.setState({
+      searchState: {
+        ...this.state.searchState,
+        page: 1,
+      },
+    });
+  };
+
   render() {
     return (
       <div className="h-screen flex flex-col">
@@ -95,6 +104,7 @@ class Search extends React.Component {
           createURL={createURL}
           filter={this.state.filter}
           filterHandler={this.filterHandler}
+          pageHandler={this.pageHandler}
         />
       </div>
     );

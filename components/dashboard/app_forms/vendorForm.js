@@ -13,7 +13,6 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
   const [vendorName, setVendorName] = useState("");
   const [website, setWebsite] = useState("");
   const [logo, setLogo] = useState("");
-  const [refLink, setRefLink] = useState("");
   // video tips
   const [logoTip, setLogoTip] = useState(false);
   // logo upload
@@ -36,7 +35,6 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
     vendors[0].name ? setVendorName(vendors[0].name) : "";
     vendors[0].website ? setWebsite(vendors[0].website) : "";
     vendors[0].logo ? setLogo(vendors[0].logo) : "";
-    vendors[0].ref_link ? setRefLink(vendors[0].ref_link) : "";
   };
 
   const handleSubmit = async (e) => {
@@ -187,22 +185,6 @@ export default function VendorForm({ vendorId, superAdmin, user }) {
 
               <FormTip video_id="413844e4d9274c9e9af740e53d45dc74" />
             </div>
-            {superAdmin && (
-              <div className="col-span-4 lg:col-span-2">
-                <label htmlFor="refLink" className="block text-sm font-medium text-gray-700">
-                  Referral link
-                </label>
-                <input
-                  type="url"
-                  name="refLink"
-                  id="refLink"
-                  placeholder="https://webflow.grsm.io/appcity?sub="
-                  value={refLink}
-                  onChange={(e) => setRefLink(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                />
-              </div>
-            )}
           </div>
         </div>
         <div className="flex px-4 py-3 bg-gray-50 text-right sm:px-6">

@@ -1,8 +1,8 @@
 import Container from "../../components/global/mobilePaddingContainer";
 import Link from "next/link";
-import Head from "../../components/global/head";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
+import Page from "../../components/global/defaultPage";
 
 const capitalizeEveryWord = (words) => {
   let wordArray = words.split(" ");
@@ -68,21 +68,14 @@ let description =
 
 export default function KitHome({ kits }) {
   return (
-    <>
-      <Head title="Starter Kits | AppCity" description={description} url="https://www.appcity.com/kits" />
-      <Container>
-        <div className="flex flex-col space-y-2 mb-8 text-center">
-          <h1 className="text-5xl font-extrabold sm:tracking-tight sm:text-6xl text-transparent bg-clip-text bg-gradient-to-l from-purple-extralight via-purple to-purple-extradark">Starter Kits</h1>
-          <p className="max-w-3xl mx-auto text-xl text-gray-500">{description}</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          {kits &&
-            kits.map((kit, idx) => {
-              return <KitCard key={idx} kit={kit} index={idx} />;
-            })}
-        </div>
-      </Container>
-    </>
+    <Page title={"Starter Kits"} description={description} url={"https://www.appcity.com/kits"}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {kits &&
+          kits.map((kit, idx) => {
+            return <KitCard key={idx} kit={kit} index={idx} />;
+          })}
+      </div>
+    </Page>
   );
 }
 

@@ -93,6 +93,15 @@ class Search extends React.Component {
     this.setState({ filter: str });
   };
 
+  pageHandler = () => {
+    this.setState({
+      searchState: {
+        ...this.state.searchState,
+        page: 1,
+      },
+    });
+  };
+
   headerHandler = () => {
     this.setState({ showHeader: true });
   };
@@ -114,7 +123,7 @@ class Search extends React.Component {
               onClick={(e) => this.setState({ showHeader: false })}
               className="h-6 w-6 sm:h-8 sm:w-8 cursor-pointer text-gray-400 hover:text-gray-700 hover:border hover:border-gray-700"
             />
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-gray-900 pt-6 pb-4">{this.state.category.name}</h1>
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-gray-900 pt-4 pb-2 sm:pt-6 sm:pb-4">{this.state.category.name}</h1>
             <ChevronUpIcon
               onClick={(e) => this.setState({ showHeader: false })}
               className="h-6 w-6 sm:h-8 sm:w-8 cursor-pointer text-gray-400 hover:text-gray-700 hover:border hover:border-gray-700"
@@ -131,6 +140,7 @@ class Search extends React.Component {
             createURL={createURL}
             filter={this.state.filter}
             filterHandler={this.filterHandler}
+            pageHandler={this.pageHandler}
             category={this.state.category}
             showHeader={this.state.showHeader}
             headerHandler={this.headerHandler}
