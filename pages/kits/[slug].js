@@ -3,6 +3,7 @@ import Link from "next/link";
 import Head from "../../components/global/head";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/initSupabase";
+import Page from "../../components/global/defaultPage";
 
 const capitalizeEveryWord = (words) => {
   let wordArray = words.split(" ");
@@ -52,7 +53,7 @@ const KitSection = ({ section }) => {
           <div className="w-full border-t border-gray-300"></div>
         </div>
         <div className="relative flex justify-start">
-          <span className="pr-3 bg-gray-50 text-2xl sm:text-2xl font-medium text-gray-900">{section.name}</span>
+          <span className="pr-3 bg-white text-2xl sm:text-2xl font-medium text-gray-900">{section.name}</span>
         </div>
       </div>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -67,21 +68,14 @@ const KitSection = ({ section }) => {
 
 export default function Kit({ kit, sections }) {
   return (
-    <>
-      <Head title={`${kit.name} Starter Kit | AppCity`} description={kit.description} url={`https://www.appcity.com/kits/${kit.slug}`} />
-      <div className="bg-gray-50 pb-20">
-        <Container>
-          <div className="text-center space-y-4">
-            <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">{kit.name} Starter Kit</h1>
-            <p className="max-w-3xl mx-auto text-base text-gray-500">{kit.description}</p>
-          </div>
-          {sections &&
-            sections.map((section, idx) => {
-              return <KitSection key={idx} section={section} />;
-            })}
-        </Container>
+    <Page title={`${kit.name} Starter Kit`} description={kit.description} url={`https://www.appcity.com/kits/${kit.slug}`}>
+      <div className={`space-y-12`}>
+        {sections &&
+          sections.map((section, idx) => {
+            return <KitSection key={idx} section={section} />;
+          })}
       </div>
-    </>
+    </Page>
   );
 }
 

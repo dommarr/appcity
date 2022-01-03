@@ -116,6 +116,7 @@ class SearchApp extends React.Component {
     } else {
     }
     this.props.filterHandler(filter);
+    this.props.pageHandler();
   }
 
   handleMonthlySubmit(e) {
@@ -142,6 +143,7 @@ class SearchApp extends React.Component {
     } else {
     }
     this.props.filterHandler(filter);
+    this.props.pageHandler();
   }
 
   handleClear() {

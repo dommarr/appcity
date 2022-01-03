@@ -87,7 +87,7 @@ export default function CategoryForm(props) {
   };
 
   async function getCategories() {
-    let { data: categories, error } = await supabase.from("categories").select("*");
+    let { data: categories, error } = await supabase.from("categories").select("*").order("name");
     if (error) {
       throw error;
     }

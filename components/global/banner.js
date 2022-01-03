@@ -17,8 +17,8 @@ export default function Banner() {
 
   return (
     <div className="relative bg-indigo-600 select-none">
-      <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
-        <div className="text-center sm:px-16 flex items-center justify-center">
+      <div className="max-w-7xl mx-auto py-1 px-3 sm:px-6 lg:px-8">
+        <div className="text-center text-sm sm:px-16 flex items-center justify-center">
           <p className=" text-white space-x-1 md:hidden">
             <span className="">🚨 Leave 1 review to unlock</span>
             <Link href="/discounts" className="">

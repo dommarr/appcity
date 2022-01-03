@@ -9,13 +9,16 @@ const AppCard = ({ app }) => {
   return (
     <Link href={`/product/${app.id}`}>
       <a>
-        <li className="col-span-1 bg-white border shadow-md divide-x divide-gray-200 flex p-4">
-          <div className="w-20 h-20 mr-4 flex flex-col items-center justify-center">
-            <img className="w-full" src={app.product_logo ? app.product_logo : app.vendors.logo} alt={`${app.name} Logo`} />
+        <li className="col-span-1 grid grid-cols-4 gap-4 bg-white border shadow-md divide-x divide-gray-200 flex p-4">
+          <div className="col-span-1 flex flex-col items-center justify-center">
+            <div className="w-20 h-20">
+              <img className="w-full" src={app.product_logo ? app.product_logo : app.vendors.logo} alt={`${app.name} Logo`} />
+            </div>
           </div>
-          <div className="flex flex-col items-start justify-around">
-            <div className="flex items-center justify-center text-xl font-medium pl-4">{app.name}</div>
-            <div className="flex items-center justify-center text-sm pl-4">{app.discount}</div>
+
+          <div className="col-span-3 flex flex-col items-start justify-around pl-4">
+            <div className="flex items-center justify-center text-xl font-medium">{app.name}</div>
+            <p className="flex items-center justify-center text-sm text-ellipsis overflow-hidden">{app.discount}</p>
           </div>
         </li>
       </a>
@@ -33,7 +36,7 @@ export default function Deals({ apps }) {
             <h1 className="text-3xl font-extrabold text-gray-900 md:text-4xl md:tracking-tight">Discounts and Offers</h1>
             <p className="max-w-xl mx-auto text-base text-gray-500">{description}</p>
           </div>
-          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {apps &&
               apps.map((app, idx) => {
                 return <AppCard key={idx} app={app} />;

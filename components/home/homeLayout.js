@@ -161,7 +161,7 @@ export default function HomeLayout({ apps, kits }) {
                   <Link href={`/product/${id}`} key={idx}>
                     <a>
                       <div className="col-span-1 p-2 md:p-8 bg-gray-50 grid grid-cols-3 gap-4 h-full">
-                        <div className="relative col-span-1 flex items-center justify-center hidden sm:block">
+                        <div className="relative col-span-1 items-center justify-center hidden sm:flex">
                           <Image
                             src={vendors.logo}
                             alt={name}
@@ -181,6 +181,7 @@ export default function HomeLayout({ apps, kits }) {
                           <h5 className="text-xl font-medium">{name}</h5>
                           <div className="flex flex-wrap overflow-hidden">
                             {categories.map((category, idy) => {
+                              if (idy > 2) return null;
                               return (
                                 <span key={idy} className="py-0.5 px-2 bg-indigo-100 text-xs text-indigo-500 whitespace-nowrap mt-1 mr-1">
                                   {category.name}

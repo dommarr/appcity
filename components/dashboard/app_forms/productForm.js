@@ -547,7 +547,6 @@ export default function ProductForm({ productId, vendorId, priceModel, setPriceM
               <span className="text-xs text-gray-500 italic">{characters} characters</span>
               <FormTip video_id="87183398fa9d467bbcc2928d0fbe4b75" />
             </div>
-            <div className="col-span-4 lg:col-span-2 flex flex-col space-x-2"></div>
             <div className="col-span-4 lg:col-span-2">
               <div className="flex space-x-2 items-center">
                 <h4 className="font-medium text-gray-900">Media</h4>

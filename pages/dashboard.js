@@ -18,6 +18,7 @@ import EditApps from "../components/dashboard/editApps";
 import AuditTasks from "../components/dashboard/auditTasks";
 import { Loader } from "react-feather";
 import { CheckIcon } from "@heroicons/react/solid";
+import KitBuilder from "../components/dashboard/kitBuilder";
 
 const navLinks = [
   {
@@ -81,6 +82,11 @@ const superAdminLinks = [
     label: "Audit tasks",
     route: "audit_tasks",
     icon: "M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z",
+  },
+  {
+    label: "Kit builder",
+    route: "kit_builder",
+    icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01",
   },
 ];
 
@@ -333,6 +339,7 @@ export default function Dashboard({ user }) {
                 {router.query.screen === "discounts" && <Discounts user={user} router={router} />}
                 {router.query.screen === "admin_create_app" && <AdminCreateApp user={user} router={router} />}
                 {router.query.screen === "audit_tasks" && <AuditTasks user={user} router={router} />}
+                {router.query.screen === "kit_builder" && <KitBuilder user={user} router={router} />}
                 {/* /End replace */}
               </div>
             </div>
