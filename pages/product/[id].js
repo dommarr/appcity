@@ -26,7 +26,7 @@ export default function Product({ product }) {
   const router = useRouter();
   //const [user, setUser] = useState(null);
   const { user } = Auth.useUser();
-  const [monthly, setMonthly] = useState(true);
+  const [monthly, setMonthly] = useState(false);
   const [description, setDescription] = useState(false);
   const [review, setReview] = useState(false);
   const [success, setSuccess] = useState(false);
