@@ -28,7 +28,8 @@ export default function Banner() {
             {/* <span className="md:hidden">🛠️ 🚧 Under construction. Have a look!</span> */}
           </p>
           <p className="hidden md:inline text-white space-x-1">
-            <span className="hidden md:inline">🚨 Leave 1 review to unlock thousands in</span>
+            <span className="pr-0.5">🚨</span>
+            <span className="hidden md:inline">Leave 1 review to unlock thousands in</span>
             <Link href="/discounts" className="">
               <a className="underline hover:no-underline">discounts and offers</a>
             </Link>
