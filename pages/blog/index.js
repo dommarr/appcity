@@ -3,7 +3,7 @@ import Link from "next/link";
 import Head from "../../components/global/head";
 import Page from "../../components/global/defaultPage";
 
-let description = "Resources to help you get the most out of your business apps.";
+let description = "Best software picks + tips and tricks from the experts at AppCity.";
 
 export default function IndexPage(props) {
   let posts = props.posts;
