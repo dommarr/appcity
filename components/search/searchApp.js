@@ -167,7 +167,7 @@ class SearchApp extends React.Component {
         onSearchParameters={this.props.onSearchParameters}
         {...this.props}
       >
-        {this.props.category && <VirtualRefinementList attribute="virtual_categories" defaultRefinement={this.props.category.name} />}
+        {this.props.category && <VirtualRefinementList attribute="virtual_categories" defaultRefinement={[this.props.category.name]} />}
         <div className="flex flex-1 overflow-hidden bg-gray-100">
           {/* Static sidebar for desktop */}
           <div className={`${this.state.showSidebar ? `flex` : `hidden`} md:flex md:flex-shrink-0 fixed inset-0 z-40 md:static md:inset-auto md:z-auto`}>

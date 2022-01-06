@@ -210,7 +210,7 @@ export default function Footer({ children, dark }) {
               </svg>
             </a>
           </div> */}
-          <p className={`mt-8 text-base ${dark ? "text-gray-200" : "text-gray-400"} md:mt-0 md:order-1`}>&copy; 2021 AppCity, LLC. All rights reserved.</p>
+          <p className={`mt-8 text-base ${dark ? "text-gray-200" : "text-gray-400"} md:mt-0 md:order-1`}>&copy; 2022 AppCity, LLC. All rights reserved.</p>
         </div>
       </div>
       {children}

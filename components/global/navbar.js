@@ -96,15 +96,19 @@ export default function Navbar({ trans, light, search }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
   useEffect(async () => {
     let parents = await fetchCategories();
     let children = await fetchChildCategories(parents);
-    let cats = parents.map((parent) => {
-      parent.children = children.filter((child) => child.parent_id === parent.id).slice(0, 8);
-      return parent;
-    });
-    setCategories(cats);
+    if (parents && children) {
+      let cats = parents.map((parent) => {
+        parent.children = children.filter((child) => child.parent_id === parent.id).slice(0, 8);
+        return parent;
+      });
+      setCategories(cats);
+      setCategoriesLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -263,7 +267,7 @@ export default function Navbar({ trans, light, search }) {
                         <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} light={light} />
                       </div>
                     )}
-                    {!search && <NavLinks navigation={navigation} categories={categories} featured={featured} />}
+                    {!search && <NavLinks navigation={navigation} categories={categories} featured={featured} categoriesLoading={categoriesLoading} />}
                   </div>
                   {/* right section */}
                   <div className={`${search ? "col-span-4" : "col-span-2"} sm:col-span-2 flex items-center justify-end space-x-4`}>

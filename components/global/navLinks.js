@@ -7,7 +7,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NavLinks({ navigation, categories, featured }) {
+export default function NavLinks({ navigation, categories, featured, categoriesLoading }) {
   return (
     <div className="hidden lg:flex items-center justify-center space-x-8 lg:space-x-16 h-full">
       <Popover.Group className="block self-stretch">
@@ -42,36 +42,49 @@ export default function NavLinks({ navigation, categories, featured }) {
                     <div className="relative bg-purple-extradark">
                       <div className="max-w-7xl mx-auto px-8">
                         <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16 border-t border-purple-dark">
-                          <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                            {categories.map((parent) => (
-                              <div key={parent.id}>
-                                <p id={`${parent.name}-heading`} className="font-medium uppercase">
-                                  {parent.name}
-                                </p>
+                          {!categoriesLoading && (
+                            <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
+                              {categories.map((parent) => (
+                                <div key={parent.id}>
+                                  <p id={`${parent.name}-heading`} className="font-medium uppercase">
+                                    {parent.name}
+                                  </p>
 
-                                <ul role="list" aria-labelledby={`${parent.name}-heading`} className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                  {parent.children.map((child) => (
-                                    <li key={child.id} className="flex">
-                                      <Popover.Button onClick={() => (open = false)} className="w-full h-full flex items-start justify-start">
-                                        <Link href={`/categories/${child.slug}`}>
-                                          <a className="hover:underline cursor-pointer text-left">{child.name}</a>
-                                        </Link>
-                                      </Popover.Button>
-                                    </li>
+                                  <ul role="list" aria-labelledby={`${parent.name}-heading`} className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                    {parent.children.map((child) => (
+                                      <li key={child.id} className="flex">
+                                        <Popover.Button onClick={() => (open = false)} className="w-full h-full flex items-start justify-start">
+                                          <Link href={`/categories/${child.slug}`}>
+                                            <a className="hover:underline cursor-pointer text-left">{child.name}</a>
+                                          </Link>
+                                        </Popover.Button>
+                                      </li>
+                                    ))}
+                                  </ul>
+
+                                  <Popover.Button onClick={() => (open = false)}>
+                                    <Link key={parent.name} href={`/categories/${parent.slug}`}>
+                                      <a className="group flex space-x-4 font-medium hover:underline mt-6">
+                                        <span className="">Browse all</span>
+                                        <ArrowSmRightIcon className="block h-5 w-5" aria-hidden="true" />
+                                      </a>
+                                    </Link>
+                                  </Popover.Button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          {categoriesLoading && (
+                            <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
+                              {[...Array(3)].map((_, i) => (
+                                <ul key={i} className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                  {[...Array(8)].map((_, i) => (
+                                    <li key={i} className="h-5 bg-purple-dark animate-pulse"></li>
                                   ))}
                                 </ul>
-
-                                <Popover.Button onClick={() => (open = false)}>
-                                  <Link key={parent.name} href={`/categories/${parent.slug}`}>
-                                    <a className="group flex space-x-4 font-medium hover:underline mt-6">
-                                      <span className="">Browse all</span>
-                                      <ArrowSmRightIcon className="block h-5 w-5" aria-hidden="true" />
-                                    </a>
-                                  </Link>
-                                </Popover.Button>
-                              </div>
-                            ))}
-                          </div>
+                              ))}
+                            </div>
+                          )}
                           <div className="col-start-2 grid grid-cols-2 gap-x-8">
                             {featured.map((item) => (
                               <div key={item.name} className="group relative text-base sm:text-sm">
