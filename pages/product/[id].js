@@ -17,6 +17,7 @@ import HeartTooltip from "../../components/global/heartTooltip";
 import { buildLinks } from "../../lib/linkBuilder";
 import DiscountTooltip from "../../components/search/discountTooltip";
 import RestrictedBillingTooltip from "../../components/productPage/restrictedBillingTooltip";
+import DeveloperRecs from "../../components/productPage/developerRecs";
 
 const Lightbox = (props) => {
   return <SRLWrapper>{props.media && props.media.map((src, idx) => <div key={idx}>{src.includes("supabase") && <img src={src} />}</div>)}</SRLWrapper>;
@@ -84,7 +85,7 @@ export default function Product({ product }) {
     } else {
       setDiscountMessage("");
     }
-  }, []);
+  }, [product]);
 
   useEffect(async () => {
     if (user) {
@@ -421,12 +422,14 @@ export default function Product({ product }) {
           <Lightbox media={product.media} />
         </div>
       )}
+      {/* Recommendations */}
+      <DeveloperRecs productId={product.id} vendorId={product.vendors.id} />
       {/* Tier Comparison */}
       <div id="compare" className="bg-gray-50 select-none">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 ${xlCols >= 5 ? "xl:px-1" : ""}`}>
           <div className="sm:flex sm:flex-col sm:align-center">
             {product.tiers.length === 1 && <h3 className="text-5xl font-extrabold text-gray-900 text-center">Pricing</h3>}
-            {product.tiers.length > 1 && <h3 className="text-5xl font-extrabold text-gray-900 text-center">Pricing Plans</h3>}
+            {product.tiers.length > 1 && <h3 className="text-5xl font-extrabold text-gray-900 text-center text-purple">Pricing Plans</h3>}
             {product.price_model !== "revenue-fee" && product.price_model !== "one-time" && product.price_model !== "per-transaction" && product.price_model !== "minimum deposit" && !hidePriceToggle && (
               <div className="relative self-center mt-8 bg-gray-200 p-0.5 flex sm:mt-8">
                 <button
@@ -623,7 +626,7 @@ export default function Product({ product }) {
       <div id="reviews" className="bg-white select-none">
         <div className={`max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8`}>
           <div className="flex flex-col align-center">
-            <h3 className="text-5xl font-extrabold text-gray-900 text-center">Reviews</h3>
+            <h3 className="text-5xl font-extrabold text-gray-900 text-center text-purple">Reviews</h3>
             {/* <ReviewRecorder user={user} product={product} /> */}
             <ReviewGrid user={user} product={product} count={count} rating={rating} setCount={setCount} setRating={setRating} />
           </div>
