@@ -9,6 +9,16 @@ module.exports = {
         destination: "/kits/firstbase",
         permanent: true,
       },
+      {
+        source: "/fieldx",
+        destination: "/kits/field-x-y",
+        permanent: true,
+      },
+      {
+        source: "/fieldy",
+        destination: "/kits/field-x-y",
+        permanent: true,
+      },
     ];
   },
 };

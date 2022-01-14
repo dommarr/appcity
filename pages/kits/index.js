@@ -29,9 +29,12 @@ const KitCard = ({ kit, index }) => {
   const [background, setBackground] = useState("");
   const [gradient, setGradient] = useState("");
 
+  const colors = ["amber", "blue", "green", "violet", "red", "pink"];
+
   useEffect(() => {
-    setBackground(`absolute inset-0 opacity-50 bg-${kit.color}-500`);
-    setGradient(`absolute inset-0 bg-gradient-to-t from-${kit.color}-600 via-${kit.color}-600 opacity-90`);
+    let colorIndex = (index + 1) % colors.length;
+    setBackground(`absolute inset-0 opacity-50 bg-${colors[colorIndex]}-500`);
+    setGradient(`absolute inset-0 bg-gradient-to-t from-${colors[colorIndex]}-600 via-${colors[colorIndex]}-600 opacity-90`);
   }, []);
 
   if (!kit.complete) {

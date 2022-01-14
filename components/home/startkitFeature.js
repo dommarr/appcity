@@ -47,12 +47,16 @@ export default function StarterKitFeature({ kits }) {
           </div>
 
           <div className="row-span-1 col-span-1 sm:row-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-            <Image src={kits[2].image} alt={`${kits[2].name} starter kit`} layout="fill" objectFit="cover" />
-            <div className={`absolute inset-0 bg-${kits[2].color}-500 opacity-50`}></div>
-            <div className={`absolute inset-0 bg-gradient-to-t from-${kits[2].color}-600 via-${kits[2].color}-600 opacity-90`}></div>
-            <div className="absolute bottom-10 left-4">
-              <div className="text-white font-semibold text-xl">Coming soon: {kits[2].name}</div>
-            </div>
+            <Link href={`/kits/${kits[4].slug}`}>
+              <a>
+                <Image src={kits[4].image} alt={`${kits[4].name} starter kit`} layout="fill" objectFit="cover" />
+                <div className={`absolute inset-0 bg-blue-500 opacity-50`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-600 opacity-90`}></div>
+                <div className="absolute bottom-10 left-4">
+                  <div className="text-white font-semibold text-xl">{kits[4].name}</div>
+                </div>
+              </a>
+            </Link>
           </div>
 
           <div className="row-span-1 col-span-1 sm:row-span-2 md:row-span-1 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
@@ -65,11 +69,11 @@ export default function StarterKitFeature({ kits }) {
           </div>
 
           <div className="row-span-1 col-span-1 md:col-span-2 relative pt-24 pb-10 px-4 shadow-xl overflow-hidden">
-            <Image src={kits[4].image} alt={`${kits[4].name} starter kit`} layout="fill" objectFit="cover" />
-            <div className={`absolute inset-0 bg-${kits[4].color}-500 opacity-50`}></div>
-            <div className={`absolute inset-0 bg-gradient-to-t from-${kits[4].color}-600 via-${kits[4].color}-600 opacity-90`}></div>
+            <Image src={kits[2].image} alt={`${kits[2].name} starter kit`} layout="fill" objectFit="cover" />
+            <div className={`absolute inset-0 bg-${kits[2].color}-500 opacity-50`}></div>
+            <div className={`absolute inset-0 bg-gradient-to-t from-${kits[2].color}-600 via-${kits[2].color}-600 opacity-90`}></div>
             <div className="absolute bottom-10 left-4">
-              <div className="text-white font-semibold text-xl">Coming soon: {kits[4].name}</div>
+              <div className="text-white font-semibold text-xl">Coming soon: {kits[2].name}</div>
             </div>
           </div>
         </div>

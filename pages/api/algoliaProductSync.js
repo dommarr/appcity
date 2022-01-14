@@ -241,6 +241,13 @@ export default async function (req, res) {
       obj.categories.lvl1 = children.map((item) => item.path);
     }
 
+    // if product is not complete, add tag hidden, else add empty tags
+    if (!elem.complete) {
+      obj._tags = ["hidden"];
+    } else {
+      obj._tags = [""];
+    }
+
     algoliaArray.push(obj);
   });
 
