@@ -53,7 +53,7 @@ export default function KitBuilder() {
   };
 
   const fetchSections = async (kitId) => {
-    let { data: kit_sections, error } = await supabase.from("kit_sections").select("*, sections_products(*)").eq("kit_id", kitId);
+    let { data: kit_sections, error } = await supabase.from("kit_sections").select("*, sections_products(*)").eq("kit_id", kitId).order("order");
     if (error) {
       throw error;
     }
