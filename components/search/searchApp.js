@@ -326,7 +326,7 @@ class SearchApp extends React.Component {
                     <div className="md:hidden fixed bottom-10 inset-x-0 mx-auto flex items-center justify-center pointer-events-none">
                       <button
                         onClick={() => this.setState({ showSidebar: true })}
-                        className="pointer-events-auto bg-gradient-to-r from-yellow to-amber-400 text-purple px-10 py-2 uppercase font-medium tracking-widest rounded-lg filter drop-shadow-lg"
+                        className="pointer-events-auto bg-gradient-to-tl from-amber-200 to-amber-500 text-white px-10 py-2 uppercase font-medium tracking-widest rounded-lg filter drop-shadow-lg"
                       >
                         Filter
                       </button>
