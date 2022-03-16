@@ -213,7 +213,7 @@ class SearchApp extends React.Component {
                               onClick={() => this.setState({ monthlyPrice: true })}
                               className={`relative w-1/2 ${
                                 this.state.monthlyPrice ? "bg-white shadow-sm" : "bg-transparent"
-                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
+                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-2.5`}
                             >
                               Monthly billing
                             </button>
@@ -222,7 +222,7 @@ class SearchApp extends React.Component {
                               onClick={() => this.setState({ monthlyPrice: false })}
                               className={`ml-0.5 relative w-1/2 ${
                                 this.state.monthlyPrice ? "bg-transparent" : "bg-white shadow-sm"
-                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-3.5`}
+                              } py-2 text-xs font-medium text-gray-700 whitespace-nowrap focus:outline-none md:w-auto px-2.5`}
                             >
                               Yearly billing
                             </button>
